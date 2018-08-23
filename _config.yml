@@ -175,7 +175,9 @@ markdown:
     linkify: true
     typographer: true
     quotes: '“”‘’'
-  
+  anchors:
+    level: 1
+    permalinkSymbol: ''
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/

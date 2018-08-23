@@ -1,23 +1,40 @@
+---
+title: "[Hexo] Theme Zilan"
+catalog: true
+date: 2018-08-18 10:51:24
+subtitle: "This is hexo theme Demo."
+header-img: "Demo.png"
+tags:
+- Hexo
+- Blog
+categories:
+- TECH
+- Hexo
+---
 > Ported Theme of [Hux Blog](https://github.com/Huxpro/huxpro.github.io), Thank [Huxpro](https://github.com/Huxpro) for designing such a flawless theme.
 > 
 > This Zilan theme created by [YuankunLi](https://catherineliyuankun.github.io/) modified from the original Porter [Kaijun](http://kaijun.rocks/hexo-theme-huxblog/) and [YuHsuan](http://beantech.org/)
 
 # Demo [Live Demo](https://catherineliyuankun.github.io/)
-![Zilan Blog](https://catherineliyuankun.github.io/)
+---
+[Zilan Blog](https://catherineliyuankun.github.io/)
 
 # Usage
+---
 I publish the whole project for your convenience, so you can just follow the instruction down below, then you can easily customiz your own blog!
 
 Let's begin!!!
 
 ## Init
+---
 ```bash
-git clone https://github.com/CatherineLiyuankun/Hexo-theme-zilan.git ./hexo-zilan
+git clone https://github.com/catherineliyuankun/hexo-theme-zilan.git ./hexo-zilan
 cd hexo-zilan
 npm install
 ```
 
 ## Modify
+---
 Modify `_config.yml` file with your own info.
 Especially the section:
 ### Deployment
@@ -62,12 +79,12 @@ You can decide to show post tags and categories or not.
 home_posts_tag: true
 home_posts_category: true
 ```
-![home_posts_tag-true](./source/_posts/hexo-theme-zilan/home_posts_tag-true.png)
+![home_posts_tag-true](home_posts_tag-true.png)
 ```yml
 home_posts_tag: false
 home_posts_category: false
 ```
-![home_posts_tag-false](./source/_posts/hexo-theme-zilan/home_posts_tag-false.png)
+![home_posts_tag-false](home_posts_tag-false.png)
 
 ### Page Header category
 You can decide to show page_header categories or not.
@@ -96,17 +113,16 @@ markdown:
 ```
 and if you want to change the header anchor 'ℬ', you can go to `layout/post.ejs` to change it.
 ```javascript
-async("//cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
         anchors.options = {
           visible: 'hover',
           placement: 'left',
-          icon: 'ℒ'
+          icon: ℒ // this is the header anchor "unicode" icon
         };
-        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-    })
 ```
 
 ## Hexo Basics
+---
 Some hexo command:
 ```bash
 hexo new post "<post name>" # you can change post to another layout if you want
@@ -115,7 +131,11 @@ hexo server # run hexo in local environment
 hexo deploy # hexo will push the static files automatically into the specific branch(gh-pages) of your repo!
 ```
 
-# Have fun ^_^ 
+# Start your own blog!
+---
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- Place this tag where you want the button to render. -->
 
-Please [Star](https://github.com/catherineliyuankun/hexo-theme-zilan) this Project if you like it! [Follow](https://github.com/catherineliyuankun) would also be appreciated!
+Please <a class="github-button" href="https://github.com/catherineliyuankun/hexo-theme-zilan.git" data-icon="octicon-star" aria-label="Star Li,Yuankun/hexo-theme-zilan on GitHub">Star</a> this Project if you like it! <a class="github-button" href="https://github.com/CatherineLiyuankun" aria-label="Follow @CatherineLiyuankun on GitHub">Follow</a> would also be appreciated!
 Peace!

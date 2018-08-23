@@ -3,7 +3,7 @@
 > This Zilan theme created by [YuankunLi](https://catherineliyuankun.github.io/) modified from the original Porter [Kaijun](http://kaijun.rocks/hexo-theme-huxblog/) and [YuHsuan](http://beantech.org/)
 
 # Demo [Live Demo](https://catherineliyuankun.github.io/)
-![Zilan Blog](https://catherineliyuankun.github.io/)
+[Zilan Blog](https://catherineliyuankun.github.io/)
 
 # Usage
 I publish the whole project for your convenience, so you can just follow the instruction down below, then you can easily customiz your own blog!

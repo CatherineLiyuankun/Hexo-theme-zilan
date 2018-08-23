@@ -59,6 +59,17 @@
                     </li>
                 <% } %>
 
+                <% if (config.email_username) { %>
+                    <li>
+                        <a target="_blank" href="mailto:<%= config.email_username %>">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                <% } %>
+
                 <% if (config.twitter_username) { %>
                     <li>
                         <a target="_blank" href="https://twitter.com/<%= config.twitter_username %>">

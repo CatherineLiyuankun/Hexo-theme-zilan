@@ -41,6 +41,7 @@ github_username: catherineliyuankun
 twitter_username: CatherineLiYK
 facebook_username: liyuankun
 linkedin_username: liyuankun
+email_username: muzilan1@qq.com
 # weibo_username: muzilanlan
 
 # Build settings
@@ -178,7 +179,7 @@ markdown:
   anchors:
     level: 1
     permalinkSymbol: ''
-    
+
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/

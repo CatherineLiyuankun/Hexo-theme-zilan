@@ -32,6 +32,8 @@ keyword: ""
 header-img: img/header_img/home-bg-2-dark.png
 signature: true #show signature
 signature-img: img/signature/signature-white.png 
+header-cover: true # make cover the header img
+header-cover-color: rgba(0,0,0,.4) # the color cover the header img
 
 
 # footer SNS settings

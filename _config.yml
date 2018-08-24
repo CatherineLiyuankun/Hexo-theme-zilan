@@ -29,9 +29,9 @@ SEOTitle: Yuankun | 源坤
 email: muzilan1@qq.com
 description: ""
 keyword: ""
-header-img: img/header_img/home-bg-2-dark.png
+header-img: img/header_img/home-bg.png
 signature: true #show signature
-signature-img: img/signature/signature-white.png 
+signature-img: img/signature/signature-white.png
 header-cover: true # make cover the header img
 header-cover-color: rgba(0,0,0,.4) # the color cover the header img
 

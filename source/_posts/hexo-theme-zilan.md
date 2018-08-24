@@ -111,7 +111,7 @@ markdown:
     typographer: true
     quotes: '“”‘’'
 ```
-and if you want to change the header anchor 'ℬ', you can go to `layout/post.ejs` to change it.
+and if you want to change the header anchor 'ℒ', you can go to `layout/post.ejs` to change it.
 ```javascript
 async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
         anchors.options = {

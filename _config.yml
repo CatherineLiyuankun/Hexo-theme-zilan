@@ -84,6 +84,8 @@ widgets:
 archive_type: 'monthly'
 show_count: true
 
+forkme: false # Fork me on GitHub
+forkme-url: https://github.com/CatherineLiyuankun/Hexo-theme-zilan # GitHub url
 
 ## Featured Tags
 featured-tags: true                     # whether or not using Feature-Tags

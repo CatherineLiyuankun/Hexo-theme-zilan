@@ -1016,3 +1016,13 @@ body {
 .page-fullscreen footer .copyright a:hover {
   color: #ddd;
 }
+#rewardButton {
+  background-color: #404040;
+  color: white;
+  border-radius: 30px;
+  padding: 10px;
+  outline: none;
+}
+#rewardButton:hover {
+  background-color: #337ab7;
+}

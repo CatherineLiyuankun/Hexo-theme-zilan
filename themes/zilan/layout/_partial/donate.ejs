@@ -1,0 +1,53 @@
+<!-- <p class="asidetitle">donate</p>
+<div>
+<form action="https://shenghuo.alipay.com/send/payment/fill.htm" method="POST" target="_blank" accept-charset="GBK">
+    <br/>
+    <input name="optEmail" type="hidden" value="your Alipay" />
+    <input name="payAmount" type="hidden" value="默认捐赠金额(元)" />
+    <input id="title" name="title" type="hidden" value="博主，打赏你的！" />
+    <input name="memo" type="hidden" value="你Y加油，继续写博客！" />
+    <input name="pay" type="image" value="转账" src="http://7xig3q.com1.z0.glb.clouddn.com/alipay-donate-website.png" />
+</form>
+</div> -->
+
+<!-- Donate -->
+<% if(config['donate']) { %>
+<div>
+    <div class="donate-container" style="padding: 10px 0; margin: auto auto; width: 90%; text-align: center;">
+        <div></div>
+        <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+        <span>Donate</span>
+        </button>
+        <div id="QR" style="display: none;">
+            <div id="wechat" style="display: inline-block">
+            <a href="<%= config['root'] %><%= config['donate-wechat']%>" class="fancybox" rel="group">
+                <img id="wechat_qr" src="<%= config['root'] %><%= config['donate-wechat']%>" alt="muzilan WeChat Pay" style="width: 200px; height: 200px; text-align: center;">
+            </a>
+            <p>Wechat</p>
+            </div>
+            <div id="alipay" style="display: inline-block">
+            <a href="<%= config['root'] %><%= config['donate-alipay']%>" class="fancybox" rel="group">
+                <img id="alipay_qr" src="<%= config['root'] %><%= config['donate-alipay']%>" alt="muzilan Alipay" style="width: 200px; height: 200px; text-align: center;">
+            </a>
+            <p>Alipay</p>
+            </div>
+        </div>
+    </div>
+    <div class="fancybox-wrap fancybox-desktop fancybox-type-image fancybox-opened" tabindex="-1" style="width: 515px; height: auto; position: fixed; top: 219px; left: 20px; opacity: 1; overflow: visible;">
+        <div class="fancybox-skin" style="padding: 15px; width: auto; height: auto;">
+            <div class="fancybox-outer">
+                <div class="fancybox-inner" style="overflow: visible; width: 485px; height: 485px;">
+                    <img class="fancybox-image" src="/uploads/wechatpay.png" alt="">
+                </div>
+                    <a title="Previous" class="fancybox-nav fancybox-prev" href="javascript:;">
+                    <span></span>
+                    </a>
+                <a title="Next" class="fancybox-nav fancybox-next" href="javascript:;">
+                    <span></span>
+                </a>
+            </div>
+            <a title="Close" class="fancybox-item fancybox-close" href="javascript:;"></a>
+        </div>
+    </div>
+</div>
+<% } %>

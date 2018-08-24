@@ -70,6 +70,11 @@ ga_domain: yoursite
 forkme: false # Fork me on GitHub
 forkme-url: https://github.com/CatherineLiyuankun/Hexo-theme-zilan # GitHub url
 
+# donate
+donate: true
+donate-alipay: img/alipay.png
+donate-wechat: img/wechatpay.png
+
 # Sidebar settings -----------
 sidebar: true                       # whether or not using Sidebar.
 sidebar-about-description: "Li,Yuankun a lazy soft engineer"

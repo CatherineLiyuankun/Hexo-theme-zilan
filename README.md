@@ -115,7 +115,6 @@ hexo server # run hexo in local environment
 hexo deploy # hexo will push the static files automatically into the specific branch(gh-pages) of your repo!
 ```
 
-# Have fun ^_^ 
 
 Please [Star](https://github.com/catherineliyuankun/hexo-theme-zilan) this Project if you like it! [Follow](https://github.com/catherineliyuankun) would also be appreciated!
 Peace!

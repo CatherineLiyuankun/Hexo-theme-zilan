@@ -7,5 +7,5 @@ header-img: "img/header_img/about-bg.jpg"
 comments: true
 ---
 
-> 光有好奇心而不去實踐，等於自願放棄成功機會
-> 別為自己畫地自限，Just Do It！！
+> Begin with a full stack soft engineer, then a machine learning engineer, now a frontend engineer!
+> A girl still have colorful dream.

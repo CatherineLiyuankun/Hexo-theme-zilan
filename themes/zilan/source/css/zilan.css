@@ -50,6 +50,11 @@
 .sidebar-container .short-about .list-inline > li {
   padding-left: 0px;
 }
+.sidebar-container .wechat .wechatQR {
+  text-align: center;
+  width: 200px;
+  height: 200px;
+}
 
 body {
   /* Hux learn from

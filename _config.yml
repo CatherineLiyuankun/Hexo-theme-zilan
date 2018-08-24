@@ -66,6 +66,9 @@ disqus_username: lyk-1
 ga_track_id: 'UA-XXXXXXXX-X'          # Format: UA-xxxxxx-xx
 ga_domain: yoursite
 
+# forkme
+forkme: false # Fork me on GitHub
+forkme-url: https://github.com/CatherineLiyuankun/Hexo-theme-zilan # GitHub url
 
 # Sidebar settings -----------
 sidebar: true                       # whether or not using Sidebar.
@@ -77,6 +80,7 @@ widgets:
 - recent-posts
 - category
 - friends-blog
+- wechat
 # - archive
 
 # widget behavior
@@ -84,8 +88,8 @@ widgets:
 archive_type: 'monthly'
 show_count: true
 
-forkme: false # Fork me on GitHub
-forkme-url: https://github.com/CatherineLiyuankun/Hexo-theme-zilan # GitHub url
+## wechat
+wechat-imgurl: img/wechat-icon.png #url of wechat QR code
 
 ## Featured Tags
 featured-tags: true                     # whether or not using Feature-Tags
@@ -190,12 +194,12 @@ markdown:
 theme: zilan
 plugins:
     hexo-generator-feed
+
 #Feed Atom
 feed:
     type: atom
     path: atom.xml
     limit: 20
-
 
 #sitemap
 sitemap:

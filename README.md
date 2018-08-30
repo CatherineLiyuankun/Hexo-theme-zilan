@@ -62,23 +62,23 @@ You can decide to show post tags and categories or not.
 home_posts_tag: true
 home_posts_category: true
 ```
-![home_posts_tag-true](./source/_posts/hexo-theme-zilan/home_posts_tag-true.png)
+![home_posts_tag-true](http://pe3ol7tjk.bkt.clouddn.com/home_posts_tag-true.png?imageView2/0/q/90|watermark/1/image/aHR0cDovL3BlM29sN3Rqay5ia3QuY2xvdWRkbi5jb20vc2lnbmF0dXJlLXdoaXRlLnBuZw==/dissolve/50/gravity/SouthEast/dx/10/dy/5)
 ```yml
 home_posts_tag: false
 home_posts_category: false
 ```
-![home_posts_tag-false](./source/_posts/hexo-theme-zilan/home_posts_tag-false.png)
+![home_posts_tag-false](http://pe3ol7tjk.bkt.clouddn.com/home_posts_tag-false.png)
 
 ### Page Header category
 You can decide to show page_header categories or not.
 ```yml
 page_header_category: true
 ```
-![page_header_category-true](page_header_category-true.png)
+![page_header_category-true](http://pe3ol7tjk.bkt.clouddn.com/page_header_category-true.png)
 ```yml
 page_header_category: false
 ```
-![page_header_category-false](page_header_category-false.png)
+![page_header_category-false](http://pe3ol7tjk.bkt.clouddn.com/page_header_category-false.png)
 
 ### Markdown render
 My markdown render engine plugin is [hexo-renderer-markdown-it](https://github.com/celsomiranda/hexo-renderer-markdown-it).

@@ -34,6 +34,7 @@ signature: true #show signature
 signature-img: img/signature/signature-white.png
 header-cover: true # make cover the header img
 header-cover-color: rgba(0,0,0,.4) # the color cover the header img
+img-watermark: 	imageView2/0/q/75|watermark/1/image/aHR0cDovL3BlM29sN3Rqay5ia3QuY2xvdWRkbi5jb20vc2lnbmF0dXJlLXdoaXRlLnBuZw==/dissolve/50/gravity/SouthEast/dx/10/dy/5
 
 
 # footer SNS settings
@@ -72,8 +73,8 @@ forkme-url: https://github.com/CatherineLiyuankun/Hexo-theme-zilan # GitHub url
 
 # donate
 donate: true
-donate-alipay: img/alipay.png
-donate-wechat: img/wechatpay.png
+donate-alipay: http://pe3ol7tjk.bkt.clouddn.com/alipay.png
+donate-wechat: http://pe3ol7tjk.bkt.clouddn.com/wechatpay.png
 
 # Sidebar settings -----------
 sidebar: true                       # whether or not using Sidebar.
@@ -85,7 +86,7 @@ widgets:
 - recent-posts
 - category
 - friends-blog
-- wechat
+# - wechat
 # - archive
 
 # widget behavior

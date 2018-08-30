@@ -3,7 +3,7 @@ title: "[Hexo] Theme Zilan"
 catalog: true
 date: 2018-08-18 10:51:24
 subtitle: "This is hexo theme Demo."
-header-img: "Demo.png"
+header-img: "http://pe3ol7tjk.bkt.clouddn.com/hexo-cover.png"
 tags:
 - Hexo
 - Blog
@@ -79,23 +79,32 @@ You can decide to show post tags and categories or not.
 home_posts_tag: true
 home_posts_category: true
 ```
-![home_posts_tag-true](home_posts_tag-true.png)
+![home_posts_tag-true](http://pe3ol7tjk.bkt.clouddn.com/home_posts_tag-true.png?imageView2/0/q/90|watermark/1/image/aHR0cDovL3BlM29sN3Rqay5ia3QuY2xvdWRkbi5jb20vc2lnbmF0dXJlLXdoaXRlLnBuZw==/dissolve/50/gravity/SouthEast/dx/10/dy/5)
 ```yml
 home_posts_tag: false
 home_posts_category: false
 ```
-![home_posts_tag-false](home_posts_tag-false.png)
+![home_posts_tag-false](http://pe3ol7tjk.bkt.clouddn.com/home_posts_tag-false.png)
 
 ### Page Header category
 You can decide to show page_header categories or not.
 ```yml
 page_header_category: true
 ```
-![page_header_category-true](page_header_category-true.png)
+![page_header_category-true](http://pe3ol7tjk.bkt.clouddn.com/page_header_category-true.png)
 ```yml
 page_header_category: false
 ```
-![page_header_category-false](page_header_category-false.png)
+![page_header_category-false](http://pe3ol7tjk.bkt.clouddn.com/page_header_category-false.png)
+
+### forkme
+forkme: false # Fork me on GitHub
+forkme-url: https://github.com/CatherineLiyuankun/Hexo-theme-zilan # GitHub url
+
+### donate
+donate: true
+donate-alipay: http://pe3ol7tjk.bkt.clouddn.com/alipay.png
+donate-wechat: http://pe3ol7tjk.bkt.clouddn.com/wechatpay.png
 
 ### Markdown render
 My markdown render engine plugin is [hexo-renderer-markdown-it](https://github.com/celsomiranda/hexo-renderer-markdown-it).

@@ -75,6 +75,7 @@ forkme-url: https://github.com/CatherineLiyuankun/Hexo-theme-zilan # GitHub url
 donate: true
 donate-alipay: http://pe3ol7tjk.bkt.clouddn.com/alipay.png
 donate-wechat: http://pe3ol7tjk.bkt.clouddn.com/wechatpay.png
+fancybox: true
 
 # Sidebar settings -----------
 sidebar: true                       # whether or not using Sidebar.

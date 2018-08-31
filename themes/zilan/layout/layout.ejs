@@ -20,6 +20,11 @@
 	<a id="rocket" href="#top" class=""></a>
 	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
     <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+    <% if (theme.fancybox){ %>
+        <%- css('/fancybox/jquery.fancybox') %>
+        <%- js('/fancybox/jquery.fancybox.pack') %>
+        <%- js('/js/wrapImage.js') %>
+    <% } %>
 <!-- Migrate from head to bottom, no longer block render and still work -->
 
     <!-- Fork me on GitHub -->

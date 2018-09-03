@@ -51,7 +51,17 @@
                                     }) %>
                                 </div>
                             <%}%>
-                            <h1><%= page.title %></h1>
+                            <h1>
+                                <%= page.title %>
+                                <!-- Share -->
+                                <% if (theme.needmoreshare2.enable && theme.needmoreshare2.postbottom.headerEnable) {%>
+                                    <span id="needsharebutton-postbottom" class="header-share">
+                                        <span class="btn">
+                                            <i class="fa fa-share-alt" aria-hidden="true"></i>
+                                        </span>
+                                    </span>
+                                <%}%>
+                            </h1>
                             <h2 class="subheading"><%= page.subtitle || "" %></h2>
                             <span class="meta">
                                 Posted by <%- page.author || config.author %> on

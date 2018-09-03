@@ -1,0 +1,52 @@
+  <% if (theme.needmoreshare2.enable){ %>
+    <%- css('/lib/needsharebutton/needsharebutton.css') %>
+    <%- js('/lib/needsharebutton/needsharebutton.js') %>
+
+    <% if(config.needmoreshare2.postbottom.headerEnable) { %>
+      <script>
+          var pbOptions = {};
+          var iconStyle = "<%= config.needmoreshare2.postbottom.options.headerIconStyle %>";
+          var boxForm = "<%= config.needmoreshare2.postbottom.options.boxForm %>";
+          var position = "<%= config.needmoreshare2.postbottom.options.headerPosition %>";
+          var networks = "<%= config.needmoreshare2.postbottom.options.networks %>";
+          pbOptions["iconStyle"] = iconStyle;
+          pbOptions["boxForm"] = boxForm;
+          pbOptions["position"] = position;
+          pbOptions["networks"] = networks;
+          
+          new needShareButton('#needsharebutton-postbottom', pbOptions);
+      </script>
+    <% } %>
+
+    <% if(config.needmoreshare2.postbottom.postEnable) { %>
+      <script>
+          var pbOptions = {};
+          var iconStyle = "<%= config.needmoreshare2.postbottom.options.postIconStyle %>";
+          var boxForm = "<%= config.needmoreshare2.postbottom.options.boxForm %>";
+          var position = "<%= config.needmoreshare2.postbottom.options.postPosition %>";
+          var networks = "<%= config.needmoreshare2.postbottom.options.networks %>";
+          pbOptions["iconStyle"] = iconStyle;
+          pbOptions["boxForm"] = boxForm;
+          pbOptions["position"] = position;
+          pbOptions["networks"] = networks;
+          
+          new needShareButton('#needsharebutton-postbottom', pbOptions);
+      </script>
+    <% } %>
+
+    <% if(theme.needmoreshare2.float.enable) { %>
+      <script>
+          var flOptions = {};
+          var iconStyle = "<%= config.needmoreshare2.float.options.iconStyle %>";
+          var boxForm = "<%= config.needmoreshare2.float.options.boxForm %>";
+          var position = "<%= config.needmoreshare2.float.options.position %>";
+          var networks = "<%= config.needmoreshare2.float.options.networks %>";
+          flOptions["iconStyle"] = iconStyle;
+          flOptions["boxForm"] = boxForm;
+          flOptions["position"] = position;
+          flOptions["networks"] = networks;
+
+          new needShareButton('#needsharebutton-float', flOptions);
+      </script>
+    <% } %>
+<% } %>

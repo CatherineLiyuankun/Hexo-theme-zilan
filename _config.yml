@@ -33,7 +33,7 @@ header-img: img/header_img/home-bg.png
 signature: true #show signature
 signature-img: img/signature/signature-white.png
 header-cover: true # make cover the header img
-header-cover-color: rgba(0,0,0,.4) # the color cover the header img
+header-cover-color: rgba(0,0,0,.2) # the color cover the header img
 img-watermark: 	imageView2/0/q/75|watermark/1/image/aHR0cDovL3BlM29sN3Rqay5ia3QuY2xvdWRkbi5jb20vc2lnbmF0dXJlLXdoaXRlLnBuZw==/dissolve/50/gravity/SouthEast/dx/10/dy/5
 
 
@@ -58,6 +58,38 @@ disqus_username: lyk-1
 # duoshuo_username: lyk
 # Share component is depend on Comment so we can NOT use share only.
 # duoshuo_share: true                     # set to false if you want to use Comment without Sharing
+
+# NeedMoreShare2
+# This plugin is a pure javascript sharing lib which is useful in China.
+# See: https://github.com/revir/need-more-share2
+# Also see: https://github.com/DzmVasileusky/needShareButton
+# iconStyle: default | box | light
+# boxForm: horizontal | vertical
+# position: top / middle / bottom + Left / Center / Right
+# networks: Weibo,Wechat,Douban,QQZone,Twitter,Linkedin,Mailto,Reddit,
+#           Delicious,StumbleUpon,Pinterest,Facebook,GooglePlus,Slashdot,
+#           Technorati,Posterous,Tumblr,GoogleBookmarks,Newsvine,
+#           Evernote,Friendfeed,Vkontakte,Odnoklassniki,Mailru
+needmoreshare2:
+  enable: true
+  postbottom: 
+    headerEnable: true
+    postEnable: true
+    enable: true
+    options:
+      postIconStyle: light
+      headerIconStyle: light
+      boxForm: horizontal
+      postPosition: middleRight
+      headerPosition: bottom
+      networks: Wechat,Weibo,Douban,Twitter,Facebook,Reddit,Linkedin,Evernote
+  float: 
+    enable: true
+    options:
+      iconStyle: box
+      boxForm: horizontal
+      position: middleRight
+      networks: Wechat,Weibo,Douban,Twitter,Facebook,Reddit,Linkedin,Evernote
 
 
 # Analytics settings

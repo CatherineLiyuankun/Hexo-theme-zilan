@@ -1,0 +1,63 @@
+<% if(!config["duoshuo_username"]) { %>
+    <% if(config.gitment.enable && config.gitment.client_id) { %>
+    <!-- LOCAL: You can save these files to your site and update links -->
+        <% if(config.gitment.mint) { %>
+            <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+            <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+        <% } else { %>
+            <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+            <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+        <% } %>
+    <!-- END LOCAL -->
+        <% if(config.gitment.cleanly) { %>
+        <style>
+            a.gitment-editor-footer-tip { display: none; }
+            .gitment-container.gitment-footer-container { display: none; }
+        </style>
+        <% } %>
+
+        <% if(page.comments) { %>
+        <script type="text/javascript">
+            var option = {
+                id: window.location.pathname,
+                owner: '<%= config.gitment.github_user %>',
+                repo: '<%= config.gitment.github_repo %>',
+                oauth: {
+                    client_id: '<%= config.gitment.client_id %>'
+                }
+            };
+            if(<%= config.gitment.mint %>) {
+                option.lang = "<%= config.gitment.language %>" || navigator.language || navigator.systemLanguage || navigator.userLanguage;
+            }
+            if (<%= config.gitment.mint %> && <%= config.gitment.proxy_gateway %>) {
+                option.oauth.redirect_protocol = '<%= config.gitment.redirect_protocol %>';
+            }
+            if (<%= config.gitment.mint %> && <%= config.gitment.proxy_gateway %>) {
+                option.oauth.proxy_gateway = '<%= config.gitment.proxy_gateway %>';
+            } else {
+                option.oauth.client_secret = '<%= config.gitment.client_secret %>';
+            }
+
+            function renderGitment(){
+                var gitment;
+                if (<%= config.gitment.mint %>) {
+                    gitment = new Gitmint(option);
+                } else {
+                    gitment = new Gitment(option);
+                }
+                gitment.render('gitment-container');
+            }
+
+            if(!<%= config.gitment.lazy %>) {
+                renderGitment();
+            } else {
+                function showGitment(){
+                    document.getElementById("gitment-display-button").style.display = "none";
+                    document.getElementById("gitment-container").style.display = "block";
+                    renderGitment();
+                }
+            }
+        </script>
+        <% } %>
+    <% } %>
+<% } %>

@@ -74,6 +74,19 @@ layout: layout
                     </div>
                 <% } %>
                 <!-- disqus comment end -->
+                <!-- gitment -->
+                <% if(is_post() && config.gitment.enable) { %>
+                    <hr>
+                    <div class="comments" id="comments">
+                        <% if(config.gitment.lazy) { %>
+                            <div onclick="showGitment()" id="gitment-display-button">show git comment</div>
+                            <div id="gitment-container" style="display:none"></div>
+                        <% } else { %>
+                            <div id="gitment-container"></div>
+                        <% } %>
+                    </div>
+                    <hr>
+                <% } %>
             </div>
             
             <!-- Tabe of Content -->
@@ -86,7 +99,7 @@ layout: layout
                 sidebar-container">
 
                 <!-- Featured Tags -->
-                <% if(config['featured-tags']) { %>
+                <% if(config['post-tags']) { %>
                 <section>
                     <!-- no hr -->
                     <h5><a href="<%= config.root %>tags/">FEATURED TAGS</a></h5>
@@ -99,7 +112,7 @@ layout: layout
                 <% }%>
 
                 <!-- Categories -->
-                <% if(config['page-category']) { %>
+                <% if(config['post-category']) { %>
                     <section>
                         <!-- no hr -->
                         <h5><a href="<%= config.root %>categories/">CATEGORORY</a></h5>
@@ -118,11 +131,10 @@ layout: layout
                   <% }%>
                                 
                 <!-- Friends Blog -->
-                <% if(config.friends) { %>
+                <% if(config["post-friends"]) { %>
                 <hr>
                 <h5>FRIENDS</h5>
                 <ul class="list-inline">
-
                     <% config.friends.forEach(function(friend){ %>
                         <li><a href="<%= friend.href %>" target="_blank"><%= friend.title %></a></li>
                     <% }); %>

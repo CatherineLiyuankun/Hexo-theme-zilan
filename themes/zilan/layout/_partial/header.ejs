@@ -39,7 +39,7 @@
                                 <a class="tag" href="<%= config.root %>tags/#<%= tag.name %>" title="<%= tag.name %>"><%= tag.name %></a>
                                 <% }) %>
                             </div>
-                            <!-- added by CatherineLiyuankun -->
+                            <!-- category post header -->
                             <% if (config.page_header_category && page.categories && page.categories.length){%>
                                 <div class="page-header-category">
                                     <%- list_categories(page.categories, {
@@ -51,10 +51,21 @@
                                     }) %>
                                 </div>
                             <%}%>
+                            <% if(config.gitment.enable && config.gitment.mint && config.gitment.count) { %>
+                                <span class="post-comments-count">
+                                    <span class="post-meta-divider">|</span>
+                                    <a href="<%- config.root %><%- page.path %>#comments" itemprop="discussionUrl">
+                                        <span class="post-meta-item-icon">
+                                            <i class="fa fa-comment-o"></i>
+                                        </span>
+                                        <span class="post-comments-count gitment-comments-count" data-xid="<%- config.root %><%- page.path %>" itemprop="commentsCount"></span>
+                                    </a>
+                                </span>
+                            <% } %>
                             <h1>
                                 <%= page.title %>
                                 <!-- Share -->
-                                <% if (theme.needmoreshare2.enable && theme.needmoreshare2.postbottom.headerEnable) {%>
+                                <% if (config.needmoreshare2.enable && theme.needmoreshare2.postbottom.headerEnable) {%>
                                     <span id="needsharebutton-postbottom" class="header-share">
                                         <span class="btn">
                                             <i class="fa fa-share-alt" aria-hidden="true"></i>

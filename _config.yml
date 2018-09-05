@@ -59,6 +59,23 @@ disqus_username: lyk-1
 # Share component is depend on Comment so we can NOT use share only.
 # duoshuo_share: true                     # set to false if you want to use Comment without Sharing
 
+# Gitment
+# Introduction: https://imsun.net/posts/gitment-introduction/
+gitment:
+  enable: true
+  mint: true # RECOMMEND, A mint on Gitment, to support count, language and proxy_gateway
+  count: true # Show comments count in post meta area
+  lazy: true # Comments lazy loading with a button
+  cleanly: true # Hide 'Powered by ...' on footer, and more
+  language: # Force language, or auto switch by theme
+  github_user: CatherineLiyuankun # MUST HAVE, Your Github ID
+  github_repo: gitment-comments # MUST HAVE, The repo you use to store Gitment comments
+  client_id: f3a0c1c7153576e1ab6c # MUST HAVE, Github client id for the Gitment
+  client_secret: bedf5010df925fa0e02e8be9399a64caac3d2b4e # EITHER this or proxy_gateway, Github access secret token for the Gitment
+  proxy_gateway: # Address of api proxy, See: https://github.com/aimingoo/intersect
+  redirect_protocol: # Protocol of redirect_uri with force_redirect_protocol when mint enabled
+
+
 # NeedMoreShare2
 # This plugin is a pure javascript sharing lib which is useful in China.
 # See: https://github.com/revir/need-more-share2
@@ -132,12 +149,13 @@ wechat-imgurl: img/wechat-icon.png #url of wechat QR code
 
 ## Featured Tags
 featured-tags: true                     # whether or not using Feature-Tags
+post-tags: false                # whether or not using Feature-Tags at bottom of blog page
 featured-condition-size: 0              # A tag will be featured if the size of it is more than this condition value
 
 ## Category
 page_header_category: true # show page_header categories
 home_posts_category: true # show posts categories
-page-category: false # show page categories at the end
+post-category: false # show page categories at the end
 sidebar-category: true # show sidebar categories
 
 # short-about SNS settings
@@ -150,6 +168,8 @@ short_github_username: catherineliyuankun
 short_linkedin_username: liyuankun
 
 ## Friends
+post-friends: false
+
 friends: [
     {
         title: "CSDN",

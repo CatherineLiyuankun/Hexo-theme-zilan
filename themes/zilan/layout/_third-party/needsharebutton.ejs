@@ -1,4 +1,4 @@
-  <% if (theme.needmoreshare2.enable){ %>
+  <% if (config.needmoreshare2.enable){ %>
     <%- css('/lib/needsharebutton/needsharebutton.css') %>
     <%- js('/lib/needsharebutton/needsharebutton.js') %>
 
@@ -34,7 +34,7 @@
       </script>
     <% } %>
 
-    <% if(theme.needmoreshare2.float.enable) { %>
+    <% if(config.needmoreshare2.float.enable) { %>
       <script>
           var flOptions = {};
           var iconStyle = "<%= config.needmoreshare2.float.options.iconStyle %>";

@@ -3,7 +3,7 @@ title: Installing MySQL on Mac
 catalog: true
 date: 2018-09-29 14:23:53
 subtitle: "zsh: command not found"
-header-img: "mysql-header.png"
+header-img: "https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Installing-MySQL-on-Mac/mysql-header.png"
 tags:
 - MySQL
 categories:
@@ -175,13 +175,13 @@ mysql> SHOW DATABASES;
 I use [Sequel Pro](https://www.sequelpro.com/) to manage MySQL because it has a pretty great UI. In case you are wondering, I am not actually affiliated with it in anyway.
 [Download and install Sequel Pro](https://sequelpro.com/download#auto-start) and open it. The database to connect to is on localhost so set “host” to “127.0.0.1”. Username is “root” and password the same as chosen in the previous step, for me that’s "administrator".
  
-![Setting](SequelPro-setting.png)
+![Setting](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Installing-MySQL-on-Mac/SequelPro-setting.png)
  
 If the connection does not work, make sure you modified your password correctly in the previous step and that the mysql service is still running.
 
 ## Error 1 
 If you meet this error:
-![connection error](SequelPro-connectionerror2.png)
+![connection error](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Installing-MySQL-on-Mac/SequelPro-connectionerror2.png)
 
 Find out which port MySQL is running on, run the following in MySql client:
 ```bash
@@ -198,7 +198,7 @@ Make sure that you input the correct port number (3306 or 3307).
 ## Error 2
 
 If you meet this error:
-![connection error](SequelPro-connectionerror.png)
+![connection error](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Installing-MySQL-on-Mac/SequelPro-connectionerror.png)
 
 
 ### Error 2 - set 'Use legacy password'
@@ -209,19 +209,19 @@ For MAC OS
 3. Choose 'Use legacy password'
 4. Start the Server again.
 5. Now connect the MySQL Workbench
-![System Preferences MySQL](SystemPreferences-MySQL.png)
+![System Preferences MySQL](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Installing-MySQL-on-Mac/SystemPreferences-MySQL.png)
 
 ### Error 2 - install MySQL in System Preferences
 If you don't have MySQL in System Preferences,
 you can set up MySQL in your System Preferences by following this: [dev.mysql.com/doc/refman/5.7/en/osx-installation-prefpane.html](dev.mysql.com/doc/refman/5.7/en/osx-installation-prefpane.html) 
-![install-MySQL-Preference-Pane](install-MySQL-Preference-Pane2.png)
+![install-MySQL-Preference-Pane](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Installing-MySQL-on-Mac/install-MySQL-Preference-Pane2.png)
 
 We can not install the MySQL Server again, because we already install it by brew. But you have to config the MySQL Preference Pane.
-![install-MySQL-Preference-Pane](install-MySQL-Preference-Pane1.png)
+![install-MySQL-Preference-Pane](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Installing-MySQL-on-Mac/install-MySQL-Preference-Pane1.png)
 
 ----
 If we install the MySQL Server again, the MySQL Preference Pane config:
-![installed-mysql config](installed-mysql.png)
+![installed-mysql config](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Installing-MySQL-on-Mac/installed-mysql.png)
  modify .bash_profile
 ```vim
 export PATH=${PATH}:/usr/local/mysql/bin
@@ -236,7 +236,7 @@ Then
 -----
 
 Remeber to choose 'Use legacy password':
-![install-MySQL-Preference-Pane](install-MySQL-Preference-Pane1.png)
+![install-MySQL-Preference-Pane](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Installing-MySQL-on-Mac/install-MySQL-Preference-Pane1.png)
 
 
 But i still do not solve it yet.

@@ -5,13 +5,13 @@
         <h5><a href="<%= config.root %>categories/">CATEGORORY</a></h5>
             <% if (site.categories && site.categories.length){ %>
                 <div class="article-category" id="categories">
-                  <%- list_categories(site.categories, {
-                    show_count: true,
-                    class: 'category-list',
-                    style: 'none',
-                    separator: '►',
-                    depth: 2
-                  }) %>
+                    <%- list_categories(site.categories, {
+                        orderby: 'name',
+                        show_count: true,
+                        class: 'category',
+                        style: 'list',
+                        depth: 3
+                    }) %>
                 </div>
             <% } %>
     </section>

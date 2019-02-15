@@ -41,11 +41,8 @@ layout: page
 <!-- 多说公共JS代码 end -->
 <% } %>
 
+<!-- Disqus Comment -->
+<% include ./_third-party/comments/disqus/disqus.ejs %>
 
-<!-- disqus comment -->
-<% if(config['disqus_username']) { %>
-<div class="disqus_comment">
-    <div id="disqus_thread" class="disqus-thread"></div>
-</div>
 <% } %>
 

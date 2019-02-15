@@ -67,12 +67,8 @@ layout: layout
                 <% } %>
                 <!-- 多说评论框 end -->
 
-                <!-- disqus comment -->
-                <% if(config['disqus_username']) { %>
-                    <div class="disqus_comment">
-                        <div id="disqus_thread" class="disqus-thread"></div>
-                    </div>
-                <% } %>
+                <!-- Disqus Comment -->
+                <% include ./_third-party/comments/disqus/disqus.ejs %>
 
                 <!-- gitment -->
                 <% if(is_post() && config.gitment.enable) { %>

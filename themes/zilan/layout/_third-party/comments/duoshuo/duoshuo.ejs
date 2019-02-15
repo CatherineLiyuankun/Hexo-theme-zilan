@@ -1,0 +1,10 @@
+<% if(config['duoshuo_username']) { %>
+    <!-- 多说评论框 start -->
+    <div class="comment">
+        <div class="ds-thread"
+            data-thread-key="<%= page.path %>"
+            data-title="<%= page.title %>"
+            data-url="<%= page.permalink %>" >
+        </div>
+    </div>
+<% } %>

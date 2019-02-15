@@ -5,47 +5,16 @@ layout: layout
 <div class="container">
     <div class="row">
         <% if(config.sidebar == false) { %>
-<!-- NO SIDEBAR -->
+<!-- SIDEBAR Below -->
     <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container">
                 <%- page.content || body %>
             </div>
-    <!-- Sidebar Container -->
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                <!-- Featured Tags -->
-                <% if(config['featured-tags']) { %>
-                <section>
-                    <!-- no hr -->
-                    <h5><a href="<%= config.root %>tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-                        <% site.tags.map(function(tag){  %>
-                            <% if(tag.length > config['featured-condition-size']) { %>
-                            <a href="<%= config.root %>tags/#<%= tag.name %>" title="<%= tag.name %>" rel="<%= tag.length %>"><%= tag.name %></a>
-                            <% } %>
-                        <% }) %>
-                    </div>
-                </section>
-                <% }%>
-
-                <!-- Friends Blog -->
-                <% if(config.friends) { %>
-                <hr>
-                <h5>FRIENDS</h5>
-                <ul class="list-inline">
-
-                    <% config.friends.forEach(function(friend){ %>
-                        <li><a href="<%= friend.href %>"><%= friend.title %></a></li>
-                    <% }); %>
-                </ul>
-                <% }%>
-            </div>
+    <!-- Sidebar Container Below -->
+            <%- partial('_partial/sidebarBelow') %>
         <%} else { %>
 
-<!-- USE SIDEBAR -->
+<!-- USE SIDEBAR Aside-->
     <!-- Post Container -->
             <div class="
                 col-lg-8 col-lg-offset-1
@@ -86,7 +55,7 @@ layout: layout
                     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
                     <script type="text/javascript">
                         // dynamic User by Hux
-                        var _user = '<%= config['duoshuo_username'] %>';
+                        var _user = '<%= config["duoshuo_username"] %>';
 
                         // duoshuo comment query.
                         var duoshuoQuery = {short_name: _user };

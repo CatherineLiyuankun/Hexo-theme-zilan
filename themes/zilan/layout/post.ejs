@@ -92,55 +92,8 @@ layout: layout
             <!-- Tabe of Content -->
             <%- partial('_partial/toc') %>
                 
-            <!-- Sidebar Container -->
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                <!-- Featured Tags -->
-                <% if(config['post-tags']) { %>
-                <section>
-                    <!-- no hr -->
-                    <h5><a href="<%= config.root %>tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-                       <% page.tags.forEach(function(tag){ %>
-                          <a class="tag" href="<%= config.root %>tags/#<%= tag.name %>" title="<%= tag.name %>"><%= tag.name %></a>
-                        <% }) %>
-                    </div>
-                </section>
-                <% }%>
-
-                <!-- Categories -->
-                <% if(config['post-category']) { %>
-                    <section>
-                        <!-- no hr -->
-                        <h5><a href="<%= config.root %>categories/">CATEGORORY</a></h5>
-                            <% if (page.categories && page.categories.length){ %>
-                                <div class="article-category" id="categories-post">
-                                  <%- list_categories(page.categories, {
-                                    show_count: false,
-                                    class: 'category-list',
-                                    style: 'none',
-                                    separator: '►',
-                                    depth: 2
-                                  }) %>
-                                </div>
-                            <% } %>
-                    </section>
-                  <% }%>
-                                
-                <!-- Friends Blog -->
-                <% if(config["post-friends"]) { %>
-                <hr>
-                <h5>FRIENDS</h5>
-                <ul class="list-inline">
-                    <% config.friends.forEach(function(friend){ %>
-                        <li><a href="<%= friend.href %>" target="_blank"><%= friend.title %></a></li>
-                    <% }); %>
-                </ul>
-                <% }%>
-            </div>
+            <!-- Sidebar Container Below-->
+            <%- partial('_partial/sidebarBelow') %>
         </div>
     </div>
 </article>
@@ -149,7 +102,7 @@ layout: layout
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
     // dynamic User by Hux
-    var _user = '<%= config['duoshuo_username'] %>';
+    var _user = '<%= config["duoshuo_username"] %>';
 
     // duoshuo comment query.
     var duoshuoQuery = {short_name: _user };

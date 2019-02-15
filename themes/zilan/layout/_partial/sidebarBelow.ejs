@@ -1,0 +1,12 @@
+<!-- Sidebar Container Below when config.sidebar == false -->
+<div class="
+    col-lg-8 col-lg-offset-2
+    col-md-10 col-md-offset-1
+    sidebar-container">
+    <% theme.widgets.forEach(function(widget){ %>
+        <% if (widget !== 'short-about'){ %>
+            <%- partial('_widget/' + widget) %>
+          <% } %>
+        <hr>
+    <% }) %>
+</div>

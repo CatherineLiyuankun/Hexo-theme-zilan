@@ -70,19 +70,8 @@ layout: layout
                 <!-- Disqus Comment -->
                 <% include ./_third-party/comments/disqus/disqus.ejs %>
 
-                <!-- gitment -->
-                <% if(is_post() && config.gitment.enable) { %>
-                    <hr>
-                    <div class="git_comment" id="git_comment">
-                        <% if(config.gitment.lazy) { %>
-                            <div onclick="showGitment()" id="gitment-display-button">show git comment</div>
-                            <div id="gitment-container" style="display:none"></div>
-                        <% } else { %>
-                            <div id="gitment-container"></div>
-                        <% } %>
-                    </div>
-                    <hr>
-                <% } %>
+                <!-- Git Comment -->
+                <% include ./_third-party/comments/gitment/gitment.ejs %>
             </div>
             
             <!-- Tabe of Content -->

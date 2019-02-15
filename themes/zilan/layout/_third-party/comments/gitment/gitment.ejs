@@ -1,0 +1,13 @@
+<!-- gitment -->
+<% if(config.gitment.enable) { %>
+    <hr>
+    <div class="git_comment" id="git_comment">
+        <% if(config.gitment.lazy) { %>
+            <div onclick="showGitment()" id="gitment-display-button">show git comment</div>
+            <div id="gitment-container" style="display:none"></div>
+        <% } else { %>
+            <div id="gitment-container"></div>
+        <% } %>
+    </div>
+    <hr>
+<% } %>

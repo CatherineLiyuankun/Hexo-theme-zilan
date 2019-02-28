@@ -10,10 +10,14 @@ language:
 timezone:
 
 # Header
-# menu:
-#   Home: /
-#   Archives: /archives
-# rss: /atom.xml
+menu:
+  Home: /
+  Archives: /archive
+  Categories: /categories
+  Tags: /tags
+  About: /about
+
+rss: /atom.xml
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -132,9 +136,9 @@ sidebar-about-description: "Li,Yuankun a lazy soft engineer"
 sidebar-avatar: img/chatHead.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 widgets:
 - featured-tags
+- category
 - short-about
 - recent-posts
-- category
 - friends-blog
 # - wechat
 # - archive
@@ -212,6 +216,9 @@ highlight:
 # Category & Tag
 default_category: uncategorized
 category_map:
+  TECH: TECH
+  Hexo: Hexo
+  LIFE: LIFE
 tag_map:
 home_posts_tag: true # show posts tags
 

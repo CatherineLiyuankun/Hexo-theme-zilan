@@ -7,6 +7,9 @@
         <%} else if (is_post()){%>
             background-image: url('<%= page["header-img"] %>');
             /*post*/
+        <%} else if (is_category()){%>
+            background-image: url('<%= config.root + "img/header_img/category-bg.jpg" %>');
+            /*category*/
         <%} else {%>
             background-image: url('<%= config.root + page["header-img"] %>');
             /*page*/

@@ -13,32 +13,62 @@
             <h2 class="archive-title<% if (page.tag){ %> tag<% } else if (page.category){ %> category<% } %>">
                 <%= title %>
             </h2>
-            <% if (type == 'tags'){ %>
+            <% if (type == 'tag'){ %>
                 <%- partial('tags') %>
-            <% } else { %>
-                <% var this_year; %>
-                <article class="archive">
-                    <% site.posts.each(function(item){ %>
-                        <% var year = item.date.year(); %>
-                        <% if (this_year != year || !this_year){ %>
-                            <% if(this_year){ %>
-                        </div></ul>
-                        <% } %>
-                        <div class="archive-time">
-                            <span id="<%= year %>" class="archive-year fa fa-calendar-times-o listing-seperator">
-                                <%= year %></span>
-                        <ul>
-                    <% this_year = year; } %>
-                    <li>
-                        <time datetime="<%= item.date.toDate().toISOString() %>">
-                            <%= item.date.format("MM-DD") %>
-                        </time>
-                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                        <a href="<%- config.root %><%- item.path %>">
-                            <%= item.title %></a>
-                    </li>
-                    <% }); %>
-                </article>
+            <% } else if (type == 'archive'){ %>
+                <% 	
+                    var years = {};	
+                    site.posts.sort('date').reverse().forEach(function(post){	
+                        var year = post.date.year()	
+                        if(years[year]===undefined){	
+                            years[year] = [];	
+                        }	
+                        years[year].push(post);	
+                    });	
+                %>	
+
+                <% Object.keys(years).reverse().forEach(function(year){  %>	
+                    <div class="archive-archive one-tag-list">	
+                        <span class="fa fa-calendar-times-o listing-seperator" id="<%= year %>">	
+                            <span class="tag-text"><%= year %></span>	
+                        </span>
+                        <ul>	
+                        <% years[year].map(function(post){  %>	
+                            <!-- <li class="listing-item">	
+                            <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>	
+                            <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>	
+                            </li> -->	
+                            <li >	
+                                <%= post.date.format('MM-DD') %>	
+                                <i class="fa fa-angle-double-right" aria-hidden="true"></i>	
+                                <a href="<%- config.root %><%- post.path %>" style="color: #0085a1">	
+                                    <span>	
+                                        <%- post.title || "Untitled" %>	
+                                    </span>	
+                                </a>	
+                                <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->	
+                            </li>
+                        <% }) %>
+                        </ul>
+                    </div>
+                <% }) %>
+            <% } else if (type == 'category'){ %>
+                <div class="archive-category">
+                    <ul>
+                    <!-- 这里使用 page.posts，因为应该是按照某一分类来获取文章，并不是获取所有分类 -->
+                    <% page.posts.sort('date', 'desc').each(function (item) { %>
+                        <li>
+                            <a href="<%= config.root %><%- item.path %>"><%= item.title %></a>
+                        </li>
+                    <% }) %>
+                    </ul>
+                </div>
+                <!-- 分页 -->
+                <% if (page.total > 1) { %>
+                    <div class="archive-page">
+                        <%- paginator({prev_text: __('prev'), next_text: __('next')}) %>
+                    </div>
+                <% } %>
             <% } %>
         </div>
     </div>

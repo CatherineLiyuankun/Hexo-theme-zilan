@@ -3,7 +3,7 @@ title: Voice over for OSX Keyboard Shortcuts
 catalog: true
 date: 2019-01-21 18:20:07
 subtitle:
-header-img:
+header-img: "https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Voice-over-for-OSX-Keyboard-Shortcuts/header-VoiceOver.png"
 tags:
 - Voice over
 categories:

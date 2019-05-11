@@ -17,7 +17,7 @@ categories:
 If (MacOS)
     If (语音 in 电脑微信窗口记录)
         在聊天窗口找个图片;
-        右键打开文件夹;
+        右键-->打开文件夹;
         里面看到的silk文件就是聊天的语音;
 
     If (语音 not in 电脑微信窗口记录)
@@ -32,7 +32,14 @@ If (MacOS)
 
         将silk文件转为wav
             > silk-v3-decoder/converter.sh ab.silk wav
-
+    If (语音 in 电脑微信窗口记录的链接内)
+        open(链接);
+        播放(语音);
+        去到("/Users/{用户名}/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/");
+        搜索(⁨OpenData⁩);
+        下面的某个文件里的音频.wav文件
+        例如:Macintosh HD⁩ ▸ ⁨Users⁩ ▸ ⁨muzilan⁩ ▸ ⁨Library⁩ ▸ ⁨Containers⁩ ▸ ⁨com.tencent.xinWeChat⁩ ▸ ⁨Data⁩ ▸ ⁨Library⁩ ▸ ⁨Application Support⁩ ▸ ⁨com.tencent.xinWeChat⁩ ▸ ⁨2.0b4.0.9⁩ ▸ ⁨f68564a536bd7f4613c075bf2be66c8e⁩ ▸ ⁨Message⁩ ▸ ⁨MessageTemp⁩ ▸ ⁨9e20f478899dc29eb19741386f9343c8⁩ ▸ ⁨OpenData⁩ ▸ ⁨177⁩▸a8b51cec5109b6774a1efcac305692c4.wav
+        直接拷贝;
 
 ```
 

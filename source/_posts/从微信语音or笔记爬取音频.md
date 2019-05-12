@@ -32,6 +32,7 @@ If (MacOS)
 
         将silk文件转为wav
             > silk-v3-decoder/converter.sh ab.silk wav
+
     If (语音 in 电脑微信窗口记录的链接内)
         open(链接);
         播放(语音);
@@ -40,6 +41,20 @@ If (MacOS)
         下面的某个文件里的音频.wav文件
         例如:Macintosh HD⁩ ▸ ⁨Users⁩ ▸ ⁨muzilan⁩ ▸ ⁨Library⁩ ▸ ⁨Containers⁩ ▸ ⁨com.tencent.xinWeChat⁩ ▸ ⁨Data⁩ ▸ ⁨Library⁩ ▸ ⁨Application Support⁩ ▸ ⁨com.tencent.xinWeChat⁩ ▸ ⁨2.0b4.0.9⁩ ▸ ⁨f68564a536bd7f4613c075bf2be66c8e⁩ ▸ ⁨Message⁩ ▸ ⁨MessageTemp⁩ ▸ ⁨9e20f478899dc29eb19741386f9343c8⁩ ▸ ⁨OpenData⁩ ▸ ⁨177⁩▸a8b51cec5109b6774a1efcac305692c4.wav
         直接拷贝;
+
+        搜索(⁨Audio);
+        下面的某个文件里的音频.silk文件
+        例如:‎⁨ Macintosh HD⁩ ▸ ⁨Users⁩ ▸ ⁨muzilan⁩ ▸ ⁨Library⁩ ▸ ⁨Containers⁩ ▸ ⁨com.tencent.xinWeChat⁩ ▸ ⁨Data⁩ ▸ ⁨Library⁩ ▸ ⁨Application Support⁩ ▸ ⁨com.tencent.xinWeChat⁩ ▸ ⁨2.0b4.0.9⁩ ▸ ⁨f68564a536bd7f4613c075bf2be66c8e⁩ ▸ ⁨Message⁩ ▸ ⁨MessageTemp⁩ ▸ ⁨fce9f67a422f2c52cee716585240bf41⁩ ▸ ⁨Audio ▸ 111.aud.silk
+
+        使用[kn007/silk-v3-decoder](https://github.com/kn007/silk-v3-decoder)
+            > brew install lame
+            > brew install ffmpeg  --enable-libmp3lame
+
+        将silk文件转为wav
+            > silk-v3-decoder/converter.sh ab.silk wav
+
+        Or 按修改时间排序，最近被改的文件夹
+        ‎⁨Macintosh HD⁩ ▸ ⁨Users⁩ ▸ ⁨muzilan⁩ ▸ ⁨Library⁩ ▸ ⁨Containers⁩ ▸ ⁨com.tencent.xinWeChat⁩ ▸ ⁨Data⁩ ▸ ⁨Library⁩ ▸ ⁨Application Support⁩ ▸ ⁨com.tencent.xinWeChat⁩ ▸ ⁨2.0b4.0.9⁩ ▸ ⁨f68564a536bd7f4613c075bf2be66c8e⁩ ▸ ⁨Message⁩ ▸ ⁨MessageTemp
 
 ```
 

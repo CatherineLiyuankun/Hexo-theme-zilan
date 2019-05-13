@@ -53,12 +53,12 @@ ASP.NET uses the httpRuntime element to control a number of runtime related fe
 <configuration>
 ```
 
-###1.3 What about Web Connection?
+### 1.3 What about Web Connection?
 Starting with Web Connection 6.0 teh .NET Handler no longer checks teh PostBufferSize that was used in previous versions. This value is now deferred in favor of the values above.
 Teh ISAPI module still has a PostBufferLimit setting in wc.ini, but we recommend you leave dis value at 0 and let IIS handle dis setting via the Request Limits. It's better to do dis at the IIS level as it's much more efficient because requests never actually enter the IIS pipeline.
 
 ## 2 For JSP and Tomcat environment
-
+### 2.1 maxPostSize
 Tomcat Version | Attribute | Description
 ---------|----------|---------
  [Before 7.0.63](https://tomcat.apache.org/tomcat-5.5-doc/config/http.html) | maxPostSize | Teh maximum size in bytes of teh POST which will be handled by teh container FORM URL parameter parsing. Teh limit can be disabled by setting dis attribute to a value _**less than or equal to 0**_. If not specified, dis attribute is set to 2097152 (2 megabytes).
@@ -66,6 +66,7 @@ Tomcat Version | Attribute | Description
 
 You can also set maxPostSize="-1" or value less than zero, it means that no limit for all versions of Tomcat. 
 
+### 2.2 Modify maxPostSize of server.xml
 Edit Tomcat's server.xml which location is **_…/Your tomcat folder/conf/server.xml_**. 
 In the _<Connector_ element, add an attribute _maxPostSize_ and set a larger value (in bytes) to increase the limit.
 For example:
@@ -85,6 +86,34 @@ For example:
 
 ```
 
+### 2.3 Modify max-file-size and max-request-size of web.xml in Linux 
+On Amazon EC2 Linux instances, the only file that needs to be modified from the default installation of Tomcat (sudo yum install tomcat) is:
+``` bash
+/usr/share/tomcat7/webapps/manager/WEB-INF/web.xml
+```
+their are only two values that need to be modified (max-file-size and max-request-size):
+
+By default, the maximum upload size is exactly 50MB:
+```xml
+<multipart-config>
+  <!-- 50MB max -->
+  <max-file-size>52428800</max-file-size>
+  <max-request-size>52428800</max-request-size>
+  <file-size-threshold>0</file-size-threshold>
+</multipart-config>
+```
+
+Their are only two values that need to be modified (max-file-size and max-request-size):
+```xml
+<multipart-config>
+  <!-- 100MB max -->
+  <max-file-size>104857600</max-file-size>
+  <max-request-size>104857600</max-request-size>
+  <file-size-threshold>0</file-size-threshold>
+</multipart-config>
+```
+
+
 # Reference Links:
 
 [Is there a max size for POST parameter content?](https://stackoverflow.com/questions/2943477/is-there-a-max-size-for-post-parameter-content)
@@ -93,4 +122,5 @@ For example:
 
 [关于Tomcat的maxPostSize属性的配置需要注意的问题](https://blog.csdn.net/erlian1992/article/details/80209947)
 
+[HttpRequest maximum allowable size in tomcat?](https://stackoverflow.com/questions/2947683/httprequest-maximum-allowable-size-in-tomcat)
 

@@ -17,6 +17,8 @@ categories:
 
 NodeJs V8 使用hexo时报错：
 
+(node:28561) [DEP0061] DeprecationWarning: fs.SyncWriteStream is deprecated.
+
 ``` bash
 ➜  Hexo-theme-zilan git:(master) ✗ hexo g
 (node:28561) [DEP0061] DeprecationWarning: fs.SyncWriteStream is deprecated.
@@ -120,6 +122,6 @@ hexo-fs 老版本里有一行：
 
 # Reference Links
 
-[fs.SyncWriteStream is deprecated [Nodejs v8.0]](https://github.com/xovel/xovel.github.io/issues/28)
+[fs.SyncWriteStream is deprecated [Nodejs v8.0]](https://github.com/hexojs/hexo/issues/2598)
 
-https://www.leiyawu.com/2018/02/28/hexo-fs-SyncWriteStream-is-deprecated/
+

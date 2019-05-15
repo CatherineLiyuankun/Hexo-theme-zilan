@@ -3,7 +3,7 @@ title: "[Hexo] Theme Zilan"
 catalog: true
 date: 2018-08-18 10:51:24
 subtitle: "This is hexo theme Demo."
-header-img: "https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/hexotheme/hexo-cover.png"
+header-img: "https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/hexotheme/header-hexo-themes.png"
 tags:
 - Hexo
 - Blog

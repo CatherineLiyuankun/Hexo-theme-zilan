@@ -13,6 +13,9 @@ categories:
 
 # 方法
 [Leon 的回答](https://www.zhihu.com/question/30112442/answer/561089000)比较符合我的需求, 转化下就是:
+
+
+              
 ```
 If (MacOS)
     If (语音 in 电脑微信窗口记录)

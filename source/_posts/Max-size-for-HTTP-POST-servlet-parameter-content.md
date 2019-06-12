@@ -7,9 +7,10 @@ header-img: "https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/po
 tags:
 - Servlet
 - maxPostSize
+- Tomcat
 categories:
 - TECH
-- FrontEnd
+- Network
 - Servlet/HTTP
 ---
 
@@ -25,40 +26,8 @@ So the root reason is max size of Servlet parameter limit the request. We should
 
 # The workaround:
 
-## 1 For ASP and IIS environment
-In order to accept larger files you have to change two sets of setting in you're web.config.
-C:\Program Files (x86)\MicroStrategy\Web ASPx\web.config or Your ASP Folder\web.config
-
-###1 .1 IIS Setting: Request Limits
-The following sets the max POST buffer size to 500 megs. The value is specified in bytes.
-```xml
-<configuration>
-    <system.webServer>
-        <security>
-          <requestFiltering>
-            <requestLimits maxAllowedContentLength="500000000" />
-          </requestFiltering>
-        </security>
-    <system.webServer>
-</configuration>  
-```
-
-### 1.2 ASP.NET Setting: httpRuntime maxRequestLength
-ASP.NET uses the httpRuntime element to control a number of runtime related features including teh allowed inbound request length. Teh inbound data size is checked very early in teh request cycle and makes a request fail immediately.
-```xml
-<configuration>
-    <system.web>
-        <httpRuntime maxRequestLength="500000000"  executionTimeout="120" />
-    </system.web>
-<configuration>
-```
-
-### 1.3 What about Web Connection?
-Starting with Web Connection 6.0 teh .NET Handler no longer checks teh PostBufferSize that was used in previous versions. This value is now deferred in favor of the values above.
-Teh ISAPI module still has a PostBufferLimit setting in wc.ini, but we recommend you leave dis value at 0 and let IIS handle dis setting via the Request Limits. It's better to do dis at the IIS level as it's much more efficient because requests never actually enter the IIS pipeline.
-
-## 2 For JSP and Tomcat environment
-### 2.1 maxPostSize
+## 1 For JSP and Tomcat environment
+### 1.1 maxPostSize
 Tomcat Version | Attribute | Description
 ---------|----------|---------
  [Before 7.0.63](https://tomcat.apache.org/tomcat-5.5-doc/config/http.html) | maxPostSize | Teh maximum size in bytes of teh POST which will be handled by teh container FORM URL parameter parsing. Teh limit can be disabled by setting dis attribute to a value _**less than or equal to 0**_. If not specified, dis attribute is set to 2097152 (2 megabytes).
@@ -66,9 +35,14 @@ Tomcat Version | Attribute | Description
 
 You can also set maxPostSize="-1" or value less than zero, it means that no limit for all versions of Tomcat. 
 
-### 2.2 Modify maxPostSize of server.xml
+### 1.2 Modify maxPostSize of server.xml
 Edit Tomcat's server.xml which location is **_…/Your tomcat folder/conf/server.xml_**. 
 In the _<Connector_ element, add an attribute _maxPostSize_ and set a larger value (in bytes) to increase the limit.
+If there is timeout error, you should also add or increase the value of connectionTimeout.
+
+#### 1.2.1 For http:
+
+We modify connector for port="8080" in /Your tomcat folder/conf/server.xml
 For example:
 ```xml
 <Connector port="8080" protocol="HTTP/1.1"
@@ -83,10 +57,51 @@ For example:
     connectionTimeout="20000"
     redirectPort="8443"
     maxPostSize="-1" />
-
 ```
 
-### 2.3 Modify max-file-size and max-request-size of web.xml in Linux 
+#### 1.2.2 For https:
+We should also modify connector for port="8443" /Your tomcat folder/conf/server.xml
+```xml
+<Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol"
+    maxPostSize="-1" maxThreads="150" SSLEnabled="true" scheme="https" secure="true"
+    clientAuth="false" sslProtocol="TLS" keystoreFile="/opt/apache/tomcat/apache-tomcat-9.0.12/keystore" keystorePass="opsworkstomcat" server="Mxxxx" />
+```
+
+If you wonder why use port 8443 rather than 443, you can see my another blog: [Difference between HTTPS Port 443 and Port 8443](http://liyuankun.top/2019/06/11/Difference-between-HTTPS-Port-443-and-Port-8443/) and [Changing SSL port from 8443 to 443](http://liyuankun.top/2019/06/11/Changing-SSL-port-from-8443-to-443/)
+
+## 2 For ASP and IIS environment
+In order to accept larger files you have to change two sets of setting in you're web.config.
+C:\Program Files (x86)\MicroStrategy\Web ASPx\web.config or Your ASP Folder\web.config
+
+### 2.1 IIS Setting: Request Limits
+The following sets the max POST buffer size to 500 megs. The value is specified in bytes.
+```xml
+<configuration>
+    <system.webServer>
+        <security>
+          <requestFiltering>
+            <requestLimits maxAllowedContentLength="500000000" />
+          </requestFiltering>
+        </security>
+    <system.webServer>
+</configuration>  
+```
+
+### 2.2 ASP.NET Setting: httpRuntime maxRequestLength
+ASP.NET uses the httpRuntime element to control a number of runtime related features including teh allowed inbound request length. Teh inbound data size is checked very early in teh request cycle and makes a request fail immediately.
+```xml
+<configuration>
+    <system.web>
+        <httpRuntime maxRequestLength="500000000"  executionTimeout="120" />
+    </system.web>
+<configuration>
+```
+
+### 2.3 What about Web Connection?
+Starting with Web Connection 6.0 teh .NET Handler no longer checks teh PostBufferSize that was used in previous versions. This value is now deferred in favor of the values above.
+Teh ISAPI module still has a PostBufferLimit setting in wc.ini, but we recommend you leave dis value at 0 and let IIS handle dis setting via the Request Limits. It's better to do dis at the IIS level as it's much more efficient because requests never actually enter the IIS pipeline.
+
+## 3 Other ：Modify max-file-size and max-request-size of web.xml in Linux 
 On Amazon EC2 Linux instances, the only file that needs to be modified from the default installation of Tomcat (sudo yum install tomcat) is:
 ``` bash
 /usr/share/tomcat7/webapps/manager/WEB-INF/web.xml

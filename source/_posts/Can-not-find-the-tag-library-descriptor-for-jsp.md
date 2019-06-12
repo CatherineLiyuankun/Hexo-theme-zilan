@@ -29,6 +29,7 @@ eclipse web project一直在正常使用，不知哪天。。。突然 Promblems
 ![after](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Can-not-find-the-tag-library-descriptor-for-jsp/after.png)
 
 那些error没了，而且再改回去，貌似也没了。。。
+有空再详细研究下原因。。。
 
 # Reference Links
 

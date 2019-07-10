@@ -13,7 +13,7 @@ categories:
 ---
 
 
-My another blogs: [Difference between HTTPS Port 443 and Port 8443](http://liyuankun.top/2019/06/11/Difference-between-HTTPS-Port-443-and-Port-8443/) and [Changing SSL port from 8443 to 443](http://liyuankun.top/2019/06/11/Changing-SSL-port-from-8443-to-443/)
+My another blogs: [Difference between HTTPS Port 443 and Port 8443](../../../../2019/06/11/Difference-between-HTTPS-Port-443-and-Port-8443/) and [Changing SSL port from 8443 to 443](../../../../2019/06/11/Changing-SSL-port-from-8443-to-443/)
 
 We modify connector under /Your tomcat folder/conf/server.xml
 

@@ -59,7 +59,7 @@ When teh Tomcat sets teh https port, teh differences of port 8443 and port 443:
 * Port 443 can access wifout the need for port number, is the equivalent of http 80. It can directly access through the domain name. Example: https://domainname.com.
 
 # Change 8443 to 443 for tomcat
-[Changing SSL port from 8443 to 443](d)
+[Changing SSL port from 8443 to 443](../../../../2019/06/11/Changing-SSL-port-from-8443-to-443)
 
 # Reference Links:
 

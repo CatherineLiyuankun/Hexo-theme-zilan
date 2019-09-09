@@ -54,8 +54,13 @@ React Portal之所以叫Portal，因为做的就是和“传送门”一样的�
 
 还有一点，Dialog的样式，因为包在其他元素中，各种样式纠缠，CSS样式太容易搞成一坨浆糊了。
 
+### When to use React传送门？【liyuankun 增加】
+当父组件样式有 overflow: hidden 或者 z-index，但是你需要子组件看起来“break out”它所在的container. 例如dialogs, hover cards 和 tool-tips.
+
+### React 16 之前怎么实现传送门？
 看样子这样搞局限很多啊，行不通，有没有其他办法？
 
+#### 通过Redux或者其他通讯方式
 有一个其他办法，就是在React组件树的最顶层留一个元素专属于Dialog，然后通过Redux或者其他什么通讯方式给这个Dialog发送信号，让Dialog显示或者不显示。
 ![Dialog](https://pic1.zhimg.com/80/v2-4022e89a8d7a22461e426cf6c653e18c_hd.jpg)
 这种方法看起来还凑合着，但是，就这点事还要动用Redux有点高射炮打蚊子，而且，要控制两个不用位置的组件，好麻烦。
@@ -75,6 +80,8 @@ React Portal之所以叫Portal，因为做的就是和“传送门”一样的�
 像上面那样，我们既希望在组件的JSX中选择使用Dialog，把Dialog用得像一个普通组件一样，但是又希望Dialog内容显示在另一个地方，就需要Portal上场了。
 
 Portal就是建立一个“传送门”，让Dialog这样的组件在表示层和其他组件没有任何差异，但是渲染的东西却像经过传送门一样出现在另一个地方。
+
+#### React 15 API
 
 React在v16之前的传送门实现方法
 在v16之前，实现“传送门”，要用到两个秘而不宣的React API
@@ -159,6 +166,7 @@ class Dialog extends React.Component {
 到了v16，React干脆直接支持Portal，当然，v15还将被使用一段时间，所以大家看了上面的内容也不算浪费时间:-)
 
 ## React v16的Portal支持
+
 在v16中，使用Portal创建Dialog组件简单多了，不需要牵扯到componentDidMount、componentDidUpdate，也不用调用API清理Portal，关键代码在render中，像下面这样就行。
 ``` JavaScript
 import React from 'react';
@@ -206,7 +214,37 @@ v16之前的React Portal实现方法，有一个小小的缺陷，就是Portal�
 
 在v16中，通过Portal渲染出去的DOM，事件是会冒泡从传送门的入口端冒出来的，上面的onDialogClick也就会被调用到了。
 
-[Dialog 嵌套 Dialog demo](https://codepen.io/catherineliyuankun/pen/oNvpxKv)
+### why事件冒泡可以到react parent 【liyuankun 增加】
+
+可以看这个例子：[Dialog 嵌套 Dialog demo](https://codepen.io/catherineliyuankun/pen/oNvpxKv)
+
+从真实的DOM结构上来看，Dialog组件中的onClick事件不应该被
+```html
+<div class="container">Here contain Dialog:</div>
+```
+组件捕获。
+但从虚拟DOM的结构上来看，Dialog却是"container"组件的子节点，事件冒泡是遵循虚拟DOM的.
+
+真实的DOM结构:
+![真实的DOM结构1](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/React-16-Portal/Real%20Dom%201.png)
+![真实的DOM结构2](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/React-16-Portal/Real%20Dom%202.png)
+
+虚拟DOM的结构:
+``` JavaScript
+    <div onClick={onDialogClick}>
+      <div className="container">
+        Here contain Dialog:
+      </div>
+      <Dialog onClick={onDialog1Click}>
+         <div>Dialog 1</div>
+          <Dialog onClick={onDialog2Click}>
+            <div>Dialog 2 Inside Dialog 1 </div>    
+          </Dialog>
+      </Dialog>
+    </div>
+```
+
+
 
 ## 总结
 React v16直接支持Portal，是因为Portal这个功能真的是必不可少，不然对话框这样的场景都没法应付。
@@ -215,4 +253,6 @@ React v16直接支持Portal，是因为Portal这个功能真的是必不可少�
 
 - [官网文档中文版](https://react.docschina.org/docs/portals.html)
 - [传送门：React Portal](https://zhuanlan.zhihu.com/p/29880992)
+- [Understanding Portals in React](https://www.beautifulcode.co/blog/46-understanding-portals-in-react)
+
 

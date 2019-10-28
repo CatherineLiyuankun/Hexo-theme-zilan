@@ -4,7 +4,7 @@ catalog: true
 date: 2019-10-12 15:51:01
 subtitle: "跨域资源共享（Cross-origin resource sharing）"
 tags:
-- HTTP
+- CORS
 categories:
 - TECH
 - Network

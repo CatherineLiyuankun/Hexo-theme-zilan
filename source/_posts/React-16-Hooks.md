@@ -30,10 +30,11 @@ categories:
 
 ## 我该如何使用 Hook 进行数据获取？
 
-该 [demo](https://codesandbox.io/s/jvvkoo8pq3) 会帮助你开始理解。欲了解更多，请查阅 [此文章](https://www.robinwieruch.de/react-hooks-fetch-data) 来了解如何使用 Hook 进行数据获取。
+该 [demo](https://codesandbox.io/s/jvvkoo8pq3) 会帮助你开始理解。欲了解更多，请查阅 [react-hooks-fetch-data](https://www.robinwieruch.de/react-hooks-fetch-data) 来了解如何使用 Hook 进行数据获取。
 
 ## Reference Links
 
 - [新一代 React API — React Hooks React Conf 2018 React Today and Tomorrow 重點回顧](https://react.docschina.org/docs/portals.html)
 - [官方文档英文版：hooks-intro](https://reactjs.org/docs/hooks-intro.html)
 - [官方文档中文版：hooks](https://zh-hans.reactjs.org/docs/hooks-intro.html)
+- [setTimeout in React Components Using Hooks](https://upmostly.com/tutorials/settimeout-in-react-components-using-hooks)

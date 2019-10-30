@@ -78,4 +78,12 @@ indexedDB.databases() 有一个很大问题就是支持的浏览器太少了。�
 * [How can I remove a whole IndexedDB database from JavaScript?](https://stackoverflow.com/questions/15861630/how-can-i-remove-a-whole-indexeddb-database-from-javascript#)
 * [indexedDB.databases()](developer.mozilla.org/en-US/docs/Web/API/IDBFactory/databases)
 * [indexedDB.deleteDatabase](https://developer.mozilla.org/en-US/docs/Web/API/IDBFactory/deleteDatabase)
-* [db.close() ](https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/close)
+* [dom-idbfactory-deletedatabase W3C](https://www.w3.org/TR/IndexedDB/#dom-idbfactory-deletedatabase)
+* [5.3. Deleting a database W3C](https://www.w3.org/TR/IndexedDB/#delete-a-database)
+
+## PouchDB
+* [pouchdb/pouchdb](https://github.com/pouchdb/pouchdb)
+* [PouchDB简单入门](http://webfuse.cn/2016/09/24/PouchDB%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/)
+* [学习PouchDB](http://www.vue5.com/pouchdb/pouchdb_delete_database.html)
+* [dom-idbfactory-deletedatabase W3C](https://www.w3.org/TR/IndexedDB/#dom-idbfactory-deletedatabase)
+* [5.3. Deleting a database W3C](https://www.w3.org/TR/IndexedDB/#delete-a-database)

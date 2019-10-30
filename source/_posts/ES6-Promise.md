@@ -5,7 +5,7 @@ date: 2019-10-13 14:05:41
 subtitle:
 header-img:
 tags:
-- ES6
+- Promise
 categories:
 - TECH
 - FrontEnd
@@ -225,4 +225,4 @@ Promise.try(() => database.users.get({id: userId}))
 
 
 # Reference Links:
-- http://es6.ruanyifeng.com/#docs/promise
+- [ES6 Book ](http://es6.ruanyifeng.com/#docs/promise)

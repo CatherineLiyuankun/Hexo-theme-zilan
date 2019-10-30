@@ -1,3 +1,13 @@
+@media (min-width: 2400px) {
+  .container {
+    width: 2070px !important;
+  }
+}
+@media (min-width: 1800px) {
+  .container {
+    width: 1770px;
+  }
+}
 @media (min-width: 1200px) {
   .post-container,
   .sidebar-container {

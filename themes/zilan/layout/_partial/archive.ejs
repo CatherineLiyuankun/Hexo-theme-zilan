@@ -53,11 +53,13 @@
                     </div>
                 <% }) %>
             <% } else if (type == 'category'){ %>
-                <div class="archive-category">
+                <div class="archive-category one-tag-list">
                     <ul>
                     <!-- 这里使用 page.posts，因为应该是按照某一分类来获取文章，并不是获取所有分类 -->
                     <% page.posts.sort('date', 'desc').each(function (item) { %>
                         <li>
+                            <%= item.date.format('MM-DD') %>	
+                            <i class="fa fa-angle-double-right" aria-hidden="true"></i>	
                             <a href="<%= config.root %><%- item.path %>"><%= item.title %></a>
                         </li>
                     <% }) %>
@@ -65,8 +67,8 @@
                 </div>
                 <!-- 分页 -->
                 <% if (page.total > 1) { %>
-                    <div class="archive-page">
-                        <%- paginator({prev_text: __('prev'), next_text: __('next')}) %>
+                    <div class="archive-category-pager pager">
+                        <%- paginator({prev_text: __('&larr; PREV'), next_text: __('NEXT &rarr;')}) %>
                     </div>
                 <% } %>
             <% } %>

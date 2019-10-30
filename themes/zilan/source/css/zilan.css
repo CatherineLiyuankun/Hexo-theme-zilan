@@ -771,6 +771,25 @@ form .row:first-child .floating-label-form-group {
   background-color: #404040;
   cursor: not-allowed;
 }
+
+.archive-category-pager.pager > a,
+.archive-category-pager.pager > span {
+  margin: 5px;
+  padding: 0 5px;
+}
+.archive-category-pager.pager > a {
+  color: #337ab7;
+}
+.archive-category-pager.pager > a:hover,
+.archive-category-pager.pager > a:focus {
+  color: #0085a1;
+}
+.archive-category-pager.pager > span {
+  /* padding: 0 5px; */
+  color: white;
+  background-color: #0085a1;
+  border-radius: 100%;
+}
 ::-moz-selection {
   color: white;
   text-shadow: none;

@@ -852,7 +852,85 @@ div.article-footer-copyright {
 
 参考文章： [Hexo博客中加入代码块复制功能](https://qiming.info/Hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E5%8A%A0%E5%85%A5%E4%BB%A3%E7%A0%81%E5%9D%97%E5%A4%8D%E5%88%B6%E5%8A%9F%E8%83%BD/)
 
+## 5.15 搜索功能
 
+借鉴了hexo-theme-next的local-search，使用的[hexo-generator-searchdb](https://github.com/theme-next/hexo-generator-searchdb)。
+GitHub commit： [Add local search function](https://github.com/CatherineLiyuankun/Hexo-theme-zilan/commit/6b672a20aa23101bf0b17f7d790c1f5ad8422843)。
+
+### 5.15.1 install hexo-generator-searchdb
+``` bash
+$ npm install hexo-generator-searchdb --save
+```
+
+或者在Hexo-theme-zilan/package.json文件中增加：
+``` json
+  "dependencies": {
+    "hexo-generator-searchdb": "^1.1.0",
+  }
+```
+``` bash
+$ npm install
+```
+### 5.15.2 修改_config.yml
+/Hexo-theme-zilan/_config.yml中增加设置：
+```yml
+# Search hexo-generator-searchdb  https://github.com/theme-next/hexo-generator-search
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
+  content: true
+```
+### 5.15.3 write a search view. 
+This is the place for displaying a search form and search results ;
+
+#### search icon 界面
+点击触发search popup显示。themes/zilan/layout/_partial/nav.ejs 添加：
+```javascript
+<!-- Search -->
+<% var hasSearch = theme.swiftype_key || theme.algolia_search.enable || theme.tinysou_Key || theme.local_search.enable; %>
+<% if (hasSearch) {%>
+    <li class="menu-item menu-item-search">
+    <% if (theme.swiftype_key) { %>
+        <a href="javascript:;" class="st-search-show-outputs">
+    <% } else if (theme.local_search.enable || theme.algolia_search.enable) { %>
+        <a href="javascript:;" class="popup-trigger">
+    <% } %>
+        <% if (theme.menu_icons.enable) { %>
+            <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+        <% } %>
+    </a>
+    </li>
+<% } %>
+```
+
+#### search popup 界面
+themes/zilan/layout/layout.ejs 文件中增加search popup 界面，用来输入search string和search 结果。
+```javascript
+    <!-- Search popup-->
+    <% var hasSearch = theme.swiftype_key || theme.algolia_search.enable || theme.tinysou_Key || theme.local_search.enable; %>
+    <% if (hasSearch) {%>
+      <div class="site-search">
+      <% include ./_partial/search.ejs %>
+      </div>
+    <% } %>
+```
+
+### 5.15.3 write a search script. 
+This script tells the browser how to grab search data and filter out contents what we're searching;
+添加文件：
+[themes/zilan/layout/_third-party/search/localsearch.ejs](https://github.com/CatherineLiyuankun/Hexo-theme-zilan/blob/master/themes/zilan/layout/_third-party/search/localsearch.ejs)
+### 5.15.3 tell hexo to connect the above two part.
+themes/zilan/layout/layout.ejs
+```javascript
+    <!-- Search -->
+    <% include ./_third-party/search/index.ejs %>
+```
+另外修了3个bug：
+1. Fix Bug: [ajax xml parser error](https://github.com/CatherineLiyuankun/Hexo-theme-zilan/commit/6b672a20aa23101bf0b17f7d790c1f5ad8422843#diff-6f479bf13d3e26f8efd29d7b534db439L53)
+2. Fix Bug: [input is null, so add /zilan/layout/_partial/search/localsearch.ejs inside "site-search"](https://github.com/CatherineLiyuankun/Hexo-theme-zilan/commit/6b672a20aa23101bf0b17f7d790c1f5ad8422843#diff-6f479bf13d3e26f8efd29d7b534db439R307)
+3. Fix Bug: [click close icon not work](https://github.com/CatherineLiyuankun/Hexo-theme-zilan/commit/6b672a20aa23101bf0b17f7d790c1f5ad8422843#diff-6f479bf13d3e26f8efd29d7b534db439R302)
 ------
 
 
@@ -914,6 +992,37 @@ category_generator:
 要说唯一不同的是，我之前的pagination_dir: archives，而查阅的其他文章中都是pagination_dir: page。
 但我改成page也还是不起作用。。。。
 
+等我发布（hexo deploy）出来后发现，其实除了tag_generator 和 archive_generator 没有成功以外，其他的设置都成功了，可能是本地模式（hexo server）下没有更新。
+
+整个修改过程参考commit： [category 分页样式修改+分页每页数量](https://github.com/CatherineLiyuankun/Hexo-theme-zilan/commit/4607f6174e0615bf5bcc4bdada7715c6934b0d29)
+
+## ERROR EISDIR: illegal operation on a directory
+
+``` bash
+➜  Hexo-theme-zilan git:(master) ✗ hexo g
+INFO  Start processing
+INFO  Files loaded in 564 ms
+ERROR EISDIR: illegal operation on a directory, read
+Error: EISDIR: illegal operation on a directory, read
+```
+
+## 其他小的修改
+
+页面内容width修改，在大屏幕（>1800px 和> 2400px）下，页面内容更宽。
+commit：t[he .container with responsive when screen width is larger than 1800px](https://github.com/CatherineLiyuankun/Hexo-theme-zilan/commit/64a23dad122b7cf59039d754125fc59307c6a9f1)
+
+``` css
+@media (min-width: 2400px) {
+  .container {
+    width: 2070px !important;
+  }
+}
+@media (min-width: 1800px) {
+  .container {
+    width: 1770px;
+  }
+}
+```
 -----
 
 # 参考文章：
@@ -930,3 +1039,5 @@ category_generator:
 * [Hexo-Next 添加 Gitment 评论系统](https://ryanluoxu.github.io/2017/11/27/Hexo-Next-%E6%B7%BB%E5%8A%A0-Gitment-%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/)
 
 * [打造个性超赞博客 Hexo + NexT + GitHub Pages 的超深度优化](https://io-oi.me/tech/hexo-next-optimization/)
+
+* [NexT 主题使用](http://theme-next.iissnan.com/getting-started.html)

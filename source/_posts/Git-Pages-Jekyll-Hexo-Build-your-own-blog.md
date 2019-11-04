@@ -789,16 +789,6 @@ fancybox: true
 
 成功！
 
-## 5.11 添加站内搜索
-
-添加[百度站内搜索](https://ziyuan.baidu.com/cse/wiki/introduce)，点击现在使用->新建搜索引擎->查看代码，将代码里的id值复制，打开_config.xml，添加配置。
-```yml
-baidu_search:     ## http://zn.baidu.com/
-  enable: true
-  id: "5678674467891171234" ## for your baidu search id
-  site: http://zhannei.baidu.com/cse/search ## your can change to your site instead of the default site
-```
-
 ## 5.12 Share 分享
 用的第三方组件[need-more-share2](https://github.com/revir/need-more-share2)
 另外可以参考主题next添加need-more-share2的[pull request](https://github.com/iissnan/hexo-theme-next/pull/1913/files)
@@ -854,7 +844,7 @@ div.article-footer-copyright {
 
 ## 5.15 搜索功能
 
-借鉴了hexo-theme-next的local-search，使用的[hexo-generator-searchdb](https://github.com/theme-next/hexo-generator-searchdb)。
+借鉴了hexo-theme-next的[local-search](http://theme-next.iissnan.com/third-party-services.html#local-search)，使用的[hexo-generator-searchdb](https://github.com/theme-next/hexo-generator-searchdb)。
 GitHub commit： [Add local search function](https://github.com/CatherineLiyuankun/Hexo-theme-zilan/commit/6b672a20aa23101bf0b17f7d790c1f5ad8422843)。
 
 ### 5.15.1 install hexo-generator-searchdb
@@ -886,6 +876,8 @@ search:
 This is the place for displaying a search form and search results ;
 
 #### search icon 界面
+nav bar上添加search icon，在“岚”后面。
+![search icon 界面](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Git-Pages-Jekyll-Hexo-Build-your-own-blog/sarch%20icon%20view.png)
 点击触发search popup显示。themes/zilan/layout/_partial/nav.ejs 添加：
 ```javascript
 <!-- Search -->
@@ -916,12 +908,14 @@ themes/zilan/layout/layout.ejs 文件中增加search popup 界面，用来输入
       </div>
     <% } %>
 ```
+![search popup 界面](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Git-Pages-Jekyll-Hexo-Build-your-own-blog/search%20popup%20view.png)
 
-### 5.15.3 write a search script. 
+
+### 5.15.4 write a search script. 
 This script tells the browser how to grab search data and filter out contents what we're searching;
 添加文件：
 [themes/zilan/layout/_third-party/search/localsearch.ejs](https://github.com/CatherineLiyuankun/Hexo-theme-zilan/blob/master/themes/zilan/layout/_third-party/search/localsearch.ejs)
-### 5.15.3 tell hexo to connect the above two part.
+### 5.15.5 tell hexo to connect the above two part.
 themes/zilan/layout/layout.ejs
 ```javascript
     <!-- Search -->
@@ -933,7 +927,15 @@ themes/zilan/layout/layout.ejs
 3. Fix Bug: [click close icon not work](https://github.com/CatherineLiyuankun/Hexo-theme-zilan/commit/6b672a20aa23101bf0b17f7d790c1f5ad8422843#diff-6f479bf13d3e26f8efd29d7b534db439R302)
 ------
 
+## 5.16 添加站内搜索
 
+添加[百度站内搜索](https://ziyuan.baidu.com/cse/wiki/introduce)，点击现在使用->新建搜索引擎->查看代码，将代码里的id值复制，打开_config.xml，添加配置。
+```yml
+baidu_search:     ## http://zn.baidu.com/
+  enable: true
+  id: "5678674467891171234" ## for your baidu search id
+  site: http://zhannei.baidu.com/cse/search ## your can change to your site instead of the default site
+```
 # 6 遇到的坑
 
 ## 目录 无法跳转

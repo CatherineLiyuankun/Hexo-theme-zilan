@@ -12,7 +12,8 @@ categories:
 ---
 
 CORS的基本原理请看上一篇：
-[CORS的基本原理](../../../../2019/10/21/HTTP CORS disable)
+<!-- [CORS的基本原理](../../../../2019/10/21/HTTP CORS disable) -->
+[CORS的基本原理](../HTTP-CORS.html)
 
 简单关闭Chrome的CORS方法:
 # MacOS

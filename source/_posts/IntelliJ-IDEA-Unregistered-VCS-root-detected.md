@@ -11,7 +11,7 @@ categories:
 - Tools
 ---
 
-如果还没有配置git，参考[IntelliJ-IDEA-Set-git](../../../../2019/07/10/IntelliJ-IDEA-Set-git/)。
+如果还没有配置git，参考[IntelliJ-IDEA-Set-git](../IntelliJ-IDEA-Set-git.html)。
 
 在IntelliJ IDEA导入已有的git项目时，出现warning：
 

@@ -37,7 +37,11 @@ YYYY/MM/DD 是BlogName的创建时间，date: 2019-06-11 16:55:24
 
 在BlogName1里面link到BlogName2 的链接就为：
 ```markdown
+当_config.yml  permalink: :year/:month/:day/:title/
 [BlogName2](../../../../2019/06/11/BlogName2)
+或
+当_config.yml permalink: :title.html
+[BlogName2](../BlogName2.html)
 ```
 2019/06/11 必须是BlogName2的date
 
@@ -48,10 +52,20 @@ YYYY/MM/DD 是BlogName的创建时间，date: 2019-06-11 16:55:24
 
 markdown写为：
 ```markdown
+当_config.yml  permalink: :year/:month/:day/:title/
+
 [Changing-SSL-port-from-8443-to-443](../../../../2019/06/11/Changing-SSL-port-from-8443-to-443/)
+或
+当_config.yml permalink: :title.html
+[Changing-SSL-port-from-8443-to-443](../Changing-SSL-port-from-8443-to-443.html)
 ```
 效果为：
+当_config.yml  permalink: :year/:month/:day/:title/
 [Changing-SSL-port-from-8443-to-443](../../../../2019/06/11/Changing-SSL-port-from-8443-to-443/)
+或
+当_config.yml permalink: :title.html
+[Changing-SSL-port-from-8443-to-443](../Changing-SSL-port-from-8443-to-443.html)
+
 
 
 ## 参考

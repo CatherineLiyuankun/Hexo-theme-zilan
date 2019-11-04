@@ -1007,6 +1007,7 @@ INFO  Files loaded in 564 ms
 ERROR EISDIR: illegal operation on a directory, read
 Error: EISDIR: illegal operation on a directory, read
 ```
+查了下貌似和npm有关，但我试了试网上的方法并不起作用，但是这个错也不影响我的博客功能。暂且放下，找到方法了再更新。
 
 ## 其他小的修改
 

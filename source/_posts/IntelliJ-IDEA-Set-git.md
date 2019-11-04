@@ -21,7 +21,8 @@ categories:
 ![Ignored Files](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/IntelliJ-IDEA-Set-git/Ignored%20Files.png)
 
 4. 添加Unregistered的project
-[IntelliJ IDEA:Unregistered VCS root detected](../../../../2019/07/10/IntelliJ-IDEA-Unregistered-VCS-root-detected/)
+<!-- [IntelliJ IDEA:Unregistered VCS root detected](../../../../2019/07/10/IntelliJ-IDEA-Unregistered-VCS-root-detected/) -->
+[IntelliJ IDEA:Unregistered VCS root detected](../IntelliJ-IDEA-Unregistered-VCS-root-detected.html)
 
 5. 可以在IDE最下方使用Version Control工具
 ![Version Control](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/IntelliJ-IDEA-Set-git/Version%20Control.png)

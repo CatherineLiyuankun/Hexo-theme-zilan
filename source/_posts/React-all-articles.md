@@ -12,5 +12,5 @@ categories:
 - React
 ---
 
-[React 16 new feature](../../03/React-16-New-feature-Summary-Links/)
+[React 16 new feature](../React-16-New-feature-Summary-Links.html)
 [【React深入】React事件机制](https://juejin.im/post/5c7df2e7f265da2d8a55d49d)

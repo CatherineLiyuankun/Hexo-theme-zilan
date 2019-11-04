@@ -10,6 +10,21 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="<%= config.root %>"><%= config.title %></a>
+            <!-- Search -->
+            <% var hasSearch = theme.swiftype_key || theme.algolia_search.enable || theme.tinysou_Key || theme.local_search.enable; %>
+            <% if (hasSearch) {%>
+                <li class="menu-item menu-item-search">
+                <% if (theme.swiftype_key) { %>
+                    <a href="javascript:;" class="st-search-show-outputs">
+                <% } else if (theme.local_search.enable || theme.algolia_search.enable) { %>
+                    <a href="javascript:;" class="popup-trigger">
+                <% } %>
+                    <% if (theme.menu_icons.enable) { %>
+                        <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+                    <% } %>
+                </a>
+                </li>
+            <% } %>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->

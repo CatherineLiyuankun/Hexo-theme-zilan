@@ -1056,3 +1056,26 @@ body {
 #rewardButton:hover {
   background-color: #0085a1;
 }
+
+/* search icon inside navigation */
+.menu-item.menu-item-search {
+  display: inline-block;
+  padding-top: 18px;
+}
+.menu-item.menu-item-search .popup-trigger{
+  padding: 18px 18px 18px 0;
+  color: white;
+}
+.menu-item.menu-item-search .popup-trigger:hover{
+  color: lightgray;
+}
+.site-search .fa-search:before {
+  position: absolute;
+  left: 5px;
+  top: 9px;
+}
+.site-search .fa-times-circle:before {
+  position: absolute;
+  right: 5px;
+  top: 10px;
+}

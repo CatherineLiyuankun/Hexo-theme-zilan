@@ -20,9 +20,21 @@
     <% if (config["forkme"]) {%>
         <a href="<%= config['forkme-url']%>"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_white_ffffff.png" alt="Fork me on GitHub"></a>
     <%}%>
-    
+       
+    <!-- Search -->
+    <% include ./_third-party/search/index.ejs %>
+
     <!-- Share -->
     <% include ./_third-party/needsharebutton.ejs %>
+
+    <!-- Share float -->
+    <% if (theme.needmoreshare2.enable && theme.needmoreshare2.float.enable) {%>
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt fa-inverse" aria-hidden="true"></i>
+        </span>
+      </div>
+      <%}%>
 
     <!-- Git Comment -->
     <% include ./_third-party/comments/gitment/gitmentBase.ejs %>
@@ -33,15 +45,14 @@
     <!-- Duoshuo Comment -->
     <% include ./_third-party/comments/duoshuo/duoshuoBase.ejs %>
 
-    <!-- Share float -->
-    <% if (theme.needmoreshare2.enable && theme.needmoreshare2.float.enable) {%>
-    <div id="needsharebutton-float">
-      <span class="btn">
-        <i class="fa fa-share-alt fa-inverse" aria-hidden="true"></i>
-      </span>
-    </div>
-    <%}%>
-
+    <!-- Search popup-->
+    <% var hasSearch = theme.swiftype_key || theme.algolia_search.enable || theme.tinysou_Key || theme.local_search.enable; %>
+    <% if (hasSearch) {%>
+      <div class="site-search">
+      <% include ./_partial/search.ejs %>
+      </div>
+    <% } %>
+    
 	<a id="rocket" href="#top" class=""></a>
 	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
     <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>

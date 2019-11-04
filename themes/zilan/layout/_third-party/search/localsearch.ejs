@@ -1,16 +1,16 @@
-{% if theme.local_search.enable %}
+<% if (theme.local_search.enable) { %>
   <script type="text/javascript">
     // Popup Window;
     var isfetched = false;
     var isXml = true;
     // Search DB path;
-    var search_path = "{{ config.search.path }}";
+    var search_path = '<%= config.search.path %>';
     if (search_path.length === 0) {
       search_path = "search.xml";
     } else if (/json$/i.test(search_path)) {
       isXml = false;
     }
-    var path = "{{ config.root }}" + search_path;
+    var path = '<%= config.root %>' + search_path;
     // monitor main search box;
 
     var onPopupClose = function (e) {
@@ -50,12 +50,16 @@
 
       $.ajax({
         url: path,
-        dataType: isXml ? "xml" : "json",
+        // dataType: isXml ? "xml" : "json",
+        // dataType: "binary",
+        // contentType: "text/xml",
+        dataType: "text", // Fix Bug: xml parser error
         async: true,
+        data: "{}",
         success: function(res) {
           // get the contents from search data
           isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
+          $('.popup').detach().appendTo('.header-cover');
           var datas = isXml ? $("entry", res).map(function() {
             return {
               title: $("title", this).text(),
@@ -206,7 +210,7 @@
 
                   // select top N slices in content
 
-                  var upperBound = parseInt('{{ theme.local_search.top_n_per_article }}');
+                  var upperBound = parseInt('<%= theme.local_search.top_n_per_article %>');
                   if (upperBound >= 0) {
                     slicesOfContent = slicesOfContent.slice(0, upperBound);
                   }
@@ -273,7 +277,33 @@
             }
           }
 
-          if ('auto' === '{{ theme.local_search.trigger }}') {
+          if (!input || !resultContent) {
+            // Fix Bug: add /zilan/layout/_partial/search/localsearch.ejs inside "site-search"
+              $(".site-search")
+              .append(
+                  '<div class="popup search-popup local-search-popup">' +
+                  '<div class="local-search-header clearfix">' +
+                    '<span class="search-icon">' +
+                      '<i class="fa fa-search"></i>' +
+                  '</span>' +
+                    '<span class="popup-btn-close">' +
+                      '<i class="fa fa-times-circle"></i>' +
+                    '</span>' +
+                    '<div class="local-search-input-wrapper">' +
+                      '<input autocomplete="off"' +
+                            'placeholder="search" spellcheck="false"' +
+                            'type="text" id="local-search-input">' +
+                    '</div>' +
+                  '</div>' +
+                  '<div id="local-search-result"></div>' +
+                '</div>');
+            input = document.getElementById("local-search-input");
+            resultContent = document.getElementById("local-search-result");
+            // Fix Bug: close not work
+            var searchClose = document.querySelector(".popup-btn-close");
+            searchClose.addEventListener('click', onPopupClose);
+          }
+          if ('auto' === '<%= theme.local_search.trigger %>') {
             input.addEventListener('input', inputEventFunction);
           } else {
             $('.search-icon').click(inputEventFunction);
@@ -289,6 +319,16 @@
           $('body').css('overflow', '');
 
           proceedsearch();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            /*弹出jqXHR对象的信息*/
+            alert(jqXHR.responseText);
+            alert(jqXHR.status);
+            alert(jqXHR.readyState);
+            alert(jqXHR.statusText);
+            /*弹出其他两个参数的信息*/
+            alert(textStatus);
+            alert(errorThrown);
         }
       });
     }
@@ -314,5 +354,18 @@
         onPopupClose();
       }
     });
+
+    var registerESCKeyEvent =  function () {
+      $(document).on('keyup', function (event) {
+        var shouldDismissSearchPopup = event.which === 27 &&
+          $('.search-popup').is(':visible');
+        if (shouldDismissSearchPopup) {
+          $('.search-popup').hide();
+          $('.search-popup-overlay').remove();
+          $('body').css('overflow', '');
+        }
+      });
+    };
+    registerESCKeyEvent();
   </script>
-{% endif %}
+<% } %>

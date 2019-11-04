@@ -15,16 +15,16 @@
             /*page*/
         <%} %>
     }
-    <% if (config.signature) {%>
-    #signature{
-        background-image: url('<%= config.root + config["signature-img"] %>');
-    }
+    <% if (config.signature) { %>
+        #signature{
+            background-image: url('<%= config.root + config["signature-img"] %>');
+        }
     <%}%>
 
-    <% if (config["header-cover-color"]) {%>
-    #header-cover{
-        background-color: <%= config["header-cover-color"] %>;
-    }
+    <% if (config["header-cover-color"]) { %>
+        #header-cover {
+            background-color: <%= config["header-cover-color"] %>;
+        }
     <%}%>
 </style>
 

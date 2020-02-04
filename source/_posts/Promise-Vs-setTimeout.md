@@ -6,6 +6,7 @@ subtitle:
 header-img:
 tags:
 - Promise
+- TODO
 categories:
 - TECH
 - FrontEnd
@@ -275,7 +276,7 @@ console.log(3);
 - [浅析setTimeout与Promise](https://juejin.im/post/5b7057b251882561381e69bf)
 - [What is the relationship between event loop and Promise [stackoverflow]](https://juejin.im/post/5b7057b251882561381e69bf)
 - [ES6 Book ](http://es6.ruanyifeng.com/#docs/promise)
-- [Promise的队列与setTimeout的队列有何关联？](https://www.zhihu.com/question/36972010)
+- [Promise的队列与setTimeout的队列有何关联？[知乎]](https://www.zhihu.com/question/36972010)
 - [Writing a JavaScript framework - Execution timing, beyond setTimeout](https://blog.risingstack.com/writing-a-javascript-framework-execution-timing-beyond-settimeout)
 - [6-Concurrency model and event loop -part B](https://github.com/deenjohn/NodeRevision/blob/master/6-Concurrency%20model%20and%20event%20loop%20-part%20B.md)
 - [Microtasks vs Events and how to define what as which?](https://stackoverflow.com/questions/34753342/microtasks-vs-events-and-how-to-define-what-as-which)

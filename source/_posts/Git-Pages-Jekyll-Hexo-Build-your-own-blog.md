@@ -1044,3 +1044,6 @@ commit：t[he .container with responsive when screen width is larger than 1800px
 * [打造个性超赞博客 Hexo + NexT + GitHub Pages 的超深度优化](https://io-oi.me/tech/hexo-next-optimization/)
 
 * [NexT 主题使用](http://theme-next.iissnan.com/getting-started.html)
+
+* [【搜索优化】Hexo-next百度和谷歌搜索优化](http://www.ehcoo.com/seo.html)
+

@@ -5,7 +5,7 @@ date: 2020-02-04 21:28:48
 subtitle: 实现...文首截取&多行文本截取
 header-img:
 tags:
-- Flexbox
+- text-overflow
 categories:
 - TECH
 - FrontEnd
@@ -30,7 +30,7 @@ categories:
     white-space: nowrap; // 强制文本在一行显示
     ```
 
-3. 在table内td除了满足前两个条件之外。要在table的样式里定义一个属性 ```table-layout:fixed```
+3. 在table内td除了满足前两个条件之外。要在table的样式里定义一个属性 `table-layout:fixed`
 [example 3] 
 
 ```html
@@ -194,6 +194,9 @@ CodePen [reverse ellipsis例子链接](https://codepen.io/catherineliyuankun/pen
 ---
 # Ⅳ 多行显示并在最后一行截断文字？
 ---
+
+多行截断的其他方法，可以参考下一篇文章：[text-overflow: ellipsis多行文本溢出...css/js方法全总结](http://liyuankun.top/text-overflow-ellipsis%E5%A4%9A%E8%A1%8C%E6%96%87%E6%9C%AC%E6%BA%A2%E5%87%BA-css-js%E6%96%B9%E6%B3%95%E5%85%A8%E6%80%BB%E7%BB%93.html)
+
 
 上面我们为了能够截断文字，使用了
 ```css

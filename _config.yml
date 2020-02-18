@@ -128,12 +128,12 @@ forkme-url: https://github.com/CatherineLiyuankun/Hexo-theme-zilan # GitHub url
 # donate
 donate: true
 donate-alipay: https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/base/alipay.png
-donate-wechat: https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/base/wechatpay.png
+donate-wechat: https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/base/wechat/wechatpay.png
 fancybox: true
 
 # Sidebar settings -----------
 sidebar: true                       # whether or not using Sidebar.
-sidebar-about-description: "Li,Yuankun a lazy soft engineer"
+sidebar-about-description: "Li,Yuankun a lazy software engineer"
 sidebar-avatar: img/chatHead.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 widgets:
 - featured-tags
@@ -141,7 +141,7 @@ widgets:
 - short-about
 - recent-posts
 - friends-blog
-# - wechat
+- wechat
 # - archive
 
 # widget behavior
@@ -150,7 +150,7 @@ archive_type: 'monthly'
 show_count: true
 
 ## wechat
-wechat-imgurl: img/wechat-icon.png #url of wechat QR code
+wechat-imgurl: img/wechat-public.png #url of wechat public QR code
 
 ## Featured Tags
 featured-tags: true                     # whether or not using Feature-Tags

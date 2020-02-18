@@ -2,58 +2,60 @@
 layout: layout
 ---
 <!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
+<div id="container">
+    <article>
+        <div class="container">
+            <div class="row">
 
-            <!-- Post Container -->
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
+                <!-- Post Container -->
+                <div class="
+                    col-lg-8 col-lg-offset-2
+                    col-md-10 col-md-offset-1
+                    post-container">
 
-                <%- page.content %>
+                    <%- page.content %>
 
-                <%- partial('_partial/post/donate') %>
+                    <%- partial('_partial/post/donate') %>
 
-                <%- partial('_partial/post/copyright') %>
+                    <%- partial('_partial/post/copyright') %>
+                    
+                    <hr>
+                    <!-- Pager -->
+                    <ul class="pager">
+                        <% if (page.prev){ %>
+                            <li class="previous">
+                                <a href="<%- config.root %><%- page.prev.path %>" data-toggle="tooltip" data-placement="top" title="<%- page.prev.title %>">&larr; Previous Post</a>
+                            </li>
+                        <% } %>
+                        <% if (page.next){ %>
+                            <li class="next">
+                                <a href="<%- config.root %><%- page.next.path %>" data-toggle="tooltip" data-placement="top" title="<%- page.next.title %>">Next Post &rarr;</a>
+                            </li>
+                        <% } %>
+                    </ul>
+
+                    <!-- Duoshuo Comment Share -->
+                    <% include ./_third-party/comments/duoshuo/duoshuoShare.ejs %>
+
+                    <!-- Duoshuo Comment -->
+                    <% include ./_third-party/comments/duoshuo/duoshuo.ejs %>
+
+                    <!-- Disqus Comment -->
+                    <% include ./_third-party/comments/disqus/disqus.ejs %>
+
+                    <!-- Git Comment -->
+                    <% include ./_third-party/comments/gitment/gitment.ejs %>
+                </div>
                 
-                <hr>
-                <!-- Pager -->
-                <ul class="pager">
-                    <% if (page.prev){ %>
-                        <li class="previous">
-                            <a href="<%- config.root %><%- page.prev.path %>" data-toggle="tooltip" data-placement="top" title="<%- page.prev.title %>">&larr; Previous Post</a>
-                        </li>
-                    <% } %>
-                    <% if (page.next){ %>
-                        <li class="next">
-                            <a href="<%- config.root %><%- page.next.path %>" data-toggle="tooltip" data-placement="top" title="<%- page.next.title %>">Next Post &rarr;</a>
-                        </li>
-                    <% } %>
-                </ul>
-
-                <!-- Duoshuo Comment Share -->
-                <% include ./_third-party/comments/duoshuo/duoshuoShare.ejs %>
-
-                <!-- Duoshuo Comment -->
-                <% include ./_third-party/comments/duoshuo/duoshuo.ejs %>
-
-                <!-- Disqus Comment -->
-                <% include ./_third-party/comments/disqus/disqus.ejs %>
-
-                <!-- Git Comment -->
-                <% include ./_third-party/comments/gitment/gitment.ejs %>
+                <!-- Tabe of Content -->
+                <%- partial('_partial/toc') %>
+                    
+                <!-- Sidebar Container Below-->
+                <%- partial('_partial/sidebarBelow') %>
             </div>
-            
-            <!-- Tabe of Content -->
-            <%- partial('_partial/toc') %>
-                
-            <!-- Sidebar Container Below-->
-            <%- partial('_partial/sidebarBelow') %>
         </div>
-    </div>
-</article>
+    </article>
+</div>
 
 <% if(config['anchorjs']) { %>
 <!-- async load function -->
@@ -77,6 +79,18 @@ layout: layout
         };
         anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
     })
+</script>
+<!-- Read more, 微信解锁博客 https://openwrite.cn/openwrite/openwrite-readmore/-->
+<script src="https://my.openwrite.cn/js/readmore.js" type="text/javascript"></script>
+<script>
+    const btw = new BTWPlugin();
+    btw.init({
+        id: 'container',
+        blogId: '19965-1582033785898-401',
+        name: '岚坤爷',
+        qrcode: 'https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/base/wechat/wechat-public.png',
+        keyword: 'vip',
+    });
 </script>
 <style>
     /* place left on bigger screen */

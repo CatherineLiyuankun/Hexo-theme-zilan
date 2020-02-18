@@ -50,6 +50,7 @@ twitter_username: CatherineLiYK
 facebook_username: liyuankun
 linkedin_username: liyuankun
 email_username: muzilan1@qq.com
+jianshu_username: 6b421fa23669
 # weibo_username: muzilanlan
 
 # Build settings
@@ -179,7 +180,11 @@ friends: [
     {
         title: "CSDN",
         href: "https://blog.csdn.net/muzilanlan"
-    }
+    },
+    {
+      title: "简书",
+      href: "https://www.jianshu.com/u/6b421fa23669"
+    },
 ]
 
 # Sidebar settings End ------------

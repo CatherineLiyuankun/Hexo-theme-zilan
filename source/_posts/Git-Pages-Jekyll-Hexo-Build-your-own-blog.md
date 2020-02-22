@@ -1055,6 +1055,17 @@ keywords: ###
 description: ###
 ---
 ```
+## 6.4 添加 “nofollow” 标签，优化SEO权重
+ [“nofollow” 标签的前世今生](https://ahrefs.com/blog/zh/nofollow-links/)。
+ > 简单理解，[Nofollow标签](https://www.batmanit.com/p/439.html)，它常用于A标签的一个属性值，主要表达不要向某个特定链接传递权重，有的时候写在Meta标签中，则表示不要爬行网页上所有的链接，主要的表现形式为:
+ > ① `<a rel="nofollow" href="">不要跟随链接</a>  `
+ > ② `<meta name="robots" content="nofollow"/>  `
+所以页面中包含的不想影响SEO权重的链接中，加上rel="nofollow"属性。例如评论，广告、新闻链接，站内联系页面，CMS程序多余入口中的链接都适合添加这个属性。
+
+例如我把换页的链接中加上rel="nofollow"属性：
+```html
+<li class="previous"><a href="<%- config.root %><%- page.prev_link %>" rel="external nofollow">&larr;  <%- __('next')%></a></li>
+```
 
 # 7 遇到的坑
 

@@ -2,7 +2,7 @@
 title: Git Pages + Jekyll/Hexo Build your own blog
 catalog: true
 date: 2018-10-09 11:10:48
-subtitle:
+subtitle: 构建个人博客-你想知道的都在这里了
 header-img: "https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/hexotheme/hexo-cover.png"
 tags:
 - Hexo
@@ -506,6 +506,104 @@ PING catherineliyuankun.github.io (185.199.109.153): 56 data bytes
 
 
 ## 5.2 网站统计
+
+### 5.2.1 [sitemap](https://github.com/hexojs/hexo-generator-sitemap)
+
+hexo所在文件夹下，命令行安装sitemap:
+```bash
+$ npm install hexo-generator-sitemap --save
+$ npm install hexo-generator-baidu-sitemap --save
+```
+
+在_config.yml里添加：
+```yml
+#sitemap
+sitemap:
+  path: sitemap.xml
+
+baidusitemap:
+  path: baidusitemap.xml
+
+```
+
+如果你已经配置了自己的域名，在_config.yml里修改url为自己的域名，例如我的http://liyuankun.top/。
+```yml
+url: http://liyuankun.top
+```
+
+生成sitemap.xml 和 baidusitemap.xml 文件：
+```bash
+$ hexo g
+$ hexo d
+```
+
+配完之后，就可以访问http://liyuankun.top/sitemap.xml和http://liyuankun.top/baidusitemap.xml，发现文件已经成功生成了.
+
+
+老版本的Google Search Console 在抓取--》 robots.txt测试工具 可以 测试robots.txt。 新版本中好像找不到了。。。
+百度也有[robots.txt工具](https://ziyuan.baidu.com/robots/index?site=http://liyuankun.top/)。
+在your-hexo-site\source中新建文件robots.txt,内容可以参照:
+
+```text
+# hexo robots.txt
+User-agent: *
+Allow: /
+Allow: /archives/
+Allow: /categories/
+Allow: /tags/
+Allow: /about-me/
+Disallow: /vendors/
+Disallow: /js/
+Disallow: /css/
+Disallow: /fonts/
+Disallow: /vendors/
+Disallow: /fancybox/
+Sitemap: http://liyuankun.top/sitemap.xml
+Sitemap: http://liyuankun.top/baidusitemap.xml
+```
+
+
+### 5.2.2 [Google Search Console](https://search.google.com/search-console/about)
+
+![5_2-2GoogleSearchConsole-1welcom](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Git-Pages-Jekyll-Hexo-Build-your-own-blog/5_2-2GoogleSearchConsole-1welcom.png)
+
+然后选择验证方式：
+![5_2-2GoogleSearchConsole-2verify](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Git-Pages-Jekyll-Hexo-Build-your-own-blog/5_2-2GoogleSearchConsole-2verify.png)
+
+我选择的验证方式是HTML标记（HTML Tag）,
+![5_2-2GoogleSearchConsole-2verifyHtmlTag](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Git-Pages-Jekyll-Hexo-Build-your-own-blog/5_2-2GoogleSearchConsole-2verifyHtmlTag.png)
+
+把复制的"<meta ...>"部分粘贴到 your hexo folder/themes/zilan/layout/_partial/head.ejs
+```html
+<head>
+    <!-- other tag -->
+    <meta name="google-site-verification" content="4aJ9pFEKjOcI9zlltw5NYLKMsnk_Ygy49okv3PcTknw" />
+    <!-- other tag -->
+</head>
+```
+
+提交sitemap
+![5_2-2GoogleSearchConsole-3sitemap](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Git-Pages-Jekyll-Hexo-Build-your-own-blog/5_2-2GoogleSearchConsole-3sitemap.png)
+
+### 5.2.3 Baidu sitemap
+[百度搜索引擎提交入口](https://ziyuan.baidu.com/site/#/)
+![5.2.3Baidu1](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Git-Pages-Jekyll-Hexo-Build-your-own-blog/5.2.3Baidu1.png)
+百度搜索有三种验证方式，我选择Html标签验证，把复制的"<meta ...>"部分粘贴到 your hexo folder/themes/zilan/layout/_partial/head.ejs：
+```html
+<head>
+    <!-- other tag -->
+    <meta name="baidu-site-verification" content="JFD0vIDsbS" />
+    <!-- other tag -->
+</head>
+```
+验证成功后，查看[站点信息](https://ziyuan.baidu.com/dashboard/index?site=http://liyuankun.top/)
+
+百度的sitemap提交需要邀请才可以，并没有对所有网站开放，网站高一点等级才会在你后台开放提交sitemap的入口。
+
+[robots.txt工具](https://ziyuan.baidu.com/robots/index?site=http://liyuankun.top/)可以告诉百度您网站的哪些页面可以被抓取，哪些页面不可以被抓取。
+![5.2.3Baidu2Robots](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Git-Pages-Jekyll-Hexo-Build-your-own-blog/5.2.3Baidu2Robots.png)
+
+### 5.2.4 Analytics
 集成了 [Baidu Analytics](https://marketingplatform.google.com/about/) 和 [Google Analytics](https://marketingplatform.google.com/about/)，到各个网站注册拿到track_id替换下面的就可以了
 
 配置方法： https://www.jianshu.com/p/7e1166eb412a
@@ -519,21 +617,15 @@ ga_track_id: 'UA-XXXXXXXX-X'          # Format: UA-xxxxxx-xx
 ga_domain: yoursite
 ```
 
-### [sitemap](https://github.com/hexojs/hexo-generator-sitemap)
-```bash
-$ npm install hexo-generator-sitemap --save
-```
-在_config.yml里添加：
+### 5.2.5 添加baidu站内搜索
+
+添加[百度站内搜索](https://ziyuan.baidu.com/cse/wiki/introduce)，点击现在使用->新建搜索引擎->查看代码，将代码里的id值复制，打开_config.xml，添加配置。
 ```yml
-#sitemap
-sitemap:
-  path: sitemap.xml
+baidu_search:     ## http://zn.baidu.com/
+  enable: true
+  id: "567867xxxxx1171234" ## for your baidu search id
+  site: http://zhannei.baidu.com/cse/search ## your can change to your site instead of the default site
 ```
-```bash
-$ hexo g
-$ hexo d
-```
-配完之后，就可以访问http://CatherineLiyuankun.github.io/sitemap.xml，发现这个文件已经成功生成了
 
 ## 5.3 评论
 ### [Disqus](https://disqus.com/) 
@@ -861,7 +953,9 @@ $ npm install hexo-generator-searchdb --save
 ``` bash
 $ npm install
 ```
+
 ### 5.15.2 修改_config.yml
+
 /Hexo-theme-zilan/_config.yml中增加设置：
 ```yml
 # Search hexo-generator-searchdb  https://github.com/theme-next/hexo-generator-search
@@ -872,6 +966,7 @@ search:
   limit: 10000
   content: true
 ```
+
 ### 5.15.3 write a search view. 
 This is the place for displaying a search form and search results ;
 
@@ -927,16 +1022,41 @@ themes/zilan/layout/layout.ejs
 3. Fix Bug: [click close icon not work](https://github.com/CatherineLiyuankun/Hexo-theme-zilan/commit/6b672a20aa23101bf0b17f7d790c1f5ad8422843#diff-6f479bf13d3e26f8efd29d7b534db439R302)
 ------
 
-## 5.16 添加站内搜索
-
-添加[百度站内搜索](https://ziyuan.baidu.com/cse/wiki/introduce)，点击现在使用->新建搜索引擎->查看代码，将代码里的id值复制，打开_config.xml，添加配置。
+# 6 优化
+## 6.1 优化文章链接
+Hexo默认的文章链接形式为 your domain/year/month/day/postTitle.
+这就是四级url，造成url过长，对搜索引擎是十分不友好的，我们可以改成 domain/postTitle 的形式。
+编辑站点_config.yml文件，修改其中的permalink字段改为 ”permalink: :title.html“:
 ```yml
-baidu_search:     ## http://zn.baidu.com/
-  enable: true
-  id: "5678674467891171234" ## for your baidu search id
-  site: http://zhannei.baidu.com/cse/search ## your can change to your site instead of the default site
+# permalink: :year/:month/:day/:title/  原来permalink的值
+permalink: :title.html  # 现在permalink的值
 ```
-# 6 遇到的坑
+
+## 6.2 设置站点地图 sitemap
+可以看本文的[sitemap部分](http://liyuankun.top/Git-Pages-Jekyll-Hexo-Build-your-own-blog.html#sitemap)。
+
+## 6.3 设置关键字keywords
+1. 添加博客网站关键字
+_config.yml中找到设置Site的部分添加keyword：
+```yml
+# Site settings
+SEOTitle: Yuankun | Zilan
+description: ""
+keyword: Tech blog, travel notes, 游记, React, Redux, javascript, Frontend, Machine Learning
+```
+2. 添加博客文章关键字
+```yml
+---
+title: ###
+date: ###
+categories: ###
+tags: ###
+keywords: ###
+description: ###
+---
+```
+
+# 7 遇到的坑
 
 ## 目录 无法跳转
 href="#undefined"

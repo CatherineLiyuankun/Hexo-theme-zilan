@@ -540,8 +540,11 @@ $ hexo d
 配完之后，就可以访问http://liyuankun.top/sitemap.xml和http://liyuankun.top/baidusitemap.xml，发现文件已经成功生成了.
 
 
-老版本的Google Search Console 在抓取--》 robots.txt测试工具 可以 测试robots.txt。 新版本中好像找不到了。。。
+老版本的Google Search Console 在抓取--》 robots.txt测试工具 可以 测试robots.txt。 新版本中好像找不到了。。。后来找到了，robots.txt [测试工具链接](https://support.google.com/webmasters/answer/6062598)在此。
 百度也有[robots.txt工具](https://ziyuan.baidu.com/robots/index?site=http://liyuankun.top/)。
+
+借助 robots.txt 测试工具，您可以检查 robots.txt 文件是否可以阻止 Google 网页抓取工具访问您网站上的特定网址。例如，您可以使用此工具来测试 Googlebot-Image 抓取工具能否抓取您想阻止 Google 图片搜索访问的图片网址。
+
 在your-hexo-site\source中新建文件robots.txt,内容可以参照:
 
 ```text

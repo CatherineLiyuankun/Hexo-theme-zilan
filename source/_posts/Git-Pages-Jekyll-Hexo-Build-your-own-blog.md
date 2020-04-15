@@ -452,6 +452,85 @@ npm install hexo-renderer-jade --save
 ```
  $ npm install hexo-renderer-haml --save
 ```
+
+## step9 支持markdown数学公式
+> 原生hexo并不支持数学公式，需要安装插件 mathJax。mathJax 是一款运行于浏览器中的开源数学符号渲染引擎，使用 mathJax 可以方便的在浏览器中嵌入数学公式。mathJax 使用网络字体产生高质量的排版，因此可适应各种分辨率，它的显示是基于文本的而非图片，因此显示效果更好。这些公式可以被搜索引擎使用，因此公式里的符号一样可以被搜索引擎检索到。
+
+### step9.1 在hexo目录(我的是Hexo-theme-zilan)下安装：
+```bash
+$ npm install hexo-math --save
+```
+
+### step9.2 方法一配置hexo-math
+代码可以参考我的commit：[支持markdown数学公式](https://github.com/CatherineLiyuankun/Hexo-theme-zilan/commit/71e6f7a23dbbb4056303c6374214077491f0f183)。
+
+#### step9.2.1 在站点配置文件_config.yml 中添加：
+ (我的是Hexo-theme-zilan/_config.yml)
+```yml
+math:
+  engine: 'mathjax' # or 'katex'
+  mathjax:
+    # src: custom_mathjax_source
+    config:
+      # MathJax config
+```
+
+#### step9.2.2 在 zilan 主题配置文件_config.yml 中添加:
+并将 mathJax.enable 设为 true.
+(我的是Hexo-theme-zilan/themes/zilan/_config.yml) 
+```yml
+# MathJax Support
+mathjax:
+  enable: true
+  per_page: false
+  cdn: //cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+```
+
+#### step9.2.3 mathjax.ejs
+在Hexo-theme-zilan/themes/zilan/layout/_third-party/添加 mathjax.ejs
+mathjax.ejs
+```ejs
+<% if(theme.mathjax.enable) { %> 
+  <% if (!theme.mathjax.per_page || (page.total || page.mathjax)) { %> 
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="<%= theme.mathjax.cdn%>"></script>
+  <% } %>
+<% } %>
+```
+
+#### step9.2.4 mathjax.ejs配置
+添加到Hexo-theme-zilan/themes/zilan/layout/layout.ejs中：
+```ejs
+  <!-- Markdown math -->
+  <% include ./_third-party/mathjax.ejs %>
+```
+
+### step9.2 方法二 直接添加hexo-math(不推荐)
+建议用方法一，方便灵活配置。
+添加到Hexo-theme-zilan/themes/zilan/layout/layout.ejs中：
+```html
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+```
+
 -----
 
 # 5 博客配置

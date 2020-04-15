@@ -304,3 +304,11 @@ search:
   format: html
   limit: 10000
   content: true
+  
+# Support Markdown Math
+  math:
+    engine: 'mathjax' # or 'katex'
+    mathjax:
+      # src: custom_mathjax_source
+      config:
+        # MathJax config

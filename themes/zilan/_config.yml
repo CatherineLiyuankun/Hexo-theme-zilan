@@ -21,3 +21,9 @@ algolia_search:
 
 menu_icons:
   enable: true
+
+# MathJax Support
+mathjax:
+  enable: true
+  per_page: false
+  cdn: //cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML

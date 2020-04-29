@@ -11,6 +11,9 @@ categories:
 - TECH
 - Hexo
 ---
+# Hexo 博客主题
+
+[Hexo博客自建主题hexo-theme-zilan](../hexo-theme-zilan.html)
 
 # 1 Github Pages
 
@@ -532,6 +535,14 @@ mathjax.ejs
 ```
 
 -----
+
+## step10 Hexo博客中插入音乐和视频
+
+[Hexo博客中插入音乐和视频](../Hexo博客中插入音乐和视频.html)
+
+## step11 Hexo插入相对路径
+
+[Hexo博客中插入相对路径](../hexo-reference%20path%20for%20link%20to%20another%20blog%20post.html)
 
 # 5 博客配置
 
@@ -1221,6 +1232,9 @@ ERROR EISDIR: illegal operation on a directory, read
 Error: EISDIR: illegal operation on a directory, read
 ```
 查了下貌似和npm有关，但我试了试网上的方法并不起作用，但是这个错也不影响我的博客功能。暂且放下，找到方法了再更新。
+
+## [DEP0061] DeprecationWarning: fs.SyncWriteStream is deprecated
+[fs.SyncWriteStream is deprecated](../Hexo-node-28561-DEP0061-DeprecationWarning-fs-SyncWriteStream-is-deprecated.html)
 
 ## 其他小的修改
 

@@ -5,6 +5,11 @@ date: 2020-04-11 16:24:29
 subtitle:
 header-img:
 tags:
+- Mac
+- TODO
+categories:
+- TECH
+- Tools
 ---
 
 

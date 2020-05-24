@@ -296,7 +296,7 @@ jo production
 ### [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
 
 日常用的命令会高亮显示，命令错误显示红色。
-![zsh-syntax-highlighting例子](https://github.com/CatherineLiyuankun/PictureBed/blob/master/blog/post/oh-my-zsh%E7%BB%84%E5%90%88%E4%BD%A0%E7%9A%84terminal/zsh-syntax-highlighting.png)
+![zsh-syntax-highlighting例子](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/oh-my-zsh%E7%BB%84%E5%90%88%E4%BD%A0%E7%9A%84terminal/zsh-syntax-highlighting.png)
 
 
 ### [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)

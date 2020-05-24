@@ -822,10 +822,19 @@ hexo g -d
 
 ### github 做图床
 
-用github新建个库，[PictureBed](https://github.com/CatherineLiyuankun/PictureBed)专门放我的博客图好了。
+用github新建个库，[PictureBed](https://github.com/CatherineLiyuankun/PicturexxBed)专门放我的博客图好了。
+
+> 注意! 一定要设置成Public的，不要设置成private私有的。
+> 注意! 一定要设置成Public的，不要设置成private私有的。
+> 注意! 一定要设置成Public的，不要设置成private私有的。
+> 设置成私有后，图片链接会带有?token=AB6MExxxxxxxxI5K6XVVI4
+> https://raw.githubusercontent.com/CatherineLiyuankun/PictureBed/master/blog/post/xxx.png?token=AB6MExxxxxxxxI5K6XVVI4 
+> 过一段时间token会失效，获取图片就会返回404
+> 设置成public,就可以继续用了
+
 克隆到本地：
 ```bash
-git clone https://github.com/CatherineLiyuankun/PictureBed.git
+git clone https://github.com/CatherineLiyuankun/PicturexxBed.git
 ```
 然后添加图片。
 需要注意的是：到GitHub提取图片地址时，注意把blob改成 raw。

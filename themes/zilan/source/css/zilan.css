@@ -1079,3 +1079,61 @@ body {
   right: 5px;
   top: 10px;
 }
+
+/* read more ------------start---------  */
+
+#read-more-wrap #read-more-btn {
+  border-color: #0085a1 !important;
+  text-decoration-color: #0085a1 !important;
+  color: #0085a1 !important;
+}
+
+#read-more-wrap #read-more-btn:hover {
+  border-bottom-color: #0085a1 !important;
+  background-color: #0085a1 !important;
+  color: white !important;
+}
+
+@media (min-width: 320px) {
+  #btw-modal {
+    width: 320px !important;
+  }
+  #btw-modal>img {
+    width: 180px !important;
+  }
+}
+
+@media (min-width: 500px) {
+  #btw-modal {
+    width: 500px !important;
+  }
+  #btw-modal>img {
+    width: 250px !important;
+  }
+}
+
+#btw-modal #btw-modal-header {
+  color: #0085a1 !important;
+}
+
+#btw-modal #btw-modal-header {
+  color: #0085a1 !important;
+}
+
+#btw-modal #btw-modal-input-code {
+  margin: 30px 0 !important;
+}
+
+#btw-modal #btw-modal-input {
+  width: 240px !important;
+  margin: 10px 10px !important;
+}
+
+#btw-modal #btw-submit-btn {
+  background-color: #0085a1 !important;
+}
+
+#btw-modal #btw-footer {
+  display: none;
+}
+/* readme more ------------end---------  */

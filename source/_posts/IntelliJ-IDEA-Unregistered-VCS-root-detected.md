@@ -9,6 +9,8 @@ tags:
 categories:
 - TECH
 - Tools
+- IDE
+
 ---
 
 如果还没有配置git，参考[IntelliJ-IDEA-Set-git](../IntelliJ-IDEA-Set-git.html)。

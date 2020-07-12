@@ -5,11 +5,11 @@ date: 2020-02-05 20:10:02
 subtitle: Fiddler可不用Mono直接在Mac上安装了！
 header-img: https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Fiddler-Everywhere-for-MAC-OS-without-Mono/Fiddler.png
 tags:
-- Promise
+- Network
 categories:
 - TECH
 - Tools
-- network tools
+- Network
 ---
 
 # Fiddler 版本历史

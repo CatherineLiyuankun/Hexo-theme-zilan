@@ -9,6 +9,7 @@ tags:
 categories:
 - TECH
 - Tools
+- IDE
 ---
 
 1. 打开Preference->Version Control->Git

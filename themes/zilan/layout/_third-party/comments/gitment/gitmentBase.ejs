@@ -29,10 +29,10 @@
             if(<%= config.gitment.mint %>) {
                 option.lang = "<%= config.gitment.language %>" || navigator.language || navigator.systemLanguage || navigator.userLanguage;
             }
-            if (<%= config.gitment.mint %> && <%= config.gitment.proxy_gateway %>) {
+            if (<%= config.gitment.mint %> && (<%= config.gitment.proxy_gateway %> || false)) {
                 option.oauth.redirect_protocol = '<%= config.gitment.redirect_protocol %>';
             }
-            if (<%= config.gitment.mint %> && <%= config.gitment.proxy_gateway %>) {
+            if (<%= config.gitment.mint %> && (<%= config.gitment.proxy_gateway %> || false)) {
                 option.oauth.proxy_gateway = '<%= config.gitment.proxy_gateway %>';
             } else {
                 option.oauth.client_secret = '<%= config.gitment.client_secret %>';

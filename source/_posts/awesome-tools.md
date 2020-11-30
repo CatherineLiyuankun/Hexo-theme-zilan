@@ -255,11 +255,11 @@ tags:
 
 # 硬件
 
-### 电脑
+## 电脑
 
 - [ ] **MacBook Pro 15-inch, 2017**，公司配的，512 G 不太够用，但还行吧。自己的电脑**MacBook Pro 15-inch, 2013**准备用[三星 970](https://detail.tmall.com/item.htm?id=569327401210&spm=a1z09.2.0.0.76a52e8dZEojbU&_u=l1h6urtf206) 升了 1T 硬盘
 
-### 电脑配件
+## 电脑配件
 
 <!-- - [ ] [**U28E590D**](https://detail.tmall.com/item.htm?id=523282229383) x2，三星显示器，应该是 4K 中最便宜的了 -->
 - [ ] [**AOC 32英寸4K曲面显示器**](https://detail.tmall.com/item.htm?id=594024489687&spm=a1z09.2.0.0.260f2e8drJ2dpC&_u=cgkogtg55d4&sku_properties=5919063:6536025) 公司用的dell，家里用的AOC 32英寸4K曲面显示器。
@@ -268,31 +268,28 @@ tags:
 <!-- - [ ] [**Razer DeathAdder Chroma**](http://www.razerzone.com/store/razer-deathadder-chroma) x2 -->
 - [ ] [**罗技无线鼠标**]()
 
-### 家庭网络
+## 家庭网络
 
 <!-- - [ ] J1900 软路由 + UBNT 交换机 + （UBNT AP & [**华硕 RT-AC88U**](https://item.jd.com/2104499.html)） -->
 
-### 手机
+## 手机
 
 - [x] [**iPhoneXS MAX**](https://www.apple.com/iphone-x/)
 
-### 耳机
+## 耳机
 
 - [x] [**Sony/索尼 WH-1000XM3**](https://detail.tmall.com/item.htm?id=577955986589&spm=a1z09.2.0.0.260f2e8drJ2dpC&sku_properties=5919063:6536025)，头戴式无线降噪蓝牙耳机1000X，天猫618买的。淘口令：(￥kusV1GSXOve￥)
 
-### 相机
+## 相机
 
 - [x] [**Sony A6000**](https://www.fujifilmusa.com/products/digital_cameras/x/fujifilm_x100t/) 准备换A7
 - [x] [**大疆手机稳定器**](https://zh.shop.gopro.com/China/cameras/hero7-black/CHDHX-701-master.html)
 
-# 相关
-
-<!-- - [ ] [awesome-f2e-libs](https://github.com/sorrycc/awesome-f2e-libs) -我关注的前端库。
-- [ ] [旧版本的装了啥](https://github.com/sorrycc/blog/issues/16) -->
-
 # 参考链接
 
 [awesome-tools](https://github.com/sorrycc/awesome-tools)
+<!-- - [ ] [awesome-f2e-libs](https://github.com/sorrycc/awesome-f2e-libs) -我关注的前端库。
+- [ ] [旧版本的装了啥](https://github.com/sorrycc/blog/issues/16) -->
 
 ## RSS 阅读器
 Reeder 好，MACOS+IOS 但是要付费

@@ -38,6 +38,7 @@ tags:
 
 ## 开发辅助
 
+- [x] [**Dash**](https://kapeli.com/dash) 快速查API文档。免费版本会在你搜索完后等10秒再显示，付费版：$29.99 无需等待。
 - [x] [**SourceTree**](https://www.sourcetreeapp.com/)，git 辅助，由于 git 高级操作命令记不住，就只用借助 UI 了。
 - [x] [**Paw**](https://paw.cloud/)，请求模拟，前后端联调API时用这个先走一遍。
 - [x] [**Postman**](https://www.postman.com/)，请求模拟，前后端联调API时用这个先走一遍。
@@ -92,7 +93,7 @@ tags:
 
 ## 效率
 
-- [x] [**Alfred**](https://www.alfredapp.com/) + [**Powerpack**](https://www.alfredapp.com/powerpack/)，应用启动、粘贴板管理、Workflow、Snippets 管理等。 同步问题可以参考：[Alfred 中如何在不同电脑上同步自定义设置？](https://www.zhihu.com/question/39098799) 和 [在Mac之间同步您的Alfred设置](https://mac.orsoon.com/news/337637.html)。
+- [x] [**Alfred**](https://www.alfredapp.com/) + [**Powerpack**](https://www.alfredapp.com/powerpack/)，应用启动、粘贴板管理、Workflow、Snippets 管理等。 同步问题可以参考：[Alfred 中如何在不同电脑上同步自定义设置？](https://www.zhihu.com/question/39098799) 和 [在Mac之间同步您的Alfred设置](https://mac.orsoon.com/news/337637.html)。免费功能：File search, Web search，app启动, Calculator, Dictionary, System。付费功能（需购买Powerpack）：Workflow，Action, Clipboard History，Snippets, Contacts, itunes, 1Password, Terminal.
 <!-- - [ ] [**Paste**](https://pasteapp.me/)，粘贴板管理，[**Copied**](https://copiedapp.com/) 在 mac 10.15 下有 bug 就放弃了，再之前一直用 Alfred 的粘贴板 -->
 <!-- - [ ] [**TaskPaper**](https://www.taskpaper.com/)，任务管理 -->
 <!-- - [ ] [**OmniFocus**](https://www.omnigroup.com/omnifocus) ，任务管理，通过 Omni Sync Server 和 iPhone 同步 -->

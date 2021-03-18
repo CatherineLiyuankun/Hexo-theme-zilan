@@ -8,6 +8,7 @@ tags:
 - Learning Notes
 categories:
 - TECH
+- FrontEnd
 - Accessibility
 ---
 

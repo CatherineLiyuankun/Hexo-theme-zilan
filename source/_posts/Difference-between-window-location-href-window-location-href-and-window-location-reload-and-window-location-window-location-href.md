@@ -92,7 +92,7 @@ The difference from the assign() method is that after using replace() the curren
 
 # Summary 总结
 
-- 如果不想要发送POST请求，使用`window.location = window.location.href`。注意！如果页面URL中包含锚`#`, `window.location.href=window.location.href` 不会reload页面，需要额外判断。
+- 如果不想要发送POST data，使用`window.location = window.location.href`。注意！如果页面URL中包含锚`#`, `window.location.href=window.location.href` 不会reload页面，需要额外判断。
 - 如果不介意使用POST请求，使用`window.location.reload()`， 这种用法在各个代码扫描工具中都不会有warning。
 
 # Reference Links

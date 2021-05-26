@@ -35,6 +35,14 @@ tags:
 - [] iTerm2 里配 `Run command...` 为 `/usr/local/bin/idea --path \2 \1` ([图](https://zos.alipayobjects.com/rmsportal/RmWdxKRQUWFMoVDjerNQ.png))，这样 Command + 点击文件路径，就会在 Intellij Idea 里打开
   - [x] 安装Go2Shell，在finder可以用iTerm2打开当前目录
   - [x] 配置[MAC终端命令行下用sublime、vscode、atom打开文件或目录](https://www.cnblogs.com/hongrunhui/p/5928833.html)
+    - [x] open .  用finder打开当前文件
+    - [x] vsc .  用vscode打开当前文件
+    - [x] subl .  用Sublime打开当前文件
+    - [x] atom .  用Atom打开当前文件
+    - [x] command + <-  / ->     切换tab
+    - [x] control + w 回退一部分命令
+- [tldr](https://tldr.sh/) Simplified and community-driven `man` pages. Quick install: `npm install -g tldr`.
+- Take `git` for example, while `man` `git` outputs more than 100 lines. `> tldr git`
 
 ## 开发辅助
 

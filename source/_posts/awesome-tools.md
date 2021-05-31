@@ -4,6 +4,10 @@ catalog: true
 subtitle: awesome-tools
 header-img:
 tags:
+- MAC
+- categories:
+- TECH
+- Tools
 ---
 本文在[awesome-tools](https://github.com/sorrycc/awesome-tools)基础上修改，添加自己使用的工具。有些是我也已经用的软件，有些是根据这篇文章才开始用的。
 > 从 [Blog](https://github.com/sorrycc/blog/issues/83) 迁移到 GitHub 仓库维护，可以有历史记录。

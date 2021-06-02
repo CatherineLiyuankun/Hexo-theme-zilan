@@ -9,6 +9,7 @@ tags:
 categories:
 - TECH
 - Tools
+- Environment setup
 ---
 
 # [MAC终端命令行下用sublime、vscode、atom打开文件或目录](https://www.cnblogs.com/hongrunhui/p/5928833.html)

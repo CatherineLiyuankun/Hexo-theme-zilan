@@ -6,6 +6,7 @@ subtitle:
 header-img:
 tags:
 - IntelliJ
+- git
 categories:
 - TECH
 - Tools

@@ -7,6 +7,7 @@ tags:
 categories:
 - TECH
 - Tools
+- Environment setup
 ---
 
 # [oh-my-zsh](http://ohmyz.sh)到底是个啥呢？

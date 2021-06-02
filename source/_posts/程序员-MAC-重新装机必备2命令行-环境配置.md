@@ -6,7 +6,7 @@ subtitle:
 header-img:
 tags:
 - MAC
-- categories:
+categories:
 - TECH
 - Tools
 ---

@@ -6,7 +6,7 @@ subtitle:
 header-img:
 tags:
 - MAC
-- categories:
+categories:
 - TECH
 - Tools
 ---
@@ -15,7 +15,7 @@ tags:
 
 - [x] [**Google Chrome**](https://www.google.com/chrome/) 网址下载，或者[APP Store + 国外账号] + [**Google Chrome Canary**](https://www.google.com/chrome/canary/) + [**Firefox**](https://www.mozilla.org/en-US/firefox/new/) + **Safari**，浏览器，调试用，IE 的测试会借助内网的云测平台
 -  Xcode  [APP Store]
--  Vscode
+-  Vscode + 插件Settings Sync （用gitHub账号创建gist同步配置）。
 
 # 效率
 

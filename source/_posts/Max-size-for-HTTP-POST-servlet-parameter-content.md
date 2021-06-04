@@ -71,7 +71,7 @@ If you wonder why use port 8443 rather than 443, you can see my another blog: [D
 
 ## 2 For ASP and IIS environment
 In order to accept larger files you have to change two sets of setting in you're web.config.
-C:\Program Files (x86)\MicroStrategy\Web ASPx\web.config or Your ASP Folder\web.config
+C:\Program Files (x86)\yourcompanydomain\Web ASPx\web.config or Your ASP Folder\web.config
 
 ### 2.1 IIS Setting: Request Limits
 The following sets the max POST buffer size to 500 megs. The value is specified in bytes.

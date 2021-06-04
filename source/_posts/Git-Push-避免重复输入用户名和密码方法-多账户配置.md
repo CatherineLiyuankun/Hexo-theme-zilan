@@ -38,7 +38,7 @@ vim .git-credentials
 ```bash
 # 输入 https://{username}:{password}@github.com
 https://{CatherineLiyuankun}:{xxxxxxxxx}@github.com
-https://{yuanli}:{xxxxxxx}@github.microstrategy.com
+https://{yuanli}:{xxxxxxx}@github.yourcompanydomain.com
 ```
 
 ### 1.2 添加Git Config 内容

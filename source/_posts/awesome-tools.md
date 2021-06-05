@@ -58,8 +58,8 @@ categories:
 - [x] [**RStudio**]()
 
 - [x] [**Colloquy**]()
-- [x] [**Cyberduck**]()
-- [x] [**VNC Viewer**]()
+- [x] [**Cyberduck**](https://cyberduck.io/)
+- [x] [**VNC Viewer**](https://www.realvnc.com/en/connect/download/viewer/)
 - [x] [**Microsoft Remote Desktop**]()
 
 <!-- - [ ] [**Github Desktop**](https://github.com/desktop/desktop)，管理 github 仓库的变更和 PR，代替了 SourceTree 的部分工作，可以方便地把别人的 PR checkout 到本地验证 -->
@@ -75,7 +75,7 @@ categories:
 
 ### 虚拟机
 
-- [x] [**VirtualBox**]()
+- [x] [**ParallelsDesktop**]()
 - [x] [**VirtualBox**]()
 
 ### 数据库

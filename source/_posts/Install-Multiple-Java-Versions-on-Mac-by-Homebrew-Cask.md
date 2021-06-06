@@ -33,6 +33,11 @@ brew tap homebrew/cask
 brew install homebrew/cask
 ```
 
+安装brew-cask-completion：
+```bash
+brew install brew-cask-completion
+```
+
 But before doing that, let’s check if we already have JDK 7 installed by Homebrew Cask:
 
 ```bash

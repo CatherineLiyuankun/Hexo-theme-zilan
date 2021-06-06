@@ -72,7 +72,8 @@ homebrew是Mac下目前最常用的包管理工具，相当于debain下的 apt ,
 - [ ] [**fd**](https://github.com/sharkdp/fd)，比系统自带的 find 友好 -->
 
 ## 多个Java版本切换和安装
-[Install Multiple Java Versions on Mac by Homebrew Cask](../source/_posts/Install-Multiple-Java-Versions-on-Mac-by-Homebrew-Cask.md)
+
+[Install Multiple Java Versions on Mac by Homebrew Cask](../Install-Multiple-Java-Versions-on-Mac-by-Homebrew-Cask.html)
 
 ## Node Version Manager: nvm
 
@@ -130,6 +131,7 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
 ```
+
 
 ## Install Node.js
 
@@ -193,6 +195,13 @@ export ANT_HOME=/usr/local/Cellar/1.10.10/libexec
 export PATH=$PATH:$ANT_HOME/bin
 ```
 
+## Install gradle
+
+```bash
+brew install gradle
+# brew install gradle@6
+brew upgrade gradle
+```
 
 <!-- ## 安装Bash
 

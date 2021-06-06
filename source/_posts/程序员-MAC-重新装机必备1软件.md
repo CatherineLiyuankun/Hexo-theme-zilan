@@ -9,6 +9,7 @@ tags:
 categories:
 - TECH
 - Tools
+- Environment setup
 ---
 
 # 编程必备
@@ -37,9 +38,9 @@ https://cyberduck.io/
 - [**Charles**](https://www.charlesproxy.com/)，抓包用，支持 https, 不免费，公司提供的付费账号。
 - [**Gas Mask**](https://github.com/2ndalpha/gasmask) ，[Hosts 管理](https://zhuanlan.zhihu.com/p/20466912)
 
-## 命令行工具
+## 命令行工具和配置
 
-- [Iterm2](https://iterm2.com/)
+参考下一篇文章： [程序员-MAC-重新装机必备2命令行-环境配置](../程序员-MAC-重新装机必备2命令行-环境配置.html)
 
 # 效率
 

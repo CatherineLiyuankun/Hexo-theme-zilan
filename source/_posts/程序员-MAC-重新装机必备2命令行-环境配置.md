@@ -45,6 +45,45 @@ Mac 自带ruby，可以检查版本：
 ruby -v
 ```
 
+## 检查shell版本 bash or zsh or?
+
+MAC 自带并默认使用zsh。
+
+参考： [How to check what shell I am using in a terminal?](https://unix.stackexchange.com/questions/9501/how-to-test-what-shell-i-am-using-in-a-terminal)
+
+### 1 常用且好记
+
+The following works on zsh, bash, and dash, but not on csh:
+
+```bash
+$ echo $0
+# or
+$ echo $SHELL
+```
+
+```bash
+$ echo $BASH_VERSION
+# or
+$ echo $ZSH_VERSION
+```
+
+### 2 作用范围广
+
+Works in the four shells (bash, dash, zsh, csh):
+
+```bash
+$ ps -p $$
+```
+
+```bash
+ps -p$$ -ocmd= 
+
+# On Solaris, this may need to be
+ps -p$$ -ofname=
+
+# On macOS and on BSD should be
+ps -p$$ -ocommand=
+```
 ## 安装homebrew
 
 [Homebrew 官网](https://brew.sh/)。
@@ -197,11 +236,66 @@ export PATH=$PATH:$ANT_HOME/bin
 
 ## Install gradle
 
+### 方法1：通过Homebrew安装
+
 ```bash
 brew install gradle
 # brew install gradle@6
 brew upgrade gradle
 ```
+
+### 方法2：通过SDKman安装，gradle多版本管理【推荐】
+
+[不同版本 Gradle ，怎么和平共处](https://juejin.cn/post/6844903481942212621)
+
+[安装SDKman](https://github.com/sdkman/sdkman-cli)
+
+```bash
+$ curl -s https://get.sdkman.io | bash
+```
+
+查看安装版本：
+
+```bash
+$ sdk version
+```
+
+安装指定版本的 Gradle
+
+```bash
+sdk install gradle 6.7
+```
+
+卸载指定版本的 Gradle
+
+```bash
+sdk uninstall gradle 6.7
+```
+
+查看当前安装的 Gradle 版本
+
+```bash
+sdk current gradle
+```
+
+查看安装的 Gradle 版本和所有版本
+
+```bash
+sdk list gradle
+```
+
+设置默认的 Gradle 版本
+
+```bash
+sdk default gradle 6.7
+```
+
+使用临时的 Gradle 版本
+
+```bash
+sdk use gradle 6.7
+```
+
 
 <!-- ## 安装Bash
 
@@ -258,4 +352,6 @@ echo 'eval `dircolors ~/lib/dircolors-solarized/dircolors.256dark`' >> ~/.profil
 $ npm install -g hexo-cli
 ```
 
-```
+# 参考链接
+
+- [当你拿到一台崭新的Mac电脑时，我们应该如何快速高效配置开发环境?](https://segmentfault.com/a/1190000037592655)

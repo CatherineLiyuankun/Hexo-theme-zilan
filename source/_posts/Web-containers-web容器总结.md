@@ -41,7 +41,7 @@ Orace WebLogic服务器，GlassFish服务器，IBM WebSphere应用程序服务�
 
 
 
-# 对比表格
+## 对比表格
 
 特性\web containers | Tomcat | WebLogic | WebSphere | JBOSS | Jetty
 ---------|----------|---------|---------|---------|---------
@@ -57,8 +57,18 @@ Orace WebLogic服务器，GlassFish服务器，IBM WebSphere应用程序服务�
  与数据库的紧密结合性 |  | 如果硬件成本比软件成本高许多，那不如使用 Weblogic/Websphere。 | 
  安全性 | 相对低 | 相对高 | 相对高 | 相对低
 
+## JBoss EAP Vs Wildfly
 
+> JBoss EAP is the JBoss Enterprise Application Platform that is a subscription based JavaEE application server; this is a Red Hat product; whereas Wildfly is the community product.
 
+作为JBoss的新手，会发现很多不同的术语-JBoss EAP，JBoss Server，Wildfly，Jboss Web，以及许多不是最新的或针对较旧版本的文档。
+JBoss EAP是Red Hat生产和支持的Java EE应用程序服务器的名称。
+
+JBoss AS / WildFly是您可以测试的社区项目的名称。这个社区项目最终将成为JBoss EAP。" WildFly"只是" AS"的新名称，它代表Application Server。版本编号在这里有点困难。 WildFly 8，WildFly 9，WildFly 10以及可能的其他WildFly版本都是通往最终称为JBoss EAP 7的里程碑。它们都实现了Java EE 7。
+
+尽管它们是该路线上的里程碑并且不受支持，但某些发行版实际上相当稳定并且可以投入生产(但由于不支持，因此后果自负)。
+
+JBoss Web是Red Hat在JBoss EAP 6及更早版本中使用的基于Tomcat的Servlet容器的名称。从EAP 7开始(因此已经在WildFly 8,9,10中使用)，它将被称为Undertow的新Servlet容器/ http引擎取代。
 # 相关CVE
 
 ## Tomcat

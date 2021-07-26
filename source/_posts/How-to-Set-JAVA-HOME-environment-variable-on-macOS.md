@@ -15,9 +15,9 @@ categories:
 ---
 ---
 
-#
+# 
 
 
 # Reference Links
 
-- [Difference between window.location.href=window.location.href and window.location.reload()](https://stackoverflow.com/questions/2405117/difference-between-window-location-href-window-location-href-and-window-location)
+- [Install Multiple Java Versions on Mac by Homebrew Cask](../Install-Multiple-Java-Versions-on-Mac-by-Homebrew-Cask.html)

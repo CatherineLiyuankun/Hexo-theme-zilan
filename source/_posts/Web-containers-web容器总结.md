@@ -4,7 +4,7 @@ catalog: true
 date: 2021-07-12 16:53:32
 subtitle: Tomcat、Weblogic、JBoss、GlassFish、Jetty、Resin、IBM Websphere
 header-img:
-tags:
+tags: WebContainer
 categories:
 - TECH
 - BackEnd
@@ -43,8 +43,10 @@ Orace WebLogic服务器，GlassFish服务器，IBM WebSphere应用程序服务�
 
 ## 对比表格
 
-特性\web containers | Tomcat | WebLogic | WebSphere | JBOSS | Jetty
+特性\web containers | Tomcat | [WebLogic](https://www.oracle.com/java/weblogic/) | WebSphere | JBOSS/WildFly | Jetty
 ---------|----------|---------|---------|---------|---------
+ 0官方文档 |  | [Command Reference for Oracle WebLogic Server 14.1.1](https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/admrf/weblogicserver.html#GUID-3F753BDB-C28E-4A9F-B569-F34A032F96F5) [下载14.1.1.0](https://www.oracle.com/middleware/technologies/fusionmiddleware-downloads.html)[文档14.1.1.0](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/index.html) | WebSphere | JBOSS | Jetty
+  0安装 |  | [下载14.1.1.0](https://www.oracle.com/middleware/technologies/fusionmiddleware-downloads.html)[文档14.1.1.0](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/index.html) | WebSphere | JBOSS | Jetty
  1出品公司 | Apache 软件基金会的 Jakarta 项目中的一个核心项目，由 Apache、 Sun 和其他一些公司及个人共同开发而成。| 最早由WebLogic Inc.开发，后并入BEA公司，最终BEA公司又并入Oracle公司 | IBM 的集成软件平台 | 2006 年,Jboss 公司被 Redhat 公司收购
  2介绍 | Jsp和Servlet容器。由于有了 Sun 的参与和支持，最新的 S ervlet 和 JSP 规范总是能在 Tomcat 中得到体现， Tomcat 5 支持最新的 Servlet 2. 4 和 JSP 2.0 规范。因为 Tomcat 技术先进、性能稳定，而且免费，因而深受 Java 爱好者的喜爱并得到了部分软件开发商的认可，成为目前比较流行的 Web 应用服务器。 | application server 确切的说是一个基于 j2ee 架构的中间件。用于开发、集成、部署和管理大型分布式 Web 应用、网络应用和数据库应用的 Java 应用服务器。将 Java 的动态功能和 Java Enterprise 标准的安全性引入大型网络应用的开发、集成、部署和管理之中。 | 它包含了编写、运行和监视全天候的工 业强度的随需应变 Web 应用程序和跨平台、 跨产品解决方案所需要的整个中间件基 础设施，如服务器、服务和工具。 WebSphere 提供了可靠、灵活和健壮的集成软件。 | JBoss是一个基于J2EE的管理EJB的容器和服务器，支持 EJB 1.1、EJB 2.0 和 EJB3.0 的 规范。但 JBoss 核心服务不包括支持 servlet/JSP 的 WEB 容器，一般与 Tomcat 或 Jetty 绑定使用。（Jboss作为应用服务器，而Tomcat做web服务器。在 3.0 之前 JBoss 使用 Jetty 作为 Web Container，之后 JBoss 使用了 Tomcat 作为他的一个基础服务提供了 Web Container，所以 JBoss 4.x 里面你会看到一个 Embbed Tomcat。）| Servlet容器
  3价位 | 免费 | 收费-高 对于开发者，有免费使用一年的许可证。| 收费-高 | 免费（文档要收费）| 免费

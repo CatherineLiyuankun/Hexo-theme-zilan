@@ -11,6 +11,7 @@ categories:
 ---
 
 # Preface
+
  [官方安装文档](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/index.html)
 
 ## step 1 确保已正确安装JDK
@@ -32,6 +33,7 @@ java -version
 解压`fmw_14.1.1.0.0_wls_lite_Disk1_1of1.zip`文件，得到安装包`fmw_14.1.1.0.0_wls_lite_generic.jar`文件。
 
 安装：
+
 ```bash
 java -jar fmw_14.1.1.0.0_wls_lite_generic.jar
 ```
@@ -50,6 +52,7 @@ java -jar fmw_14.1.1.0.0_wls_lite_generic.jar
 ### start 关闭weblogic
 
 Window 系统则使用./startWebLogic.cmd
+
 ```bash
 cd <weblogicFoder>/user_projects/domains/base_domain
 ./startWebLogic.sh
@@ -69,6 +72,7 @@ cd <weblogicFoder>/user_projects/domains/base_domain/bin
 ```
 
 ## 配置文件
+
 ```bash
 cd <weblogicFoder>/user_projects/domains/base_domain/config
 vim config.xml
@@ -77,6 +81,7 @@ vim config.xml
 
 
 ## 参考文章
+
 - [WebLogic使用总结(一)——WebLogic安装](https://www.cnblogs.com/xdp-gacl/p/4140683.html)
 - [Weblogic运维使用手册](https://cloud.tencent.com/developer/article/1501376)
 

@@ -84,6 +84,7 @@ ps -p$$ -ofname=
 # On macOS and on BSD should be
 ps -p$$ -ocommand=
 ```
+
 ## 安装homebrew
 
 [Homebrew 官网](https://brew.sh/)。
@@ -94,11 +95,18 @@ homebrew是Mac下目前最常用的包管理工具，相当于debain下的 apt ,
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-报错解决方法： [Mac 怎么安装Homebrew (2021)](https://zhuanlan.zhihu.com/p/346726110)。
+### 报错解决方法
 
-<!-- > homebrew默认会把可执行文件装在目录 /usr/local/bin 下面，建议修改 path 路径，让你通过 homebrew
+[Mac 怎么安装Homebrew (2021)](https://zhuanlan.zhihu.com/p/346726110)
+
+### 安装路径
+
+The `/usr/local/Cellar` directory is the default location on OS X. You'll see sub-directories in there for all your installed formulae.
+
+MAC 系统上默认路径为`/usr/local/Cellar`, 下面的子目录就是用brew安装的其他包。
+homebrew默认会把可执行文件装在目录 /usr/local/bin 下面，建议修改 path 路径，让你通过 homebrew
 安装的工具可以覆盖掉Mac默认的（例如git，Big sur Mac自带2.30.1版本的git）。使用管理员权限修改文件
-/etc/paths 将 /usr/local/bin 移动到第一行。 -->
+/etc/paths 将 /usr/local/bin 移动到第一行。
 
 ### 通过 [homebrew](https://brew.sh/) 安装
 
@@ -295,6 +303,29 @@ sdk default gradle 6.7
 ```bash
 sdk use gradle 6.7
 ```
+
+## 安装Python
+
+### 安装Python
+
+如果你正在使用Mac，系统是OS X>=10.9，那么系统自带的Python版本是2.7。要安装最新的Python 3.9，有两个方法：
+
+方法一：[从Python官网下载Python 3.9的安装程序](https://www.python.org/downloads/)，下载后双击运行并安装；
+
+安装目录：
+
+```python
+which python3
+/Library/Frameworks/Python.framework/Versions/3.9/bin/python3
+```
+
+方法二：如果安装了Homebrew，直接通过命令`brew install python3`安装即可。
+
+安装目录：`/usr/local/Cellar/python@3.9`
+可执行文件目录：`/usr/local/bin/python3.9`
+
+### [Mac上python2和python3的版本切换设置](../Mac上python2和python3的版本切换设置.html)
+
 
 
 <!-- ## 安装Bash

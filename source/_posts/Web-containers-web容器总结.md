@@ -38,39 +38,27 @@ Orace WebLogic服务器，GlassFish服务器，IBM WebSphere应用程序服务�
 > Web container: Manages the execution of JSP page and servlet components for Java EE applications. Web components and their container run on the Java EE server.
 管理Java EE应用程序的网页，Servlet和某些EJB组件的执行。 Web组件及其容器运行在Web服务器上，例如Jetty，tomcat。
 
-
-
-
-## 对比表格
+# Web容器对比
 
 特性\web containers | Tomcat | [WebLogic](https://www.oracle.com/java/weblogic/) | WebSphere | JBOSS/WildFly | Jetty
 ---------|----------|---------|---------|---------|---------
- 0官方文档 |  | [Command Reference for Oracle WebLogic Server 14.1.1](https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/admrf/weblogicserver.html#GUID-3F753BDB-C28E-4A9F-B569-F34A032F96F5) [下载14.1.1.0](https://www.oracle.com/middleware/technologies/fusionmiddleware-downloads.html)[文档14.1.1.0](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/index.html) | WebSphere | JBOSS | Jetty
-  0安装 |  | [下载14.1.1.0](https://www.oracle.com/middleware/technologies/fusionmiddleware-downloads.html)[文档14.1.1.0](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/index.html) | WebSphere | JBOSS | Jetty
+ 0官方文档 |  | 1. [Command Reference for Oracle WebLogic Server 14.1.1](https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/admrf/weblogicserver.html#GUID-3F753BDB-C28E-4A9F-B569-F34A032F96F5)  2.[文档14.1.1.0](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/index.html) | WebSphere | [JBOSS](https://developers.redhat.com/products/eap/download/ ) / [WildFly](https://www.wildfly.org/downloads/)| Jetty
+  0安装 |  | [下载14.1.1.0](https://www.oracle.com/middleware/technologies/fusionmiddleware-downloads.html)  | WebSphere | [JBOSS](https://developers.redhat.com/products/eap/download/ ) / [WildFly](https://www.wildfly.org/downloads/) | Jetty
  1出品公司 | Apache 软件基金会的 Jakarta 项目中的一个核心项目，由 Apache、 Sun 和其他一些公司及个人共同开发而成。| 最早由WebLogic Inc.开发，后并入BEA公司，最终BEA公司又并入Oracle公司 | IBM 的集成软件平台 | 2006 年,Jboss 公司被 Redhat 公司收购
  2介绍 | Jsp和Servlet容器。由于有了 Sun 的参与和支持，最新的 S ervlet 和 JSP 规范总是能在 Tomcat 中得到体现， Tomcat 5 支持最新的 Servlet 2. 4 和 JSP 2.0 规范。因为 Tomcat 技术先进、性能稳定，而且免费，因而深受 Java 爱好者的喜爱并得到了部分软件开发商的认可，成为目前比较流行的 Web 应用服务器。 | application server 确切的说是一个基于 j2ee 架构的中间件。用于开发、集成、部署和管理大型分布式 Web 应用、网络应用和数据库应用的 Java 应用服务器。将 Java 的动态功能和 Java Enterprise 标准的安全性引入大型网络应用的开发、集成、部署和管理之中。 | 它包含了编写、运行和监视全天候的工 业强度的随需应变 Web 应用程序和跨平台、 跨产品解决方案所需要的整个中间件基 础设施，如服务器、服务和工具。 WebSphere 提供了可靠、灵活和健壮的集成软件。 | JBoss是一个基于J2EE的管理EJB的容器和服务器，支持 EJB 1.1、EJB 2.0 和 EJB3.0 的 规范。但 JBoss 核心服务不包括支持 servlet/JSP 的 WEB 容器，一般与 Tomcat 或 Jetty 绑定使用。（Jboss作为应用服务器，而Tomcat做web服务器。在 3.0 之前 JBoss 使用 Jetty 作为 Web Container，之后 JBoss 使用了 Tomcat 作为他的一个基础服务提供了 Web Container，所以 JBoss 4.x 里面你会看到一个 Embbed Tomcat。）| Servlet容器
  3价位 | 免费 | 收费-高 对于开发者，有免费使用一年的许可证。| 收费-高 | 免费（文档要收费）| 免费
- 开源性 | 开源 | 不 | 不 | 开源 | 开源
+ 开源性 | 开源 | 不 | 不 | 开源 `LGPL` | 开源
  优点| 轻便小巧 |  |  | 热deploy | 开源
  技术支持 | `EJB` No | WebLogic 与 WebSphere 都是对业内多种标准的全面支持， 包括 EJB、 JSB、 JMS、 JDBC、XML 和 WML，使 Web 应用系统的实施更为简单，并且保护了投资，同时也使基于标准的解决方案的开发更加简便。| | `EJB` Yes JBoss 是实现了EJB 容器，再集成了 Tomcat
  扩展性 |  | 高扩展的架构体系闻名于业内，包括客户机连接的共享、资源 pooling 以及动态网页和 EJB 组件群集。|  |  
- 应用范围 | 小型的轻量级应用服务器，在中小型系统和并发访问用户不是很多的场合下被普遍使用，是开发和调试 JSP 程序的首选。 | 大型企业的大型项目| 大型企业的大型项目 | EJB 服务的中小型公司 
+ 应用范围 | 小型的轻量级应用服务器，在中小型系统和并发访问用户不是很多的场合下被普遍使用，是开发和调试 JSP 程序的首选。 | 大型企业的大型项目| 大型企业的大型项目 | EJB 服务的中小型公司
  商业服务和技术支持 | 无 | 有 | 有 | 无
- 与数据库的紧密结合性 |  | 如果硬件成本比软件成本高许多，那不如使用 Weblogic/Websphere。 | 
+ 与数据库的紧密结合性 |  | 如果硬件成本比软件成本高许多，那不如使用 Weblogic/Websphere。 |
  安全性 | 相对低 | 相对高 | 相对高 | 相对低
 
-## JBoss EAP Vs Wildfly
+## [JBoss/WildFly all you should know](../JBoss-WildFly-all-you-should-know.html)
 
-> JBoss EAP is the JBoss Enterprise Application Platform that is a subscription based JavaEE application server; this is a Red Hat product; whereas Wildfly is the community product.
 
-作为JBoss的新手，会发现很多不同的术语-JBoss EAP，JBoss Server，Wildfly，Jboss Web，以及许多不是最新的或针对较旧版本的文档。
-JBoss EAP是Red Hat生产和支持的Java EE应用程序服务器的名称。
-
-JBoss AS / WildFly是您可以测试的社区项目的名称。这个社区项目最终将成为JBoss EAP。" WildFly"只是" AS"的新名称，它代表Application Server。版本编号在这里有点困难。 WildFly 8，WildFly 9，WildFly 10以及可能的其他WildFly版本都是通往最终称为JBoss EAP 7的里程碑。它们都实现了Java EE 7。
-
-尽管它们是该路线上的里程碑并且不受支持，但某些发行版实际上相当稳定并且可以投入生产(但由于不支持，因此后果自负)。
-
-JBoss Web是Red Hat在JBoss EAP 6及更早版本中使用的基于Tomcat的Servlet容器的名称。从EAP 7开始(因此已经在WildFly 8,9,10中使用)，它将被称为Undertow的新Servlet容器/ http引擎取代。
 # 相关CVE
 
 ## Tomcat
@@ -100,7 +88,7 @@ JBoss Web是Red Hat在JBoss EAP 6及更早版本中使用的基于Tomcat的Servl
 - CVE-2019-2646
 - CVE-2019-2645
 - CVE-2019-2618
-  - https://github.com/jas502n/cve-2019-2618/
+  - <https://github.com/jas502n/cve-2019-2618/>
 - CVE-2019-2615
 - CVE-2019-2568
 - CVE-2018-3252
@@ -109,16 +97,16 @@ JBoss Web是Red Hat在JBoss EAP 6及更早版本中使用的基于Tomcat的Servl
 - CVE-2018-3201
 - CVE-2018-3197
 - CVE-2018-3191
-  - https://github.com/voidfyoo/CVE-2018-3191
-  - https://github.com/Libraggbond/CVE-2018-3191
+  - <https://github.com/voidfyoo/CVE-2018-3191>
+  - <https://github.com/Libraggbond/CVE-2018-3191>
 - CVE-2018-2894
   - 任意文件上传
-  - https://xz.aliyun.com/t/2458
+  - <https://xz.aliyun.com/t/2458>
 - CVE-2018-2893
   - 反序列化
-  - https://www.freebuf.com/vuls/178105.html
+  - <https://www.freebuf.com/vuls/178105.html>
 - CVE-2018-2628
-  - https://mp.weixin.qq.com/s/nYY4zg2m2xsqT0GXa9pMGA
+  - <https://mp.weixin.qq.com/s/nYY4zg2m2xsqT0GXa9pMGA>
 - CVE-2018-1258
 - CVE-2017-10271
   - [XMLDecoder 反序列化漏洞](http://webcache.googleusercontent.com/search?q=cache%3AsH7j8TF8uOIJ%3Awww.freebuf.com%2Fvuls%2F160367.html)
@@ -126,14 +114,13 @@ JBoss Web是Red Hat在JBoss EAP 6及更早版本中使用的基于Tomcat的Servl
 - CVE-2017-3248
 - CVE-2016-3510
 - CVE-2015-4852
-  - https://github.com/roo7break/serialator
+  - <https://github.com/roo7break/serialator>
 
 ## JBoss
 
 - CVE-2017-12149
   - 反序列化漏洞
   - 访问 /invoker/readonly ，页面存在即有反序列化漏洞
-
 
 # 参考文章
 

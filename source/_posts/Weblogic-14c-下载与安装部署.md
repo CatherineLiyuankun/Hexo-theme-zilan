@@ -10,6 +10,8 @@ categories:
 - Java
 ---
 
+# [Web-containers-web容器总结](../Web-containers-web容器总结.html)
+
 # Preface
 
  [官方安装文档](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/index.html)
@@ -78,10 +80,7 @@ cd <weblogicFoder>/user_projects/domains/base_domain/config
 vim config.xml
 ```
 
-
-
 ## 参考文章
 
 - [WebLogic使用总结(一)——WebLogic安装](https://www.cnblogs.com/xdp-gacl/p/4140683.html)
 - [Weblogic运维使用手册](https://cloud.tencent.com/developer/article/1501376)
-

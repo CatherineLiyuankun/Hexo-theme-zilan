@@ -13,13 +13,15 @@ categories:
 - Java
 ---
 
+# [Web-containers-web容器总结](../Web-containers-web容器总结.html)
+
 # JBoss 基本术语/概念
 
 ## JBoss EAP Vs JBoss AS Vs Wildfly
 
 > JBoss EAP is the JBoss Enterprise Application Platform that is a subscription based JavaEE application server; this is a Red Hat product; whereas Wildfly is the community product.
 
-作为JBoss的新手，会发现很多不同的术语-JBoss EAP，JBoss Server，Wildfly，Jboss Web，以及许多不是最新的或针对较旧版本的文档。
+作为JBoss的新手，会发现很多不同的术语-JBoss EAP，JBoss Server，Wildfly，Jboss Web，以及许多不是最新的或针对较旧版本的文档。按时间线来看的话：
 
 `JBoss AS` (JBoss Application Server) 是开源社区早期版本，发布比较频繁。内部封装的容器是基于Tomcat的升级版。最新版本是7.1.1，2012年3月发布的，已经不再维护。官方推荐升级到WildFly或者JBoss EAP。所以从JBoss AS 7.1.1之后分出了两个方向，分别是WildFly和JBoss EAP。
 网址：<https://jbossas.jboss.org/downloads>
@@ -46,10 +48,10 @@ categories:
 - Tomcat 是 JSP/Servlet 容器
 
 - JBoss 是 JEE 容器，JEE 包括JSP/Servlet，JMS， EJB，JAX-WS，JAX-RS，CDI等等
-  - JBoss是一个管理EJB的容器和服务器，但JBoss核心服务不包括支持servlet/JSP的WEB容器，一般与Tomcat或Jetty绑定使用。servlet容器还是tomcat，所以JBoss是基于tomcat的。
+  - JBoss是一个管理EJB的容器和服务器，但JBoss核心服务不包括支持servlet/JSP的WEB容器，一般与Tomcat或Jetty绑定使用。servlet容器还是tomcat，所以JBoss是基于tomcat的。从EAP 7开始(因此已经在WildFly 8,9,10中使用)，tomcat被称为`Undertow`的新Servlet容器/ http引擎取代。
   - JBoss无最大访问限制、可伸缩性。
 
-# JBoss 下载部署
+# JBoss 下载配置
 
 ## JBoss 下载
 
@@ -60,6 +62,8 @@ categories:
 
 ## JBoss 官方文档
 
+这里只列出部分常用配置文档：
+
 [JBOSS EAP 官方文档目录](https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.4)
 
 - [JBOSS EAP 官方文档-Getting Started Guide](https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.4/html/getting_started_guide/index)
@@ -69,8 +73,7 @@ categories:
   - [JBoss EAP 官方文档-1.4 Network and port configuration JBoss EAP](https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.4/html/getting_started_guide/administering_jboss_eap#assembly-network-port-configurations_default)
 - [JBOSS EAP 官方文档-INSTALLATION GUIDE](https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.4/html-single/installation_guide/index)
 - [JBOSS EAP 官方文档-Configuration Guide](https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.4/html-single/configuration_guide/index)
-
-## WAR(Web Application）的布署
+  - [JBOSS EAP 官方文档-Deploying Applications](https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html/configuration_guide/deploying_applications)
 
 ## JBoss 常用配置
 
@@ -148,6 +151,182 @@ JBoss EAP 中的高可用性 (HA) 是指多个 JBoss EAP 实例一起协同运�
 #### 操作模式
 
 除了向应用程序提供相关功能和 API 之外，JBoss EAP 还具备强大的管理功能。JBoss EAP 采用不同的操作模式启动，可以分别提供不同的管理功能。JBoss EAP 提供独立服务器操作模式用于管理分散的实例，提供受管域操作模式用于从单个控制点管理一组实例。
+
+# Web Application的部署
+
+[JBOSS EAP 官方文档-Deploying Applications](https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html/configuration_guide/deploying_applications)
+官方文档中有6种方法，这里只列出常用的方法，可根据生产/开发环境来选择合适的方式。
+
+> For administrators, the `management console` and the `management CLI` offer ideal graphical and command-line interfaces to manage application deployment in a production environment.
+
+对于管理员, `management console` 和 `management CLI` 提供理想的图形和命令行界面来管理生产环境中的应用程序部署.
+
+> For developers, the range of application deployment testing options include a configurable file system `deployment scanner`, the `HTTP API`, an `IDE` such as Red Hat CodeReady Studio, and `Maven`.
+
+对于开发人员，应用程序部署测试选项的范围包括可配置文件系统`deployment scanner`、`HTTP API`、`IDE`（例如 Red Hat CodeReady Studio）和`Maven`。
+
+
+部署方式 | Management CLI | Management Console | Deployment Scanner | Exploded | HTTP API | Maven
+---------|----------|---------|----------|---------|----------|---------
+ 环境 | 生产环境(推荐) | 生产环境 | 开发环境 | 开发环境 | 开发环境 | 开发环境
+ 需要上传文件到deployments文件夹下？ | No | No | YES | 根据部署方式
+
+## 使用Management CLI部署【官方推荐：生产环境】
+
+[JBOSS EAP 官方文档-Deploying Applications](https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html/configuration_guide/deploying_applications#deploying_apps_using_cli)
+
+<!-- 增加属性scan-enabled="false" -->
+此模式是官方推荐的生产环境部署应用方式，无需将应用上传至deployments文件夹下。首先保证test-application.war在服务器上，假设其路径为/path/to/test-application.war。
+
+1. 启动服务器，并使用`./jboss-cli.sh --connect`命令进入命令行管理界面。
+2. 执行命令`deployment deploy-file /path/to/test-application.war`部署应用。
+3. 取消部署时，在命令行管理界面执行 `deployment undeploy test-application.war`。
+应用的数据会在`EAP_HOME/standalone/data/content`下，并且standalone.xml最下方会出现deployments标签，显示已经部署的应用。
+
+- Disable某个application：
+Disable 不会把部署内容移除，只是暂时不启动。
+
+```bash
+deployment disable test-application.war
+```
+
+```bash
+deployment disable-all
+```
+
+- Enable某个application：
+  
+```bash
+deployment enable test-application.war
+```
+
+```bash
+deployment enable-all
+```
+
+- 列出deploy信息
+  
+```bash
+deployment info
+```
+
+## 使用Management Console部署【生产环境】
+
+Management Console，管理控制台。是jboss提供的web管理系统，所有的操作均可通过jboss-cli实现。默认用户名密码admin/admin, 可以通过 `EAP_HOME/bin/add-user.sh` 选择`a` management user, 进行添加或修改。
+[<http://localhost:9990/console/index.html>](http://localhost:9990/console/index.html)
+
+### 选择Deployments Tab
+
+![选择Deployments Tab](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/JBoss-WildFly-all-you-should-know/console.png)
+
+### 点击+，可以选择
+
+![选择Deployments Tab](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/JBoss-WildFly-all-you-should-know/console-deployment1.png)
+
+- Upload a deployment
+
+  Upload an application that will be copied to the server’s content repository and managed by JBoss EAP.
+
+- Adding an unmanaged deployment
+
+  Specify the location of a deployment. This deployment will not be copied to the server’s content repository and will not be managed by JBoss EAP.
+
+- Creating an empty deployment
+
+  Create an empty, exploded deployment. You can add files to the deployment after it has been created.
+
+### 选中application，可以选择
+
+![选择Deployments Tab](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/JBoss-WildFly-all-you-should-know/console-deployment2.png)
+
+- Undeploy an Application
+  Select the deployment and choose the `Remove` option to undeploy the application. This undeploys the deployment and removes it from the content repository.
+
+- Disable an Application
+  Select the deployment and choose the `Disable` option to disable the application. This undeploys the deployment, but does not remove it from the content repository.
+
+- Replace an Application
+  Select the deployment and choose the `Replace` option. Select the new version of the deployment, which must have the same name as the original, and click Finish. This undeploys and removes the original version of the deployment, and then deploys the new version.
+
+## 使用Deployment Scanner部署【适合开发环境】
+
+### Deploy an Application
+
+在默认配置下，将war包拷贝至`EAP_HOME/standalone/deployments/`，服务器会在启动时，每5秒间隔检查deployments下的文件变化，部署应用。
+此外，Deployment Scanner不应与其他部署方法结合使用。
+> Deployment Scanner仅在 JBoss EAP 作为standalone服务器运行时可用。
+
+```bash
+cp /path/to/test-application.war EAP_HOME/standalone/deployments/
+```
+
+如果启用了自动部署，则会自动选取、部署此文件，并创建`.dodeploy`标记文件。
+如果未启用自动部署，则需要手动添加`.dodeploy` 标记文件以触发部署。
+JBOSS在启动时会把这个文件名自动改成`test-application.war.deploying`。
+如果布署成功，该文件名会被自动改名成：`test-application.war.deployed`
+如果布署失败，该文件名会被自动改名成：`test-application.war.failed`
+
+```bash
+touch EAP_HOME/standalone/deployments/test-application.war.dodeploy
+```
+
+### UnDeploy
+
+删除`.dodeploy` 标记文件。如果启用自动部署，删除`.war`文件也会触发undeploy。
+
+### ReDeploy
+
+手动添加 `.dodeploy` 标记文件, 或者把之前的标记文件从`.deployed`或者`.failed`重命名为`.dodeploy`。
+
+```bash
+touch EAP_HOME/standalone/deployments/test-application.war.dodeploy
+```
+
+
+## 解压式部署【适合开发环境】
+
+解压式部署比war包部署的好处是，允许更改解压的应用程序的内容，而无需部署应用程序的新版本。
+在 JBoss EAP 7.1 之前，只能通过操作文件系统上的文件来管理解压部署。从 JBoss EAP 7.1 开始，可以使用管理界面management console管理解压式部署。
+
+### 手动部署
+
+在 JBoss EAP 7.1 之前，只能通过操作文件系统上的文件来管理解压部署。和Deployment Scanner部署比较相像， 唯一区别是需要手动解压war文件，并重命名。
+
+1. 解压test-application.war包到test-application文件夹，重命名test-application文件夹为`test-application.war`
+2. 拷贝解压好的war包拷贝至`EAP_HOME/standalone/deployments/`。
+
+```bash
+cp /path/to/test-application.war EAP_HOME/standalone/deployments/
+```
+
+3. 创建`.dodeploy`标记文件。 如果未启用自动部署，则需要手动添加`.dodeploy` 标记文件以触发部署。
+
+```bash
+touch EAP_HOME/standalone/deployments/test-application.war.dodeploy
+```
+4. UnDeploy和ReDeploy的方法也和Deployment Scanner部署一样。
+
+### management console部署
+
+从 JBoss EAP 7.1 开始，可以使用管理界面management console管理解压式部署。
+>对部署中的静态文件（例如 JavaScript 和 CSS 文件）的更新会立即生效。 对其他文件（例如 Java 类）的更改可能需要重新部署应用程序才能使更改生效。
+
+1. 选择Deployments Tab, 点击+, 选择`Creating an empty deployment`
+2. 填写文件夹路径`/path/to/test-application.war`
+
+### Management CLI部署
+
+#### 创建空的部署：
+
+```bash
+/deployment=DEPLOYMENT_NAME.war:add(content=[{empty=true}])
+```
+
+#### Explode an Existing Archive Deployment
+
+```bash
+/deployment=ARCHIVE_DEPLOYMENT_NAME.ear:explode
+```
 
 # 参考文章
 

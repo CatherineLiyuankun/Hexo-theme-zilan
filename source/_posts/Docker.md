@@ -16,14 +16,18 @@ categories:
 
 # Docker 基本概念
 
-镜像（`Image`）：Docker 镜像理解为一个包含了OS文件系统和应用的对象。是一个特殊的文件系统，除了提供容器运行时所需的程序、库、资源、配置等文件外，还包含了一些为运行时准备的一些配置参数（如匿名卷、环境变量、用户等）。镜像不包含任何动态数据，其内容在构建之后也不会被改变。
+镜像（`Image`）：Docker 镜像理解为一个包含了必要的操作系统（通常只有OS文件系统和文件系统对象）。是一个特殊的文件系统，除了提供容器运行时所需的程序、库、资源、配置等文件外，还包含了一些为运行时准备的一些配置参数（如匿名卷、环境变量、用户等）。镜像不包含任何动态数据，其内容在构建之后也不会被改变。镜像由一些松耦合的只读镜像层组成。多个镜像间可以并且确实会共享镜像层（节约空间提升性能）。
 
-容器（`Container`）：镜像（Image）和容器（Container）的关系，就像是面向对象程序设计中的`类` 和 `实例` 一样，镜像是静态的定义，容器是镜像运行时的实体， 一个镜像可以运行为多个容器。容器可以被创建、启动、停止、删除、暂停等。
+容器（`Container`）：镜像（Image）和容器（Container）的关系，就像是面向对象程序设计中的`类` 和 `实例` 一样，镜像是静态的定义，容器是镜像运行时的实体， 一个镜像可以运行为多个容器。容器可以被创建、启动、停止、删除、暂停等。可以停止某个容器的运行，并从中创建新的镜像。镜像可以理解为一种构建时（build-time）结构，容器为运行时（run-time）结构。一旦容器从镜像启动后，二者变成了相互依赖的关系，并且在镜像上启动的容器全部停止之前，镜像是无法被删除的。
 
-仓库（`Repository`）：仓库（Repository）类似Git的远程仓库，集中存放镜像文件。
+仓库（`Repository`）：镜像仓库（Image Registry）类似Git的远程仓库，集中存放镜像文件。Docker客户端的镜像仓库服务可配置，默认使用的镜像仓库是Docker Hub. 镜像仓库服务： 镜像仓库 = 1: N 镜像仓库: 镜像 = 1：N。`Docker Hub`分为`官方仓库（Official Repository）`和`非官方仓库（Unofficial Repository）`.
+  - `官方仓库（Official Repository）`: 镜像由官方审查过，及时更新，高质量，安全，完善文档，最佳实践。
+  - `非官方仓库（Unofficial Repository）`：非官方，不保证上述特性。
 
 三者关系：
-![三者关系](https://ask.qcloudimg.com/http-save/yehe-7565276/joa65awgh4.png?imageView2/2/w/1620)
+![三者关系](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Docker/docker1.png)
+
+`悬虚镜像`: Repository:Tag 为<none>:<none>. 因为构建了一个新的镜像，为该新镜像打了一个已经存在的Tag，Docker发现已经有镜像包含相同的Tag，会移除旧镜像上面的Tag，将Tag标在新镜像上， 旧镜像就成了悬虚镜像。
 
 ## 相关资料
 
@@ -32,7 +36,7 @@ categories:
 `版本号`： 从2017年第一季度开始，YY.MM-xx格式， 例如18.06.0-ce（18年6月社区版）
 `开放容器计划（The Open Container Initiative， OCI）`： 对容器基础架构中的基础组件进行标准化的管理委员会（在Linux基金会支持下运作）。 OCI已发布规范：`镜像规范`(类比铁轨尺寸)， `运行时规范`(类比相关属性).
 
-# Doker安装
+# Docker安装
 
  方式 | Docker for Windows(DfW) | Docker for Mac(DfM) | Linux | Windows Server2016
 ---------|----------|---------|----------|---------
@@ -52,9 +56,8 @@ Docker for Mac(DfM) 是一个流畅，简单并且稳定版的boot2docker.
 
 查看Docker系统信息（信息比`docker version`更多）
 
-
 ```bash
-$ docker system info
+docker system info
 ```
 
 查看Docker版本信息，包含Client和Server信息。
@@ -131,6 +134,218 @@ service docker restart
 
 ```bash
 service docker stop
+```
+
+## 镜像
+
+### 镜像仓库
+
+Docker Hub 等镜像仓库上有大量的高质量的镜像可以用，可以从仓库获取镜像。
+
+- 检索镜像
+  - `docker search 关键字` 搜索NAME字段含有关键字符串的仓库
+    - `docker search 关键字 --filter "is-official=true"` 过滤是否是官方镜像
+    - `docker search 关键字 --filter "is-automated=true"`过滤是否是自动创建的镜像
+    - `docker search 关键字 --limit 行数` 默认只返回25行结果，--limit 可设置返回行数，最多为100行
+- 拉取镜像
+  - `docker image pull <option> <DockerHub用户名组织名/repository>:<tag>` 
+    - 从官方Ubuntu库 拉取 标签为latest的镜像 `docker image pull ubuntu:latest`
+    - 默认标签为latest `docker image pull ubuntu`
+    - 注意！！！latest不一定代表是最新镜像
+    - 多个镜像可有相同tag
+    - 从官方Mongo库 拉取 标签为3.3.11的镜像`docker image pull mongo:3.3.11`
+    - 从Docker Hub 账号nigelpoulton为命名空间的tu-demon库下拉取v2标签的镜像`docker image pull nigelpoulton/tu-demo:v2`
+    - 从第三方镜像仓库服务获取，需在前面加上第三方镜像仓库服务DNS名称 例如Google容器镜像仓库（GCR） `docker image pull gcr.io/nigelpoulton/tu-demo:v2`
+  - `docker image pull -a <DockerHub用户名组织名/repository>` `-a` 拉取全部镜像
+  - `docker image pull <repository><Digest>``docker image pull ubuntu@sha256:c0537...7cj32rg42454` 通过镜像摘要Digest 拉取镜像，镜像摘要Digest是基于内容散列值（Content Hash），可区分出两个tag相同的镜像
+
+### 镜像管理
+
+- 列出镜像
+  - `docker image ls`
+    - `docker image ls -q` 获取全部镜像ID
+    - `docker image ls --filter` 过滤
+      - dangling: true(返回悬虚镜像) false (返回非悬虚镜像) `docker image ls --filter dangling=true`
+      - before: 镜像名/ID 返回指定镜像之前被创建的全部镜像
+      - since: 与before类似，返回指定镜像之后被创建的全部镜像
+      - label: 根据标注（lable）的名称或者值，对镜像进行过滤。`docker image ls`输出中不显示lable
+      - reference：`docker image ls --filter reference="*:latest"`
+    - `docker image ls --format` 通过Go模板对输出内容格式化
+      - `docker image ls --format "{{.Size}}"` 只返回镜像的Size属性
+      - `docker image ls --format "{{.Repository}}: {{.Tag}}: {{.Size}}"` 只返回镜像的Repository: Tag: Size属性
+    - `docker image ls --digest [镜像名/镜像ID]` 显示镜像摘要（Image Digest，镜像内容散列值）
+  - `docker images`
+
+- 查看镜像分层
+  - `docker image inspect [镜像名/镜像ID]`
+  
+- 移除全部的`悬虚镜像`
+  - `docker image prune`
+
+- 删除镜像
+  - 删除指定镜像`docker image rm <镜像Id>`
+  - 删除本地所有镜像`docker image rm $(docker image ls -q) -f`
+
+- 导出镜像
+  - 将镜像保存为归档文件
+  - docker save
+- 导入镜像
+  - docker load
+
+### Dockerfile构建镜像
+
+Dockerfile 是一个文本格式的配 文件，用户可以使用 Dockerfile 来快速创建自定义的镜像。
+
+Dockerfile 由一行行行命令语句组成，并且支持以＃开头的注释行.
+
+- Dockerfile常见指令
+下面是Dockerfile中一些常见的指令：
+
+  - FROM：指定基础镜像
+
+  - RUN：执行命令
+
+  - COPY：复制文件
+
+  - ADD：更高级的复制文件
+
+  - CMD：容器启动命令
+
+  - ENV：设置环境变量
+
+  - EXPOSE：暴露端口
+
+其它的指令还有ENTRYPOINT、ARG、VOLUME、WORKDIR、USER、HEALTHCHECK、ONBUILD、LABEL等等。
+
+以下是一个Dockerfile实例：
+
+```bash
+FROM java:8
+MAINTAINER "jinshw"<jinshw@qq.com>
+ADD mapcharts-0.0.1-SNAPSHOT.jar mapcharts.jar
+EXPOSE 8080
+CMD java -jar mapcharts.jar
+```
+
+- 镜像构建(在Dockerfile目录下运行)
+  - `docker image build -t test:latest`
+- 镜像运行
+镜像运行，就是新建并运行一个容器。
+
+  - `docker run [镜像ID]`
+
+## 容器
+
+### 容器生命周期
+
+- 查看容器
+
+```bash
+# 列出本机运行的容器
+$ docker ps
+$ docker container ls
+
+# 列出本机所有的容器（包括停止和运行）
+$ docker ps -a
+$ docker container ls -a
+```
+
+- 启动：启动容器有两种方式，一种是基于镜像新建一个容器并启动，另外一个是将在终止状态（stopped）的容器重新启动。
+
+```bash
+# 新建并启动
+docker container run [镜像名/镜像ID]
+# 例子 -it 将Shell切换到容器终端
+docker container run -it ubuntu:latest /bin/bash
+# 指定name为lyk 和 port为8080:8080
+docker container run -it --name lyk --publish 8080:8080 ubuntu:latest
+
+# 启动已终止容器
+docker start [容器ID or name]
+```
+
+- 退出容器
+ - Ctrl + PQ 退出容器时保持容器运行
+ - 从这个 stdin 中 exit，会导致容器的停止
+
+- 进入容器
+进入容器有两种方式：
+
+```bash
+# 如果从这个 stdin 中 exit，会导致容器的停止
+docker attach [容器ID or name]
+
+# 交互式进入运行中的容器
+docker exec <option> <container-name or container-ID> <command/app>
+docker exec -it 4dbcc6555bc6 bash
+```
+
+进入容器通常使用第二种方式，`docker exec`后面跟的常见参数如下：
+
+`－d, --detach` 在容器中后台执行命令；
+`－i, --interactive=true I false` ：打开标准输入接受用户输入命令
+
+- 停止容器
+
+```bash
+# 停止运行的容器
+docker stop [容器ID or name]
+
+# 杀死容器进程
+docker  kill [容器ID or name]
+```
+
+- 重启容器
+  - `docker restart [容器ID or name]`
+
+- 删除容器
+  - `docker  rm [容器ID or name]`
+
+
+### 导出和导入
+
+- 导出容器
+
+```bash
+# 导出一个已经创建的容器到一个文件
+docker export [容器ID or name]
+```
+
+- 导入容器
+
+```bash
+# 导出的容器快照文件可以再导入为镜像
+docker import [路径]
+```
+
+### 其它
+
+- 查看日志
+
+```bash
+# 导出的容器快照文件可以再导入为镜像
+docker logs [容器ID or name]
+```
+
+这个命令有以下常用参数
+
+```bash
+ -f : 跟踪日志输出
+
+--since :显示某个开始时间的所有日志
+
+-t : 显示时间戳
+
+--tail :仅列出最新N条容器日志
+```
+
+- 复制文件
+
+```bash
+# 从主机复制到容器
+sudo docker cp host_path containerID:container_path 
+# 从容器复制到主机
+sudo docker cp containerID:container_path host_path
 ```
 
 # 参考文章

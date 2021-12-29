@@ -21,8 +21,9 @@ categories:
 容器（`Container`）：镜像（Image）和容器（Container）的关系，就像是面向对象程序设计中的`类` 和 `实例` 一样，镜像是静态的定义，容器是镜像运行时的实体， 一个镜像可以运行为多个容器。容器可以被创建、启动、停止、删除、暂停等。可以停止某个容器的运行，并从中创建新的镜像。镜像可以理解为一种构建时（build-time）结构，容器为运行时（run-time）结构。一旦容器从镜像启动后，二者变成了相互依赖的关系，并且在镜像上启动的容器全部停止之前，镜像是无法被删除的。
 
 仓库（`Repository`）：镜像仓库（Image Registry）类似Git的远程仓库，集中存放镜像文件。Docker客户端的镜像仓库服务可配置，默认使用的镜像仓库是Docker Hub. 镜像仓库服务： 镜像仓库 = 1: N 镜像仓库: 镜像 = 1：N。`Docker Hub`分为`官方仓库（Official Repository）`和`非官方仓库（Unofficial Repository）`.
-  - `官方仓库（Official Repository）`: 镜像由官方审查过，及时更新，高质量，安全，完善文档，最佳实践。
-  - `非官方仓库（Unofficial Repository）`：非官方，不保证上述特性。
+
+- `官方仓库（Official Repository）`: 镜像由官方审查过，及时更新，高质量，安全，完善文档，最佳实践。
+- `非官方仓库（Unofficial Repository）`：非官方，不保证上述特性。
 
 三者关系：
 ![三者关系](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Docker/docker1.png)
@@ -148,7 +149,7 @@ Docker Hub 等镜像仓库上有大量的高质量的镜像可以用，可以从
     - `docker search 关键字 --filter "is-automated=true"`过滤是否是自动创建的镜像
     - `docker search 关键字 --limit 行数` 默认只返回25行结果，--limit 可设置返回行数，最多为100行
 - 拉取镜像
-  - `docker image pull <option> <DockerHub用户名组织名/repository>:<tag>` 
+  - `docker image pull <option> <DockerHub用户名组织名/repository>:<tag>`
     - 从官方Ubuntu库 拉取 标签为latest的镜像 `docker image pull ubuntu:latest`
     - 默认标签为latest `docker image pull ubuntu`
     - 注意！！！latest不一定代表是最新镜像
@@ -171,8 +172,17 @@ Docker Hub 等镜像仓库上有大量的高质量的镜像可以用，可以从
       - label: 根据标注（lable）的名称或者值，对镜像进行过滤。`docker image ls`输出中不显示lable
       - reference：`docker image ls --filter reference="*:latest"`
     - `docker image ls --format` 通过Go模板对输出内容格式化
-      - `docker image ls --format "{{.Size}}"` 只返回镜像的Size属性
-      - `docker image ls --format "{{.Repository}}: {{.Tag}}: {{.Size}}"` 只返回镜像的Repository: Tag: Size属性
+
+      ```bash
+      # 只返回镜像的Size属性
+      docker image ls --format "{{.Size}}"
+      ```
+
+      ```bash
+      # 只返回镜像的Repository: Tag: Size属性
+      docker image ls --format "{{.Repository}}: {{.Tag}}: {{.Size}}"
+      ```
+
     - `docker image ls --digest [镜像名/镜像ID]` 显示镜像摘要（Image Digest，镜像内容散列值）
   - `docker images`
 
@@ -265,8 +275,8 @@ docker start [容器ID or name]
 ```
 
 - 退出容器
- - Ctrl + PQ 退出容器时保持容器运行
- - 从这个 stdin 中 exit，会导致容器的停止
+- Ctrl + PQ 退出容器时保持容器运行
+- 从这个 stdin 中 exit，会导致容器的停止
 
 - 进入容器
 进入容器有两种方式：
@@ -300,7 +310,6 @@ docker  kill [容器ID or name]
 
 - 删除容器
   - `docker  rm [容器ID or name]`
-
 
 ### 导出和导入
 

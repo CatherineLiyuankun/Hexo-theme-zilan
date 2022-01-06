@@ -28,6 +28,24 @@ categories:
 三者关系：
 ![三者关系](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Docker/docker1.png)
 
+## 容器Vs虚拟机
+
+容器优势：
+- `OS Tax/VM Tas`: 虚拟机操作系统OS本身有额外开销。
+- 容器启动快： 容器不是完整操作系统，容器内部不需要内核，也就没有定位、解压以及初始化的过程。
+
+虚拟化：
+- 硬件虚拟化（`Hardware Virtualization`）: Hypervisor将硬件物理资源划分为虚拟资源。
+- 操作系统虚拟化（`Hardware Virtualization`）: 容器将系统资源划分为虚拟资源。
+
+## 容器（`Container`）
+
+容器随着运行应用的退出而终止。 
+  - `docker container run -it ubuntu /bin/bash` Linux容器在Bash Shell退出后终止.
+  - `docker container run -it microsoft- /powershell:nanoserver pwsh.exe` Windows容器在PowerShell进程退出后终止.
+
+## 镜像（`Image`）
+
 `悬虚镜像`: Repository:Tag 为<none>:<none>. 因为构建了一个新的镜像，为该新镜像打了一个已经存在的Tag，Docker发现已经有镜像包含相同的Tag，会移除旧镜像上面的Tag，将Tag标在新镜像上， 旧镜像就成了悬虚镜像。
 
 ## 相关资料
@@ -53,6 +71,31 @@ Docker for Mac(DfM) 是一个流畅，简单并且稳定版的boot2docker.
 
 ![Docker 常用命令](https://ask.qcloudimg.com/http-save/yehe-7565276/6lldlbgfhn.png?imageView2/2/w/1620)
 
+## 参数（Options）
+
+### `docker run` Options
+
+`--help` 输出帮助信息，例如`docker run --help`
+`－d, --detach` 在容器中后台执行命令；
+`－i, --interactive` ：打开标准输入接受用户输入命令（Keep STDIN open even if not attached）
+`-t, --tty`           Allocate a pseudo-TTY
+
+### `docker` Options
+
+      --config string      Location of client config files (default "/Users/liyuankun/.docker")
+  -c, --context string     Name of the context to use to connect to the daemon (overrides DOCKER_HOST env var
+                           and default context set with "docker context use")
+  -D, --debug              Enable debug mode
+  -H, --host list          Daemon socket(s) to connect to
+  -l, --log-level string   Set the logging level ("debug"|"info"|"warn"|"error"|"fatal") (default "info")
+      --tls                Use TLS; implied by --tlsverify
+      --tlscacert string   Trust certs signed only by this CA (default "/Users/liyuankun/.docker/ca.pem")
+      --tlscert string     Path to TLS certificate file (default "/Users/liyuankun/.docker/cert.pem")
+      --tlskey string      Path to TLS key file (default "/Users/liyuankun/.docker/key.pem")
+      --tlsverify          Use TLS and verify the remote
+  -v, --version            输出版本信息（Print version information and quit）
+
+
 ## 服务
 
 查看Docker系统信息（信息比`docker version`更多）
@@ -62,6 +105,11 @@ docker system info
 ```
 
 查看Docker版本信息，包含Client和Server信息。
+如果Server中包含错误码，表示
+1. 或者当前用户没有权限访问。 解决方法： 确认用户是否属于本地Docker UNIX组，若不是，`usermod -aG docker <user>`来添加，退出并重新登录Shell
+2. Docker daemon可能没有运行。 解决方法：检查Docker daemon状态 `server docker status`
+   
+
 
 ```bash
 $ docker version
@@ -183,17 +231,17 @@ Docker Hub 等镜像仓库上有大量的高质量的镜像可以用，可以从
       docker image ls --format "{{.Repository}}: {{.Tag}}: {{.Size}}"
       ```
 
-    - `docker image ls --digest [镜像名/镜像ID]` 显示镜像摘要（Image Digest，镜像内容散列值）
+    - `docker image ls --digest <image-name or image-id>` 显示镜像摘要（Image Digest，镜像内容散列值）
   - `docker images`
 
 - 查看镜像分层
-  - `docker image inspect [镜像名/镜像ID]`
+  - `docker image inspect <image-name or image-id>`
   
 - 移除全部的`悬虚镜像`
   - `docker image prune`
 
 - 删除镜像
-  - 删除指定镜像`docker image rm <镜像Id>`
+  - 删除指定镜像`docker image rm <image-name or image-id>`
   - 删除本地所有镜像`docker image rm $(docker image ls -q) -f`
 
 - 导出镜像
@@ -242,7 +290,7 @@ CMD java -jar mapcharts.jar
 - 镜像运行
 镜像运行，就是新建并运行一个容器。
 
-  - `docker run [镜像ID]`
+  - `docker run <image-name or image-id>` `docker run [OPTIONS] IMAGE [COMMAND] [ARG...]`
 
 ## 容器
 
@@ -264,14 +312,14 @@ $ docker container ls -a
 
 ```bash
 # 新建并启动
-docker container run [镜像名/镜像ID]
+docker container run <image-name or image-id> <app>
 # 例子 -it 将Shell切换到容器终端
 docker container run -it ubuntu:latest /bin/bash
 # 指定name为lyk 和 port为8080:8080
 docker container run -it --name lyk --publish 8080:8080 ubuntu:latest
 
 # 启动已终止容器
-docker start [容器ID or name]
+docker start <container-id or container-name>
 ```
 
 - 退出容器
@@ -283,7 +331,7 @@ docker start [容器ID or name]
 
 ```bash
 # 如果从这个 stdin 中 exit，会导致容器的停止
-docker attach [容器ID or name]
+docker attach <container-id or container-name>
 
 # 交互式进入运行中的容器
 docker exec <option> <container-name or container-ID> <command/app>
@@ -299,17 +347,17 @@ docker exec -it 4dbcc6555bc6 bash
 
 ```bash
 # 停止运行的容器
-docker stop [容器ID or name]
+docker stop <container-id or container-name>
 
 # 杀死容器进程
-docker  kill [容器ID or name]
+docker  kill <container-id or container-name>
 ```
 
 - 重启容器
-  - `docker restart [容器ID or name]`
+  - `docker restart <container-id or container-name>`
 
 - 删除容器
-  - `docker  rm [容器ID or name]`
+  - `docker  rm <container-id or container-name>`
 
 ### 导出和导入
 
@@ -317,14 +365,14 @@ docker  kill [容器ID or name]
 
 ```bash
 # 导出一个已经创建的容器到一个文件
-docker export [容器ID or name]
+docker export <container-id or container-name>
 ```
 
 - 导入容器
 
 ```bash
 # 导出的容器快照文件可以再导入为镜像
-docker import [路径]
+docker import <路径>
 ```
 
 ### 其它
@@ -333,7 +381,7 @@ docker import [路径]
 
 ```bash
 # 导出的容器快照文件可以再导入为镜像
-docker logs [容器ID or name]
+docker logs <container-id or container-name>
 ```
 
 这个命令有以下常用参数
@@ -360,3 +408,4 @@ sudo docker cp containerID:container_path host_path
 # 参考文章
 
 - [一张脑图整理Docker常用命令](https://cloud.tencent.com/developer/article/1772136)
+- 《深入浅出Docker》书

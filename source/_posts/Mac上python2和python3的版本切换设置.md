@@ -43,7 +43,7 @@ which python
 
 ```python
 which python3
-/Library/Frameworks/Python.framework/Versions/3.8/bin/python3
+/Library/Frameworks/Python.framework/Versions/3.9/bin/python3
 ```
 
 ## 查看python版本
@@ -73,9 +73,9 @@ vi ~/.zprofile
 # The original version is saved in .bash_profile.pysave
 export PATH="/usr/bin:${PATH}"
 
-# Setting PATH for Python 3.8
+# Setting PATH for Python 3.9
 # The original version is saved in .bash_profile.pysave
-export PATH="/Library/Frameworks/Python.framework/Versions/3.8/bin:${PATH}"
+export PATH="/Library/Frameworks/Python.framework/Versions/3.9/bin:${PATH}"
 
 # If you using Homebrew to install Python 3
 # export PATH="/usr/local/bin:${PATH}"
@@ -96,9 +96,9 @@ vi ~/.zshrc
 ```vim
 # python
 alias python2='/usr/bin/python2.7'
-alias python3='/Library/Frameworks/Python.framework/Versions/3.8/bin/python3.8'
+alias python3='/Library/Frameworks/Python.framework/Versions/3.9/bin/python3.9'
 # If you using Homebrew to install Python 3
-# alias python3='/usr/local/bin/python3.8'
+# alias python3='/usr/local/bin/python3.9'
 alias python=python3
 ```
 
@@ -118,7 +118,7 @@ Python 3.8.0
 $ which python2
 python2: aliased to /usr/bin/python2.7
 $ which python3
-python3: aliased to /Library/Frameworks/Python.framework/Versions/3.8/bin/python3.8
+python3: aliased to /Library/Frameworks/Python.framework/Versions/3.9/bin/python3.9
 $ which python
 python: aliased to python3
 ```

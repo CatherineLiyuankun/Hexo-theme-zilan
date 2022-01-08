@@ -5,6 +5,12 @@ date: 2020-06-10 20:50:27
 subtitle:
 header-img:
 tags:
+- Python
+- Command line
+categories:
+- TECH
+- Language
+- Python
 ---
 
 # 安装Python

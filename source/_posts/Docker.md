@@ -43,6 +43,27 @@ categories:
 容器随着运行应用的退出而终止。 
   - `docker container run -it ubuntu /bin/bash` Linux容器在Bash Shell退出后终止.
   - `docker container run -it microsoft- /powershell:nanoserver pwsh.exe` Windows容器在PowerShell进程退出后终止.
+  - 
+
+杀死容器中的主进程，容器也会被杀死：
+
+```bash
+$ docker container run -it ubuntu:latest /bin/bash
+# 查看容器内进程
+root@3027eb644874:/# ps -elf
+# 退出容器
+  # Ctrl + PQ 退出容器时保持容器运行
+  # 从这个 stdin 中 exit()，会导致容器的停止
+Ctrl + PQ
+
+$ docker exec -it 3027eb644874 bash
+root@3027eb644874:/#
+# docker exec创建了新的Bash进程并且连接到容器，所以现在输入exit()并不会导致容器种植，因为原Bash进程还在运行中
+```
+
+### Docker 端口
+
+Docker默认非TLS网络端口为2375，默认TLS网络端口为2376。
 
 ## 镜像（`Image`）
 
@@ -98,16 +119,17 @@ Docker for Mac(DfM) 是一个流畅，简单并且稳定版的boot2docker.
 
 ## 服务
 
-查看Docker系统信息（信息比`docker version`更多）
+### 查看Docker系统信息（信息比`docker version`更多）
 
 ```bash
 docker system info
 ```
 
-查看Docker版本信息，包含Client和Server信息。
+### 查看Docker版本信息，包含Client和Server信息。
+
 如果Server中包含错误码，表示
 1. 或者当前用户没有权限访问。 解决方法： 确认用户是否属于本地Docker UNIX组，若不是，`usermod -aG docker <user>`来添加，退出并重新登录Shell
-2. Docker daemon可能没有运行。 解决方法：检查Docker daemon状态 `server docker status`
+2. Docker daemon可能没有运行。 解决方法：检查Docker daemon状态 `service docker status`
    
 
 
@@ -143,8 +165,7 @@ Server: Docker Engine - Community
   Version:          0.19.0
   GitCommit:        de40ad0
 ```
-
-查看docker简要信息
+#### 查看docker简要信息
 
 ```bash
 $ docker -v
@@ -155,34 +176,57 @@ Docker version 20.10.11, build dea9396
 docker --version
 ```
 
-启动Docker
+### 检查Docker daemon状态
 
 ```bash
+# 使用System V在Linux系统中执行命令
+$ service docker status
+docker start/running, process 29393
+```
+
+```bash
+# 使用SystemD 在Linux系统中执行命令
+$ systemctl is-active docker
+active
+```
+
+```bash
+# 在Windows Server 2016 的PowerShell窗口中执行命令
+> Get-Service docker
+Status    Name     DisplayName
+------    ----     -----------
+Running   Docker   docker
+```
+
+### 启动Docker服务
+
+```bash
+# 使用SystemD 在Linux系统中执行命令
 systemctl start docker
 ```
 
-关闭docker
-
 ```bash
-systemctl stop docker
-```
-
-设置开机启动
-
-```bash
-systemctl enable docker
-```
-
-重启docker服务
-
-```bash
+# 使用System V在Linux系统中执行命令
 service docker restart
 ```
 
-关闭docker服务
+### 关闭docker服务
 
 ```bash
+# 使用SystemD 在Linux系统中执行命令
+systemctl stop docker
+```
+
+```bash
+# 使用System V在Linux系统中执行命令
 service docker stop
+```
+
+### 设置开机启动
+
+```bash
+# 使用SystemD 在Linux系统中执行命令
+systemctl enable docker
 ```
 
 ## 镜像
@@ -290,7 +334,7 @@ CMD java -jar mapcharts.jar
 - 镜像运行
 镜像运行，就是新建并运行一个容器。
 
-  - `docker run <image-name or image-id>` `docker run [OPTIONS] IMAGE [COMMAND] [ARG...]`
+  - `docker container run <image-name or image-id>` `docker container run [OPTIONS] IMAGE [COMMAND] [ARG...]`
 
 ## 容器
 
@@ -312,19 +356,23 @@ $ docker container ls -a
 
 ```bash
 # 新建并启动
-docker container run <image-name or image-id> <app>
+$ docker container run <option> <image-name or image-id>:<tag> <app>
+
 # 例子 -it 将Shell切换到容器终端
-docker container run -it ubuntu:latest /bin/bash
+$ docker container run -it ubuntu:latest /bin/bash
+root@3027eb644874:/#
+# 3027eb644874是容器唯一ID的前12个字符
+
 # 指定name为lyk 和 port为8080:8080
-docker container run -it --name lyk --publish 8080:8080 ubuntu:latest
+$ docker container run -it --name lyk --publish 8080:8080 ubuntu:latest
 
 # 启动已终止容器
 docker start <container-id or container-name>
 ```
 
 - 退出容器
-- Ctrl + PQ 退出容器时保持容器运行
-- 从这个 stdin 中 exit，会导致容器的停止
+  - Ctrl + PQ 退出容器时保持容器运行
+  - 从这个 stdin 中 exit，会导致容器的停止
 
 - 进入容器
 进入容器有两种方式：
@@ -347,17 +395,19 @@ docker exec -it 4dbcc6555bc6 bash
 
 ```bash
 # 停止运行的容器
+# 给容器进程发送SIGTTERM信号
 docker stop <container-id or container-name>
 
 # 杀死容器进程
 docker  kill <container-id or container-name>
 ```
 
+- 删除容器
+  - `docker rm <container-id or container-name>` 删除容器前，最好先`docker stop `容器，给容器中运行的应用/进程一个停止运行并清理残留数据的机会。# 给容器进程发送SIGKILL信号
+  - `docker rm <container-id or container-name> -f`。删除所有运行中的容器
+
 - 重启容器
   - `docker restart <container-id or container-name>`
-
-- 删除容器
-  - `docker  rm <container-id or container-name>`
 
 ### 导出和导入
 
@@ -409,3 +459,5 @@ sudo docker cp containerID:container_path host_path
 
 - [一张脑图整理Docker常用命令](https://cloud.tencent.com/developer/article/1772136)
 - 《深入浅出Docker》书
+- [System-V 与 SystemD 区别](../System-V-与-SystemD-区别.html)
+- [Docker概述-状态转换，命令](https://www.codenong.com/bc35c4295aaef7fb6b8c/)

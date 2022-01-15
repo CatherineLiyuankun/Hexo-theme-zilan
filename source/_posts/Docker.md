@@ -47,8 +47,6 @@ categories:
 - `docker container run -it ubuntu /bin/bash` Linux容器在Bash Shell退出后终止.
 - `docker container run -it microsoft- /powershell:nanoserver pwsh.exe` Windows容器在PowerShell进程退出后终止.
 
--
-
 杀死容器中的主进程，容器也会被杀死：
 
 ```bash
@@ -139,6 +137,10 @@ CONTAINER ID   IMAGE           COMMAND       CREATED          STATUS            
 
 Docker默认非TLS网络端口为2375，默认TLS网络端口为2376。
 
+### Docker 持久化
+
+stop 或 pause容器并不会导致容器销毁，或者内部存储的数据丢失。
+
 ## 镜像（`Image`）
 
 `悬虚镜像`: Repository:Tag 为<none>:<none>. 因为构建了一个新的镜像，为该新镜像打了一个已经存在的Tag，Docker发现已经有镜像包含相同的Tag，会移除旧镜像上面的Tag，将Tag标在新镜像上， 旧镜像就成了悬虚镜像。
@@ -165,34 +167,6 @@ Docker for Mac(DfM) 是一个流畅，简单并且稳定版的boot2docker.
 # Docker 常用命令
 
 ![Docker 常用命令](https://ask.qcloudimg.com/http-save/yehe-7565276/6lldlbgfhn.png?imageView2/2/w/1620)
-
-## 参数（Options）
-
-### `docker container run` Options
-
-`--help` 输出帮助信息，例如`docker run --help`
-`－d, --detach` 在容器中后台执行命令；
-`－i, --interactive` ：打开标准输入接受用户输入命令（Keep STDIN open even if not attached）
-`-t, --tty`           Allocate a pseudo-TTY
-`--restart always`: 设置重启策略，例如`docker container run -it --restart always ubuntu:latest /bin/bash`
-`--name`: 设置容器名称
-`-p, --publish`: 端口映射  主机端口：容器端口`docker container run -it --name lyk --publish 8080:8080 ubuntu:latest`
-`-f`: force 强制执行
-
-### `docker` Options
-
-      --config string      Location of client config files (default "/Users/liyuankun/.docker")
-  -c, --context string     Name of the context to use to connect to the daemon (overrides DOCKER_HOST env var
-                           and default context set with "docker context use")
-  -D, --debug              Enable debug mode
-  -H, --host list          Daemon socket(s) to connect to
-  -l, --log-level string   Set the logging level ("debug"|"info"|"warn"|"error"|"fatal") (default "info")
-      --tls                Use TLS; implied by --tlsverify
-      --tlscacert string   Trust certs signed only by this CA (default "/Users/liyuankun/.docker/ca.pem")
-      --tlscert string     Path to TLS certificate file (default "/Users/liyuankun/.docker/cert.pem")
-      --tlskey string      Path to TLS key file (default "/Users/liyuankun/.docker/key.pem")
-      --tlsverify          Use TLS and verify the remote
-  -v, --version            输出版本信息（Print version information and quit）
 
 ## 服务
 
@@ -383,48 +357,138 @@ Docker Hub 等镜像仓库上有大量的高质量的镜像可以用，可以从
 - 导入镜像
   - docker load
 
-### Dockerfile构建镜像
+## Dockerfile构建镜像
 
-Dockerfile 是一个文本格式的配 文件，用户可以使用 Dockerfile 来快速创建自定义的镜像。
+`容器化（Containerizing）`也叫`Docker化(Dockerizing)`： 将应用整合到容器中并运行起来的过程。
+容器化过程：
 
-Dockerfile 由一行行行命令语句组成，并且支持以＃开头的注释行.
+1. 编写应用代码
+2. 创建Dockerfile，其中包含当前应用描述、依赖以及如何运行这个应用。
+3. 对Dockerfile执行`docker image build`命令
+4. 等待Docker将应用程序构建到Docker镜像中。
+
+### Dockerfile
+
+`Dockerfile` 是一个文本格式的配置文件，用户可以使用 Dockerfile 来快速创建自定义的镜像。
+`Dockerfile` 由一行行行命令语句组成，并且支持以＃开头的注释行.除注释行，每一行都是一条`指令（Instruction）`.
+指令不区分大小写，通常采用大写。
+`构建上下文（Build Context）`: 包含应用文件的目录。
+通常将Dockerfile放在构建上下文的根目录下。
 
 - Dockerfile常见指令
 下面是Dockerfile中一些常见的指令：
 
-  - FROM：指定基础镜像
+  - `FROM`：指定`基础镜像（Base Image）`
 
-  - RUN：执行命令
+  - `RUN`：执行命令
 
-  - COPY：复制文件
+  - `COPY`：复制文件
 
-  - ADD：更高级的复制文件
+  - `ADD`：更高级的复制文件
 
-  - CMD：容器启动命令
+  - `CMD`：容器启动命令
 
-  - ENV：设置环境变量
+  - `ENV`：设置环境变量
 
-  - EXPOSE：暴露端口
+  - `EXPOSE`：暴露端口
 
-其它的指令还有ENTRYPOINT、ARG、VOLUME、WORKDIR、USER、HEALTHCHECK、ONBUILD、LABEL等等。
+其它的指令还有`ENTRYPOINT`、`ARG`、`VOLUME`、`WORKDIR`、`USER`、`HEALTHCHECK`、`ONBUILD`、`LABEL`等等。
 
 以下是一个Dockerfile实例：
 
 ```bash
 FROM java:8
+LABEL maintainer="yuanli@gmail.com"
 MAINTAINER "jinshw"<jinshw@qq.com>
 ADD mapcharts-0.0.1-SNAPSHOT.jar mapcharts.jar
 EXPOSE 8080
 CMD java -jar mapcharts.jar
 ```
 
-- 镜像构建(在Dockerfile目录下运行)
-  - `docker image build -t test:latest`
-- 镜像运行
-镜像运行，就是新建并运行一个容器。
+```Dockerfile
+# 1 apine作为基础镜像， 是镜像的第一个镜像层layer
+FROM apine
+# 2 维护者为yuanli@gmail.com
+LABEL maintainer="yuanli@gmail.com"
+# 3 安装Node.js 和NPM，新建镜像层2
+RUN apk add --update nodejs nodejs-npm
+# 4 将应用代码拷贝到当前镜像中，新建镜像层3
+COPY . /src
+# 5 设置工作目录
+WORKDIR /src
+# 6 npm install会根据package.json文件用npm安装应用的依赖包，新建镜像层4
+RUN npm install
+# 7 应用需要通过TCP端口8080对外提供web服务
+EXPOSE 8080
+# 8 指定镜像的入口程序 
+ENTRYPOINT ["node", "./app.js"]
+```
 
-  - `docker container run <image-name or image-id>` `docker container run [OPTIONS] IMAGE [COMMAND] [ARG...]`
+#### 如何区分命令是否会新建镜像层？
 
+- if 向镜像中添加新的文件或程序，then 新建镜像层。例如例子中的1，3，4，6
+- if 只是告诉Docker如何完成构建或如何运行应用程序，then 增加镜像的元数据。例如例子中的2，5，7，8
+
+### 构建命令
+
+#### 镜像构建`docker image build`
+
+镜像构建(在Dockerfile目录下运行)
+`docker image build -t test:latest .`
+
+- `.`表示使用当前目录作为构建上下文
+- `--no-cache=true` 强制忽略缓存，不使用缓存构建镜像
+- `--squash` 创建一个合并镜像
+
+构建过程：
+
+1. 运行临时容器  `---> Running in e60ddca785f`
+2. 在该容器中运行Dockerfile中的指令
+3. 将指令运行结果保存为一个新的镜像层 `---> cldddca785f`
+4. 删除临时容器 `Removing intermediate container`
+
+#### 查看构建镜像过程中执行的指令`docker image history`
+
+`docker image history test:latest`
+
+- 每行都对应Dockerfile中的一条指令
+- SIZE列数值不为零的指令，表示新建镜像层
+
+### 生产环境中的多阶段构建
+
+Docker镜像应尽量小， 对生产环境来说，缩小到仅包含运行应用所必须的内容即可。
+
+#### Docker镜像如何尽量小？
+
+1. Dockerfile的写法： 每个RUN指令会新增一个镜像层，通过使用&&连接多个命令以及使用反斜杠（\）换行的方法，将多个命令煲仔一个RUN指令字中。
+2. 利用构建缓存：
+
+- 一旦有指令在缓存中未命中，后续整个构建过程将不再使用缓存。所以编写Dockerfile时，将容易放生变化的指令放在Dockerfile文件靠后的位置执行。
+  - `docker image build`参数 `--no-cache=true` 强制忽略缓存，不使用缓存构建镜像
+- `COPY``ADD`指令会检查复制到镜像中的内容自上一次构建之后是否发生了变化。`COPY . /src` 指令没有变化，但被复制的内容发生变化了。Docker会计算每个被复制文件的Checksum值，并与缓存镜像层中同一个文件的checksum对比，如果不匹配，则认为缓存无效并构建新的镜像层。
+
+3. 合并镜像
+
+镜像层数过多时，可以合并镜像。如果新建了一个镜像，想把它作为其他镜像的基础镜像时，这个基础镜像最后被合并为一层。
+缺点： 合并的镜像无法共享镜像层，存储空间低效利用。而且push和pull操作的镜像体积更大。
+`docker image build`参数 `--squash` 创建一个合并镜像
+
+4. 使用no-install-recommends（Linux）
+
+构建Linux镜像时，若使用APT包管理器，在执行`apt-get install`时增加`no-install-recommends`参数。确保APT只安装核心依赖，而不是推荐和建议的包， 减少不必要包的下载数量。
+
+5. 不要安装MSI包（Windows）
+
+构建Windows镜像时，尽量避免使用MSI包管理器。其对空间利用率不高，会大幅增加镜像体积。
+
+#### 构建清理？
+
+构建镜像过程中拉取的构建工具在构建完成后没有清理，就会留在镜像中移交至生产环境。
+
+- 方法一：`建造者模式（Builder Pattern）`： 两个Dockerfile, 开发环境Dockerfile.dev(构建一个镜像并创建容器)， 生产环境Dockerfile.prod(从刚才创建的容器中将应用程序的部分复制过来). 需要编写额外的脚本才能串联起来。
+
+- 方法二（更好，建议使用）：`多阶段构建(Multi-Stage Build)`： 一个Dockerfile， 包含多个`FROM`指令。每个`FROM`指令都是一个新的`构建阶段（Build Stage）`, 并且可以方便地复制之前构建阶段的构件。
+  
 ## 容器
 
 ### 容器生命周期
@@ -452,7 +516,7 @@ $ docker container run -it ubuntu:latest /bin/bash
 root@3027eb644874:/#
 # 3027eb644874是容器唯一ID的前12个字符
 
-# 指定name为lyk 和 port为8080:8080
+# 指定name为lyk 和 port映射为 host-port:container-port 8080:8080
 $ docker container run -it --name lyk --publish 8080:8080 ubuntu:latest
 ```
 
@@ -483,6 +547,9 @@ docker exec -it 4dbcc6555bc6 bash
 `－d, --detach` 在容器中后台执行命令；
 `－i, --interactive=true I false` ：打开标准输入接受用户输入命令
 
+- 暂停容器
+  `docker container pause <container-id or container-name>`
+
 - 停止容器
 
 ```bash
@@ -496,7 +563,8 @@ docker  kill <container-id or container-name>
 
 - 删除容器
   - `docker container rm <container-id or container-name>` 删除容器前，最好先`docker stop`容器，给容器中运行的应用/进程一个停止运行并清理残留数据的机会。# 给容器进程发送SIGKILL信号
-  - `docker container rm $(docker container ls -aq) -f`。删除所有运行中的容器
+  - `docker container rm $(docker container ls -aq) -f`。删除所有运行中的容器.
+    - `-f`: force 强制执行， 运行状态的容器也会被删除。
 
 - 重启容器
   - `docker restart <container-id or container-name>`
@@ -549,6 +617,37 @@ sudo docker cp host_path containerID:container_path
 # 从容器复制到主机
 sudo docker cp containerID:container_path host_path
 ```
+
+## 参数（Options）
+
+### `docker container run` Options
+
+`--help` 输出帮助信息，例如`docker run --help`
+`－d, --detach` 在容器中后台执行命令；
+`－i, --interactive` ：打开标准输入接受用户输入命令（Keep STDIN open even if not attached）
+`-t, --tty`           Allocate a pseudo-TTY
+`--restart always`: 设置重启策略，例如`docker container run -it --restart always ubuntu:latest /bin/bash`
+`--name`: 设置容器名称
+`-p, --publish`: 端口映射  主机端口：容器端口`docker container run -it --name lyk --publish 8080:8080 ubuntu:latest`
+
+### `docker container rm` Options
+
+`-f`: force 强制执行， 运行状态的容器也会被删除。
+
+### `docker` Options
+
+      --config string      Location of client config files (default "/Users/liyuankun/.docker")
+  -c, --context string     Name of the context to use to connect to the daemon (overrides DOCKER_HOST env var
+                           and default context set with "docker context use")
+  -D, --debug              Enable debug mode
+  -H, --host list          Daemon socket(s) to connect to
+  -l, --log-level string   Set the logging level ("debug"|"info"|"warn"|"error"|"fatal") (default "info")
+      --tls                Use TLS; implied by --tlsverify
+      --tlscacert string   Trust certs signed only by this CA (default "/Users/liyuankun/.docker/ca.pem")
+      --tlscert string     Path to TLS certificate file (default "/Users/liyuankun/.docker/cert.pem")
+      --tlskey string      Path to TLS key file (default "/Users/liyuankun/.docker/key.pem")
+      --tlsverify          Use TLS and verify the remote
+  -v, --version            输出版本信息（Print version information and quit）
 
 # 参考文章
 

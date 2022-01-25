@@ -31,19 +31,23 @@ categories:
 ## 容器Vs虚拟机
 
 容器优势：
+
 - `OS Tax/VM Tas`: 虚拟机操作系统OS本身有额外开销。
 - 容器启动快： 容器不是完整操作系统，容器内部不需要内核，也就没有定位、解压以及初始化的过程。
 
 虚拟化：
+
 - 硬件虚拟化（`Hardware Virtualization`）: Hypervisor将硬件物理资源划分为虚拟资源。
 - 操作系统虚拟化（`Hardware Virtualization`）: 容器将系统资源划分为虚拟资源。
 
 ## 容器（`Container`）
 
-容器随着运行应用的退出而终止。 
-  - `docker container run -it ubuntu /bin/bash` Linux容器在Bash Shell退出后终止.
-  - `docker container run -it microsoft- /powershell:nanoserver pwsh.exe` Windows容器在PowerShell进程退出后终止.
-  - 
+### 容器随着运行应用的退出而终止
+
+- `docker container run -it ubuntu /bin/bash` Linux容器在Bash Shell退出后终止.
+- `docker container run -it microsoft- /powershell:nanoserver pwsh.exe` Windows容器在PowerShell进程退出后终止.
+
+-
 
 杀死容器中的主进程，容器也会被杀死：
 
@@ -59,6 +63,76 @@ Ctrl + PQ
 $ docker exec -it 3027eb644874 bash
 root@3027eb644874:/#
 # docker exec创建了新的Bash进程并且连接到容器，所以现在输入exit并不会导致容器种植，因为原Bash进程还在运行中
+```
+
+### 重启策略
+
+`--restart [重启策略]`: 设置重启策略，例如`docker container run -it  --restart always ubuntu:latest /bin/bash`
+
+重启策略 | always | unless-stopped | on-failed
+---------|----------|---------|---------
+策略  | if not 容器被明确停止（例如`docker container stop`）， 重启处于停止状态的容器 | if not 容器被明确停止（例如`docker container stop`）， 重启处于停止状态的容器 | if 退出容器&&返回值!=0， 重启容器
+daemon/Docker重启时  | 停止的容器也被重启 | 停止的容器不！！！重启 | stopped的容器也被重启
+
+```bash
+# 无重启策略
+$ docker container run -it  ubuntu:latest /bin/bash
+root@733b80d556f7:/# exit
+exit
+# 退出进程时，容器终止
+ ✘ $ docker container ls
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+```
+
+```bash
+# 重启策略： always
+$ docker container run -it  --restart always ubuntu:latest /bin/bash
+root@b077521d228e:/# exit
+exit
+# 退出进程时，容器终止，又自动重启（STATUS 启动时间 UP 7 seconds < CREATED 创建时间13 seconds ago）
+$ docker container ls
+CONTAINER ID   IMAGE           COMMAND       CREATED          STATUS         PORTS     NAMES
+b077521d228e   ubuntu:latest   "/bin/bash"   13 seconds ago   Up 7 seconds             wonderful_yalow
+# 主动stop后，不自动重启
+$ docker container stop b077521d228e
+b077521d228e
+ $ docker container ls
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+# 重启Docker，容器重启
+$ systemctl restart docker
+$ docker container ls
+CONTAINER ID   IMAGE           COMMAND       CREATED          STATUS         PORTS     NAMES
+807b900b28f9   ubuntu:latest   "/bin/bash"   12 seconds ago   Up 3 seconds             epic_noether
+```
+
+```bash
+# 重启策略： always 和 unless-stopped
+$ docker container run -d --name always \
+  --restart always \
+  ubuntu:latest /bin/bash
+$ docker container run -d --name unless-stopped \
+  --restart unless-stopped \
+  ubuntu:latest /bin/bash
+
+$ docker container ls
+CONTAINER ID   IMAGE           COMMAND       CREATED          STATUS         PORTS     NAMES
+807b900b28f9   ubuntu:latest   "/bin/bash"   12 seconds ago   Up 3 seconds             always
+9afe62536be6   ubuntu:latest   "/bin/bash"   12 seconds ago   Up 17 seconds            unless-stopped
+
+# 主动stop后，不自动重启
+$ docker container stop always unless-stopped
+b077521d228e
+ $ docker container ls -a
+CONTAINER ID   IMAGE           COMMAND       CREATED          STATUS                   PORTS     NAMES
+807b900b28f9   ubuntu:latest   "/bin/bash"   12 seconds ago   Exited (137) 3 seconds ago         always
+9afe62536be6   ubuntu:latest   "/bin/bash"   12 seconds ago   Exited (137) 3 seconds ago         unless-stopped
+
+# 重启Docker，always容器重启
+$ systemctl restart docker
+$ docker container ls -a
+CONTAINER ID   IMAGE           COMMAND       CREATED          STATUS                   PORTS     NAMES
+807b900b28f9   ubuntu:latest   "/bin/bash"   12 seconds ago   Exited (137) 2 minutes ago         always
+9afe62536be6   ubuntu:latest   "/bin/bash"   12 seconds ago   Up 17 seconds                      unless-stopped
 ```
 
 ### Docker 端口
@@ -94,12 +168,16 @@ Docker for Mac(DfM) 是一个流畅，简单并且稳定版的boot2docker.
 
 ## 参数（Options）
 
-### `docker run` Options
+### `docker container run` Options
 
 `--help` 输出帮助信息，例如`docker run --help`
 `－d, --detach` 在容器中后台执行命令；
 `－i, --interactive` ：打开标准输入接受用户输入命令（Keep STDIN open even if not attached）
 `-t, --tty`           Allocate a pseudo-TTY
+`--restart always`: 设置重启策略，例如`docker container run -it --restart always ubuntu:latest /bin/bash`
+`--name`: 设置容器名称
+`-p, --publish`: 端口映射  主机端口：容器端口`docker container run -it --name lyk --publish 8080:8080 ubuntu:latest`
+`-f`: force 强制执行
 
 ### `docker` Options
 
@@ -116,7 +194,6 @@ Docker for Mac(DfM) 是一个流畅，简单并且稳定版的boot2docker.
       --tlsverify          Use TLS and verify the remote
   -v, --version            输出版本信息（Print version information and quit）
 
-
 ## 服务
 
 ### 查看Docker系统信息（信息比`docker version`更多）
@@ -125,13 +202,12 @@ Docker for Mac(DfM) 是一个流畅，简单并且稳定版的boot2docker.
 docker system info
 ```
 
-### 查看Docker版本信息，包含Client和Server信息。
+### 查看Docker版本信息，包含Client和Server信息
 
 如果Server中包含错误码，表示
+
 1. 或者当前用户没有权限访问。 解决方法： 确认用户是否属于本地Docker UNIX组，若不是，`usermod -aG docker <user>`来添加，退出并重新登录Shell
 2. Docker daemon可能没有运行。 解决方法：检查Docker daemon状态 `service docker status`
-   
-
 
 ```bash
 $ docker version
@@ -165,6 +241,7 @@ Server: Docker Engine - Community
   Version:          0.19.0
   GitCommit:        de40ad0
 ```
+
 #### 查看docker简要信息
 
 ```bash
@@ -203,6 +280,18 @@ Running   Docker   docker
 ```bash
 # 使用SystemD 在Linux系统中执行命令
 systemctl start docker
+```
+
+```bash
+# 使用System V在Linux系统中执行命令
+service docker start
+```
+
+### 重启Docker服务
+
+```bash
+# 使用SystemD 在Linux系统中执行命令
+systemctl restart docker
 ```
 
 ```bash
@@ -278,7 +367,7 @@ Docker Hub 等镜像仓库上有大量的高质量的镜像可以用，可以从
     - `docker image ls --digest <image-name or image-id>` 显示镜像摘要（Image Digest，镜像内容散列值）
   - `docker images`
 
-- 查看镜像分层
+- 查看镜像分层，启动时默认应用
   - `docker image inspect <image-name or image-id>`
   
 - 移除全部的`悬虚镜像`
@@ -365,7 +454,11 @@ root@3027eb644874:/#
 
 # 指定name为lyk 和 port为8080:8080
 $ docker container run -it --name lyk --publish 8080:8080 ubuntu:latest
+```
 
+`--restart always`: 设置重启策略，例如`docker container run -it  --restart always ubuntu:latest /bin/bash`
+
+```bash
 # 启动已终止容器
 docker start <container-id or container-name>
 ```
@@ -387,7 +480,6 @@ docker exec -it 4dbcc6555bc6 bash
 ```
 
 进入容器通常使用第二种方式，`docker exec`后面跟的常见参数如下：
-
 `－d, --detach` 在容器中后台执行命令；
 `－i, --interactive=true I false` ：打开标准输入接受用户输入命令
 
@@ -403,11 +495,14 @@ docker  kill <container-id or container-name>
 ```
 
 - 删除容器
-  - `docker rm <container-id or container-name>` 删除容器前，最好先`docker stop `容器，给容器中运行的应用/进程一个停止运行并清理残留数据的机会。# 给容器进程发送SIGKILL信号
-  - `docker rm <container-id or container-name> -f`。删除所有运行中的容器
+  - `docker container rm <container-id or container-name>` 删除容器前，最好先`docker stop`容器，给容器中运行的应用/进程一个停止运行并清理残留数据的机会。# 给容器进程发送SIGKILL信号
+  - `docker container rm $(docker container ls -aq) -f`。删除所有运行中的容器
 
 - 重启容器
   - `docker restart <container-id or container-name>`
+
+- 查看容器配置细节和运行时信息
+  - `docker container inspect <container-name or container-id>`
 
 ### 导出和导入
 

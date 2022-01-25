@@ -31,6 +31,7 @@ categories:
 - [**ColorSnapper2**](https://colorsnapper.com/)，取色工具。付费，App store 没有。
 https://cyberduck.io/
 - [**Cyberduck**](https://cyberduck.io/)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
 ## 网络
 

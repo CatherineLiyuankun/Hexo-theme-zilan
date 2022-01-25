@@ -53,12 +53,12 @@ $ docker container run -it ubuntu:latest /bin/bash
 root@3027eb644874:/# ps -elf
 # 退出容器
   # Ctrl + PQ 退出容器时保持容器运行
-  # 从这个 stdin 中 exit()，会导致容器的停止
+  # 从这个 stdin 中 exit，会导致容器的停止
 Ctrl + PQ
 
 $ docker exec -it 3027eb644874 bash
 root@3027eb644874:/#
-# docker exec创建了新的Bash进程并且连接到容器，所以现在输入exit()并不会导致容器种植，因为原Bash进程还在运行中
+# docker exec创建了新的Bash进程并且连接到容器，所以现在输入exit并不会导致容器种植，因为原Bash进程还在运行中
 ```
 
 ### Docker 端口

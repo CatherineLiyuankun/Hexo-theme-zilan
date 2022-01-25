@@ -19,7 +19,7 @@ categories:
 
 - [x] zsh 的插件开了 git、autojump、brew、git、git-extra、git-flow、git-prompt、git-remote-branch、github、gitignore、history、history-substring-search、iterm2、node、npm、npx、nvm、tig、vscode、yarn、[zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)、[命令行安装WakaTime](https://wakatime.com/terminal)
 - [] iTerm2 里配 `Run command...` 为 `/usr/local/bin/idea --path \2 \1` ([图](https://zos.alipayobjects.com/rmsportal/RmWdxKRQUWFMoVDjerNQ.png))，这样 Command + 点击文件路径，就会在 Intellij Idea 里打开
-  - [x] 安装Go2Shell，在finder可以用iTerm2打开当前目录
+  - [x] 安装Go2Shell，在finder可以用iTerm2打开当前目录。【我的百度网盘】`!!!!!亲测版本V2.5, Mac OS Big Sur可以使用`
   - [x] 配置[MAC终端命令行下用sublime、vscode、atom打开文件或目录](https://www.cnblogs.com/hongrunhui/p/5928833.html)
     - [x] open .  用finder打开当前文件
     - [x] vsc .  用vscode打开当前文件

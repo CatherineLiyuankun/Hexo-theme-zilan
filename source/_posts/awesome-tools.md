@@ -37,7 +37,7 @@ categories:
 - [x] Terminal 用 [**iTerm2**](https://www.iterm2.com/) + [**zsh**](https://en.wikipedia.org/wiki/Z_shell) + [**oh-my-zsh**](https://github.com/robbyrussell/oh-my-zsh) 的组合，主题是 [robbyrussell](https://github.com/robbyrussell/oh-my-zsh/blob/master/themes/robbyrussell.zsh-theme)
 - [x] zsh 的插件开了 git、autojump、brew、git、git-extra、git-flow、git-prompt、git-remote-branch、github、gitignore、history、history-substring-search、iterm2、node、npm、npx、nvm、tig、vscode、yarn、[zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
 - [] iTerm2 里配 `Run command...` 为 `/usr/local/bin/idea --path \2 \1` ([图](https://zos.alipayobjects.com/rmsportal/RmWdxKRQUWFMoVDjerNQ.png))，这样 Command + 点击文件路径，就会在 Intellij Idea 里打开
-  - [x] 安装Go2Shell，在finder可以用iTerm2打开当前目录
+  - [x] 安装Go2Shell，在finder可以用iTerm2打开当前目录, [配置方法-Mac 配置Finder当前目录打开iTerm2](http://liyuankun.top/%E5%A5%A5%E5%88%A9%E7%BB%99%E4%BD%A0%E7%9A%84iTerm2-%E5%BF%AB%E9%80%9F%E7%94%A8IDE%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6.html#mac-%E9%85%8D%E7%BD%AEfinder%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E6%89%93%E5%BC%80iterm2) `!!!!!亲测版本V2.5, Mac OS Big Sur可以使用`
   - [x] 配置[MAC终端命令行下用sublime、vscode、atom打开文件或目录](https://www.cnblogs.com/hongrunhui/p/5928833.html)
     - [x] open .  用finder打开当前文件
     - [x] vsc .  用vscode打开当前文件
@@ -60,7 +60,7 @@ categories:
 - [x] [**Colloquy**]()
 - [x] [**Cyberduck**](https://cyberduck.io/)
 - [x] [**VNC Viewer**](https://www.realvnc.com/en/connect/download/viewer/)
-- [x] [**Microsoft Remote Desktop**]()
+- [x] [**Microsoft Remote Desktop**]() [APP Store] 美版账号
 
 <!-- - [ ] [**Github Desktop**](https://github.com/desktop/desktop)，管理 github 仓库的变更和 PR，代替了 SourceTree 的部分工作，可以方便地把别人的 PR checkout 到本地验证 -->
 - [x] [**Gas Mask**](https://github.com/2ndalpha/gasmask) ，[Hosts 管理](https://zhuanlan.zhihu.com/p/20466912)

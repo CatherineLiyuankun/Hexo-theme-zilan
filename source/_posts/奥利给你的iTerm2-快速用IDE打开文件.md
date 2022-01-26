@@ -2,7 +2,7 @@
 title: 奥利给你的iTerm2-快速用IDE打开文件
 catalog: true
 date: 2020-05-25 23:26:24
-subtitle:
+subtitle: Go2Shell
 header-img:
 tags:
 - Command line

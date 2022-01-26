@@ -91,7 +91,7 @@ https://cyberduck.io/
 ## 工作必备
 
 - [x] [GlobalProtect](https://vpn.microstrategy.com/global-protect/getsoftwarepage.esp) 【网址下载】 工作 VPN 软件
-- [ ] Microsoft Remote Desktop [APP Store]
+- [ ] Microsoft Remote Desktop [APP Store] 美版账号
 - [ ] Zoom
 
 ## 生活娱乐必备

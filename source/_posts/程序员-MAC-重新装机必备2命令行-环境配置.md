@@ -119,6 +119,8 @@ homebrew默认会把可执行文件装在目录 /usr/local/bin 下面，建议�
 安装的工具可以覆盖掉Mac默认的（例如git，Big sur Mac自带2.30.1版本的git）。使用管理员权限修改文件
 /etc/paths 将 /usr/local/bin 移动到第一行。
 
+MAC Monterey 系统，默认路径为`/opt/homebrew/Cellar`, 下面的子目录就是用brew安装的其他包。
+
 ### 通过 [homebrew](https://brew.sh/) 安装
 
 - [x] [**autojump**](https://github.com/wting/autojump)，目录跳转。 `brew install autojump`。

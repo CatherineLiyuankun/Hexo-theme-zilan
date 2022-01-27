@@ -50,7 +50,7 @@ https://cyberduck.io/
   - [Alfred auto paste on return 自动粘贴失效解决方法](https://www.jianshu.com/p/594fac7950c4) 确认下 System Preferences -> Security & Privacy -> Accessibility 里有没有勾选 Alfred。如果已经勾上了 取消掉 重新选择勾上试试。
 - [x] [**Thor**](https://github.com/gbammc/Thor)，【网址下载】或者[APP Store + 国外账号]一键直达应用， 免费，开源。
 - [**Karabiner Element**](https://pqrs.org/osx/karabiner/)，用于[把右 Command 和 Capslock 键利用起来](http://lucifr.com/2013/02/16/caps-lock-to-hyper-key/)，避免快捷键冲突，[简单 note](https://hackmd.io/s/rk4u9i-pG)，详见[sorrycc的《我的快捷键技巧》](https://www.bilibili.com/video/av44127555)
-  - “`右 Command”改成F19`: 切换到Complex modifications --> Add rule --> "Change caps_lock to command+control+option+shift." --> 打开文件`/Users/yourusername/.config/karabiner/karabiner.json` 把`caps_lock`替换成`right_command`
+  - “`右 Command”改成F19`: 切换到Complex modifications --> Add rule --> "Change caps_lock to command+control+option+shift." --> 打开文件`~/.config/karabiner/karabiner.json` 把`caps_lock`替换成`right_command`
   ![`caps_lock`替换成`right_command`](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/%E5%A5%A5%E5%88%A9%E7%BB%99%E4%BD%A0%E7%9A%84iTerm2-%E5%BF%AB%E9%80%9F%E7%94%A8IDE%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6/Karabiner%20Element.png)
   - 我试了后, 把“右 Command”改成F19,发现我右 Command+delete还是经常用的，所以接着在Karabiner Element 的“Simple modifications” 把 "right_option" 改成了 “left_command”。
   - [遇到了macOS 10.14.6 Karabiner-Elements](https://www.v2ex.com/t/585453) 疑似无法正常使用的问题

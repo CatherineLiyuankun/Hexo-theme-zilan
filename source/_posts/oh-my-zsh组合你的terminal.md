@@ -171,20 +171,50 @@ ZSH_THEME="agnoster"
 
 ### 安装[Powerline Fonts字体](https://github.com/powerline/fonts)
 
+#### 通过命令安装字体
+
 ```bash
 # clone
-git clone https://github.com/powerline/fonts.git --depth=1
+$ git clone https://github.com/powerline/fonts.git --depth=1
+
 # install
-cd fonts
-./install.sh
+$ cd fonts
+$ ./install.sh
+cp: directory /Users/yuanli/Library/Fonts does not exist
+Powerline fonts installed to /Users/yuanli/Library/Fonts
+
+# 如果~/Library/Fonts 文件夹不存在，则创建文件夹后再次执行
+$ ./install.sh
+# ~/Library/Fonts里面就有需要的字体
+
 # clean-up a bit
 cd ..
 rm -rf fonts
 ```
 
-这时候发现还是不生效。
+#### 通过font book安装字体
+
+参考链接： https://www.lifewire.com/how-to-manually-install-fonts-on-mac-2260815
+
+1. 打开Mac自带应用： Font Book
+
+2. Select `File` and choose `Add Fonts` in the drop-down menu.
+
+3. 选择刚刚在~/Library/Fonts下安装好的所有字体
+4. Before you use the font, validate it to be sure it is safe to use. Select the font and choose `Validate Font` in the File menu to generate a Font Validation window.
+
+这时候发现还是不生效。iTerm2需要额外配置，需要在终端中Regular font 和 the Non-ASCII Font选中刚刚安装的字体
 
 ### 修改iTerm2设置
+
+#### 多设备共享iTerm2设置
+
+iTerm2 --> Preferences --> General --> Preferences Tab
+
+勾选 `Load preferences from a custom folder or URL`，并选择配置文件，这里我是用oneDrive共享过来的。
+![修改iTerm2设置字体](https://github.com/CatherineLiyuankun/PictureBed/raw/218eec4defecbfe94b81086b7dfa7b4c099b9746/blog/post/oh-my-zsh%E7%BB%84%E5%90%88%E4%BD%A0%E7%9A%84terminal/iTerm2%E9%85%8D%E7%BD%AE%E5%85%B1%E4%BA%AB.png)
+
+#### iTerm2设置主题
 
 iTerm2需要额外配置，需要在终端中Regular font 和 the Non-ASCII Font选中刚刚安装的字体，点击iTerms的菜单"iTerm > Preferences > Profiles > Text"，进行配置（[git issue](https://github.com/powerline/fonts/issues/44)）。
 

@@ -14,7 +14,7 @@ categories:
 
 # Terminal 设置
 
-- [x] Terminal 用 [**iTerm2**](https://www.iterm2.com/) + [**zsh**](https://en.wikipedia.org/wiki/Z_shell) + [**oh-my-zsh**](https://github.com/robbyrussell/oh-my-zsh) 的组合，主题是 [robbyrussell](https://github.com/robbyrussell/oh-my-zsh/blob/master/themes/robbyrussell.zsh-theme). 
+- [x] Terminal 用 [**iTerm2**](https://www.iterm2.com/) + [**zsh**](https://en.wikipedia.org/wiki/Z_shell) + [**oh-my-zsh**](https://github.com/robbyrussell/oh-my-zsh) 的组合，主题是 [robbyrussell](https://github.com/robbyrussell/oh-my-zsh/blob/master/themes/robbyrussell.zsh-theme).
   配置方法参考文章： [iterm2+oh-my-zsh组合你的terminal](../oh-my-zsh%E7%BB%84%E5%90%88%E4%BD%A0%E7%9A%84terminal.html).
 
 - [x] zsh 的插件开了 git、autojump、brew、git、git-extra、git-flow、git-prompt、git-remote-branch、github、gitignore、history、history-substring-search、iterm2、node、npm、npx、nvm、tig、vscode、yarn、[zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)、[命令行安装WakaTime](https://wakatime.com/terminal)
@@ -29,7 +29,6 @@ categories:
     - [x] control + w 回退一部分命令
 - [tldr](https://tldr.sh/) Simplified and community-driven `man` pages. Quick install: `npm install -g tldr`.
   Take `git` for example, while `man` `git` outputs more than 100 lines. `> tldr git`
-
 
 # 命令行开发环境设置
 
@@ -72,7 +71,7 @@ $ echo $ZSH_VERSION
 Works in the four shells (bash, dash, zsh, csh):
 
 ```bash
-$ ps -p $$
+ps -p $$
 ```
 
 ```bash
@@ -84,6 +83,7 @@ ps -p$$ -ofname=
 # On macOS and on BSD should be
 ps -p$$ -ocommand=
 ```
+
 ## 设置Zsh 作为默认shell
 
 打开一个新的terminal来确认，设置Zsh 作为默认shell：
@@ -96,6 +96,7 @@ echo $SHELL
 # 使用下面命令设置Zsh 作为默认shell
 [sudo] chsh -s $(which zsh)  #或 chsh -s /bin/zsh
 ```
+
 ## 安装homebrew
 
 [Homebrew 官网](https://brew.sh/)。
@@ -146,23 +147,23 @@ nvm
 zsh: command not found: nvm
 ```
 
-### 解决方法1：
+### 解决方法1
 
 There might be some problems installing nvm in new mac, caused by the shell is not bash by default, check if it is bash with command
 
 ```bash
-$ echo $0
+echo $0
 ```
 
 § if it is not run command
 
 ```bash
-$ chsh -s /bin/bash
+chsh -s /bin/bash
 ```
 
 And then reopen the terminal
 
-### 解决方法2：
+### 解决方法2
 
 如果用的是`zsh`, 而不是`bash`. 将`.bashrc`中关于`nvm`的配置copy到`.zshrc`里边。
 将`.bashrc`中的copy到`~.zshrc`下就可以啦。
@@ -176,7 +177,35 @@ export NVM_DIR="/usr/local/Cellar/nvm/0.38.0"
 然后再
 
 ```bash
-$ source ~/.zshrc
+source ~/.zshrc
+```
+
+## Install Node.js
+
+1. Install Node.js
+
+```bash
+nvm install v10.15.0
+```
+
+2. Upgrade(<https://codeforgeek.com/update-node-using-npm/>)
+
+```bash
+sudo npm install -g n
+npm -v
+sudo n 10.15.0
+```
+
+### Install Grunt globally
+
+```bash
+npm install -g grunt-cli
+```
+
+### Install yarn globally
+
+```bash
+npm install -g yarn
 ```
 
 ## 安装bash-complete
@@ -192,24 +221,7 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
 fi
 ```
 
-
-## Install Node.js
-
-1. Install Node.js
-
-```bash
-$ nvm install v10.15.0
-```
-
-2. Upgrade(https://codeforgeek.com/update-node-using-npm/)
-
-```bash
-$ sudo npm install -g n
-$ npm -v
-$ sudo n 10.15.0
-```
-
-## Install Maven and add its bin folder to the PATH environment variable.
+## Install Maven and add its bin folder to the PATH environment variable
 
 ```bash
 brew install maven
@@ -224,12 +236,6 @@ vi ~/.bash_profile
 # Maven
 export M2_HOME="/usr/local/Cellar/maven/3.8.1/libexec"
 export PATH="${M2_HOME}/bin:${PATH}"
-```
-
-## Install Grunt globally
-
-```bash
-npm install -g grunt-cli
 ```
 
 ## Install the Ant build tool
@@ -272,13 +278,13 @@ brew upgrade gradle
 [安装SDKman](https://github.com/sdkman/sdkman-cli)
 
 ```bash
-$ curl -s https://get.sdkman.io | bash
+curl -s https://get.sdkman.io | bash
 ```
 
 查看安装版本：
 
 ```bash
-$ sdk version
+sdk version
 ```
 
 安装指定版本的 Gradle
@@ -339,8 +345,6 @@ which python3
 
 ### [Mac上python2和python3的版本切换设置](../Mac上python2和python3的版本切换设置.html)
 
-
-
 <!-- ## 安装Bash
 
 Mac 虽然默认也是使用 GNU Bash，不过使用命令 `/bin/bash --version` 可看到版本只有 3.2，该版本不支持 4.0 版本后添加的关联数组等功能，为了脚本的通用，建议升级到最新版本。
@@ -351,7 +355,6 @@ brew install bash
 
 安装完要设置新安装的 bash 为默认 bash ，用超级用户编辑文件：`/etc/shells`，加入
 `/usr/local/bin/bash`到第一行 -->
-
 
 <!-- ## 安装coreutils
 
@@ -393,7 +396,7 @@ echo 'eval `dircolors ~/lib/dircolors-solarized/dircolors.256dark`' >> ~/.profil
 安装 Hexo（参考：[Git Pages + Jekyll/Hexo Build your own blog](../Git-Pages-Jekyll-Hexo-Build-your-own-blog.html#step1-安装-hexo)）
 
 ```bash
-$ npm install -g hexo-cli
+npm install -g hexo-cli
 ```
 
 # 参考链接

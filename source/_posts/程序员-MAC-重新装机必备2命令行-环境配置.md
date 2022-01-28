@@ -210,6 +210,13 @@ npm install -g grunt-cli
 npm install -g yarn
 ```
 
+#### 通过 `yarn global add` 安装
+
+- [ ] [**projj**](https://github.com/popomore/projj)，github/gitlab 项目管理
+- [ ] [**serve**](https://github.com/zeit/serve)，本地静态服务器
+- [ ] [**fkill**](https://github.com/sindresorhus/fkill)，比 kill 好用的进程 killer
+- [ ] [**qrcode-terminal**](https://github.com/gtanner/qrcode-terminal)，二维码生成
+
 ## 安装bash-complete
 
 bash 自动完成功能在 linux 发行版里一般都会自带，不过通过 homebrew 安装也很简单
@@ -383,13 +390,6 @@ mkdir ~/lib
 cd ~/lib
 git clone git@github.com:seebi/dircolors-solarized.git
 echo 'eval `dircolors ~/lib/dircolors-solarized/dircolors.256dark`' >> ~/.profile -->
-
-## 通过 `yarn global add` 安装
-
-- [ ] [**projj**](https://github.com/popomore/projj)，github/gitlab 项目管理
-- [ ] [**serve**](https://github.com/zeit/serve)，本地静态服务器
-- [ ] [**fkill**](https://github.com/sindresorhus/fkill)，比 kill 好用的进程 killer
-- [ ] [**qrcode-terminal**](https://github.com/gtanner/qrcode-terminal)，二维码生成
 
 # 其他设置
 

@@ -233,7 +233,7 @@ iTerm2设置中不仅要修改Non-ASCII Font，还要修改字体。
 或者:
 ![或者](https://cloud.githubusercontent.com/assets/1128227/9950693/c834c0ec-5dc5-11e5-92c1-a75d80f3d783.png)
 
-### 配色方案
+#### iTerm2配色方案
 
 我的iTerm2配色跟agnoster不同，也需要修改。
 下载[solarized](https://github.com/altercation/solarized#click-here-to-download-latest-version)。
@@ -243,6 +243,16 @@ iTerm2设置中不仅要修改Non-ASCII Font，还要修改字体。
 通过load presets选择刚刚安装的配色主题即可
 ![修改iTerm2设置字体](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/oh-my-zsh%E7%BB%84%E5%90%88%E4%BD%A0%E7%9A%84terminal/iTerm2%E8%AE%BE%E7%BD%AE%E9%85%8D%E8%89%B23.png
 )
+
+### VS Code 设置
+
+但后来我发现，在VS Code的控制台中仍然有乱码。
+原因是VS Code的字体设置有限制，只能设置monospace样式的字体，我找到了这篇文章
+作者用的是Linux，跟Mac在目录结构上有些差异，我参照了前面提到的install.sh脚本中的信息，修改了一些地方，以下是Mac上的操作步骤：
+
+- 从这个[链接](https://github.com/abertsch/Menlo-for-Powerline)下载字体文件
+- sudo mv "Menlo for Powerline.ttf" ~/Library/Fonts
+- VS Code -> Terminal Font Family 设置字体为 Menlo for Powerline
 
 ## [修改主题-怎样不显示主机名](https://github.com/agnoster/agnoster-zsh-theme/issues/39#issuecomment-307338817)
 

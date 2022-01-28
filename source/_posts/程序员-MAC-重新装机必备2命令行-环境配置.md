@@ -30,6 +30,8 @@ categories:
 - [tldr](https://tldr.sh/) Simplified and community-driven `man` pages. Quick install: `npm install -g tldr`.
   Take `git` for example, while `man` `git` outputs more than 100 lines. `> tldr git`
 
+- [Git 多用户配置](http://liyuankun.top/Git-Push-%E9%81%BF%E5%85%8D%E9%87%8D%E5%A4%8D%E8%BE%93%E5%85%A5%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E5%AF%86%E7%A0%81%E6%96%B9%E6%B3%95-%E5%A4%9A%E8%B4%A6%E6%88%B7%E9%85%8D%E7%BD%AE.html)
+
 # 命令行开发环境设置
 
 ## 安装Command line tools

@@ -19,7 +19,15 @@ categories:
 
 - [x] zsh 的插件开了 git、autojump、brew、git、git-extra、git-flow、git-prompt、git-remote-branch、github、gitignore、history、history-substring-search、iterm2、node、npm、npx、nvm、tig、vscode、yarn、[zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)、[命令行安装WakaTime](https://wakatime.com/terminal)
 - [] iTerm2 里配 `Run command...` 为 `/usr/local/bin/idea --path \2 \1` ([图](https://zos.alipayobjects.com/rmsportal/RmWdxKRQUWFMoVDjerNQ.png))，这样 Command + 点击文件路径，就会在 Intellij Idea 里打开
-  - [x] 安装Go2Shell，在finder可以用iTerm2打开当前目录。[配置方法-Mac 配置Finder当前目录打开iTerm2](http://liyuankun.top/%E5%A5%A5%E5%88%A9%E7%BB%99%E4%BD%A0%E7%9A%84iTerm2-%E5%BF%AB%E9%80%9F%E7%94%A8IDE%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6.html#mac-%E9%85%8D%E7%BD%AEfinder%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E6%89%93%E5%BC%80iterm2)，【我的百度网盘】`!!!!!亲测版本V2.5, Mac OS Big Sur可以使用`
+  - [x] 安装Go2Shell，在finder可以用iTerm2打开当前目录。[配置方法-Mac 配置Finder当前目录打开iTerm2](http://liyuankun.top/%E5%A5%A5%E5%88%A9%E7%BB%99%E4%BD%A0%E7%9A%84iTerm2-%E5%BF%AB%E9%80%9F%E7%94%A8IDE%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6.html#mac-%E9%85%8D%E7%BD%AEfinder%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E6%89%93%E5%BC%80iterm2)，【我的百度网盘】`!!!!!亲测版本V2.5, Mac OS Big Sur可以使用, 但是Monterey不能使用
+    - [Mac 系統升級， go2shell 不能用了，求大佬們推薦類似功能的軟體](https://xa8.net/post/34806729)
+      - 直接拖文件夾 /文件到 Dock 上的 iTerm2 的圖標上。。。哈哈，虽然可以。。。但是不好用
+      - [OpenInTerminal](https://github.com/Ji4n1ng/OpenInTerminal/blob/master/Resources/README-zh.md)  个人选择使用这个开源软件了。
+      - [cdto](https://github.com/jbtule/cdto)
+      - [Alfred 有TerminalFinder workflow](https://github.com/LeEnno/alfred-terminalfinder)
+      - [XtraFinder](https://www.macwk.com/soft/xtrafinder)，附贈这个功能： XtraFinder 设置 -> Menus -> 从这里启动，设置个快捷键，选择 iTerm，完事。
+      - MAC Automator，找到個更原生的辦法 http://azaleasays.com/2017/09/21/mac-os-x-open-iterm-here/
+
   - [x] 配置[MAC终端命令行下用sublime、vscode、atom打开文件或目录](https://www.cnblogs.com/hongrunhui/p/5928833.html)
     - [x] open .  用finder打开当前文件
     - [x] vsc .  用vscode打开当前文件
@@ -122,7 +130,7 @@ homebrew默认会把可执行文件装在目录 /usr/local/bin 下面，建议�
 安装的工具可以覆盖掉Mac默认的（例如git，Big sur Mac自带2.30.1版本的git）。使用管理员权限修改文件
 /etc/paths 将 /usr/local/bin 移动到第一行。
 
-MAC Monterey 系统，默认路径为`/opt/homebrew/Cellar`, 下面的子目录就是用brew安装的其他包。
+MAC Monterey 系统上新版本Homebrew， 例如 3.3.12，默认路径变为`/opt/homebrew/Cellar`, 下面的子目录就是用brew安装的其他包。
 
 ### 通过 [homebrew](https://brew.sh/) 安装
 
@@ -352,7 +360,21 @@ which python3
 安装目录：`/usr/local/Cellar/python@3.9`
 可执行文件目录：`/usr/local/bin/python3.9`
 
+MAC Monterey 系统上新版本Homebrew， 例如 3.3.12，默认路径变为`/opt/homebrew/Cellar/python@3.10`, 下面的子目录就是用brew安装的其他包。
+
 ### [Mac上python2和python3的版本切换设置](../Mac上python2和python3的版本切换设置.html)
+
+### APKTOOL
+
+```bash
+brew install apktool
+```
+
+### JADX
+
+```bash
+brew install jadx
+```
 
 <!-- ## 安装Bash
 

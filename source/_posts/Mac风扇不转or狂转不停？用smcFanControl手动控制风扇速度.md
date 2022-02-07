@@ -5,7 +5,7 @@ date: 2020-04-16 18:49:12
 subtitle:
 header-img: 'https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Mac%E9%A3%8E%E6%89%87%E4%B8%8D%E8%BD%ACor%E7%8B%82%E8%BD%AC%E4%B8%8D%E5%81%9C%EF%BC%9F%E7%94%A8smcFanControl%E6%89%8B%E5%8A%A8%E6%8E%A7%E5%88%B6%E9%A3%8E%E6%89%87%E9%80%9F%E5%BA%A6/%E5%B0%81%E9%9D%A2.png'
 tags:
-- Mac
+- MAC
 categories:
 - TECH
 - Tools

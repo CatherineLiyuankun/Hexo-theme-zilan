@@ -37,7 +37,14 @@ categories:
 - [x] Terminal 用 [**iTerm2**](https://www.iterm2.com/) + [**zsh**](https://en.wikipedia.org/wiki/Z_shell) + [**oh-my-zsh**](https://github.com/robbyrussell/oh-my-zsh) 的组合，主题是 [robbyrussell](https://github.com/robbyrussell/oh-my-zsh/blob/master/themes/robbyrussell.zsh-theme)
 - [x] zsh 的插件开了 git、autojump、brew、git、git-extra、git-flow、git-prompt、git-remote-branch、github、gitignore、history、history-substring-search、iterm2、node、npm、npx、nvm、tig、vscode、yarn、[zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
 - [] iTerm2 里配 `Run command...` 为 `/usr/local/bin/idea --path \2 \1` ([图](https://zos.alipayobjects.com/rmsportal/RmWdxKRQUWFMoVDjerNQ.png))，这样 Command + 点击文件路径，就会在 Intellij Idea 里打开
-  - [x] 安装Go2Shell，在finder可以用iTerm2打开当前目录, [配置方法-Mac 配置Finder当前目录打开iTerm2](http://liyuankun.top/%E5%A5%A5%E5%88%A9%E7%BB%99%E4%BD%A0%E7%9A%84iTerm2-%E5%BF%AB%E9%80%9F%E7%94%A8IDE%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6.html#mac-%E9%85%8D%E7%BD%AEfinder%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E6%89%93%E5%BC%80iterm2) `!!!!!亲测版本V2.5, Mac OS Big Sur可以使用`
+  - [x] 安装Go2Shell，在finder可以用iTerm2打开当前目录, [配置方法-Mac 配置Finder当前目录打开iTerm2](http://liyuankun.top/%E5%A5%A5%E5%88%A9%E7%BB%99%E4%BD%A0%E7%9A%84iTerm2-%E5%BF%AB%E9%80%9F%E7%94%A8IDE%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6.html#mac-%E9%85%8D%E7%BD%AEfinder%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E6%89%93%E5%BC%80iterm2) `!!!!!亲测版本V2.5, Mac OS Big Sur可以使用，Monterey不能使用`【我的百度网盘】
+    - [Mac 系統升級， go2shell 不能用了，求大佬們推薦類似功能的軟體](https://xa8.net/post/34806729)
+      - 直接拖文件夾 /文件到 Dock 上的 iTerm2 的圖標上。。。哈哈，这是一直都有的原生功能，虽然可以。。。但是不好用
+      - [OpenInTerminal](https://github.com/Ji4n1ng/OpenInTerminal/blob/master/Resources/README-zh.md)  【推荐】个人目前选择使用这个开源软件了，Mac OS Monterey可以使用。
+      - [cdto](https://github.com/jbtule/cdto)
+      - [Alfred 有TerminalFinder workflow](https://github.com/LeEnno/alfred-terminalfinder)
+      - [XtraFinder](https://www.macwk.com/soft/xtrafinder)，附贈这个功能： XtraFinder 设置 -> Menus -> 从这里启动，设置个快捷键，选择 iTerm，完事。
+      - MAC Automator，找到個更原生的辦法 http://azaleasays.com/2017/09/21/mac-os-x-open-iterm-here/
   - [x] 配置[MAC终端命令行下用sublime、vscode、atom打开文件或目录](https://www.cnblogs.com/hongrunhui/p/5928833.html)
     - [x] open .  用finder打开当前文件
     - [x] vsc .  用vscode打开当前文件

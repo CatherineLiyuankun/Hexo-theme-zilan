@@ -13,7 +13,7 @@ categories:
 - Docker
 ---
 
-# Docker
+# Docker Command[](http://liyuankun.top/Docker.html)
 
 ## 服务
 
@@ -53,8 +53,6 @@ categories:
 
 ### 镜像仓库
 
-Docker Hub 等镜像仓库上有大量的高质量的镜像可以用，可以从仓库获取镜像。
-
 - 检索镜像
   - `docker search 关键字`
 - 拉取镜像
@@ -67,11 +65,10 @@ Docker Hub 等镜像仓库上有大量的高质量的镜像可以用，可以从
   - `docker images`
 
 - 删除镜像
-  - 删除指定镜像
-  - docker rmi <镜像Id>
+  - docker image rm <镜像Id>
 
 - 导出镜像
-  - 将镜像保存为归档文件
+  将镜像保存为归档文件
   - docker save
 - 导入镜像
   - docker load
@@ -100,16 +97,6 @@ Dockerfile 由一行行行命令语句组成，并且支持以＃开头的注释
   - EXPOSE：暴露端口
 
 其它的指令还有ENTRYPOINT、ARG、VOLUME、WORKDIR、USER、HEALTHCHECK、ONBUILD、LABEL等等。
-
-以下是一个Dockerfile实例：
-
-```bash
-FROM java:8
-MAINTAINER "jinshw"<jinshw@qq.com>
-ADD mapcharts-0.0.1-SNAPSHOT.jar mapcharts.jar
-EXPOSE 8080
-CMD java -jar mapcharts.jar
-```
 
 - 镜像构建
   - `docker build`

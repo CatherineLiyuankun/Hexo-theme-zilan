@@ -35,9 +35,12 @@ which python3
 安装目录：`/usr/local/Cellar/python@3.9`
 可执行文件目录：`/usr/local/bin/python3.9`
 
+MAC Monterey 系统上新版本Homebrew， 例如 3.3.12，默认路径变为`/opt/homebrew/Cellar/python@3.10`, 下面的子目录就是用brew安装的其他包。
+
 # 查找Python路径
 
 根据你实际的python安装路径，进行下一步的Environment path的设置。
+
 ## Mac 自带python 路径
 
 ```python

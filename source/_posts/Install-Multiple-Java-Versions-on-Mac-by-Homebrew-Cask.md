@@ -97,10 +97,14 @@ jEnv doesn’t install JDKs, so we have to tell jEnv where to look for them. Typ
 $ where java
 /usr/bin/java
 /Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin/java
+/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/bin/java
 ```
 
 ```bash
 $ jenv add /Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home
+$ jenv add /Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
+$ jenv add /usr
+
 ```
 
 After that, run this command to list all registered JDKs:

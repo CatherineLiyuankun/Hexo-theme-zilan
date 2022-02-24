@@ -17,13 +17,20 @@ categories:
 
 [使用方法](http://www.chengpengfei.com/2018/08/27/)
 
-如果是第一次使用，点击“Login with github”直接用github账号登陆，可以直接自动生成token，不需要自己手动生成。
+- 如果是第一次使用，点击“Login with github”直接用github账号登陆，可以直接自动生成token，不需要自己手动生成。
 
-即使你更换了新电脑B，只要你记得第三个步骤里保存的 token，同步也是非常方便的。
-不记得的话 老电脑A cmd + shift + P –> sync 高级选项 Advanced Options –> Open setting 里面有Access Token 和 Gist ID。
-你可以通过 新电脑B cmd + shift + P –> sync 高级选项 Advanced Options –> 编辑本地扩展设置 syncLocalSettings ，将你的 token 粘贴在配置文件里，然后再执行同步/下载的配置即可。
-cmd + shift + P –> sync 高级选项 Advanced Options –> Open setting 里勾选Auto Download， Auto Upload， Remove Extensions 
+- 即使你更换了新电脑B，只要你记得第三个步骤里保存的 Gist ID 和 Access token，同步也是非常方便的。
+  - 不记得的话 老电脑A cmd + shift + P –> sync 高级选项 Advanced Options –> Open setting 里面有Access Token 和 Gist ID。
+  - 你可以通过 新电脑B cmd + shift + P –> sync 高级选项 Advanced Options –> 编辑本地扩展设置 syncLocalSettings ，将你的 token 粘贴在配置文件里，然后再执行同步/下载的配置即可。
+
+- cmd + shift + P –> sync 高级选项 Advanced Options –> Open setting 里勾选Auto Download， Auto Upload， Remove Extensions
 Sync Extensions。
+
+## [Markdown Extension Pack](https://marketplace.visualstudio.com/items?itemName=bat67.markdown-extension-pack)
+
+## GitLens
+
+[VSCode 插件之 - GitLens](https://cloud.tencent.com/developer/article/1810324)
 
 # 设置
 

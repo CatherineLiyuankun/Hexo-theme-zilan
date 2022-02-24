@@ -5,7 +5,7 @@ date: 2019-07-11 11:08:39
 subtitle:
 header-img:
 tags:
-- Mac
+- MAC
 categories:
 - TECH
 - Tools

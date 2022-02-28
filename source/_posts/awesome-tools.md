@@ -154,7 +154,9 @@ categories:
 
 ## 其他
 
-- [x] [**CleanMyMac 3**](https://macpaw.com/cleanmymac)，系统清理， 付费。
+- [x] [**CleanMyMac **](https://macpaw.com/cleanmymac)，系统清理， 付费。
+- [x] [**OmniDiskSweeper **](https://www.omnigroup.com/more) 系统文件清理。开源免费软件。
+
 - [ ] [**1Password**](https://1password.com/)，密码管理
 - [x] [**Last Password**](https://www.lastpass.com/)，密码管理 浏览器插件免费，手机app需要Premium会员（我iphone上用苹果的密码记录,就没使用Last Password）, 1Password也不错，这两个都可以。
 <!-- - [ ] [**Bartender 3**](https://www.macbartender.com/)，管理系统右上菜单项，隐藏或收起不常用的，付费。 -->

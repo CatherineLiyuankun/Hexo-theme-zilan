@@ -146,65 +146,7 @@ MAC Monterey 系统上新版本Homebrew， 例如 3.3.12，默认路径变为`/o
 
 [Install Multiple Java Versions on Mac by Homebrew Cask](../Install-Multiple-Java-Versions-on-Mac-by-Homebrew-Cask.html)
 
-## Node Version Manager: nvm
-
-```bash
-brew install nvm
-```
-
-```bash
-nvm
-zsh: command not found: nvm
-```
-
-### 解决方法1
-
-There might be some problems installing nvm in new mac, caused by the shell is not bash by default, check if it is bash with command
-
-```bash
-echo $0
-```
-
-§ if it is not run command
-
-```bash
-chsh -s /bin/bash
-```
-
-And then reopen the terminal
-
-### 解决方法2
-
-如果用的是`zsh`, 而不是`bash`. 将`.bashrc`中关于`nvm`的配置copy到`.zshrc`里边。
-将`.bashrc`中的copy到`~.zshrc`下就可以啦。
-
-```bash
-export NVM_DIR="/usr/local/Cellar/nvm/0.38.0"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" #This loads nvm bash_completion
-```
-
-然后再
-
-```bash
-source ~/.zshrc
-```
-
-## Install Node.js
-
-1. Install Node.js
-
-```bash
-nvm install v10.15.0
-```
-
-2. Upgrade(<https://codeforgeek.com/update-node-using-npm/>)
-
-```bash
-sudo npm install -g n
-npm -v
-sudo n 10.15.0
-```
+## [Install node.js and nvm](../Install-node-js-and-nvm.html)
 
 ### Install Grunt globally
 

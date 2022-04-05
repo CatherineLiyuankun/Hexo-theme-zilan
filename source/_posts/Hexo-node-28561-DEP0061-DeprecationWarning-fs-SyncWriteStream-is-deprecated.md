@@ -48,14 +48,19 @@ TypeError: Cannot set property 'lastIndex' of undefined
     at Async._drainQueue (/Users/liyuankun/MyOwnGit/Hexo-theme-zilan/node_modules/bluebird/js/release/async.js:138:12)
     at Async._drainQueues (/Users/liyuankun/MyOwnGit/Hexo-theme-zilan/node_modules/bluebird/js/release/async.js:143:10)
 ```
+
 ## Root cause
+
 hexo-fs 老版本里有一行：
+
 ```
     exports.SyncWriteStream = fs.SyncWriteStream;
 ```
+
 跟nodejs v8 有冲突。所以要更新 hexo-fs >= ^0.2.0
 
 # Solutions
+
 ## Fix 1 use old version of nodejs
 
 用nvm管理node版本。发现切换node后，zsh: command not found: hexo。
@@ -76,6 +81,7 @@ hexo-fs 老版本里有一行：
 ```
 
 ## Fix 2 install hexo-fs
+
 如果还想使用nodejs > v8, 可以更新hexo-fs
 
 ```
@@ -85,6 +91,7 @@ hexo-fs 老版本里有一行：
 试了下还是没解决。。。 Try again, still has the error...
 
 ## Fix 2 hexo --debug
+
 会发现hexo-deployer-git 里使用了旧版本的hexo-fs，所以造成问题
 
   ```
@@ -108,14 +115,18 @@ hexo-fs 老版本里有一行：
         07:05:52.360 DEBUG Plugin loaded: hexo-server
         07:05:52.364 DEBUG Script loaded: themes/zilan/scripts/fancybox.js
    ```
+
 ## Fix 2 modify hexo-deployer-git
+
  ```
     ➜  Hexo-theme-zilan git:(master) ✗ npm install hexo-deployer-git hexo-serve --save
  ```
+
 试了下还是没解决。。。 Try again, still has the error...
 看了下hexo-deployer-git并没什么更新，只能自己手动改了
 
 注释掉 /Users/liyuankun/MyOwnGit/Hexo-theme-zilan/node_modules/hexo-deployer-git/node_modules/hexo-fs/lib/fs.js 中的
+
 ```javascript
     //exports.SyncWriteStream = fs.SyncWriteStream;
 ```
@@ -123,5 +134,3 @@ hexo-fs 老版本里有一行：
 # Reference Links
 
 [fs.SyncWriteStream is deprecated [Nodejs v8.0]](https://github.com/hexojs/hexo/issues/2598)
-
-

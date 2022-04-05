@@ -224,7 +224,8 @@ Docker version 20.10.11, build dea9396
 ```
 
 ```bash
-docker --version
+$ docker --version
+Docker version 20.10.11, build dea9396
 ```
 
 ### 检查Docker daemon状态
@@ -338,7 +339,7 @@ Docker Hub 等镜像仓库上有大量的高质量的镜像可以用，可以从
       docker image ls --format "{{.Repository}}: {{.Tag}}: {{.Size}}"
       ```
 
-    - `docker image ls --digest <image-name or image-id>` 显示镜像摘要（Image Digest，镜像内容散列值）
+    - `docker image ls --digests <image-name or image-id>` 显示镜像摘要（Image Digest，镜像内容散列值）
   - `docker images`
 
 - 查看镜像分层，启动时默认应用

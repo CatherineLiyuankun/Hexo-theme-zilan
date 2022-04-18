@@ -12,7 +12,7 @@ timezone:
 # Header
 menu:
   Home: /
-  Archives: /archive
+  Archives: /archives/ || archive
   Categories: /categories
   Tags: /tags
   About: /about
@@ -197,7 +197,7 @@ friends: [
 source_dir: source
 public_dir: public
 tag_dir: tags
-archive_dir: archives
+archive_dir: archive
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang

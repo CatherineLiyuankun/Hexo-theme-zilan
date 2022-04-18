@@ -7,6 +7,7 @@ header-img:
 tags:
 - TODO
 - Python
+- LinksSummary
 categories:
 - TECH
 - Language
@@ -19,4 +20,5 @@ categories:
 
 - [Mac上python2和python3的版本切换设置](../Mac上python2和python3的版本切换设置.html)
 - [CSDN LYK Python分类](https://blog.csdn.net/muzilanlan/category_3201921.html)
-- [PyCharm 安装 NumPy，SciPy 等科学计算包 （Anaconda）for mac OS X](https://blog.csdn.net/muzilanlan/article/details/50479931)
+- [PyCharm 安装 NumPy，SciPy 等科学计算包 （Anaconda）for mac OS X](https://blog.csdn.net/muzilanlan/article/details/50479931
+- [Anaconda 介绍、安装及使用保姆级教程](https://mp.weixin.qq.com/s/vIZoE4BmXYlyhfFFmlhDWg)

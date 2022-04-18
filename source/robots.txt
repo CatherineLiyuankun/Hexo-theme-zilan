@@ -2,6 +2,7 @@
 User-agent: *
 Allow: /
 Allow: /archives/
+Allow: /archive/
 Allow: /categories/
 Allow: /tags/
 Allow: /about-me/

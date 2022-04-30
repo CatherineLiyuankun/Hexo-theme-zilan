@@ -26,34 +26,34 @@ categories:
 
 - [ ] 用了 [SetApp](https://go.setapp.com/invite/sorrycc)，包含以下的不少付费应用，能省不少钱。
 
-## 编辑器和 Terminal
+## 编辑器
 
-主 [**WebStorm**](https://www.jetbrains.com/idea/)，辅 [**VSCode**](https://code.visualstudio.com/) 和 **Vim**。选 WebStorm 的原因是无需安装插件就很好用，另外也是没有时间去折腾插件。
+- 主 [**VSCode**](https://code.visualstudio.com/) + [**IntelliJ**](https://www.jetbrains.com/idea/)
+- 辅 [**WebStorm**](https://www.jetbrains.com/webstorm/)和 **Vim**。如果没有时间去折腾插件，那就选 WebStorm， 无需安装插件就很好用。
 
 <!-- - [ ] 字体用 [**Dank Mono**](https://dank.sh/) 和 [**Operator Mono**](http://www.typography.com/fonts/operator/overview/)，轮着用，看厌一个切另一个
 - [ ] WebStorm 使用 [**material-theme-jetbrains**](https://github.com/ChrisRM/material-theme-jetbrains)，Theme 选 Material One Dark，字号 16 号，行距 1.2，[效果图](https://gw.alipayobjects.com/zos/rmsportal/JKRPNvvHhPgFonHHXvPe.png)
 - [ ] WebStorm 插件额外装了 **File Watchers**、**GitLink**、**Import Cost**、**Prettier** 和 **Rainbow Brackets** -->
 - [x] [Vscode 配置和插件](http://liyuankun.top/Vscode-配置和插件.html)。
+
+## Terminal
+
 - [x] Terminal 用 [**iTerm2**](https://www.iterm2.com/) + [**zsh**](https://en.wikipedia.org/wiki/Z_shell) + [**oh-my-zsh**](https://github.com/robbyrussell/oh-my-zsh) 的组合，主题是 [robbyrussell](https://github.com/robbyrussell/oh-my-zsh/blob/master/themes/robbyrussell.zsh-theme)
 - [x] zsh 的插件开了 git、autojump、brew、git、git-extra、git-flow、git-prompt、git-remote-branch、github、gitignore、history、history-substring-search、iterm2、node、npm、npx、nvm、tig、vscode、yarn、[zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
 - [] iTerm2 里配 `Run command...` 为 `/usr/local/bin/idea --path \2 \1` ([图](https://zos.alipayobjects.com/rmsportal/RmWdxKRQUWFMoVDjerNQ.png))，这样 Command + 点击文件路径，就会在 Intellij Idea 里打开
-  - [x] 安装Go2Shell，在finder可以用iTerm2打开当前目录, [配置方法-Mac 配置Finder当前目录打开iTerm2](http://liyuankun.top/%E5%A5%A5%E5%88%A9%E7%BB%99%E4%BD%A0%E7%9A%84iTerm2-%E5%BF%AB%E9%80%9F%E7%94%A8IDE%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6.html#mac-%E9%85%8D%E7%BD%AEfinder%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E6%89%93%E5%BC%80iterm2) `!!!!!亲测版本V2.5, Mac OS Big Sur可以使用，Monterey不能使用`【我的百度网盘】
-    - [Mac 系統升級， go2shell 不能用了，求大佬們推薦類似功能的軟體](https://xa8.net/post/34806729)
-      - 直接拖文件夾 /文件到 Dock 上的 iTerm2 的圖標上。。。哈哈，这是一直都有的原生功能，虽然可以。。。但是不好用
-      - [OpenInTerminal](https://github.com/Ji4n1ng/OpenInTerminal/blob/master/Resources/README-zh.md)  【推荐】个人目前选择使用这个开源软件了，Mac OS Monterey可以使用。
-      - [cdto](https://github.com/jbtule/cdto)
-      - [Alfred 有TerminalFinder workflow](https://github.com/LeEnno/alfred-terminalfinder)
-      - [XtraFinder](https://www.macwk.com/soft/xtrafinder)，附贈这个功能： XtraFinder 设置 -> Menus -> 从这里启动，设置个快捷键，选择 iTerm，完事。
-      - MAC Automator，找到個更原生的辦法 http://azaleasays.com/2017/09/21/mac-os-x-open-iterm-here/
-  - [x] 配置[MAC终端命令行下用sublime、vscode、atom打开文件或目录](https://www.cnblogs.com/hongrunhui/p/5928833.html)
-    - [x] open .  用finder打开当前文件
-    - [x] vsc .  用vscode打开当前文件
-    - [x] subl .  用Sublime打开当前文件
-    - [x] atom .  用Atom打开当前文件
-    - [x] command + <-  / ->     切换tab
-    - [x] control + w 回退一部分命令
+- [Mac 配置在Finder里用iTerm2打开当前目录](http://liyuankun.top/%E5%A5%A5%E5%88%A9%E7%BB%99%E4%BD%A0%E7%9A%84iTerm2-%E5%BF%AB%E9%80%9F%E7%94%A8IDE%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6.html#mac-%E9%85%8D%E7%BD%AEfinder%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E6%89%93%E5%BC%80iterm2)
+  - [x] 方法一：安装Go2Shell【MAC OS 版本 <= Big Sur】,  `!!!!!亲测版本V2.5, Mac OS Big Sur可以使用，Monterey不能使用`【我的百度网盘】
+  - [x] [方法二：安装OpenInTerminal【MAC OS 版本 >= Monterey】](http://liyuankun.top/%E5%A5%A5%E5%88%A9%E7%BB%99%E4%BD%A0%E7%9A%84iTerm2-%E5%BF%AB%E9%80%9F%E7%94%A8IDE%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6.html#%E9%99%A4go2shell%E7%9A%84%E5%85%B6%E4%BB%96%E6%96%B9%E6%B3%95-mac-os-%E7%89%88%E6%9C%AC-monterey)
+    - [OpenInTerminal](https://github.com/Ji4n1ng/OpenInTerminal/blob/master/Resources/README-zh.md)  【推荐】个人目前选择使用这个开源软件了，不仅可以用iTerm2打开，还可以配置用其他IDE例如VScode打开。
+- [x] 配置[MAC终端命令行下用sublime、vscode、atom打开文件或目录](https://www.cnblogs.com/hongrunhui/p/5928833.html)
+  - [x] open .  用finder打开当前文件
+  - [x] vsc .  用vscode打开当前文件
+  - [x] subl .  用Sublime打开当前文件
+  - [x] atom .  用Atom打开当前文件
+  - [x] command + <-  / ->     切换tab
+  - [x] control + w 回退一部分命令
 - [tldr](https://tldr.sh/) Simplified and community-driven `man` pages. Quick install: `npm install -g tldr`.
-- Take `git` for example, while `man` `git` outputs more than 100 lines. `> tldr git`
+  - Take `git` for example, while `man` `git` outputs more than 100 lines. `> tldr git`
 
 ## 开发辅助
 
@@ -140,7 +140,6 @@ categories:
 - [x] [**Blackmagic RAW Speed Test**](https://apps.apple.com/cn/app/blackmagic-raw-speed-test/id1466185689?mt=12) Blackmagic RAW Speed Test是一套CPU和GPU衡量工具，可用于测试系统上解码全分辨率Blackmagic RAW帧的速度。测试中多个CPU内核和GPU会被自动检测和使用，为您提供准确实际的结果。只需选择Blackmagic RAW固定比特率3:1、5:1、8:1或12:1，以及您想要的分辨率即可执行测试。测试结果以简单明了的表格形式展示，显示了您的计算机每秒解码所有支持分辨率的帧数。App store 有，免费。
 - [x] [**PluralEyes 4**](https://www.blackmagicdesign.com/products/davinciresolve/) Red Giant PluralEyes for mac是Mac平台上一款专业的音视频同步剪辑软件，pluraleyes 4 mac支持使用轨道和媒体剪辑、跨区剪辑、临时同步文件、调整同步结果、微调同步、导出为媒体文件、导出时间轴等功能，能够轻松处理多机位的音视频同步问题。付费。
 
-
 - [ ] [**Softorino YouTube Converter**](https://softorino.com/youtube-converter)，免费24小时，之后付费，YouTube 视频下载
 - [ ] [**youtube-dl**](https://github.com/ytdl-org/youtube-dl/blob/master/README.md#readme) [命令行视频下载利器，选择下载视频，或是将视频流直接导出到自己想使用的播放器中](https://zhuanlan.zhihu.com/p/27718783)。国内类似版本： [You-Get](https://github.com/soimort/you-get)，对国内平台支持的更好。
 <!-- - [ ] [**Downie 3**](http://software.charliemonroe.net/downie.php)，通用视频下载，付费，SetApp含有 -->
@@ -214,7 +213,6 @@ categories:
 - [ ] [**Lingocloud Interpreter**](https://chrome.google.com/webstore/detail/lingocloud-interpreter/jmpepeebcbihafjjadogphmbgiffiajh/related)，全文翻译
 - [ ] [**Video Speed Controller**](https://chrome.google.com/webstore/detail/video-speed-controller/nffaoalbilbmmfgbnbgppjihopabppdk/related?hl=en)，在视频上显示按钮可控制播放速度
 
-
 # Mac 设置
 
 - [x] [固定MAC窗口顺序](https://www.zhihu.com/question/49530172)
@@ -235,7 +233,7 @@ categories:
 - [x] **网易云音乐**
 - [ ] **OmniFocus**，任务管理
 
-更多 https://github.com/sorrycc/ama/issues/12
+更多 <https://github.com/sorrycc/ama/issues/12>
 
 # 在线服务
 
@@ -314,9 +312,9 @@ categories:
 - [ ] [旧版本的装了啥](https://github.com/sorrycc/blog/issues/16) -->
 
 ## RSS 阅读器
+
 Reeder 好，MACOS+IOS 但是要付费
 NetNewsWire 免费，只有IOS
-
 
 名称 | 内容简介 | 缺点 | 适用平台 | 评分
 ---|------|------|---|---
@@ -345,15 +343,17 @@ irreader | 国产RSS阅读器，速度快。除了基本的 OPML 导入外，它
 
 [四款好用的 RSS 阅读器推荐[全平台支持]](https://zhuanlan.zhihu.com/p/45120897)
 [Mac 上的 RSS 阅读工具，你有这些好看实用的选择](https://sspai.com/post/55050)
-[2020 RSS 阅读推荐 ](https://www.v1tx.com/post/best-rss-reader/)
+[2020 RSS 阅读推荐](https://www.v1tx.com/post/best-rss-reader/)
 
 ## 请问 Mac 上有哪些硬盘检测工具？[如 Win 上 CrystalDiskInfo、HD Tune 之类](https://www.v2ex.com/t/175051)
+
 DriveDx
 可以用brew安装smartmontools查看SMART数据
 [MacOS硬盘检测工具](https://kknews.cc/digital/562gly8.html) [SMART Utility 3.2.6](https://www.itpwd.com/215.html)
 HD Tune Pro for Mac
 
 ### Mac 移动硬盘未挂载-解决办法
+
 [Mac 移动硬盘未挂载-解决办法](https://www.jianshu.com/p/56d37a0002d7)
 [Mac的移动硬盘不能装载该如何解决?](https://www.cnblogs.com/kaffeetrinken/p/10596740.html)
 [Mac 下移动硬盘异常退出修复](https://zhuanlan.zhihu.com/p/83542978)

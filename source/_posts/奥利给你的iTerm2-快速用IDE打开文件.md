@@ -46,8 +46,8 @@ MAC版本升级到Monterey后，Go2Shell不能使用，转用OpenInTerminal。
 ## 除Go2Shell的其他方法（MAC OS 版本 >= Monterey）
 
 - 参考文章： [Mac 系統升級， go2shell 不能用了，求大佬們推薦類似功能的軟體](https://xa8.net/post/34806729)整理的几种方法：
+  - [OpenInTerminal](https://github.com/Ji4n1ng/OpenInTerminal/blob/master/Resources/README-zh.md)  【墙裂推荐！】个人目前选择使用这个开源软件了，不仅可以用iTerm2打开，还可以配置用其他IDE例如VScode打开，还可以复制路径。
   - 直接拖文件夾 /文件到 Dock 上的 iTerm2 的圖標上。。。哈哈，这是一直都有的原生功能，虽然可以。。。但是不好用
-  - [OpenInTerminal](https://github.com/Ji4n1ng/OpenInTerminal/blob/master/Resources/README-zh.md)  【推荐】个人目前选择使用这个开源软件了。
   - [cdto](https://github.com/jbtule/cdto)
   - [Alfred 有TerminalFinder workflow](https://github.com/LeEnno/alfred-terminalfinder)
   - [XtraFinder](https://www.macwk.com/soft/xtrafinder)，附贈这个功能： XtraFinder 设置 -> Menus -> 从这里启动，设置个快捷键，选择 iTerm，完事。
@@ -107,4 +107,4 @@ open -a Go2Shell --args configGo
 - [终端环境之iTerm2](https://link.jianshu.com/?t=http://foocoder.com/blog/wo-zai-yong-de-macruan-jian.html/)
 - [mac下超好用的终端--iterm2用法与技巧](https://link.jianshu.com/?t=http://blog.csdn.net/thinkdiff/article/details/25075047)
 - [使用profiles功能快速ssh机器-Fast SSH Windows With iTerm 2](https://link.jianshu.com/?t=http://hiltmon.com/blog/2013/07/18/fast-ssh-windows-with-iterm-2/) 或者看这篇中文文章 <http://fuweiyi.com/mac/2015/03/06/a-mac-iterm2-ssh-profile.html>
-  - - [Mac 系統升級， go2shell 不能用了，求大佬們推薦類似功能的軟體](https://xa8.net/post/34806729)
+    - - [Mac 系統升級， go2shell 不能用了，求大佬們推薦類似功能的軟體](https://xa8.net/post/34806729)

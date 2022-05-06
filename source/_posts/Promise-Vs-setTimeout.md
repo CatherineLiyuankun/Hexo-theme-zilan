@@ -10,7 +10,7 @@ tags:
 categories:
 - TECH
 - FrontEnd
-- JS
+- JavaScript
 ---
 
 了解这个，就得了解JavaScript异步编程，了解任务队列才能知其根本。

@@ -9,7 +9,7 @@ tags:
 categories:
 - TECH
 - FrontEnd
-- JS
+- JavaScript
 ---
 # Why can not use === to compare Array?
 复习下javascript包括两个不同类型的值， 最新的 ECMAScript 标准定义了 8 种数据类型:

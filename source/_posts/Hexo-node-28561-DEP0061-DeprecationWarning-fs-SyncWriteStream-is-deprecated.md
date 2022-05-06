@@ -8,6 +8,7 @@ header-img:
 tags:
 - Hexo
 - Blog
+- node.js
 categories:
 - TECH
 - Hexo

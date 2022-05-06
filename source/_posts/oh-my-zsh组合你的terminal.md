@@ -157,7 +157,7 @@ echo $ZSH_THEME
 
 ![agnoster](https://cloud.githubusercontent.com/assets/2618447/6316862/70f58fb6-ba03-11e4-82c9-c083bf9a6574.png)
 
-为啥这个单拎出来说呢，因为需要额外安装[Powerline Fonts字体](https://github.com/powerline/fonts)和修改iTerm设置。
+为啥这个单拎出来说呢，因为需要额外安装[Powerline Fonts字体](https://github.com/powerline/fonts) (或[Cascadia Code PL /Cascadia Mono PL字体](https://github.com/microsoft/cascadia-code))和修改iTerm设置。
 
 否则就会长这个样子：
 
@@ -165,7 +165,7 @@ echo $ZSH_THEME
 
 解决方法：
 
-1. [下载Powerline字体库](https://github.com/powerline/fonts)
+1. [下载Powerline字体库](https://github.com/powerline/fonts), 或者使用[Cascadia Code PL /Cascadia Mono PL字体](https://github.com/microsoft/cascadia-code)
 2. 进入目录，执行install.sh脚本
 3. iTerm -> Preferences -> Profiles -> Text -> Font 修改字体
 
@@ -224,20 +224,34 @@ iTerm2 --> Preferences --> General --> Preferences Tab
 
 iTerm2需要额外配置，需要在终端中Regular font 和 the Non-ASCII Font选中刚刚安装的字体，点击iTerms的菜单"iTerm > Preferences > Profiles > Text"，进行配置（[git issue](https://github.com/powerline/fonts/issues/44)）。
 
+##### 字体方案一【不管用】
+
 ![修改iTerm2设置](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/oh-my-zsh%E7%BB%84%E5%90%88%E4%BD%A0%E7%9A%84terminal/iTerm2%E8%AE%BE%E7%BD%AE.png)
 
 按说这回就能正常显示主题agnoster了，但还是不行。
+
+##### 字体方案二【管用】
+
 后来在git issue上面查了半天，找到了[解决办法](https://github.com/ohmyzsh/ohmyzsh/issues/2869)。
 
 iTerm2设置中不仅要修改Non-ASCII Font，还要修改字体。
 这里我修改成：
 ![修改iTerm2设置字体](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/oh-my-zsh%E7%BB%84%E5%90%88%E4%BD%A0%E7%9A%84terminal/iTerm2%E8%AE%BE%E7%BD%AE2.png)
 
+##### 字体方案三【管用】
+
 看别人的经验，还可以把iTerm 2的设置里的Profile中的Text 选项卡中里的Regular Font和Non-ASCII Font的字体都设置成 Powerline的字体
 `12pt Meslo LG S DZ Regular for Powerline`
 
 或者:
 ![或者](https://cloud.githubusercontent.com/assets/1128227/9950693/c834c0ec-5dc5-11e5-92c1-a75d80f3d783.png)
+
+##### 字体方案四【管用，正在使用】
+
+如果之前安装的是[Cascadia Code PL /Cascadia Mono PL字体](https://github.com/microsoft/cascadia-code)，设置为：
+
+- Font：Cascadia Code PL            Regular 12
+- Non-ASCII Font：Cascadia Code PL  Regular 12
 
 #### iTerm2配色方案
 

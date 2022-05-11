@@ -55,7 +55,9 @@ github上有个194k star的项目，这个项目通过一个路线图展示了�
 
 ## Code style
 
-- [建议初学者避免使用的坏的编码习惯?](https://www.reddit.com/r/learnprogramming/comments/1i4ds4/what_are_some_bad_coding_habits_you_would/)  
+- 通用Code style
+  - [建议初学者避免使用的坏的编码习惯?](https://www.reddit.com/r/learnprogramming/comments/1i4ds4/what_are_some_bad_coding_habits_you_would/)  
+  - [State-of-the-Art Shitcode Principles](https://github.com/trekhleb/state-of-the-art-shitcode) 反向教学，让你看看什么是shit一样的code。
   
 - Frontend
   - [Airbnb JS 风格指南](https://github.com/airbnb/javascript) : 写JavaScript最好的方式。
@@ -270,3 +272,5 @@ B站从一开始的二次元，到现在的多元化发展，你想要的他基�
 - [程序员应该访问的最佳网站中文版](https://github.com/tuteng/Best-websites-a-programmer-should-visit-zh)
 - [程序员不能错过的20个学习网站](https://www.cnblogs.com/dimple91/p/12320317.html)
 - [2020年Web前端最新导航（常见前端框架、前端大牛）](https://www.cnblogs.com/qianguyihao/p/10701923.html)
+- [全网最全的高质量博客与网站（国内篇）](https://zhuanlan.zhihu.com/p/68386214)
+

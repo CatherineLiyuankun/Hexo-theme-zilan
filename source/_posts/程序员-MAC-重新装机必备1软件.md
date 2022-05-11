@@ -123,8 +123,11 @@ JAVACMD="/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin
 - [**TickTick滴答**](https://dida365.com/) ，任务管理，有MAC版和iPhone版，可以同步。[APP Store]
 - [x] [RescueTime](https://www.rescuetime.com/dashboard)和[WakaTime](https://wakatime.com/dashboard)来记录你的时间，都有Chrome插件。RescueTime 手机端电脑端都有app。[命令行安装WakaTime](https://wakatime.com/terminal)
 
-- [x] [**KeepingYouAwake**](https://github.com/newmarcel/KeepingYouAwake)，可保证Mac系统不自动休眠。原来用的[Caffeine](http://lightheadsw.com/caffeine/)，但是[MacOS更新到Mojave以后就不管用了](https://www.reddit.com/r/osx/comments/9pbl9u/macos_mojave_caffeine_replacement/)。可以改用Amphetamine 或者 KeepingYouAwake。免费，开源。
+## MACOS 工具
+
+- [x] [**KeepingYouAwake**](https://github.com/newmarcel/KeepingYouAwake)，【免费，开源】可保证Mac系统不自动休眠。原来用的[Caffeine](http://lightheadsw.com/caffeine/)，但是[MacOS更新到Mojave以后就不管用了](https://www.reddit.com/r/osx/comments/9pbl9u/macos_mojave_caffeine_replacement/)。可以改用Amphetamine 或者 KeepingYouAwake。
 - 【[**runcat **App store](https://apps.apple.com/us/app/runcat/id1429033973?mt=12), 免费】顶部菜单栏随 CPU 越跑越快的猫。
+- [x] [**Hidden Bar**](https://github.com/dwarvesf/hidden)，【免费，开源】菜单栏图标隐藏工具。
 
 ## 文件
 
@@ -136,8 +139,20 @@ JAVACMD="/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin
 ### 文件比较/查看
 
 - [**Meld**](http://meldmerge.org/) 【开源免费】文件比较， [Meld git下载](https://github.com/yousseb/meld/releases/)
-- [**Qmenu**](https://apps.apple.com/cn/app/qmenu/id1567442612?l=en&mt=12) 【免费, App strore】访达扩展，拥有QSpace【付费, App strore】的部分功能。【新建文件】、【**计算文件哈希值**】、【自定义文件夹图标】、【打开到终端】.
-- [OpenInTerminal](https://github.com/Ji4n1ng/OpenInTerminal/blob/master/Resources/README-zh.md)  【开源免费】访达扩展，不仅可以用iTerm2打开，还可以配置用其他IDE例如VScode打开，还可以复制路径。
+- [**Qmenu**](https://apps.apple.com/cn/app/qmenu/id1567442612?l=en&mt=12) 【免费, App strore】访达扩展，拥有QSpace【付费, App strore】的部分功能。
+  - 【新建文件】
+  - 【**计算文件哈希值**】
+  - 【Open in Item2】
+  - 【Open in VScode】
+  - 【Open in Sublime】
+  - 【Copy path】
+- [OpenInTerminal](https://github.com/Ji4n1ng/OpenInTerminal/blob/master/Resources/README-zh.md)  【开源免费】访达扩展，不仅可以用iTerm2打开，还可以配置用其他IDE打开。
+  - Support Terminal: iTerm, Hyper, Alacritty and kitty.
+  - Support TextEdit, Visual Studio Code, VSCode Insiders, Atom, Sublime Text, VSCodium, BBEdit, TextMate, CotEditor, MacVim, JetBrains(AppCode, CLion, GoLand, IntelliJ IDEA, PhpStorm, PyCharm, RubyMine, WebStorm), and Typora.
+  - 因为部分功能与`Qmenu`重复，所以`OpenInTerminal`只设置了下面选项：
+    - 【Open in IntelliJ IDEA】
+    - 【Open in PyCharm】
+    - 【Copy path】
 
 ### 文件清理
 

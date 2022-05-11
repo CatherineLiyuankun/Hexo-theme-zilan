@@ -44,7 +44,7 @@ categories:
 - [Mac 配置在Finder里用iTerm2打开当前目录](http://liyuankun.top/%E5%A5%A5%E5%88%A9%E7%BB%99%E4%BD%A0%E7%9A%84iTerm2-%E5%BF%AB%E9%80%9F%E7%94%A8IDE%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6.html#mac-%E9%85%8D%E7%BD%AEfinder%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E6%89%93%E5%BC%80iterm2)
   - [x] 方法一：安装Go2Shell【MAC OS 版本 <= Big Sur】,  `!!!!!亲测版本V2.5, Mac OS Big Sur可以使用，Monterey不能使用`【我的百度网盘】
   - [x] [方法二：安装OpenInTerminal【MAC OS 版本 >= Monterey】](http://liyuankun.top/%E5%A5%A5%E5%88%A9%E7%BB%99%E4%BD%A0%E7%9A%84iTerm2-%E5%BF%AB%E9%80%9F%E7%94%A8IDE%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6.html#%E9%99%A4go2shell%E7%9A%84%E5%85%B6%E4%BB%96%E6%96%B9%E6%B3%95-mac-os-%E7%89%88%E6%9C%AC-monterey)
-    - [OpenInTerminal](https://github.com/Ji4n1ng/OpenInTerminal/blob/master/Resources/README-zh.md)  【推荐】个人目前选择使用这个开源软件了，不仅可以用iTerm2打开，还可以配置用其他IDE例如VScode打开。
+    - [OpenInTerminal](https://github.com/Ji4n1ng/OpenInTerminal/blob/master/Resources/README-zh.md)  【推荐】个人目前选择使用这个开源软件了，不仅可以用iTerm2打开，还可以配置用其他IDE例如VScode, sublime打开。
 - [x] 配置[MAC终端命令行下用sublime、vscode、atom打开文件或目录](https://www.cnblogs.com/hongrunhui/p/5928833.html)
   - [x] open .  用finder打开当前文件
   - [x] vsc .  用vscode打开当前文件

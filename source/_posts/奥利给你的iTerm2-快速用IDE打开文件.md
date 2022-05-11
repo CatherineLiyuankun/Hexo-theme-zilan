@@ -46,7 +46,20 @@ MAC版本升级到Monterey后，Go2Shell不能使用，转用OpenInTerminal。
 ## 除Go2Shell的其他方法（MAC OS 版本 >= Monterey）
 
 - 参考文章： [Mac 系統升級， go2shell 不能用了，求大佬們推薦類似功能的軟體](https://xa8.net/post/34806729)整理的几种方法：
-  - [OpenInTerminal](https://github.com/Ji4n1ng/OpenInTerminal/blob/master/Resources/README-zh.md)  【墙裂推荐！】个人目前选择使用这个开源软件了，不仅可以用iTerm2打开，还可以配置用其他IDE例如VScode打开，还可以复制路径。
+  - [**Qmenu**](https://apps.apple.com/cn/app/qmenu/id1567442612?l=en&mt=12) 【免费, App strore】访达扩展，拥有QSpace【付费, App strore】的部分功能。
+    - 【新建文件】
+    - 【**计算文件哈希值**】
+    - 【Open in Item2】
+    - 【Open in VScode】
+    - 【Open in Sublime】
+    - 【Copy path】
+  - [OpenInTerminal](https://github.com/Ji4n1ng/OpenInTerminal/blob/master/Resources/README-zh.md)  【开源免费】访达扩展，不仅可以用iTerm2打开，还可以配置用其他IDE打开。
+    - Support Terminal: iTerm, Hyper, Alacritty and kitty.
+    - Support TextEdit, Visual Studio Code, VSCode Insiders, Atom, Sublime Text, VSCodium, BBEdit, TextMate, CotEditor, MacVim, JetBrains(AppCode, CLion, GoLand, IntelliJ IDEA, PhpStorm, PyCharm, RubyMine, WebStorm), and Typora.
+    - 因为部分功能与`Qmenu`重复，所以`OpenInTerminal`只设置了下面选项：
+      - 【Open in IntelliJ IDEA】
+      - 【Open in PyCharm】
+      - 【Copy path】
   - 直接拖文件夾 /文件到 Dock 上的 iTerm2 的圖標上。。。哈哈，这是一直都有的原生功能，虽然可以。。。但是不好用
   - [cdto](https://github.com/jbtule/cdto)
   - [Alfred 有TerminalFinder workflow](https://github.com/LeEnno/alfred-terminalfinder)
@@ -99,7 +112,7 @@ open -a Go2Shell --args configGo
 > 删除这个功能，或者图标显示错误很好处理，按住 cmd 键，鼠标拖拽这个图标到外面释放图标，就可以删除这个功能了。
 > 或者重新打开Go2Shell设置， 点击“Uninstall Go2Shell from Finder”
 
-# Links
+## Links
 
 - [MAC终端命令行下用sublime、vscode、atom打开文件或目录](https://www.cnblogs.com/hongrunhui/p/5928833.html)
 - [Mac 配置Finder当前目录打开iTerm2](https://www.jianshu.com/p/445d3f754c4d)

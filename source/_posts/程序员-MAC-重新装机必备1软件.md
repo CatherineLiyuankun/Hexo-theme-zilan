@@ -168,14 +168,28 @@ JAVACMD="/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin
 - [x] [**Kiwi for Gmail**](http://kiwiforgmail.com/)，Gmail 客户端, 我用的免费的lite版，App store 要切换到美国。
 - [x] [**Microsoft NTFS for Mac by Paragon Software**](https://www.seagate.com/pl/pl/support/software/paragon/) - 支持 NTFS 格式硬盘，因为原来买了希捷的移动硬盘，送的软件，一般、够用。
 
-
-- [x] [**RDM**](https://github.com/avibrazil/RDM)，分辨率切换，允许设置未支持的分辨率，比如我会在录屏时设置 720p(hd) 的分辨率。在使用多个外接显示屏的时候，也可以调整外接显示屏的分辨率，很方便。免费，开源。
+- [x] [**RDM**](https://github.com/avibrazil/RDM)，【免费，开源】分辨率切换，允许设置未支持的分辨率，比如我会在录屏时设置 720p(hd) 的分辨率。在使用多个外接显示屏的时候，也可以调整外接显示屏的分辨率，很方便。
 
 ## 笔记/阅读
 
-- [x] [**Onenote**](https://www.onenote.com/signin?wdorigin=ondc)，笔记工具，从 [Evernote印象笔记](https://evernote.com/intl/zh-cn) （原来是会员，现在只是免费版） 切到 Onenote，感觉Onenote对markdown支持不好（只有windows版本有插件可以支持markdown），准备换[**Ulysses**](https://ulysses.app/)。不过我现在markdown一般都用vscode+github来写了。
+- [x] [**Onenote**](https://www.onenote.com/signin?wdorigin=ondc)，笔记工具，从 [Evernote印象笔记](https://evernote.com/intl/zh-cn) （原来是会员，现在只是免费版） 切到 Onenote，准备换[**Ulysses**](https://ulysses.app/)。不过我现在markdown一般都用vscode+github来写了。
+  - Onenoted 优点
+    - 0 免费 + 实时同步到onedrive
+    - 1 多级目录（note - stack section - section - page - subpage）
+    - 2 笔记间可相互引用：可复制page link和section link
+  - Onenoted 缺点
+    - 对markdown支持不好（只有windows版本有插件可以支持markdown）
+- [有道云笔记](https://note.youdao.com/)【免费，支持markdown】推荐。[APP store 可下载](https://apps.apple.com/cn/app/%E6%9C%89%E9%81%93%E4%BA%91%E7%AC%94%E8%AE%B0-%E7%AC%94%E8%AE%B0%E6%95%88%E7%8E%87%E5%8A%9E%E5%85%AC/id1600668116?l=en&mt=12)
+  - 支持markdown
+  - 免费版（非会员）2-3G空间
+- [Typora](https://typora.io/) 专门写markdown的编辑器。
 - [x] [**Reeder**](http://reederapp.com/mac/)，RSS 阅读软件
  <!-- 我的主要信息来源，没有提供 rss 源的我会先在 [**rsshub.app**](https://docs.rsshub.app/) 上找，再没有就自己写一个 serverless 服务部署在 [now](https://zeit.co/) 上，[now使用方法](http://object.ws/2017/09/10/nowsh-note/) -->
+
+- [uPic](https://github.com/gee1k/uPic) 【免费，开源】Mac图床客户端。我当然用的免费开源版。
+  - 支持图床： smms、 又拍云 USS、七牛云 KODO、 阿里云 OSS、 腾讯云 COS、微博、Github、 Gitee、 Amazon S3、自定义上传接口等
+  - [中文使用说明](https://blog.svend.cc/upic/)
+  - [App store 也可下载收费版￥30](https://apps.apple.com/cn/app/upic-a-powerful-hosting-tool/id1549159979?l=en&mt=12) 只有 AppStore 是最新版本。 其他安装留在`v0.21.1'。可以拉取代码自行编译打包。
 
 ## 作图
 
@@ -189,7 +203,7 @@ JAVACMD="/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin
 ## 视频
 
 - [x] [**Gif Brewery 3**](https://apps.apple.com/cn/app/gif-brewery-3-video-to-gif/id1081413713?l=en&mt=12) ，GIF 录屏工具, 可以直接录屏并转换成gif动图。免费，App store 下载。
-- [ ] - 各类视频软件
+- 各类视频软件
 - [x] [**IINA**](https://github.com/iina/iina)，[IINA](https://iina.io/)视频播放。原来用的[VLC media player](https://www.videolan.org/vlc/index.zh.html)，后来[改用IINA](https://www.zhihu.com/question/19552878/answer/139035466)。【开源免费】多媒体播放器，支持多倍速播放。 `brew install --cask iina`
 
 ### 视频编辑

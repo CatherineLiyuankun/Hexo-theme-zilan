@@ -32,3 +32,8 @@ categories:
 Log branch commit信息
 
 ![Log](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/IntelliJ-IDEA-Set-git/log.png)
+
+## Reference links
+
+- [最新 IntelliJ IDEA 配置 Git / GitHub 过程演示（2021超详细图文版）](https://www.cnblogs.com/poscana/p/14920720.html)
+- [IntelliJ IDEA 中集成并使用 Git 图文教程](https://segmentfault.com/a/1190000041226135)

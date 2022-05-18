@@ -19,13 +19,19 @@ categories:
 
 ## 方法一：从Python官网下载安装程序
 
-[从Python官网下载Python 3.9的安装程序](https://www.python.org/downloads/)下载后双击运行并安装:
+[从Python官网下载Python 3.9的安装程序](https://www.python.org/downloads/)
+[从Python官网下载Python 2.7.18 (python2最后一个版本)](https://www.python.org/downloads/release/python-2718/)
+
+
+下载后双击运行并安装:
 
 安装目录：
 
 ```python
 which python3
 /Library/Frameworks/Python.framework/Versions/3.9/bin/python3
+# python2
+/Library/Frameworks/Python.framework/Versions/2.7/bin/python2
 ```
 
 ## 方法二：Homebrew

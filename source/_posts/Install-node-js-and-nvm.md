@@ -1,8 +1,8 @@
 ---
-title: Install node.js and nvm
+title: Install/Upgrade node.js
 catalog: true
 date: 2022-04-05 19:16:29
-subtitle:
+subtitle: By n, nvm, 
 header-img:
 tags:
 - Command line
@@ -37,6 +37,8 @@ categories:
 - [Node.js Chagelog](https://github.com/nodejs/node/blob/master/doc/changelogs/CHANGELOG_V16.md#16.14.2)
 - [Node.js News](https://nodejs.org/tr/blog/)
 - [Long Term Support (LTS) schedule](https://nodejs.org/en/about/releases/)
+
+## Node.js 安装方法
 
 ## 通过`nvm`安装Node.js
 
@@ -211,9 +213,43 @@ npm -v
 sudo n 10.15.0
 ``` -->
 
+## Node.js 升级
+
+### 安装node.js 新版本
+
+- via npm
+
+```bash
+npm cache clean -f
+npm install -g n
+n 16.15.0
+```
+
+- via nvm
+
+```bash
+nvm install v16.15.0
+nvm use v16.15.0
+```
+
+- via [brew](https://formulae.brew.sh/formula/node@16)
+
+```bash
+brew install node@16
+```
+
+### Remove node_modules folder (optional)
+
+### Reinstall the dependencies
+
+by `yarn install` or `npm install`
+
 ## 参考文章
 
 - [Node.js怎么选版本？](https://juejin.cn/post/7001401390983544840)
-- [How to Update Node to Any Version Using Npm](https://codeforgeek.com/update-node-using-npm/)
 - [使用 nvm 管理不同版本的 node 与 npm](https://www.runoob.com/w3cnote/nvm-manager-node-versions.html)
 - [How to switch Node.js versions with NVM](https://blog.logrocket.com/how-switch-node-js-versions-nvm/)
+
+- [How to Update Node to Any Version Using Npm](https://codeforgeek.com/update-node-using-npm/)
+- [How to Update Node.js to Latest Version {Linux, Windows, and macOS}](https://phoenixnap.com/kb/update-node-js-version)
+- [Upgrading Node.js to latest version](https://stackoverflow.com/questions/10075990/upgrading-node-js-to-latest-version)

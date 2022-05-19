@@ -139,20 +139,23 @@ JAVACMD="/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin
 ### 文件比较/查看
 
 - [**Meld**](http://meldmerge.org/) 【开源免费】文件比较， [Meld git下载](https://github.com/yousseb/meld/releases/)
-- [**Qmenu**](https://apps.apple.com/cn/app/qmenu/id1567442612?l=en&mt=12) 【免费, App strore】访达扩展，拥有QSpace【付费, App strore】的部分功能。
+- [**Qmenu**](https://apps.apple.com/cn/app/qmenu/id1567442612?l=en&mt=12) 【免费, App strore】访达扩展，拥有QSpace【付费, App strore】的部分功能。Support open in more Apps, such as Atom, MacVim, Emacs, CotEditor, Typora, Android Studio, HBuilderX, IDEA, AppCode, CLion, DataGrip, DataSpell, GoLand, PhpStorm, PyCharm, PyCharm CE, Rider, RubyMine, WebStorm.
   - 【新建文件】
   - 【**计算文件哈希值**】
   - 【Open in Item2】
   - 【Open in VScode】
-  - 【Open in Sublime】
+  - 【Open in IntelliJ IDEA】
+  - 【Open in PyCharm CE】
+  - 【Open in Typora】
   - 【Copy path】
+<!-- Qmenu升级1.2后包含了OpenInTerminal的功能，所以OpenInTerminal就不用了。
 - [OpenInTerminal](https://github.com/Ji4n1ng/OpenInTerminal/blob/master/Resources/README-zh.md)  【开源免费】访达扩展，不仅可以用iTerm2打开，还可以配置用其他IDE打开。
   - Support Terminal: iTerm, Hyper, Alacritty and kitty.
   - Support TextEdit, Visual Studio Code, VSCode Insiders, Atom, Sublime Text, VSCodium, BBEdit, TextMate, CotEditor, MacVim, JetBrains(AppCode, CLion, GoLand, IntelliJ IDEA, PhpStorm, PyCharm, RubyMine, WebStorm), and Typora.
   - 因为部分功能与`Qmenu`重复，所以`OpenInTerminal`只设置了下面选项：
     - 【Open in IntelliJ IDEA】
     - 【Open in PyCharm】
-    - 【Copy path】
+    - 【Copy path】 -->
 
 ### 文件清理
 
@@ -186,7 +189,7 @@ JAVACMD="/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin
 - [x] [**Reeder**](http://reederapp.com/mac/)，RSS 阅读软件
  <!-- 我的主要信息来源，没有提供 rss 源的我会先在 [**rsshub.app**](https://docs.rsshub.app/) 上找，再没有就自己写一个 serverless 服务部署在 [now](https://zeit.co/) 上，[now使用方法](http://object.ws/2017/09/10/nowsh-note/) -->
 
-- [uPic](https://github.com/gee1k/uPic) 【免费，开源】Mac图床客户端。我当然用的免费开源版。
+- [uPic](https://github.com/gee1k/uPic) 【免费，开源】Mac图床客户端。我当然用的免费开源版。需要在 系统偏好设置 - 扩展 - 访达扩展 中添加扩展，否则点击会没有反应，[参照](https://blog.svend.cc/upic/#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85)
   - 支持图床： smms、 又拍云 USS、七牛云 KODO、 阿里云 OSS、 腾讯云 COS、微博、Github、 Gitee、 Amazon S3、自定义上传接口等
   - [中文使用说明](https://blog.svend.cc/upic/)
   - [App store 也可下载收费版￥30](https://apps.apple.com/cn/app/upic-a-powerful-hosting-tool/id1549159979?l=en&mt=12) 只有 AppStore 是最新版本。 其他安装留在`v0.21.1'。可以拉取代码自行编译打包。

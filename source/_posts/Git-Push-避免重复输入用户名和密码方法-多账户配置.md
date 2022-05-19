@@ -77,7 +77,6 @@ machine {git account name}.github.comlogin your-usernmaepassword your-password
         name = Li,Yuankun
         email = yuanli@microstrategy.com -->
 
-
 ## 3 开启两步验证"Two-factor authentication"的github账号
 
 前面用方法一之后， 重启终端， 重新`git push`, 跟据提示输入用户名和密码，结果报错：
@@ -110,20 +109,23 @@ After 2FA is enabled there are a couple of scenarios where you need to enter a p
 For example, when you access a repository using Git on the command line using commands like git clone, git fetch, git pull or git push with HTTPS URLs, you must provide your GitHub username and your personal access token when prompted for a username and password. The command line prompt won't specify that you should enter your personal access token when it asks for your password.
 
 > **2FA and Subversion (svn command line, tortoise svn, etc)**
-> 
+>
 > When you access a repository via Subversion, you must provide a personal access token instead of entering your password.
 
 ## 附录：配置git账户命令
+
 ``` bash
 # 配置git账户
 git config --list #查看当前配置
-git config --list [--local] #查看当前仓库配置
+git config --list --local #查看当前仓库配置
 git config --list --global #查看全局配置
+
 # 配置全局账户（配置文件位于 ~/.gitconfig中）
 git config --global user.name "your_name" # 如果是提到github上，your_name最好是你的github账户的名字
 git config --global user.email "your_email@example.com" # 如果是提到github上，your_email@example.com最好是你的github账户的邮箱
+
 # 配置本地仓库账户 (配置文件位于当前仓库目录的.git/config中）
-git config [--local] user.name "your_name_in_company" # 如果是提到github上，your_name最好是你的github账户的名字
-git config [--local] user.email "your_company_email@example.com" # 如果是提到github上，your_email@example.com最好是你的github账户的邮箱
+git config --local user.name "your_name_in_company" # 如果是提到github上，your_name最好是你的github账户的名字
+git config --local user.email "your_company_email@example.com" # 如果是提到github上，your_email@example.com最好是你的github账户的邮箱
 
 ```

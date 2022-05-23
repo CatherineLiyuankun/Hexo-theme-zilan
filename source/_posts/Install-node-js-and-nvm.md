@@ -2,7 +2,7 @@
 title: Install/Upgrade node.js
 catalog: true
 date: 2022-04-05 19:16:29
-subtitle: By n, nvm, 
+subtitle: By n, nvm, brew
 header-img:
 tags:
 - Command line
@@ -203,15 +203,9 @@ lts/gallium -> v16.15.0
   nvm run 6.10.3 app.js
 # Run `node app.js` with the PATH pointing to node 4.8.3
   nvm exec 4.8.3 node app.js
+# 卸载指定版本 Uninstall a version
+  nvm uninstall <version>
 ```
-
-<!-- 2. Upgrade(<https://codeforgeek.com/update-node-using-npm/>)
-
-```bash
-sudo npm install -g n
-npm -v
-sudo n 10.15.0
-``` -->
 
 ## Node.js 升级
 

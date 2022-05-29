@@ -18,7 +18,6 @@ categories:
 
 比如：要生成一个文件放在服务器上得一个目录下,可以使用request.getContextPath()+/dir,组成一个完整得目录结构.
 
-
 当使用Tomcat作为Web服务器，项目一般部署在Tomcat下的webapps的目录下。具体来说主要用两种部署的路径：
 
 - 将web项目中的webRoot下的文件直接拷贝到webapps/ROOT下（删除ROOT下的原有文件）；
@@ -28,6 +27,7 @@ categories:
 对于第一部署方法，`request.getContextPath()`的返回值为空（即：`""`,中间无空格，注意区分`null`)。
 
 对于第二部署方法，其返回值为：`/创建的文件夹的名称`。
+
 
 ## URL实例
 
@@ -53,7 +53,6 @@ categories:
 
 打印结果：`\Tomcat所在目录\webapps\liyuankun\test`
 
-
 `request.getSchema()`可以返回当前页面使用的协议，http、https等, 这里是`http`;
 
 `request.getServerName()`可以返回当前页面所在的服务器的名字, 这里是`localhost`;
@@ -68,6 +67,12 @@ categories:
  String basePath =request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort() + appContext; 
 %>
 
+```
+
+```java
+public static String buildAbsoluteUrl(HttpServletRequest request, String relativePath, String queryString) {
+   return UrlUtils.buildFullRequestUrl(request.getScheme(), request.getServerName(), request.getServerPort(), request.getContextPath() + relativePath, queryString);
+}
 ```
 
 ## 参考链接

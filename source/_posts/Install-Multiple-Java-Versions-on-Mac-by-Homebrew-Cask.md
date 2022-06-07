@@ -65,6 +65,69 @@ brew install --cask java
 
 ## 安装指定版本Java
 
+### [New]安装openjdk11
+
+[Homebrew 安装openjdk11](https://formulae.brew.sh/formula/openjdk@11)
+MACOS 升级M1芯片后，最好更新下jdk版本，运行效率更高。
+另外因为`CVE-2022-21476 vulnerability resolution` (aka Java upgrade to jdk-11.0.15+10) ，openjdk11最好更新到`11.0.15+10`.
+
+1. Install
+
+```bash
+$ brew install openjdk@11
+
+For the system Java wrappers to find this JDK, symlink it with
+  sudo ln -sfn /opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
+
+openjdk@11 is keg-only, which means it was not symlinked into /opt/homebrew,
+because this is an alternate version of another formula.
+
+If you need to have openjdk@11 first in your PATH, run:
+  echo 'export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"' >> ~/.zshrc
+
+For compilers to find openjdk@11 you may need to set:
+  export CPPFLAGS="-I/opt/homebrew/opt/openjdk@11/include"
+```
+
+2. Set jdk for jenv
+
+```bash
+$ where java
+/opt/homebrew/opt/openjdk@11/bin/java
+/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home
+
+$ jenv versions
+openjdk64-11.0.11
+
+$ jenv add /opt/homebrew/opt/openjdk@11/bin/java
+
+$ jenv versions
+* openjdk64-11.0.11 (set by /Users/yuanli/.jenv/version)
+openjdk64-11.0.15
+
+# set default jdk version
+$ jenv global openjdk64-11.0.15
+
+$ jenv versions
+openjdk64-11.0.11
+* openjdk64-11.0.15 (set by /Users/yuanli/.jenv/version)
+```
+
+3. (Optional)删除旧的jdk
+
+```bash
+$ sudo rm -rf /Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin/java
+
+$ jenv remove openjdk64-11.0.11
+
+$ jenv versions
+openjdk64-11.0.15
+```
+
+4. Set jdk for IDE
+
+### other
+
 Install Specific Versions of Java (Java8, Java11, Java13)
 To install previous or specific versions of JDKs, you can get them from AdoptOpenJDK:
 
@@ -101,16 +164,24 @@ $ where java
 ```
 
 ```bash
-$ jenv add /Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home
+# 添加jdk变量到jenv，只有添加过jenv versions 才能显示出来
 $ jenv add /Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
+$ jenv add /Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home
 $ jenv add /usr
-
 ```
 
 After that, run this command to list all registered JDKs:
 
 ```bash
-jenv versions
+$ jenv versions
+
+openjdk64-1.8.0.292
+openjdk64-11.0.11
+```
+
+```bash
+# 移除jdk变量
+jenv remove openjdk64-11.0.11
 ```
 
 The version with an asterisk is the active version.

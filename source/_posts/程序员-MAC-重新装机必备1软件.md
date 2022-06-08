@@ -25,6 +25,7 @@ categories:
 - Xcode  [APP Store]
 - [Vscode](https://code.visualstudio.com/) + 插件Settings Sync （用gitHub账号创建gist同步配置和插件）+ [Vscode 配置和插件](http://liyuankun.top/Vscode-配置和插件.html)。
 - [Toolbox](https://www.jetbrains.com/toolbox-app/) + [**IntelliJ**](https://www.jetbrains.com/idea/) + PyCharm：  用Toolbox来管理和下载IntelliJ，PyCharm
+  - [IntelliJ 官方文档-Share settings through a settings repository](https://www.jetbrains.com/help/idea/sharing-your-ide-settings.html#settings-repository)
 - [Sublime](https://www.sublimetext.com/)
 
 ## Database

@@ -99,7 +99,7 @@ $ where java
 $ jenv versions
 openjdk64-11.0.11
 
-$ jenv add /opt/homebrew/opt/openjdk@11/bin/java
+$ jenv add /opt/homebrew/opt/openjdk@11
 
 $ jenv versions
 * openjdk64-11.0.11 (set by /Users/yuanli/.jenv/version)

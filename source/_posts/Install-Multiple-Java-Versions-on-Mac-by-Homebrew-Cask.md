@@ -34,6 +34,7 @@ brew install homebrew/cask
 ```
 
 安装brew-cask-completion：
+
 ```bash
 brew install brew-cask-completion
 ```
@@ -126,17 +127,37 @@ openjdk64-11.0.15
 
 4. Set jdk for IDE
 
+#### ERROR in terminal
+
+`~/.bash_profile` 或是`~/.zprofile` `~/.zshrc`里面配置了`JAVA_HOME`
+
+```bash
+ export JAVA_HOME="/opt/homebrew/opt/openjdk@11" 
+```
+
+- 报错：
+
+```bash
+ERROR: JAVA_HOME is set to an invalid directory: /opt/homebrew/opt/openjdk@11
+```
+
+- [解决方法](https://stackoverflow.com/a/6588410)：
+
+1. `JAVA_HOME` 修改为： `export JAVA_HOME="$(/usr/libexec/java_home)"`
+2. Run `sudo ln -sfn /usr/local/opt/openjdk/libexec/openjdk.jdk`
+
+
 ### other
 
 Install Specific Versions of Java (Java8, Java11, Java13)
 To install previous or specific versions of JDKs, you can get them from AdoptOpenJDK:
 
 ```bash
-$ brew tap adoptopenjdk/openjdk
+brew tap adoptopenjdk/openjdk
 
-$ brew install --cask adoptopenjdk8
-$ brew install --cask adoptopenjdk11
-$ brew install --cask adoptopenjdk13
+brew install --cask adoptopenjdk8
+brew install --cask adoptopenjdk11
+brew install --cask adoptopenjdk13
 ```
 
 # Java版本切换
@@ -203,7 +224,6 @@ The above command will create a .java-version file at project root. Its content 
 ```bash
 oracle64-1.8.0.66
 ```
-
 
 # Reference
 

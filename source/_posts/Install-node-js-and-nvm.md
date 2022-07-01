@@ -46,6 +46,7 @@ categories:
 
 - [nvm](https://nodejs.org/zh-cn/download/package-manager/#nvm)适用OS: Mac/Linux
 - [nvm-windows](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fcoreybutler%2Fnvm-windows%2Freleases)则是其在windows平台的一个替代方案，两者有联系，但是各自独立的项目。
+  - [Install NodeJS on Windows](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows)
 
 ### 安装`nvm`
 
@@ -244,6 +245,7 @@ by `yarn install` or `npm install`
 - [使用 nvm 管理不同版本的 node 与 npm](https://www.runoob.com/w3cnote/nvm-manager-node-versions.html)
 - [How to switch Node.js versions with NVM](https://blog.logrocket.com/how-switch-node-js-versions-nvm/)
 
+- [Install NodeJS on Windows](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows)
 - [How to Update Node to Any Version Using Npm](https://codeforgeek.com/update-node-using-npm/)
 - [How to Update Node.js to Latest Version {Linux, Windows, and macOS}](https://phoenixnap.com/kb/update-node-js-version)
 - [Upgrading Node.js to latest version](https://stackoverflow.com/questions/10075990/upgrading-node-js-to-latest-version)

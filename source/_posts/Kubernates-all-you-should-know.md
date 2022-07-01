@@ -10,5 +10,5 @@ tags:
 categories:
 - TECH
 - container
-- Docker
+- Kubernetes
 ---

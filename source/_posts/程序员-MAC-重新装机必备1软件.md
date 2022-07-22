@@ -113,6 +113,7 @@ JAVACMD="/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin
   - [Alfred auto paste on return 自动粘贴失效解决方法](https://www.jianshu.com/p/594fac7950c4) 确认下 System Preferences -> Security & Privacy -> Accessibility 里有没有勾选 Alfred。如果已经勾上了 取消掉 重新选择勾上试试。
 - [x] [**Raycast**](https://www.raycast.com/)，【开源免费】，Alfred太贵了，Raycast是很好用的平替。"打开application/文件夹"，"snippet"，"剪贴板"等功能都有。
 
+- [x] [**shortcutdetective**](https://formulae.brew.sh/cask/shortcutdetective)，【网址下载】检测keyboard shortcut(hotkey) 冲突， 免费。例如control + A, 可以检测出哪些application设置有这个快捷键，避免冲突。
 - [x] [**Thor**](https://github.com/gbammc/Thor)，【网址下载】或者[APP Store + 国外账号]一键直达应用， 免费，开源。
 - [x] [**Karabiner Element**](https://pqrs.org/osx/karabiner/)，用于[把右 Command 和 Capslock 键利用起来](http://lucifr.com/2013/02/16/caps-lock-to-hyper-key/)，避免快捷键冲突，[简单 note](https://hackmd.io/s/rk4u9i-pG)，详见[sorrycc的《我的快捷键技巧》](https://www.bilibili.com/video/av44127555)
   - “`右 Command”改成F19`: 切换到Complex modifications --> Add rule --> "Change caps_lock to command+control+option+shift." --> 打开文件`~/.config/karabiner/karabiner.json` 把`caps_lock`替换成`right_command`

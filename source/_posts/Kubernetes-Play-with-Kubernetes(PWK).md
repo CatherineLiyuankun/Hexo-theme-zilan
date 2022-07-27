@@ -1,5 +1,5 @@
 ---
-title: Kubernetes 最全总结
+title: Kubernetes - Play with Kubernetes（PWK）
 catalog: true
 date: 2022-03-05 22:30:33
 subtitle:

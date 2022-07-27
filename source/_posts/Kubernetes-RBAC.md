@@ -4,7 +4,13 @@ catalog: true
 date: 2022-07-27 22:13:15
 subtitle: role & rolebinding clusterrole & clusterrolebinding serviceaccount
 header-img:
-tags:
+tags: 
+- Cloud
+- container
+categories:
+- TECH
+- container
+- Kubernetes
 ---
 
 # Role

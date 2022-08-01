@@ -29,7 +29,7 @@ categories:
 $ docker version
 
 
-$ kuberctl version --output=yaml
+$ kubectl version --output=yaml
 
 $ whoami
 root
@@ -78,7 +78,7 @@ node1   NotReady   control-plane,master   111s   v1.20.1
 
 节点状态`NotReady`是由于尚未配置Pod网络。
 
-### 7  `kubectl get nodes` 初始化Pod网络（集群网络）
+### 7 初始化Pod网络（集群网络）
 
 
 ```bash
@@ -112,6 +112,12 @@ Pod网络已经初始化，控制层也已经Ready。
 # 先复制好，但不执行
 kubeadm join 192.168.0.23:6443 --token 221f6u.1r9leb1snw0fngbo \
     --discovery-token-ca-cert-hash sha256:dc7108dbbe961ecddada53f6597459e7bbccd046dc60900330d24ee94dbcb216
+```
+
+如果忘记保存此命令，可用如下命令获取：
+
+```bash
+kubeadm token create --print-join-command
 ```
 
 ### 10 左侧导航栏 点击“ADD NEW INSTANCE”
@@ -186,15 +192,81 @@ $ kubectl config use-context contextName
 ```
 
 
-
-
-
-
-
-
 ```bash
  1. (Optional) Create an nginx deployment:
 
  kubectl apply -f <https://raw.githubusercontent.com/kubernetes/website/master/content/en/examples/application/nginx-app.yaml>
 
+```
+
+## 安装后设置
+
+### 设置使用Tab键
+
+编辑/etc/profile, 在第二行加上source <(kubectl completion bash)
+
+- 要让此设置生效，操作系统要安装bash-completion
+- 注意小括号为英文版
+
+```bash
+$ head -3 /etc/profile
+# /etc/profile
+source <(kubectl completion bash) # 新增<与(中间没有空格
+
+$ source /etc/profile
+```
+
+### 设置vim
+
+创建/root/.vimrc
+
+```bash
+$ cat .vimrc
+set paste
+```
+
+## 设置metric-server监控pod及node负载
+
+### 安装metric-server
+
+1. 所有node上下载镜像
+
+```bash
+$ docker pull mirrorgooglecontainers/metrics-server-amd64:v0.3.6
+```
+
+2. 所有node上tag操作，形成一个新镜像
+
+```bash
+$ docker tag mirrorgooglecontainers/metrics-server-amd64:v0.3.6 k8s.gcr.io/metrics-server-amd64:v0.3.6
+```
+
+3. master上下载metrics-server
+
+```bash
+$ curl -Ls https://api.github.com/repos/kubernetes-sigs/metrics-server/tarball/v0.3.6 -o metrics-server-v0.3.6.tar.gz
+```
+
+4. 解压`metrics-server-v0.3.6.tar.gz`, 进入目录 `/root/kubernetes-sigs-metrics-server-d1f4f6f/deploy/1.8+`
+
+5. 修改metrics-server-deployment.yaml
+6. 运行当前目录所有文件
+
+
+```bash
+$ kubectl apply -f .
+```
+
+### 查看负载
+
+查看节点负载
+
+```bash
+$ kubectl top nodes --use-protocol-buffers
+```
+
+查看pod负载
+
+```bash
+$ kubectl top pods -n kube-system --use-protocol-buffers
 ```

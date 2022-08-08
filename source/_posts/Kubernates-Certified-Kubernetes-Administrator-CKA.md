@@ -1,5 +1,5 @@
 ---
-title: 2022 CKA 考试真题 
+title: 2022 CKA 考试真题整理
 catalog: true
 date: 2022-08-02 22:52:43
 subtitle: Kubernates-Certified Kubernetes Administrator
@@ -31,8 +31,13 @@ categories:
 
 #### vim粘贴设置
 
-    `:set paste`
+1. `:set paste`
     Turning off auto indent when pasting text into vim
+2. 开启TAB补全
+   - `kubectl --help | grep bash`,此步是为了找关键词completion
+   - `sudo vim /etc/profile`
+   - 添加`source <(kubectl completion bash)`
+   - 保存退出，`source /etc/profile`
 
 #### 使用nano编辑器
 
@@ -122,6 +127,8 @@ nano中被称为“快捷方式”，例如保存，退出，对齐等。最常�
 
 ### RBAC题目
 
+Task weight: 4%
+
 Set configuration context:
 
 ```bash
@@ -162,6 +169,8 @@ $ kubectl create rolebinding cicd-token-binding --clusterrole=deployment-cluster
 
 ### 题目：NetworkPolicy
 
+Task weight: 7%
+
 Set configuration context:
 
 ```bash
@@ -171,7 +180,7 @@ Set configuration context:
 #### Task
 
 Create a new `NetworkPolicy` named `allow-port-from-namespace` that allows Pods in the existing
-namespace `echo` to connect to port `5768` of other Pods in the namespace `my-app`.
+namespace `internal` to connect to port `5768` of other Pods in the namespace `my-app`.
 
 Ensure that the new NetworkPolicy:
 
@@ -185,7 +194,8 @@ Ensure that the new NetworkPolicy:
 ```bash
 kubectl config use-context hk8s
 kubectl get ns --show-labels
-# kubectl label ns echo user=lyk
+# kubectl create namespace internal
+kubectl label ns internal project: my-app
 vim allow-port-from-namespace.yaml
 # nano allow-port-from-namespace.yaml
 ```
@@ -195,7 +205,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: allow-port-from-namespace
-  namespace: echo # 目的命名空间
+  namespace: internal # 目的命名空间
 spec:
   podSelector: {} # 加matchLabels会报错
   policyTypes:
@@ -210,11 +220,18 @@ spec:
         port: 5768 # 允许访问的端口
 ```
 
+```bash
+kubectl apply -f allow-port-from-namespace.yaml
+kubectl get networkpolicies.networking.k8s.io -n internal
+```
+
 ---
 
 ## 考题3-创建 svc
 
 ### 题目：创建 svc
+
+Task weight: 7%
 
 Set configuration context:
 
@@ -261,6 +278,7 @@ kubectl expose deployment front-end --name=front-end-svc --port=80 --target-port
 
 ### 题目：ingress
 
+Task weight: 7%
 Set configuration context:
 
 ```bash
@@ -313,7 +331,7 @@ kubectl apply -f pong.yaml
 
 # 获取 ingress 的 IP 地址
 $ kubectl get pod -n ing-internal -o wide
-# kubctl get ingress pong
+kubctl get ingress -n ing-internal
 
 # 验证
 $ curl -kl <INTERNAL_IP>/hi
@@ -368,6 +386,7 @@ kubectl get pods
 ### 题目：将 pod 部署到指定 node 节点上
 
 难易程度： 简单
+Task weight: 4%
 
 Set configuration context:
 
@@ -401,8 +420,8 @@ spec:
   - name: nginx
     image: nginx
     imagePullPolicy: IfNotPresent
-  nodeSelector:
-    disk: spinning
+  nodeSelector: # 添加nodeSelector
+    disk: spinning # 添加node label
     
 kubectl apply -f nginx-kusc00401.yaml
 kubectl get pod nginx-kusc00401 -o wide
@@ -414,6 +433,8 @@ kubectl get pod nginx-kusc00401 -o wide
 
 ### 题目： Kubernates-upgrade
 
+Task weight: 7%
+
 Set configuration context:
 
 ```bash
@@ -422,7 +443,7 @@ Set configuration context:
 
 #### Task
 
-Given an existing Kubernetes cluster running version `1.22.0`, upgrade all of the Kubernetes control plane and node components on the master node only to version `1.22.2`.
+Given an existing Kubernetes cluster running version `1.22.1`, upgrade all of the Kubernetes control plane and node components on the master node only to version `1.22.2`.
 
 You are also expected to upgrade kubelet and kubectl on the **master** node.
 
@@ -472,6 +493,8 @@ $ kubectl get node # (确认只升级了 master 节点到 1.22.2 版本)
 ### 题目：etcd 备份还原
 
 (1.20 版本需要把端口号从 2739 改成 2830)
+Task weight: 7%
+
 No configuration context change required for this item.
 
 #### Task
@@ -503,8 +526,6 @@ ETCDCTL_API=3 etcdctl --endpoints 127.0.0.1:2379
 # restore
 ETCDCTL_API=3 etcdctl --endpoints 127.0.0.1:2379 --cacert=/opt/KUIN00601/ca.crt --cert=/opt/KUIN00601/etcd-client.crt 
 --key=/opt/KUIN00601/etcd-client.key snapshot restore /var/lib/backup/etcd-snapshot-previous.db
-
-# Modify /etc/kubernetes/manifest/etcd.yaml to update the data location.
 ```
 
 ---
@@ -516,6 +537,7 @@ ETCDCTL_API=3 etcdctl --endpoints 127.0.0.1:2379 --cacert=/opt/KUIN00601/ca.crt 
 ### 题目：创建多个 container 的 Pod
 
 难易程度： 简单
+Task weight: 4%
 
 Set configuration context:
 
@@ -541,11 +563,11 @@ spec:
   containers:
   - name: nginx
     image: nginx
-  - name: redis
+  - name: redis # Add 1 
     image: redis
-  - name: memcached
+  - name: memcached # Add 2
     image: memcached
-  - name: consul
+  - name: consul # Add 3
     image: consul
 
 kubectl apply -f kucc1.yaml
@@ -557,6 +579,8 @@ kubectl apply -f kucc1.yaml
 ## 考题10-创建 Persistent Volume
 
 ### 题目：创建 Persistent Volume
+
+Task weight: 4%
 
 Set configuration context:
 `[student@node-1] $ kubectl config use-context hk85`
@@ -577,13 +601,13 @@ nano app-config.yaml
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: app-config
+  name: app-config # name
 spec:
   capacity:
-    storage: 2Gi
+    storage: 2Gi # capacity 2Gi
   accessModes:
-    - ReadWriteMany
-  hostPath:
+    - ReadWriteMany # ReadWriteMany
+  hostPath: # hostPath
     path: "/srv/app-config"
 
 kubectl apply -f app-config.yaml
@@ -595,6 +619,8 @@ kubectl get pv
 ## 考题11-创建 PVC
 
 ### 题目：创建 PVC
+
+Task weight: 7%
 
 Set configuration context:
 `[student@node-1] $ kubectl config use-context ok85`
@@ -636,14 +662,14 @@ nano pv-volume.yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pv-volume
+  name: pv-volume # 1 name
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteOnce # 2 ReadWriteOnce
   resources:
     requests:
-      storage: 10Mi
-  storageClassName: csi-hostpath-sc
+      storage: 10Mi # 3
+  storageClassName: csi-hostpath-sc # 4
 
 kubectl apply -f pv-volume.yaml
 kubectl get pvc
@@ -659,7 +685,7 @@ spec:
   volumes:
     - name: task-pv-storage
       persistentVolumeClaim:
-        claimName: pv-volume
+        claimName: pv-volume # PVC name, 要与之前一致
   containers:
     - name: nginx
       image: nginx
@@ -769,6 +795,8 @@ echo 'cpu-user-1' > /opt/KUTR00401/KUTR00401.txt
 
 ### 题目：集群故障排查
 
+Task weight: 13%
+
 Set configuration context:
 `[student@node-1] $ kubectl config use-context wk8s`
 
@@ -805,6 +833,8 @@ exit
 
 ### 题目：添加 sidecar container
 
+Task weight: 7%
+
 Set configuration context:
 `[student@node-1] $ kubectl config use-context k8s`
 
@@ -833,8 +863,8 @@ must access it at `/var/log/legacy-app.log`
 ```bash
 kubectl config use-context k8s
 
-kubectl get pod legacy-app -o yaml > legacy-app.yaml
-vim legacy-app.yaml
+kubectl get pod legacy-app -o yaml > legacy-app2.yaml
+vim legacy-app2.yaml
 
 apiVersion: v1
 kind: Pod
@@ -857,20 +887,21 @@ spec:
         sleep 1;
       done      
     volumeMounts:
-    - name: logs
-      mountPath: /var/log/legacy-app.log
-  - name: busybox
+    - name: logs # 3.1 修改挂载名称
+      mountPath: /var/log/legacy-app.log # 3.2 修改挂载目录
+  - name: busybox  # 1 添加pod及vomuleMount挂载点
     image: busybox
     args: [/bin/sh, -c, 'tail -n+1 -f /var/log/legacy-app.log']
     volumeMounts:
     - name: logs
       mountPath: /var/log/legacy-app.log
-  volumes:
-  - name: logs
+  volumes:  
+  - name: logs # 2 添加volumes
     emptyDir: {}
 
-kubectl replace -f legacy-app.yaml --force # ???
-
+kubectl apply -f legacy-app2.yaml
+kubectl delete pod legacy-app -–force
+kubectl get pods | grep legacy-app
 ```
 
 ---
@@ -902,12 +933,22 @@ Search `Check to see how many nodes are ready`, 选择[Troubleshooting Clusters]
 
 ```bash
 kubectl config use-context k8s
-# 查看STATUS是Ready的node有k个
+# 1 查看STATUS是Ready的node有k个
 kubectl get nodes
+
+# 2 查看Ready的那些node是否是NoSchedule
+kubectl describe nodes vms22.rhce.cc | grep Taint
+    Taints: node-role.kubernetes.io/master:NoSchedule
+
+kubectl describe nodes vms23.rhce.cc | grep Taint
+    Taints: <none>
+
+# 2 或者使用：
 # -i 或 --ignore-case : 忽略字符大小写的差别。-v 或 --invert-match : 显示不包含匹配文本的所有行。
-kubectl describe nodes | grep -i taints | grep -v -i noschedule 
-# ps：请注意node不包括 Noschedule 节点，答案变成 3个
-echo $Num > /opt/KUSC00402/kusc00402.txt
+# kubectl describe nodes | grep -i taints | grep -v -i noschedule 
+
+# 3 输出
+echo 1 > /opt/KUSC00402/kusc00402.txt
 ```
 
 ---
@@ -918,3 +959,5 @@ echo $Num > /opt/KUSC00402/kusc00402.txt
 
 - [linux nano命令_Nano入门指南，Linux命令行文本编辑器](https://blog.csdn.net/cum88284/article/details/109042737)
 - [2022年CKA 考试题 2022年3月1日刚过](https://blog.csdn.net/april_4/article/details/123233845)
+- [2022.2 k8s-cka考试题库](https://blog.csdn.net/qq_33680297/article/details/123074501)
+- [CKA 百度文库](https://wenku.baidu.com/view/1d4a8bdbcbd376eeaeaad1f34693daef5ef713f4?bfetype=new)

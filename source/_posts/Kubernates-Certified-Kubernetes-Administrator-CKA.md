@@ -69,7 +69,7 @@ When in `vim` you can press <kbd>Esc</kbd> and type `:set number` or `:set nonum
 Get used to copy/paste/cut with vim:
 
 ```md
-Mark lines: <kbd>Esc</kbd>+<kbd>v</kbd> (then arrow keys)
+Mark lines: Esc+v (then arrow keys)
 Copy marked lines: y
 Cut marked lines: d
 Past lines: p or P

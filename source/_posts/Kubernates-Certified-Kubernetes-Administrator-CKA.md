@@ -20,6 +20,7 @@ categories:
 - 考生有 2 小时的时间完成 CKA 和 CKAD 考试。
   - 因为从06/2022开始环境升级（贬义），考试环境更难用了，变的很卡，所以时间变得比较紧张。容易做不完题，建议先把有把握的，花费时间不多的题先做掉
     - [CKS CKA CKAD changed Terminal to Remote Desktop ](https://itnext.io/cks-cka-ckad-changed-terminal-to-remote-desktop-157a26c1d5e)
+- 2020年9月更新的CKA新版考试66分以上即可通过（原定72分），考试不通过有一次补考机会。
 
 <!-- > 本文记录的题目大概按照难易程度，先易后难。 -->
 
@@ -33,6 +34,8 @@ categories:
   - What works in Terminal: <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>c</kbd> and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd>
   - What works in other apps like Firefox: <kbd>Ctrl</kbd>+<kbd>c</kbd> and <kbd>Ctrl</kbd>+<kbd>v</kbd>
 - 可以用<kbd>Tab</kbd>键，自动补全kubectl命令，大大提升效率，以及避免键盘输入拼写错误
+- 考试时间快结束的时候，弹出对话框，问你是否结束考试，一定要点击“Continue”继续考试
+  - 否则直接结束考试，会引发考试系统的bug： session未能正常close，造成一直无法出成绩。只能通过提ticket来人工解决，才能拿到成绩。
 
 ## Pre Setup
 

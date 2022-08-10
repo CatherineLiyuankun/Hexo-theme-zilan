@@ -16,7 +16,10 @@ categories:
 ## 考试内容
 
 - 考试包括 15-20 项performance-based tasks。
+  - 实测是17道题
 - 考生有 2 小时的时间完成 CKA 和 CKAD 考试。
+  - 因为从06/2022开始环境升级（贬义），考试环境更难用了，变的很卡，所以时间变得比较紧张。容易做不完题，建议先把有把握的，花费时间不多的题先做掉
+    - [CKS CKA CKAD changed Terminal to Remote Desktop ](https://itnext.io/cks-cka-ckad-changed-terminal-to-remote-desktop-157a26c1d5e)
 
 <!-- > 本文记录的题目大概按照难易程度，先易后难。 -->
 
@@ -24,12 +27,29 @@ categories:
 
 - **经验1**： Kubernates cluster upgrade 或者 etcd backup 放最后做，否则环境搞坏，其他的题不能做.
 - **经验2**：  需要在ssh到新的node的时候，在新的tab做题，避免忘记exit出来。
+- 考试环境点击`-`来zoom out, 这样可以显示更多内容。（尤其是使用平板电脑，屏幕太小，显示有效内容很少）。
+- 复制粘贴
+  - What always works: copy+paste using right mouse context menu
+  - What works in Terminal: <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>c</kbd> and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd>
+  - What works in other apps like Firefox: <kbd>Ctrl</kbd>+<kbd>c</kbd> and <kbd>Ctrl</kbd>+<kbd>v</kbd>
+- 可以用<kbd>Tab</kbd>键，自动补全kubectl命令，大大提升效率，以及避免键盘输入拼写错误
 
-### 经验3 复制粘贴 format
+## Pre Setup
 
-复制粘贴 - 从网页上copy yaml内容，使用vim 来粘贴时，yaml内容格式会乱。
+Once you've gained access to your terminal it might be wise to spend ~1 minute to setup your environment. You could set these:
 
-#### vim粘贴设置
+```bash
+alias k=kubectl                         # will already be pre-configured
+
+export do="--dry-run=client -o yaml"    # k create deploy nginx --image=nginx $do
+
+export now="--force --grace-period 0"   # k delete pod x $now 复制粘贴 format
+
+# 使用例子
+k run pod1 --image=httpd:2.4.41-alpine $do > 2.yaml
+```
+
+### vim设置
 
 1. `:set paste`
     Turning off auto indent when pasting text into vim
@@ -39,7 +59,28 @@ categories:
    - 添加`source <(kubectl completion bash)`
    - 保存退出，`source /etc/profile`
 
-#### 使用nano编辑器
+3. toggle vim line numbers
+
+When in `vim` you can press <kbd>Esc</kbd> and type `:set number` or `:set nonumber` followed by Enter to toggle line numbers. This can be useful when finding syntax errors based on line - but can be bad when wanting to mark&copy by mouse. You can also just jump to a line number with <kbd>Esc</kbd> `:22` + Enter.
+
+4. copy&paste
+
+复制粘贴 - 从网页上copy yaml内容，使用vim 来粘贴时，yaml内容格式会乱。现在已经被修复，环境里面默认加了一些vim粘贴的设置。
+Get used to copy/paste/cut with vim:
+
+```md
+Mark lines: <kbd>Esc</kbd>+<kbd>v</kbd> (then arrow keys)
+Copy marked lines: y
+Cut marked lines: d
+Past lines: p or P
+```
+
+5. Indent multiple lines
+
+To indent multiple lines press <kbd>Esc</kbd> and type `:set shiftwidth=2`. First mark multiple lines using <kbd>Ctrl</kbd> <kbd>v</kbd>  and the up/down keys. Then to indent the marked lines press <kbd>></kbd> or <kbd><</kbd>. You can then press <kbd>.</kbd> to repeat the action.
+
+
+### 使用nano编辑器
 
 ```bash
 # 编辑1.yaml文件，如果1.yaml文件不存在则新建
@@ -52,9 +93,9 @@ nano 1.yaml
 
 ##### nano快捷键
 
-nano中被称为“快捷方式”，例如保存，退出，对齐等。最常见的功能在屏幕底部列出，但还有许多其他功能。 
+nano中被称为“快捷方式”，例如保存，退出，对齐等。最常见的功能在屏幕底部列出，但还有许多其他功能。
 
-请注意，nano不使用快捷键中的<kbd>Shift</kbd>键。 所有快捷方式均使用小写字母和未修改的数字键，因此<kbd>Ctrl</kbd> + <kbd>G</kbd>不是<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>G</kbd>。
+<!-- 请注意，nano不使用快捷键中的<kbd>Shift</kbd>键。 所有快捷方式均使用小写字母和未修改的数字键，因此<kbd>Ctrl</kbd> + <kbd>G</kbd>不是<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>G</kbd>。 -->
 
 - 光标控制
   - 移动光标：使用用方向键移动。
@@ -64,6 +105,7 @@ nano中被称为“快捷方式”，例如保存，退出，对齐等。最常�
 
 - 复制、剪贴和粘贴
   <!-- - 复制一整行：<kbd>option</kbd> + <kbd>6</kbd> -->
+  - 复制和粘贴快捷键<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>c</kbd> and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd>
   - 剪切一整行<kbd>control</kbd>  + <kbd>K</kbd>
   - 在当前光标处插入上次剪切的内容<kbd>control</kbd>  + <kbd>U</kbd>
 
@@ -72,7 +114,7 @@ nano中被称为“快捷方式”，例如保存，退出，对齐等。最常�
   - 这时选定的文本会反白，用<kbd>option</kbd> + <kbd>6</kbd>来复制，<kbd>control</kbd>  + <kbd>K</kbd> 来剪贴。若在选择文本过程中要取消，只需要再按一次<kbd>control</kbd>  + <kbd>6</kbd>。
 
 - 保存
-  - 使用<kbd>control</kbd>  + <kbd>O</kbd>来保存所做的修改
+  - 使用<kbd>control</kbd> + <kbd>O</kbd>来保存所做的修改
 
 - 退出
   - 按<kbd>control</kbd> + <kbd>X</kbd> 
@@ -80,7 +122,11 @@ nano中被称为“快捷方式”，例如保存，退出，对齐等。最常�
     - 输入<kbd>Y</kbd>确认保存，输入<kbd>N</kbd>不保存，按<kbd>control</kbd>  + <kbd>U</kbd>取消返回。
     - 如果输入了<kbd>Y</kbd>，下一步会让你输入想要保存的文件名。
       - 如果不需要修改文件名直接回车就行；若想要保存成别的名字（也就是另存为）则输入新名称然后回车。这个时候也可用<kbd>control</kbd>  + <kbd>U</kbd>来取消返回。
-
+- Undo
+  - <kbd>Meta</kbd> + <kbd>u</kbd>
+  - 考试环境 + MAC OS 上的<kbd>Meta</kbd>实测是<kbd>Esc</kbd>
+- Redo
+  - <kbd>Meta</kbd> + <kbd>e</kbd>
 - 搜索
   - 按<kbd>control</kbd>  + <kbd>W</kbd>，然后输入你要搜索的关键字，回车确定。这将会定位到第一个匹配的文本，接着可以用<kbd>option</kbd> + <kbd>W</kbd>来定位到下一个匹配的文本。
 
@@ -193,7 +239,7 @@ Ensure that the new NetworkPolicy:
 
 ```bash
 kubectl config use-context hk8s
-kubectl get ns --show-labels
+kubectl get ns --show-labels # 得到`internal`的label，例如project=internal
 # kubectl create namespace internal
 kubectl label ns internal project: my-app
 vim allow-port-from-namespace.yaml
@@ -210,8 +256,14 @@ spec:
   podSelector: {} # 加matchLabels会报错
   policyTypes:
     - Ingress
+    - Egress
   ingress:
     - from:
+        - namespaceSelector:
+        matchLabels:
+          project: internal # 命名空间label
+  egress:
+    - to:
         - namespaceSelector:
             matchLabels:
               project: my-app # 命名空间label
@@ -255,7 +307,7 @@ search “containerPort”, 参考[Connecting Applications with Services](https:
 ```bash
 kubectl config use-context k8S
 
-kubectl get deployment front-end
+kubectl get deployment front-end # 可选
 kubectl edit deployment front-end
 
 spec:
@@ -339,6 +391,7 @@ $ curl -kl <INTERNAL_IP>/hi
 ```
 
 ```bash
+# 方法2
 kubectl config use-context k85
 kubectl create ingress pong -n ing-internal --rule="/hi*=hi:5678"
 
@@ -443,7 +496,7 @@ Set configuration context:
 
 #### Task
 
-Given an existing Kubernetes cluster running version `1.22.1`, upgrade all of the Kubernetes control plane and node components on the master node only to version `1.22.2`.
+Given an existing Kubernetes cluster running version `1.24.1`, upgrade all of the Kubernetes control plane and node components on the master node only to version `1.24.2`.
 
 You are also expected to upgrade kubelet and kubectl on the **master** node.
 
@@ -465,25 +518,29 @@ $ ssh mk8s-master-1
 $ sudo -i
 
 # 升级kubeadm
-[root@mk8s-master-1] apt-mark unhold kubeadm && \
-apt-get update && apt-get install -y kubeadm=1.22.2-00 && \
-apt-mark hold kubeadm
+[root@mk8s-master-1] apt-get update && apt-get install -y kubeadm=1.24.2-00
 [root@mk8s-master-1] kubeadm version
 [root@mk8s-master-1] kubeadm upgrade plan
+# 查看etcd参数
+[root@mk8s-master-1] kubeadm upgrade apply -h | grep etcd
+
 [root@mk8s-master-1] kubeadm upgrade apply v1.22.2 --etcd-upgrade=false
 
 # 升级 kubelet 和 kubectl 
-[root@mk8s-master-1] apt-get update && apt-get install -y kubelet=1.22.2-00 kubectl=1.22.2-00
+[root@mk8s-master-1] kubectl version
+[root@mk8s-master-1] kubelet --version
+
+[root@mk8s-master-1] apt-get update && apt-get install -y kubelet=1.24.2-00 kubectl=1.24.2-00
 ## 重启
 [root@mk8s-master-1] sudo systemctl daemon-reload
 [root@mk8s-master-1] sudo systemctl restart kubelet
-[root@mk8s-master-1] kubelet version
-[root@mk8s-master-1] kubectl version
-[root@mk8s-master-1] exit
+[root@mk8s-master-1] kubelet --version
 
 # 解除节点的保护
-$ kubectl uncordon mk8s-master-1
-$ kubectl get node # (确认只升级了 master 节点到 1.22.2 版本)
+[root@mk8s-master-1] kubectl uncordon mk8s-master-1
+[root@mk8s-master-1] kubectl get node # (确认只升级了 master 节点到 1.24.2 版本)
+
+[root@mk8s-master-1] exit
 ```
 
 ---
@@ -519,13 +576,19 @@ Search `etcd backup`, 选择 [Operating etcd clusters for Kubernetes](https://ku
 
 ```bash
 # backup
-ETCDCTL_API=3 etcdctl --endpoints 127.0.0.1:2379 
---cacert=/opt/KUIN00601/ca.crt --cert=/opt/KUIN00601/etcd-client.crt 
---key=/opt/KUIN00601/etcd-client.key snapshot save /srv/data/etcd-snapshot.db
+ETCDCTL_API=3 etcdctl snapshot save /srv/data/etcd-snapshot.db \
+--endpoints 127.0.0.1:2379 
+--cacert=/opt/KUIN00601/ca.crt \
+--cert=/opt/KUIN00601/etcd-client.crt \
+--key=/opt/KUIN00601/etcd-client.key 
 
 # restore
-ETCDCTL_API=3 etcdctl --endpoints 127.0.0.1:2379 --cacert=/opt/KUIN00601/ca.crt --cert=/opt/KUIN00601/etcd-client.crt 
---key=/opt/KUIN00601/etcd-client.key snapshot restore /var/lib/backup/etcd-snapshot-previous.db
+ETCDCTL_API=3 etcdctl snapshot restore /var/lib/backup/etcd-snapshot-previous.db \
+# --data-dir /var/lib/etcd-backup \
+# --endpoints 127.0.0.1:2379 
+--cacert=/opt/KUIN00601/ca.crt \
+--cert=/opt/KUIN00601/etcd-client.crt \
+--key=/opt/KUIN00601/etcd-client.key 
 ```
 
 ---
@@ -729,7 +792,7 @@ Set the node named `ek8s-node-1` as unavailable and reschedule all the pods runn
 ```bash
 kubectl config use-context ek85
 kubectl get nodes
-kubectl drain ek8s-node-1 --ignore-daemonsets --delete-local-data # --delete-emptydir-data --force
+kubectl drain ek8s-node-1 --ignore-daemonsets --delete-emptydir-data # 不加--delete-emptydir-data会报错。可选参数：--delete-local-data --force
 # kubectl uncordon ek8s-node-1 # 应该不需要这行
 ```
 
@@ -933,14 +996,17 @@ Search `Check to see how many nodes are ready`, 选择[Troubleshooting Clusters]
 
 ```bash
 kubectl config use-context k8s
-# 1 查看STATUS是Ready的node有k个
+# 1 查看STATUS是Ready的node有3个
 kubectl get nodes
 
 # 2 查看Ready的那些node是否是NoSchedule
-kubectl describe nodes vms22.rhce.cc | grep Taint
+kubectl describe nodes k8s-master-0 | grep Taint
     Taints: node-role.kubernetes.io/master:NoSchedule
 
-kubectl describe nodes vms23.rhce.cc | grep Taint
+kubectl describe nodes k8s-node-0 | grep Taint
+    Taints: <none>
+
+kubectl describe nodes k8s-node-1 | grep Taint
     Taints: <none>
 
 # 2 或者使用：
@@ -948,7 +1014,7 @@ kubectl describe nodes vms23.rhce.cc | grep Taint
 # kubectl describe nodes | grep -i taints | grep -v -i noschedule 
 
 # 3 输出
-echo 1 > /opt/KUSC00402/kusc00402.txt
+echo 2 > /opt/KUSC00402/kusc00402.txt
 ```
 
 ---
@@ -958,6 +1024,7 @@ echo 1 > /opt/KUSC00402/kusc00402.txt
 ## 参考文章
 
 - [linux nano命令_Nano入门指南，Linux命令行文本编辑器](https://blog.csdn.net/cum88284/article/details/109042737)
+- [CKS CKA CKAD changed Terminal to Remote Desktop since 06/2022](https://itnext.io/cks-cka-ckad-changed-terminal-to-remote-desktop-157a26c1d5e)
 - [2022年CKA 考试题 2022年3月1日刚过](https://blog.csdn.net/april_4/article/details/123233845)
 - [2022.2 k8s-cka考试题库](https://blog.csdn.net/qq_33680297/article/details/123074501)
 - [CKA 百度文库](https://wenku.baidu.com/view/1d4a8bdbcbd376eeaeaad1f34693daef5ef713f4?bfetype=new)

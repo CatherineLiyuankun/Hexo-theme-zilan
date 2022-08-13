@@ -527,7 +527,7 @@ $ sudo -i
 # 查看etcd参数
 [root@mk8s-master-1] kubeadm upgrade apply -h | grep etcd
 
-[root@mk8s-master-1] kubeadm upgrade apply v1.22.2 --etcd-upgrade=false
+[root@mk8s-master-1] kubeadm upgrade apply v1.22.2 --etcd-upgrade=false # 注意Do not upgrade the worker nodes, etc, the container manager, the CNI plugin, the DNS service or any other addons.
 
 # 升级 kubelet 和 kubectl 
 [root@mk8s-master-1] kubectl version
@@ -578,14 +578,26 @@ connecting to the server with `etcdctl`:
 Search `etcd backup`, 选择 [Operating etcd clusters for Kubernetes](https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#backing-up-an-etcd-cluster)
 
 ```bash
-# backup
+# 1.0 如果记不清参数，可查看帮助
+etcdctl snapshot save --help
+
+# 1.1 backup
 ETCDCTL_API=3 etcdctl snapshot save /srv/data/etcd-snapshot.db \
 --endpoints 127.0.0.1:2379 
 --cacert=/opt/KUIN00601/ca.crt \
 --cert=/opt/KUIN00601/etcd-client.crt \
 --key=/opt/KUIN00601/etcd-client.key 
 
-# restore
+# 1.2 接着既可以检查下你备份的文件:
+ETCDCTL_API=3 etcdctl --write-out=table snapshot status /data/backup/etcd- snapshot.db
+#有以下输出，就没问题
++----------+----------+------------+------------+ 
+| HASH | REVISION | TOTAL KEYS | TOTAL SIZE |
++----------+----------+------------+------------+ 
+| fe01cf57 | 10 | 7 | 2.1 MB 
+| +----------+----------+------------+------------+
+
+# 2 restore
 ETCDCTL_API=3 etcdctl snapshot restore /var/lib/backup/etcd-snapshot-previous.db \
 # --data-dir /var/lib/etcd-backup \
 # --endpoints 127.0.0.1:2379 
@@ -1003,20 +1015,23 @@ kubectl config use-context k8s
 kubectl get nodes
 
 # 2 查看Ready的那些node是否是NoSchedule
-kubectl describe nodes k8s-master-0 | grep Taint
-    Taints: node-role.kubernetes.io/master:NoSchedule
+kubectl describe nodes | grep Taint
 
-kubectl describe nodes k8s-node-0 | grep Taint
-    Taints: <none>
+# 或者一个一个看node是否是NoSchedule
+# kubectl describe nodes k8s-master-0 | grep Taint
+#     Taints: node-role.kubernetes.io/master:NoSchedule
 
-kubectl describe nodes k8s-node-1 | grep Taint
-    Taints: <none>
+# kubectl describe nodes k8s-node-0 | grep Taint
+#     Taints: <none>
 
-# 2 或者使用：
+# kubectl describe nodes k8s-node-1 | grep Taint
+#     Taints: <none>
+
+# 2 或者直接查看所有nodes里面不包含noschedule 并且是ready的共有几个，就是答案
 # -i 或 --ignore-case : 忽略字符大小写的差别。-v 或 --invert-match : 显示不包含匹配文本的所有行。
 # kubectl describe nodes | grep -i taints | grep -v -i noschedule 
 
-# 3 输出
+# 3 输出 = node ready 个数 - NoSchedule 个数
 echo 2 > /opt/KUSC00402/kusc00402.txt
 ```
 

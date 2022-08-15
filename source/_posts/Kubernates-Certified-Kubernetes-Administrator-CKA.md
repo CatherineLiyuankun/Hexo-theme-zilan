@@ -1,5 +1,5 @@
 ---
-title: 2022 CKA 考试真题整理
+title: 2022年8月 CKA 考试真题整理
 catalog: true
 date: 2022-08-02 22:52:43
 subtitle: Kubernates-Certified Kubernetes Administrator

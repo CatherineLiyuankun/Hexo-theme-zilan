@@ -205,6 +205,14 @@ JAVACMD="/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin
 - [x] [**Xmind**](https://www.xmind.net/) 脑图工具。
 <!-- - [ ] + iPad 上的 [**Whiteboard**](https://apps.apple.com/us/app/microsoft-whiteboard/id1352499399)，分别用于画架构图和和脑图 -->
 
+## 截图
+
+- [Shottr](https://shottr.cc/) 【免费，MAC M1】Screenshot tool fordesigners，front-end engineers，mobile developers those who care about pixels.
+  - 可以量尺寸pixels
+  - Text recognition (OCR) 图片识别文字
+  - Scrolling Screenshots on Mac 长截图
+  - Color picker 取色器
+
 ## 视频
 
 - [x] [**Gif Brewery 3**](https://apps.apple.com/cn/app/gif-brewery-3-video-to-gif/id1081413713?l=en&mt=12) ，GIF 录屏工具, 可以直接录屏并转换成gif动图。免费，App store 下载。

@@ -45,8 +45,82 @@ white-space: nowrap; // 强制文本在一行显示
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;  
 }
+
+@mixin allowWrappingTwoRows {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-word;
+}
 ```
+
+## 2022.9 Update
+
+Chrome, Firefox, Safari, Edge 都可以work， IE支不支持我已经不关心了。
+可以在[CanIUse查询](https://caniuse.com/?search=-webkit-line-clamp)
+
+## 被[postcss/autoprefixer](https://github.com/postcss/autoprefixer)自动移除
+
+- 问题：发现`-webkit-box-orient: vertical;`因为会被[postcss/autoprefixer](https://github.com/postcss/autoprefixer)自动移除
+- 解决方法： 加`/* autoprefixer: off */ `注释
+
+### 方法1 [windows上可能报错](https://blog.csdn.net/weixin_34403976/article/details/102708645)
+
+> 为什么用/*!...\*/这种方式书写？
+和autoprefixer的github上的readme中demo不一致，多了'!'。
+原因：在postcss-loader在处理css时会把非'!'开头的comment(注释)删除掉了。
+
+```scss
+@mixin allowWrappingTwoRows {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-word;
+  /*! autoprefixer: off */
+  -webkit-box-orient: vertical
+  /*! autoprefixer: on */
+}
+```
+
+### 方法2
+
+```scss
+@mixin allowWrappingTwoRows {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-word;
+  /*! autoprefixer: ignore next */
+  -webkit-box-orient: vertical;
+}
+```
+
+### 方法3
+
+```scss
+@mixin allowWrappingTwoRows {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-word;
+  // Avoid remove "-webkit-box-orient: vertical;" by autoprefixer
+  /* autoprefixer: off */
+}
+```
+
+
 # 方法2 Text-overflow: -o-ellipsis-lastline
+
 从10.60版开始，Opera增加了在多行块上剪切文本的功能。 老实说，我从未尝试过，理论上只在Opera 10.6以后可以使用，不建议使用。
 
 # 方法3 JavaScript
@@ -200,4 +274,6 @@ p {
 ---
 # The reference link
 
-[MDN text-overflow](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow) 
+- [MDN text-overflow](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow) 
+- [CSS 设置 /*! autoprefixer: off */ 后控制台报错问题](https://blog.csdn.net/weixin_34403976/article/details/102708645)
+- [怎样使用autoprefixer时保留-webkit-box-orient等样式规则](https://juejin.cn/post/6844903848599896072)

@@ -18,8 +18,9 @@ categories:
 - 考试包括 15-20 项performance-based tasks。
   - 实测是17道题
 - 考生有 2 小时的时间完成 CKA 和 CKAD 考试。
-  - 因为从06/2022开始环境升级（贬义），考试环境更难用了，变的很卡，所以时间变得比较紧张。容易做不完题，建议先把有把握的，花费时间不多的题先做掉
+  - 因为从[06/2022开始环境升级](https://docs.linuxfoundation.org/tc-docs/certification/tips-cka-and-ckad)（贬义），考试环境更难用了，变的很卡，所以时间变得比较紧张。容易做不完题，建议先把有把握的，花费时间不多的题先做掉
     - [CKS CKA CKAD changed Terminal to Remote Desktop ](https://itnext.io/cks-cka-ckad-changed-terminal-to-remote-desktop-157a26c1d5e)
+    - 2022.9更新，据说很多卡顿的bug已经修复。
 - 2020年9月更新的CKA新版考试66分以上即可通过（原定72分），考试不通过有一次补考机会。
 
 <!-- > 本文记录的题目大概按照难易程度，先易后难。 -->
@@ -94,7 +95,7 @@ nano 1.yaml
 # 退出 control + x
 ```
 
-##### nano快捷键
+#### nano快捷键
 
 nano中被称为“快捷方式”，例如保存，退出，对齐等。最常见的功能在屏幕底部列出，但还有许多其他功能。
 

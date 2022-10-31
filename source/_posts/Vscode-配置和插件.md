@@ -5,11 +5,18 @@ date: 2020-05-26 22:20:04
 subtitle:
 header-img:
 tags:
+- VSCode
 categories:
 - TECH
 - Tools
 - IDE
 ---
+
+# VSCode 基本使用
+
+- [VSCode的使用-Git 详细介绍](https://github.com/qianguyihao/Web/blob/master/00-%E5%89%8D%E7%AB%AF%E5%B7%A5%E5%85%B7/01-VS%20Code%E7%9A%84%E4%BD%BF%E7%94%A8.md)
+- [VSCode的常用快捷键](./VSCode-%E5%BF%AB%E6%8D%B7%E9%94%AE.html)
+  - [VSCode的常用快捷键](https://zhuanlan.zhihu.com/p/44044896)
 
 # 插件
 

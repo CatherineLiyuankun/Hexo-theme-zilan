@@ -63,10 +63,19 @@ kubectl version --client
 
 ## 安装虚拟机管理器
 
-### 安装hyperkit (适合x86_64机器)
+### 安装[hyperkit](https://minikube.sigs.k8s.io/docs/drivers/hyperkit/) (适合x86_64机器)
 
 ```bash
 brew install hyperkit
+
+# To check your current version, run: 
+hyperkit -v
+
+# If the version didn’t change after upgrading verify the correct HyperKit is in the path. run: 
+which hyperkit
+
+#Run to make sure the version matches minikube
+docker-machine-driver-hyperkit version
 ```
 
 #### 问题：Mac M1: hyperkit not supported

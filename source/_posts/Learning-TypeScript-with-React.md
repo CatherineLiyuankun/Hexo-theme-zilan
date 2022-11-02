@@ -16,3 +16,7 @@ categories:
 [官方文档： TypeScript in 5 minutes - TypeScript for JavaScript Programmers](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
     [Interfaces and Types](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
         [Interfaces and Types区别](https://stackoverflow.com/questions/37233735/typescript-interfaces-vs-types/52682220#52682220)
+练习：[type-challenges](https://github.com/type-challenges/type-challenges) 推荐把Easy和Medium的做了。
+
+
+[Type Checking Redux Thunks](https://redux.js.org/usage/usage-with-typescript#type-checking-redux-thunks)

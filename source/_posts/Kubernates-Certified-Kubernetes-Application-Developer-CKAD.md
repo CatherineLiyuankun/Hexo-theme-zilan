@@ -22,11 +22,22 @@ categories:
     - [CKS CKA CKAD changed Terminal to Remote Desktop ](https://itnext.io/cks-cka-ckad-changed-terminal-to-remote-desktop-157a26c1d5e)
 - CKAD考试66分以上即可通过，考试不通过有一次补考机会。
 
-<!-- > 本文记录的题目大概按照难易程度，先易后难。 -->
+![CKA](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/CKA/CKA_exam_syllabus.png)
+![CKAD](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/CKA/CKAD_exam_syllabus.png)
+
+### More items for CKAD than CKA
+
+- Define, build and modify container images, `Dockerfile`
+- Understand multi-container Pod design patterns (init containers)
+- Understand `Jobs` and `CronJobs`
+- Implement `probes` and health checks
+- Understand `SecurityContexts`
+
 ## 如何备考
 
-可以本地安装minikube练习。有几个练习库，建议将每个题目都自己亲自操作一遍，一定要操作。
+可以本地安装`Minikube`练习， 参考另一篇博客[Minikube安装-MacOS M1](./Minikube%E5%AE%89%E8%A3%85-MacOS-M1.html)。有几个练习库，建议将每个题目都自己亲自操作一遍，一定要操作。
 
+- https://github.com/StenlyTU/K8s-training-official
 - https://www.katacoda.com/liptanbiswas/courses/ckad-practice-challenges
 - https://github.com/dgkanatsios/CKAD-exercises
 - https://github.com/bbachi/CKAD-Practice-Questions
@@ -185,56 +196,9 @@ nano中被称为“快捷方式”，例如保存，退出，对齐等。最常�
 
 ---
 
-## 考题1-RBAC
-
-### RBAC题目
-
-Task weight: 4%
-
-Set configuration context:
-
-```bash
-[student@node-1] $ kubectl config use-context k8s
-```
-
-#### Context
-
-You have been asked to create a new `ClusterRole` for a deployment pipeline and bind it to a specific `ServiceAccount` scoped to a specific namespace.
-
-#### Task
-
-Create a new `ClusterRole` named `deployment-clusterrole` which only allows to create the following resource types:
-
-- Deployment
-- StatefulSet
-- DaemonSet
-
-Create a new `ServiceAccount` named `cicd-token` in the existing namespace `app-team1`.
-
-Bind the new ClusterRole `deployment-clusterrole` to the new ServiceAccount `cicd-token` , limited to the namespace `app-team1`.
-
-### RBAC解答
-
-```bash
-kubectl config use-contex t k8s
-$ kubectl create clusterrole deployment-clusterrole --resource=deployments,statefulsets,daemonsets --verb=create
-# $ kubectl create namespace app-team1 # in the existing namespace `app-team1` 所以不需要新建namespace
-$ kubectl create serviceaccount cicd-token -n app-team1
-$ kubectl create rolebinding cicd-token-binding --clusterrole=deployment-clusterrole --serviceaccount=app-team1:cicd-token --namespace=app-team1
-# $ kubectl -n app-team1 describe rolebindings.rbac.authorization.k8s.io cicd-token-binding
-# kubectl auth can-i create deployments
-```
-
----
-
-
-
----
 
 ## 参考文章
 
-- [linux nano命令_Nano入门指南，Linux命令行文本编辑器](https://blog.csdn.net/cum88284/article/details/109042737)
-- [CKS CKA CKAD changed Terminal to Remote Desktop since 06/2022](https://itnext.io/cks-cka-ckad-changed-terminal-to-remote-desktop-157a26c1d5e)
 - CKAD 真题
   - [CKAD考试预备动员](https://blog.csdn.net/xixihahalelehehe/article/details/104332178?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522166047629616782350895616%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=166047629616782350895616&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~pc_rank_34-23-104332178-null-null.142^v40^pc_search_integral,185^v2^control&utm_term=CKAD%E8%80%83%E8%AF%95%E9%A2%98&spm=1018.2226.3001.4187)
     - [CKAD 1. Core Concepts(13%)考题答案](https://blog.csdn.net/xixihahalelehehe/article/details/108342028)

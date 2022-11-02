@@ -35,7 +35,7 @@ categories:
 
 ## 如何备考
 
-可以本地安装`Minikube`练习。有几个练习库，建议将每个题目都自己亲自操作一遍，一定要操作。
+可以本地安装`Minikube`练习， 参考另一篇博客[Minikube安装-MacOS M1](./Minikube%E5%AE%89%E8%A3%85-MacOS-M1.html)。有几个练习库，建议将每个题目都自己亲自操作一遍，一定要操作。
 
 - https://github.com/StenlyTU/K8s-training-official
 - https://www.katacoda.com/liptanbiswas/courses/ckad-practice-challenges
@@ -198,16 +198,6 @@ nano中被称为“快捷方式”，例如保存，退出，对齐等。最常�
 
 
 ## 参考文章
-
-- Minikube
-  - [从零开始Minikube MAC](https://www.jianshu.com/p/92034019d7d6)
-    - [Mac M1: hyperkit not supported](https://github.com/kubernetes/minikube/issues/11885)
-      - HyperKit is Intel-only, so the alternative to QEMU will be the new Virtualization.framework driver
-        - `brew install qemu`
-        - `minikube start --driver=qemu --memory=4Gb`
-
-  - [推荐一款Kubernetes神器“minikube”](https://zhuanlan.zhihu.com/p/112755080)
-  - [k8s官方文档-Minikube](https://kubernetes.io/zh-cn/docs/tutorials/hello-minikube/)
 
 - CKAD 真题
   - [CKAD考试预备动员](https://blog.csdn.net/xixihahalelehehe/article/details/104332178?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522166047629616782350895616%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=166047629616782350895616&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~pc_rank_34-23-104332178-null-null.142^v40^pc_search_integral,185^v2^control&utm_term=CKAD%E8%80%83%E8%AF%95%E9%A2%98&spm=1018.2226.3001.4187)

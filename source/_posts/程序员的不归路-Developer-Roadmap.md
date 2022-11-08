@@ -36,13 +36,6 @@ github上有个194k star的项目，这个项目通过一个路线图展示了�
 - [知乎](https://www.zhihu.com/hot)
 知乎是网络问答社区，连接各行各业的用户。后来开设的专栏更像是博客。
 
-## 在线技术学习
-
-- 算法学习 [LeetCode](https://leetcode-cn.com/)
-算法学习网站，上去每天学习下，刷几道算法题，走遍天下都不怕。有中英文两个网站，这个网站其实不需要说太多了，大家可以去看下算法岗位，可以去关注下校招对算法的要求，重要性不言而喻。
-- [菜鸟教程](https://www.runoob.com/)
-提供了编程的基础技术教程, 介绍了HTML、CSS、Javascript、Python,Java,Ruby,C,PHP , MySQL等各种编程语言的基础知识。什么语言想要入门的，来这里就对啦。
-
 ## 面试
 
 - [牛客网](https://www.nowcoder.com/)
@@ -97,6 +90,7 @@ github上有个194k star的项目，这个项目通过一个路线图展示了�
 
 - GitHub trending（官网推荐—）：<https://github.com/trending>
 你的项目要是能上 GitHub trending，绝对火得一塌糊涂。
+  - [Stars超过100000](https://github.com/search?o=desc&q=stars%3A%3E100000&s=stars&type=Repositories)
 
 - GitHub 中国区排名：<https://githuber.cn/search?language=JavaScript>
 这个网站虽然比较小众，但排名还是相对比较准的。
@@ -126,8 +120,15 @@ github上有个194k star的项目，这个项目通过一个路线图展示了�
 
 ## 在线课程/书籍
 
+### 在线课程
+
+- [freeCodeCamp](https://github.com/freeCodeCamp/freeCodeCamp) Github开源库，免费学习编码。 它由捐赠者支持的 501(c)(3) 非营利组织运营，旨在帮助数百万忙碌的成年人过渡到科技行业。全栈 Web 开发和机器学习课程完全免费且可自定进度。提供几个免费的开发者认证。这些认证中的每一项都涉及构建 5 个必需的 Web 应用程序项目，以及数百个可选的编码挑战，以帮助您为这些项目做好准备。我们估计每个认证需要初学者大约 300 小时才能获得。
+- 算法学习 [LeetCode](https://leetcode-cn.com/)
+算法学习网站，上去每天学习下，刷几道算法题，走遍天下都不怕。有中英文两个网站，这个网站其实不需要说太多了，大家可以去看下算法岗位，可以去关注下校招对算法的要求，重要性不言而喻。
+- [菜鸟教程](https://www.runoob.com/)
+提供了编程的基础技术教程, 介绍了HTML、CSS、Javascript、Python,Java,Ruby,C,PHP , MySQL等各种编程语言的基础知识。什么语言想要入门的，来这里就对啦。
+
 - [Coursera.org](https://www.coursera.org/) :在网上学习全世界最好的课程。不限于开发学习，各个学科的课程都有。
-- [Oreilly Safari Books](https://www.safaribooksonline.com/)，Oreilly 图书、视频教程、newsletter 等。【付费】
 - [极客时间](https://time.geekbang.org/)
 极客时间是极客邦科技出品的IT 类知识服务产品，内容包含专栏订阅、极客新闻、热点专题、直播、视频和音频等多种形式的知识服务。产品形态包括移动 App，移动端网站、PC 端网站、微信平台等。
 - [慕课网](https://www.imooc.com/)
@@ -137,10 +138,20 @@ github上有个194k star的项目，这个项目通过一个路线图展示了�
 B站从一开始的二次元，到现在的多元化发展，你想要的他基本上都有。之前B站的跨年演唱会、李子柒的视频等等，更是把B站推向了一个高潮，作为中国的油管，每个人都有展现自己机会，无限的机会，你也可以试试。
 - [七月在线](https://www.julyedu.com/) july创建的在线课程网站，主要是算法和机器学习相关。
 
-## 关注的前端库
+### 书籍
+
+- [Oreilly Safari Books](https://www.safaribooksonline.com/)，Oreilly 图书、视频教程、newsletter 等。【付费】
+
+## 前端
+
+### 关注的前端库
 
 - [awesome-f2e-libs](https://github.com/sorrycc/awesome-f2e-libs) 关注的前端库list
 - [Awesome JavaScript](https://github.com/sorrycc/awesome-javascript) A collection of awesome browser-side JavaScript libraries, resources and shiny things.
+
+### Debug技巧
+
+[Chrome DevTools - JavaScript debugging reference](https://developer.chrome.com/docs/devtools/javascript/reference/)
 
 ## 技术社区/博客
 

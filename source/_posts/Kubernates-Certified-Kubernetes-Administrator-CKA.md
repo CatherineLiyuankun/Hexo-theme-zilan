@@ -23,6 +23,8 @@ categories:
     - 2022.9更新，据说很多卡顿的bug已经修复。
 - 2020年9月更新的CKA新版考试66分以上即可通过（原定72分），考试不通过有一次补考机会。
 
+![CKA](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/CKA/CKA_exam_syllabus.png)
+
 <!-- > 本文记录的题目大概按照难易程度，先易后难。 -->
 
 ## 经验总结
@@ -53,11 +55,13 @@ export now="--force --grace-period 0"   # k delete pod x $now 复制粘贴 forma
 k run pod1 --image=httpd:2.4.41-alpine $do > 2.yaml
 ```
 
-### vim设置
+### [Vim 设置](https://www.ruanyifeng.com/blog/2018/09/vimrc.html)
 
-1. `:set paste`
-    Turning off auto indent when pasting text into vim
-2. 开启TAB补全
+1. `:set nopaste` Turning off auto indent when pasting text into vim
+   `:set paste` Turning on auto indent when pasting text into vim
+   [Paste toggle](https://vim.fandom.com/wiki/Toggle_auto-indenting_for_code_paste)
+  
+2. 开启TAB补全 (2022最新考试环境已开启，不用再配置了)
    - `kubectl --help | grep bash`,此步是为了找关键词completion
    - `sudo vim /etc/profile`
    - 添加`source <(kubectl completion bash)`
@@ -65,11 +69,26 @@ k run pod1 --image=httpd:2.4.41-alpine $do > 2.yaml
 
 3. toggle vim line numbers
 
-When in `vim` you can press <kbd>Esc</kbd> and type `:set number` or `:set nonumber` followed by Enter to toggle line numbers. This can be useful when finding syntax errors based on line - but can be bad when wanting to mark&copy by mouse. You can also just jump to a line number with <kbd>Esc</kbd> `:22` + Enter.
+When in `vim` you can press <kbd>Esc</kbd> and type `:set number` (turn on number) or `:set nonumber` (turn off number) followed by Enter to toggle line numbers. This can be useful when finding syntax errors based on line - but can be bad when wanting to mark&copy by mouse. You can also just jump to a line number with <kbd>Esc</kbd> `:22` + Enter.
 
-4. copy&paste
+4. copy & paste
 
 复制粘贴 - 从网页上copy yaml内容，使用vim 来粘贴时，yaml内容格式会乱。现在已经被修复，环境里面默认加了一些vim粘贴的设置。
+Make sure to set these in your `.vimrc` or otherwise indents will be very messy during pasting (the exams have these config settings now also by default, but can’t hurt to be able to type them down):
+
+下面代码中，双引号开始的行表示注释。
+
+```vim
+”由于 Tab 键在不同的编辑器缩进不一致，该设置自动将 Tab 转为空格。
+:set expandtab
+
+”按下 Tab 键时，Vim 显示的空格数。
+:set tabstop=2
+
+”在文本上按下>>（增加一级缩进）、<<（取消一级缩进）或者==（取消全部缩进）时，每一级的字符数。
+:set shiftwidth=2
+```
+
 Get used to copy/paste/cut with vim:
 
 ```md

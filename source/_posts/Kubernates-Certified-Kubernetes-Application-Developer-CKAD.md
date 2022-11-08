@@ -13,6 +13,8 @@ categories:
 - Kubernetes
 ---
 
+上一篇：[CKA考试真题](./Kubernates-Certified-Kubernetes-Administrator-CKA.html)
+
 ## 考试内容
 
 - 考试包括 15-20 项performance-based tasks。
@@ -58,7 +60,7 @@ categories:
 - 考试时间快结束的时候，弹出对话框，问你是否结束考试，一定要点击“Continue”继续考试
   - 否则直接结束考试，会引发考试系统的bug： session未能正常close，造成一直无法出成绩。只能通过提ticket来人工解决，才能拿到成绩。
 - 关于sa token
-  - k8s中创建sa时会默认创建对应的secret，secret中存有token信息，查看yaml文件和使用describe命令得到的token信息不一致，因为yaml中的token是使用base64加密后的，可使用`echo yaml。token | base64 -d`解密，对比可以发现两者一致。
+  - k8s中创建sa时会默认创建对应的secret，secret中存有token信息，查看yaml文件和使用describe命令得到的token信息不一致，因为yaml中的token是使用base64加密后的，可使用`echo yaml token | base64 -d`解密，对比可以发现两者一致。
 
 
 ## Pre Setup
@@ -76,11 +78,13 @@ export now="--force --grace-period 0"   # k delete pod x $now 复制粘贴 forma
 k run pod1 --image=httpd:2.4.41-alpine $do > 2.yaml
 ```
 
-### vim设置
+### [Vim 设置](https://www.ruanyifeng.com/blog/2018/09/vimrc.html)
 
-1. `:set paste`
-    Turning off auto indent when pasting text into vim
-2. 开启TAB补全
+1. `:set nopaste` Turning off auto indent when pasting text into vim
+   `:set paste` Turning on auto indent when pasting text into vim
+   [Paste toggle](https://vim.fandom.com/wiki/Toggle_auto-indenting_for_code_paste)
+  
+2. 开启TAB补全 (2022最新考试环境已开启，不用再配置了)
    - `kubectl --help | grep bash`,此步是为了找关键词completion
    - `sudo vim /etc/profile`
    - 添加`source <(kubectl completion bash)`
@@ -88,11 +92,26 @@ k run pod1 --image=httpd:2.4.41-alpine $do > 2.yaml
 
 3. toggle vim line numbers
 
-When in `vim` you can press <kbd>Esc</kbd> and type `:set number` or `:set nonumber` followed by Enter to toggle line numbers. This can be useful when finding syntax errors based on line - but can be bad when wanting to mark&copy by mouse. You can also just jump to a line number with <kbd>Esc</kbd> `:22` + Enter.
+When in `vim` you can press <kbd>Esc</kbd> and type `:set number` (turn on number) or `:set nonumber` (turn off number) followed by Enter to toggle line numbers. This can be useful when finding syntax errors based on line - but can be bad when wanting to mark&copy by mouse. You can also just jump to a line number with <kbd>Esc</kbd> `:22` + Enter.
 
-4. copy&paste
+4. copy & paste
 
 复制粘贴 - 从网页上copy yaml内容，使用vim 来粘贴时，yaml内容格式会乱。现在已经被修复，环境里面默认加了一些vim粘贴的设置。
+Make sure to set these in your `.vimrc` or otherwise indents will be very messy during pasting (the exams have these config settings now also by default, but can’t hurt to be able to type them down):
+
+下面代码中，双引号开始的行表示注释。
+
+```vim
+”由于 Tab 键在不同的编辑器缩进不一致，该设置自动将 Tab 转为空格。
+:set expandtab
+
+”按下 Tab 键时，Vim 显示的空格数。
+:set tabstop=2
+
+”在文本上按下>>（增加一级缩进）、<<（取消一级缩进）或者==（取消全部缩进）时，每一级的字符数。
+:set shiftwidth=2
+```
+
 Get used to copy/paste/cut with vim:
 
 ```md

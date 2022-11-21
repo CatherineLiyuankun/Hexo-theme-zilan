@@ -29,9 +29,13 @@ categories:
 
 ## 经验总结
 
-- **经验1**： Kubernates cluster upgrade 或者 etcd backup 放最后做，否则环境搞坏，其他的题不能做.
+- **经验1**： 不要完全按照顺序做题！！！Kubernates cluster upgrade 或者 etcd backup 放最后做，否则环境搞坏，其他的题不能做. 隔过去的题可以用flag标记，省的忘记哪些还没有做。
 - **经验2**：  需要在ssh到新的node的时候，在新的tab做题，避免忘记exit出来。
+- 使用`kubectl explain` 来查看命令内容， 例如`kubectl explain pods.spec.tolerations --recursive`
+- 使用`kubectl --help` 查看命令参数, 例如`kubectl create clusterrole --help`
+- 使用`kubectl api-resources`, 查看所有资源缩写
 - 考试环境点击`-`来zoom out, 这样可以显示更多内容。（尤其是使用平板电脑，屏幕太小，显示有效内容很少）。
+- 善用考试记事本（exam notepad）。
 - 复制粘贴
   - What always works: copy+paste using right mouse context menu
   - What works in Terminal: <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>c</kbd> and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd>
@@ -40,9 +44,24 @@ categories:
 - 考试时间快结束的时候，弹出对话框，问你是否结束考试，一定要点击“Continue”继续考试
   - 否则直接结束考试，会引发考试系统的bug： session未能正常close，造成一直无法出成绩。只能通过提ticket来人工解决，才能拿到成绩。
 
+### 常用官方文档链接
+
+- https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+- https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands
+- https://github.com/kubernetes/kubernetes
+- 考试中多使用命令式命令CLI ( imperative commands)，少使用声明式（Declarative）
+  - https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands
+  - https://medium.com/better-programming/kubernetes-tips-create-pods-with-imperative-commands-in-1-18-62ea6e1ceb32
+  - Promote the use of generators for Job, CronJob, Network Policies etc: this link is very useful:
+    - https://www.linkedin.com/pulse/kubernetes-deep-dive-part-3-generators-quick-poc-atharva-chauthaiwale/
+  - Use maximum conventions and best practices to avoid unexpected pod errors:
+    - https://unofficial-kubernetes.readthedocs.io/en/latest/user-guide/kubectl-conventions/
+
 ## Pre Setup
 
 Once you've gained access to your terminal it might be wise to spend ~1 minute to setup your environment. You could set these:
+
+1. 设置kubectl命令别名
 
 ```bash
 alias k=kubectl                         # will already be pre-configured
@@ -55,23 +74,23 @@ export now="--force --grace-period 0"   # k delete pod x $now 复制粘贴 forma
 k run pod1 --image=httpd:2.4.41-alpine $do > 2.yaml
 ```
 
+2. [开启自动补全autocomplete](https://kubernetes.io/docs/reference/kubectl/cheatsheet/#kubectl-autocomplete) (2022最新考试环境已开启，不用再配置了)
+   - `kubectl --help | grep bash`,此步是为了找关键词completion
+   - `sudo vim /etc/profile`
+   - 添加`source <(kubectl completion bash)`
+   - 保存退出，`source /etc/profile`
+
 ### [Vim 设置](https://www.ruanyifeng.com/blog/2018/09/vimrc.html)
 
 1. `:set nopaste` Turning off auto indent when pasting text into vim
    `:set paste` Turning on auto indent when pasting text into vim
    [Paste toggle](https://vim.fandom.com/wiki/Toggle_auto-indenting_for_code_paste)
   
-2. 开启TAB补全 (2022最新考试环境已开启，不用再配置了)
-   - `kubectl --help | grep bash`,此步是为了找关键词completion
-   - `sudo vim /etc/profile`
-   - 添加`source <(kubectl completion bash)`
-   - 保存退出，`source /etc/profile`
-
-3. toggle vim line numbers
+2. 显示行号 toggle vim line numbers
 
 When in `vim` you can press <kbd>Esc</kbd> and type `:set number` (turn on number) or `:set nonumber` (turn off number) followed by Enter to toggle line numbers. This can be useful when finding syntax errors based on line - but can be bad when wanting to mark&copy by mouse. You can also just jump to a line number with <kbd>Esc</kbd> `:22` + Enter.
 
-4. copy & paste
+3. copy & paste
 
 复制粘贴 - 从网页上copy yaml内容，使用vim 来粘贴时，yaml内容格式会乱。现在已经被修复，环境里面默认加了一些vim粘贴的设置。
 Make sure to set these in your `.vimrc` or otherwise indents will be very messy during pasting (the exams have these config settings now also by default, but can’t hurt to be able to type them down):
@@ -98,7 +117,7 @@ Cut marked lines: d
 Past lines: p or P
 ```
 
-5. Indent multiple lines
+4. Indent multiple lines
 
 To indent multiple lines press <kbd>Esc</kbd> and type `:set shiftwidth=2`. First mark multiple lines using <kbd>Ctrl</kbd> <kbd>v</kbd>  and the up/down keys. Then to indent the marked lines press <kbd>></kbd> or <kbd><</kbd>. You can then press <kbd>.</kbd> to repeat the action.
 

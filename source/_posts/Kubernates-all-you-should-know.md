@@ -35,6 +35,31 @@ https://mp.weixin.qq.com/s/n3QYIGuM1io1ubE3KC1hrw
 > - If you are familiar with Kubernetes: this Udemy course from Mumshad Mannambeth will be your best friend: https://www.udemy.com/course/certified-kubernetes-application-developer/
 > This course contains: 26 practical labs, 2 lightings labs, 6 mini-mock and 2 mock exams. And are all with the solution in videos.
 
+#### Oreilly视频课程
+
+- [CKA和CKAD](https://learning.oreilly.com/beta-search/?q=ckad%20sander%20van%20vugt&type=*&publishers=Pearson&order_by=relevance)
+  - [Certified Kubernetes Administrator (CKA) Crash Course](https://learning.oreilly.com/live-events/certified-kubernetes-administrator-cka-crash-course/0636920315766/)
+    - 附带练习环境Practice: [Certified Kubernetes - CKA Labs](https://learning.oreilly.com/playlists/d6e3fe86-067c-4dc7-a36d-698802d0bdee/)
+  - [Certified Kubernetes Application Developer (CKAD) Crash Course](https://learning.oreilly.com/live-events/certified-kubernetes-application-developer-ckad-crash-course/0636920315803/)
+    - 附带练习环境Practice: [Certified Kubernetes - CKAD Labs](https://learning.oreilly.com/playlists/ea6ea0fc-d8e2-422c-94dd-a0a8f608d224/)
+
+
+## k8s练习环境
+
+### 本地环境-Minikube
+
+可以本地安装`Minikube`练习， 参考另一篇博客[Minikube安装-MacOS M1](./Minikube%E5%AE%89%E8%A3%85-MacOS-M1.html)。
+
+### 在线环境-killercoda
+
+- https://killercoda.com/killer-shell-cka
+- https://killercoda.com/killer-shell-ckad
+
+### 在线环境-Oreilly
+
+- [Certified Kubernetes - CKA Labs](https://learning.oreilly.com/playlists/d6e3fe86-067c-4dc7-a36d-698802d0bdee/)
+- [Certified Kubernetes - CKAD Labs](https://learning.oreilly.com/playlists/ea6ea0fc-d8e2-422c-94dd-a0a8f608d224/)
+
 ## K8s Certificate 考试认证
 
 - KCNA

@@ -25,7 +25,38 @@ categories:
 
 ![CKA](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/CKA/CKA_exam_syllabus.png)
 
+### CKA Preparation
+
+- Read the Curriculum
+https://github.com/cncf/curriculum
+- Read the Handbook
+https://docs.linuxfoundation.org/tc-docs/certification/If-candidate-handbook
+- Read the important tips
+https://docs.linuxfoundation.org/tc-docs/certification/tips-cka-and-ckad
+- Read the FAQ
+https://docs.linuxfoundation.org/tc-docs/certification/faq-cka-ckad
+
 <!-- > 本文记录的题目大概按照难易程度，先易后难。 -->
+
+## 如何备考
+
+### k8s练习环境
+
+#### 本地环境-Minikube
+
+可以本地安装`Minikube`练习， 参考另一篇博客[Minikube安装-MacOS M1](./Minikube%E5%AE%89%E8%A3%85-MacOS-M1.html)。
+
+#### 在线环境-killercoda
+
+- https://killercoda.com/killer-shell-cka
+- https://killercoda.com/killer-shell-ckad
+
+### CKA课程
+
+- CKA考试-对应官方课程[Kubernetes Fundamentals (LFS258)](https://training.linuxfoundation.org/training/kubernetes-fundamentals/)
+- Oreilly视频课程: (For beginner or Advanced) [Certified Kubernetes Administrator (CKA), 2nd Ed](https://learning.oreilly.com/videos/certified-kubernetes-administrator/9780137438419/).
+  - [Certified Kubernetes Administrator (CKA) Crash Course](https://learning.oreilly.com/live-events/certified-kubernetes-administrator-cka-crash-course/0636920315766/)
+    - 附带练习环境Practice: [Certified Kubernetes - CKA Labs](https://learning.oreilly.com/playlists/d6e3fe86-067c-4dc7-a36d-698802d0bdee/)
 
 ## 经验总结
 
@@ -41,7 +72,7 @@ categories:
   - What works in Terminal: <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>c</kbd> and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd>
   - What works in other apps like Firefox: <kbd>Ctrl</kbd>+<kbd>c</kbd> and <kbd>Ctrl</kbd>+<kbd>v</kbd>
 - 可以用<kbd>Tab</kbd>键，自动补全kubectl命令，大大提升效率，以及避免键盘输入拼写错误
-- 考试时间快结束的时候，弹出对话框，问你是否结束考试，一定要点击“Continue”继续考试
+- 考试时间快结束的时候，弹出对话框，问你是否结束考试，一定要点击"Continue"继续考试
   - 否则直接结束考试，会引发考试系统的bug： session未能正常close，造成一直无法出成绩。只能通过提ticket来人工解决，才能拿到成绩。
 
 ### 常用官方文档链接
@@ -61,54 +92,78 @@ categories:
 
 Once you've gained access to your terminal it might be wise to spend ~1 minute to setup your environment. You could set these:
 
-1. 设置kubectl命令别名
+### kubectl 设置
+
+**1. 设置kubectl命令别名**
 
 ```bash
-alias k=kubectl                         # will already be pre-configured
-
+alias k=kubectl                         # will already be pre-configured 
+                                        # (2022最新考试环境默认已开启，不用再配置了)
 export do="--dry-run=client -o yaml"    # k create deploy nginx --image=nginx $do
 
-export now="--force --grace-period 0"   # k delete pod x $now 复制粘贴 format
+export now="--force --grace-period 0"   # k delete pod x $now
+                                        # Don't need to wait ~30 seconds
+```
 
+```bash
 # 使用例子
 k run pod1 --image=httpd:2.4.41-alpine $do > 2.yaml
 ```
 
-2. [开启自动补全autocomplete](https://kubernetes.io/docs/reference/kubectl/cheatsheet/#kubectl-autocomplete) (2022最新考试环境已开启，不用再配置了)
-   - `kubectl --help | grep bash`,此步是为了找关键词completion
-   - `sudo vim /etc/profile`
-   - 添加`source <(kubectl completion bash)`
-   - 保存退出，`source /etc/profile`
+**Alias Namespace**
+In addition you could define an alias like:
+
+```bash
+alias kn='kubectl config set-context --current --namespace
+```
+
+Which allows you to define the default namespace of the current context. Then once you switch a context or namespace you can just run:
+
+```bash
+k default      # set default to default
+k my-namespace # set default to my-namespace
+```
+
+But only do this if you used it before and are comfortable doing so. Else you need to specify the namespace for every call, which is also fine:
+
+```bash
+k -n my-namespace get all
+k -n my-namespace get pod
+...
+```
+
+**2. [开启自动补全autocomplete](https://kubernetes.io/docs/reference/kubectl/cheatsheet/#kubectl-autocomplete)**
+(2022最新考试环境默认已开启，不用再配置了)
+
+- `kubectl --help | grep bash`,此步是为了找关键词completion
+- `sudo vim /etc/profile`
+- 添加`source <(kubectl completion bash)`
+- 保存退出，`source /etc/profile`
 
 ### [Vim 设置](https://www.ruanyifeng.com/blog/2018/09/vimrc.html)
 
-1. `:set nopaste` Turning off auto indent when pasting text into vim
-   `:set paste` Turning on auto indent when pasting text into vim
-   [Paste toggle](https://vim.fandom.com/wiki/Toggle_auto-indenting_for_code_paste)
-  
-2. 显示行号 toggle vim line numbers
-
-When in `vim` you can press <kbd>Esc</kbd> and type `:set number` (turn on number) or `:set nonumber` (turn off number) followed by Enter to toggle line numbers. This can be useful when finding syntax errors based on line - but can be bad when wanting to mark&copy by mouse. You can also just jump to a line number with <kbd>Esc</kbd> `:22` + Enter.
-
-3. copy & paste
-
-复制粘贴 - 从网页上copy yaml内容，使用vim 来粘贴时，yaml内容格式会乱。现在已经被修复，环境里面默认加了一些vim粘贴的设置。
-Make sure to set these in your `.vimrc` or otherwise indents will be very messy during pasting (the exams have these config settings now also by default, but can’t hurt to be able to type them down):
+复制粘贴 - 从网页上copy yaml内容，使用vim 来粘贴时，yaml内容格式会乱。现在考试环境已经被修复，`.vimrc` 里面默认加了一些vim粘贴的设置。
+> Make sure to set these in your `.vimrc` or otherwise indents will be very messy during pasting (the exams have these config settings now also by default, but can’t hurt to be able to type them down):
 
 下面代码中，双引号开始的行表示注释。
 
 ```vim
-”由于 Tab 键在不同的编辑器缩进不一致，该设置自动将 Tab 转为空格。
+"1.1 由于 Tab 键在不同的编辑器缩进不一致，该设置自动将 Tab 转为空格。
 :set expandtab
 
-”按下 Tab 键时，Vim 显示的空格数。
+"1.2 按下 Tab 键时，Vim 显示的空格数。
 :set tabstop=2
 
-”在文本上按下>>（增加一级缩进）、<<（取消一级缩进）或者==（取消全部缩进）时，每一级的字符数。
+"1.3 在文本上按下>>（增加一级缩进）、<<（取消一级缩进）或者==（取消全部缩进）时，每一级的字符数。
 :set shiftwidth=2
 ```
 
-Get used to copy/paste/cut with vim:
+**1.3 Indent multiple lines**
+
+To indent multiple lines press <kbd>Esc</kbd> and type `:set shiftwidth=2`.
+First mark multiple lines using <kbd>Ctrl</kbd> <kbd>v</kbd>  and the up/down keys. Then to indent the marked lines press <kbd>></kbd> or <kbd><</kbd>. You can then press <kbd>.</kbd> to repeat the action.
+
+**1.4 Get used to copy/paste/cut with vim:**
 
 ```md
 Mark lines: Esc+v (then arrow keys)
@@ -117,10 +172,18 @@ Cut marked lines: d
 Past lines: p or P
 ```
 
-4. Indent multiple lines
+**1.5 `:set paste`**
 
-To indent multiple lines press <kbd>Esc</kbd> and type `:set shiftwidth=2`. First mark multiple lines using <kbd>Ctrl</kbd> <kbd>v</kbd>  and the up/down keys. Then to indent the marked lines press <kbd>></kbd> or <kbd><</kbd>. You can then press <kbd>.</kbd> to repeat the action.
+- `:set nopaste` Turning off auto indent when pasting text into vim
+- `:set paste` Turning on auto indent when pasting text into vim
+   [Paste toggle](https://vim.fandom.com/wiki/Toggle_auto-indenting_for_code_paste)
+  
+**1.6 显示行号 `:set number`**
 
+toggle vim line numbers
+
+When in `vim` you can press <kbd>Esc</kbd> and type `:set number` (turn on number) or `:set nonumber` (turn off number) followed by Enter to toggle line numbers. This can be useful when finding syntax errors based on line - but can be bad when wanting to mark&copy by mouse.
+You can also just jump to a line number with <kbd>Esc</kbd> `:22` + Enter.
 
 ### 使用nano编辑器
 
@@ -135,7 +198,7 @@ nano 1.yaml
 
 #### nano快捷键
 
-nano中被称为“快捷方式”，例如保存，退出，对齐等。最常见的功能在屏幕底部列出，但还有许多其他功能。
+nano中被称为"快捷方式"，例如保存，退出，对齐等。最常见的功能在屏幕底部列出，但还有许多其他功能。
 
 <!-- 请注意，nano不使用快捷键中的<kbd>Shift</kbd>键。 所有快捷方式均使用小写字母和未修改的数字键，因此<kbd>Ctrl</kbd> + <kbd>G</kbd>不是<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>G</kbd>。 -->
 
@@ -343,7 +406,7 @@ Configure the new service to also expose the individual Pods via a `NodePort` on
 
 ### 解答：创建 svc
 
-search “containerPort”, 参考[Connecting Applications with Services](https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/)
+search "containerPort", 参考[Connecting Applications with Services](https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/)
 [configure-pod-container](https://kubernetes.io/docs/tasks/configure-pod-container/_print/)
 
 ```bash
@@ -765,7 +828,7 @@ Finally, using `kubectl edit` or `kubectl patch` expand the `PersistentVolumeCla
 ### 解答：创建 PVC
 
 参考官方文档：
-- 搜索 `PV pod`, 选择[”Configure a Pod to Use a PersistentVolume for Storage | Kubernetes“](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolumeclaim)
+- 搜索 `PV pod`, 选择["Configure a Pod to Use a PersistentVolume for Storage | Kubernetes"](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolumeclaim)
   - [Create a PersistentVolumeClaim](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolumeclaim)
   - [Configure a Pod ...中文文档](https://kubernetes.io/zh-cn/docs/tasks/configure-pod-container/configure-persistent-volume-storage/)
 - 搜索 `kubectl edit pvc` [Resizing Persistent Volumes using Kubernetes](https://kubernetes.io/blog/2018/07/12/resizing-persistent-volumes-using-kubernetes/)

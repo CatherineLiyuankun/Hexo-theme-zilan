@@ -37,10 +37,7 @@ categories:
 
 ## 如何备考
 
-### k8s练习环境
-
-可以本地安装`Minikube`练习， 参考另一篇博客[Minikube安装-MacOS M1](./Minikube%E5%AE%89%E8%A3%85-MacOS-M1.html)。
-
+### [k8s练习环境](./Kubernates-Certified-Kubernetes-Administrator-CKA.html#k8s%E7%BB%83%E4%B9%A0%E7%8E%AF%E5%A2%83)(同CKA)
 
 ### CKAD练习题
 
@@ -57,15 +54,16 @@ categories:
 
 题库里面题目是更简单一些，真的考题会是这些练习题的组合，把里面的题目都能熟练操作，就差不多了。
 
-### 课程
+### CKAD课程
 
-1. CKAD考试-对应官方课程[Kubernetes for Developers (LFD259)](https://training.linuxfoundation.org/training/kubernetes-for-developers/)
-2. Oreilly视频课程-附带练习环境: (For beginner or Advanced) [Certified Kubernetes Application Developer (CKAD) Sander van Vugt](https://learning.oreilly.com/videos/certified-kubernetes-application/9780136677628/9780136677628-CKAD_00_00_00)
-https://www.katacoda.com/ .
+- CKAD考试-对应官方课程[Kubernetes for Developers (LFD259)](https://training.linuxfoundation.org/training/kubernetes-for-developers/)
+- Oreilly视频课程: (For beginner or Advanced) [Certified Kubernetes Application Developer (CKAD) Sander van Vugt](https://learning.oreilly.com/videos/certified-kubernetes-application/9780137841509/).
+  - [Certified Kubernetes Application Developer (CKAD) Crash Course](https://learning.oreilly.com/live-events/certified-kubernetes-application-developer-ckad-crash-course/0636920315803/)
+    - 附带练习环境Practice: [Certified Kubernetes - CKAD Labs](https://learning.oreilly.com/playlists/ea6ea0fc-d8e2-422c-94dd-a0a8f608d224/)
 
-## [经验总结](http://liyuankun.top/Kubernates-Certified-Kubernetes-Administrator-CKA.html#%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93)
+## [经验总结](http://liyuankun.top/Kubernates-Certified-Kubernetes-Administrator-CKA.html#%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93)(同CKA)
 
-## [Pre Setup](http://liyuankun.top/Kubernates-Certified-Kubernetes-Administrator-CKA.html#pre-setup)
+## [Pre Setup](http://liyuankun.top/Kubernates-Certified-Kubernetes-Administrator-CKA.html#pre-setup)(同CKA)
 
 ## 参考文章
 

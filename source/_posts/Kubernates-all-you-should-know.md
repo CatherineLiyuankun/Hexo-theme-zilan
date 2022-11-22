@@ -50,6 +50,13 @@ https://mp.weixin.qq.com/s/n3QYIGuM1io1ubE3KC1hrw
 
 可以本地安装`Minikube`练习， 参考另一篇博客[Minikube安装-MacOS M1](./Minikube%E5%AE%89%E8%A3%85-MacOS-M1.html)。
 
+可以配置成Oreilly课程对应的lab环境：
+> To work through the labs in this course, you will need to install and configure your own lab environment.
+> 
+> Different lab installation options are possible, but it is recommended to use `Minikube`, on a virtual machine that runs the latest version of Ubuntu LTS desktop.
+> 
+> Students that want to prepare the Minikube based lab setup before start of the course can follow the instructions that are provided in the "Setup Guide" in the course [GitHub repository](https://github.com/sandervanvugt/ckad)
+
 ### 在线环境-killercoda
 
 - CKA在线练习环境：https://killercoda.com/killer-shell-cka
@@ -66,7 +73,7 @@ https://mp.weixin.qq.com/s/n3QYIGuM1io1ubE3KC1hrw
 
 ### 在线环境-Oreilly
 
-需购买课程
+需购买课程, 或配置本地环境
 - [Certified Kubernetes - CKA Labs](https://learning.oreilly.com/playlists/d6e3fe86-067c-4dc7-a36d-698802d0bdee/)
 - [Certified Kubernetes - CKAD Labs](https://learning.oreilly.com/playlists/ea6ea0fc-d8e2-422c-94dd-a0a8f608d224/)
 

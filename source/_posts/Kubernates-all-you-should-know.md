@@ -52,11 +52,21 @@ https://mp.weixin.qq.com/s/n3QYIGuM1io1ubE3KC1hrw
 
 ### 在线环境-killercoda
 
-- https://killercoda.com/killer-shell-cka
-- https://killercoda.com/killer-shell-ckad
+- CKA在线练习环境：https://killercoda.com/killer-shell-cka
+- CKAD在线练习环境：https://killercoda.com/killer-shell-ckad
+- CKS在线练习环境：https://killercoda.com/killer-shell-cks
+
+- 临时考试模拟环境（1小时有效期）：https://killercoda.com/kimwuestkamp/scenario/cks-cka-ckad-remote-desktop
+
+- 模拟考试环境： https://killer.sh/ 包含CKA,CKAD,CKS （需付费，官方考试已包含两次session，每个session 36个小时有效期）
+  - 模拟考题：[CKA Simulator Kubernetes 1.24](https://killer.sh/attendee/f8c336a9-658e-4342-a59e-13850ff20813/content)
+  - [CKA Simulator Preview Kubernetes 1.25](https://killer.sh/course/preview/e84d0e31-4fff-4c42-8afd-be1bdbc0d994)
+  - [CKAD Simulator Preview Kubernetes 1.25](https://killer.sh/course/preview/052229bd-1062-44a4-8aae-f50d0770165a)
+  - [CKS Simulator Preview Kubernetes 1.25](https://killer.sh/course/preview/bf573045-49c8-44c3-b2e5-8eec7b8eaab3)
 
 ### 在线环境-Oreilly
 
+需购买课程
 - [Certified Kubernetes - CKA Labs](https://learning.oreilly.com/playlists/d6e3fe86-067c-4dc7-a36d-698802d0bdee/)
 - [Certified Kubernetes - CKAD Labs](https://learning.oreilly.com/playlists/ea6ea0fc-d8e2-422c-94dd-a0a8f608d224/)
 

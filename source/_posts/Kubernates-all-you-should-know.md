@@ -54,8 +54,8 @@ https://mp.weixin.qq.com/s/n3QYIGuM1io1ubE3KC1hrw
 > To work through the labs in this course, you will need to install and configure your own lab environment.
 > 
 > Different lab installation options are possible, but it is recommended to use `Minikube`, on a virtual machine that runs the latest version of Ubuntu LTS desktop.
-> 
-> Students that want to prepare the Minikube based lab setup before start of the course can follow the instructions that are provided in the "Setup Guide" in the course [GitHub repository](https://github.com/sandervanvugt/ckad)
+
+Prepare the `Minikube` based lab setup before start of the course can follow the instructions that are provided in the **"Setup Guide"** in the course [CKAD GitHub repository](https://github.com/sandervanvugt/ckad/blob/master/SetupGuide.pdf), [CKA GitHub repository](https://github.com/sandervanvugt/cka)
 
 ### 在线环境-killercoda
 

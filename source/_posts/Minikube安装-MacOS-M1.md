@@ -98,7 +98,7 @@ Error: hyperkit: An unsatisfied requirement failed this build.
     - `brew install qemu`
     - `minikube start --driver=qemu --memory=4Gb`
 
-## 运行Minikube
+## 检查运行Minikube
 
 ```bash
 minikube start --driver=hyperkit
@@ -111,6 +111,28 @@ minikube start --driver=hyperkit
 minikube start --driver=qemu
 ```
 
+# 运行Minikube
+
+## Testing Minikube
+
+- `minikube status`: shows current status
+- `kubectl get all`: verifies kubectl client operation
+- `minikube start`: starts Minikube
+- `minikube stop`: stops Minikube
+- `minikube ssh`: logs in to the Minikube host
+- `docker ps`: shows all Docker processes on the Minikube host
+
+## Managing Minikube
+
+The **minikube** command has different options
+
+- `minikube dashboard`: opens the K8s dashboard in the local browser
+- `minikube delete`: deletes a cluster
+- `minikube ip`: shows the currently used IP address
+- `minikube start`: starts a cluster
+- `minikube stop`: stops a cluster
+- `minikube status`: gives current status
+- `minikube version`: shows current version
 
 ## 参考文章
 

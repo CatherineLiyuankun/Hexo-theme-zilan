@@ -30,11 +30,12 @@ tags:
 | mm      | 分         | mm-------->07 小写的m            |
 | s      | 秒         | s-------->9  没有前导零               |
 | ss      | 秒         | ss-------->09                 |
+| a      | displays time with AM/ PM marker     | hh:mm:ss a-------->12：59：59 AM      |
 | SSS      | 毫秒        | SSS--------->666              |
 | Y      | Week Year | YYYY---->2020                 |
 | D      | 一年中天数     | DD-------->365                |
 
-### C#中其他含义
+### 其他含义
 
 　gg 时期或纪元。如果要设置格式的日期不具有关联的时期或纪元字符串，则忽略该模式。
   f 秒的小数精度为一位。其余数字被截断。
@@ -95,7 +96,7 @@ oracle中，一般使用类型INTEGER，获取方式：
 SELECT (SYSDATE - TO_DATE('1970-1-1 8', 'YYYY-MM-DD HH24')) * 86400 FROM DUAL;
 ```
 
-#### Java
+#### Java 中的时间戳
 
 java中，一般使用类型long，获取方式：
 
@@ -118,7 +119,7 @@ public class Main
 }
 ```
 
-#### JavaScript
+#### JavaScript 中的时间戳
 
 ```javascript
 // 1.获取的时间戳, 把毫秒改成000显示
@@ -261,20 +262,91 @@ Gradle 配置 （build.gradle）
 
 参考文章： [JDK11变化详解，JDK8升级JDK11详细指南](https://developer.aliyun.com/article/659407)
 
-## JavaScript中的Date
+## JavaScript中的DateTime
 
 ### 原生JavaScript
 
-```javascript
-// 1.获取的时间戳, 把毫秒改成000显示
-const timestamp1 = Date.parse(new Date()); // 1668656204000
-// 2.获取当前毫秒的时间戳
-const timestamp2 = (new Date()).valueOf(); // 1668656204519
-// 3.获取当前毫秒的时间戳
-const timestamp3=new Date().getTime()；// 1668656204519
-```
+#### [JavaScript 中的时间戳](./%E6%97%A5%E6%9C%9F%E6%A0%BC%E5%BC%8FDateTimeFormat-yyyy-MM-dd-HH-mm-ss-%E5%9D%91-%E5%A4%A7%E5%B0%8F%E5%86%99%E5%8C%BA%E5%88%AB.html#javascript-%E4%B8%AD%E7%9A%84%E6%97%B6%E9%97%B4%E6%88%B3-v2)
 
 ### JS库 - Moment
+
+### JS库 - Date
+
+## Java 中的DateTime
+
+### [Java 中的时间戳](./%E6%97%A5%E6%9C%9F%E6%A0%BC%E5%BC%8FDateTimeFormat-yyyy-MM-dd-HH-mm-ss-%E5%9D%91-%E5%A4%A7%E5%B0%8F%E5%86%99%E5%8C%BA%E5%88%AB.html#java-%E4%B8%AD%E7%9A%84%E6%97%B6%E9%97%B4%E6%88%B3)
+
+### Java 中的DateTime format
+
+```java
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Calendar;
+public class Demo {
+    public static void main(String[] args) throws Exception {
+        // displaying current date and time
+        Calendar cal = Calendar.getInstance();
+        String formatStr = "dd/MMMM/yyyy hh:mm:ss zzzz";
+        SimpleDateFormat simpleformat = new SimpleDateFormat(formatStr);
+        System.out.println("Today's date '" + formatStr + "' = " + simpleformat.format(cal.getTime()));
+
+        formatStr = "dd/MMM/yyy hh:mm:ss zzz";
+        Format f = new SimpleDateFormat(formatStr);
+        System.out.println("Today's date '" + formatStr + "' = " + f.format(new Date()));
+
+        formatStr = "dd/MM/yy hh:mm:ss zz";
+        f = new SimpleDateFormat(formatStr);
+        System.out.println("Today's date '" + formatStr + "' = " + f.format(new Date()));
+
+        formatStr = "d/M/y h:mm:s z";
+        f = new SimpleDateFormat(formatStr);
+        System.out.println("Today's date '" + formatStr + "' = " + f.format(new Date()));
+
+        // current time
+        System.out.println("------Time----------");
+        formatStr = "hh:mm:ss a";
+        f = new SimpleDateFormat(formatStr);
+        String strResult = f.format(new Date());
+        System.out.println("Time '" + formatStr + "' = "+strResult); // Time = 02:52:28 AM
+
+        // Illegal pattern character 'A'at java.text.SimpleDateFormat.compile(SimpleDateFormat.java:826)
+        // formatStr = "hh:mm:ss A";
+        // f = new SimpleDateFormat(formatStr);
+        // strResult = f.format(new Date());
+        // System.out.println("Time '" + formatStr + "' = "+strResult);
+
+        // displaying hour
+        f = new SimpleDateFormat("H");
+        String strHour = f.format(new Date());
+        System.out.println("Current Hour = "+strHour); // Current Hour = 2
+
+        // displaying minutes
+        f = new SimpleDateFormat("mm");
+        String strMinute = f.format(new Date());
+        System.out.println("Current Minutes = "+strMinute); // Current Minutes = 52
+
+        // displaying seconds
+        f = new SimpleDateFormat("ss");
+        String strSeconds = f.format(new Date());
+        System.out.println("Current Seconds = "+strSeconds); // Current Seconds = 28
+    }
+}
+```
+
+输出：
+
+```text
+Today's date 'dd/MMMM/yyyy hh:mm:ss zzzz' = 25/November/2022 08:33:21 Coordinated Universal Time
+Today's date 'dd/MMM/yyy hh:mm:ss zzz' = 25/Nov/2022 08:33:21 UTC
+Today's date 'dd/MM/yy hh:mm:ss zz' = 25/11/22 08:33:21 UTC
+Today's date 'd/M/y h:mm:s z' = 25/11/2022 8:33:21 UTC
+------Time----------
+Time 'hh:mm:ss a' = 08:33:21 AM
+Current Hour = 8
+Current Minutes = 33
+Current Seconds = 21
+```
 
 ## 参考文章
 

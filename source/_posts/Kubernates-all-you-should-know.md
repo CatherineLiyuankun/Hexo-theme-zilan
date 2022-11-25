@@ -19,7 +19,8 @@ categories:
 - [Kubernetes 知识合集（微信公众号）](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzIxMTE0ODU5NQ==&action=getalbum&album_id=2332884281821462529&scene=173&from_msgid=2650248506&from_itemidx=1&count=3&nolastread=1#wechat_redirect)
   - [新手必须知道的 Kubernetes 架构](https://mp.weixin.qq.com/s/uTBmNoXuiNyIkxRtPhsvOA)
   - [Kubernetes 架构核心点详细总结！](https://mp.weixin.qq.com/s/JpvlPBazyvy41AyX-RPwvQ)
-https://mp.weixin.qq.com/s/n3QYIGuM1io1ubE3KC1hrw
+  - [【云原生】一文细数kubernetes常见20道问题](https://mp.weixin.qq.com/s/n3QYIGuM1io1ubE3KC1hrw)
+
 
 ### K8s书籍
 
@@ -44,7 +45,8 @@ https://mp.weixin.qq.com/s/n3QYIGuM1io1ubE3KC1hrw
     - 附带练习环境Practice: [Certified Kubernetes - CKAD Labs](https://learning.oreilly.com/playlists/ea6ea0fc-d8e2-422c-94dd-a0a8f608d224/)
 
 
-## k8s练习环境
+
+## k8s安装部署
 
 ### 本地环境-Minikube
 
@@ -56,6 +58,12 @@ https://mp.weixin.qq.com/s/n3QYIGuM1io1ubE3KC1hrw
 > Different lab installation options are possible, but it is recommended to use `Minikube`, on a virtual machine that runs the latest version of Ubuntu LTS desktop.
 
 Prepare the `Minikube` based lab setup before start of the course can follow the instructions that are provided in the **"Setup Guide"** in the course [CKAD GitHub repository](https://github.com/sandervanvugt/ckad/blob/master/SetupGuide.pdf), [CKA GitHub repository](https://github.com/sandervanvugt/cka)
+
+## k8s在线练习环境
+
+### [Play with Kubernetes（PWK）](https://labs.play-with-k8s.com/)
+
+[PWK部署k8s集群](./Kubernetes-Play-with-Kubernetes(PWK).html)
 
 ### 在线环境-killercoda
 
@@ -93,4 +101,4 @@ Prepare the `Minikube` based lab setup before start of the course can follow the
 
 ## 参考文章
 
-[How I got CKAD Certification (2021) in 3 Weeks](https://www.linkedin.com/pulse/how-i-got-ckad-certification-2021-3-weeks-abdelahad-satour/)
+- [How I got CKAD Certification (2021) in 3 Weeks](https://www.linkedin.com/pulse/how-i-got-ckad-certification-2021-3-weeks-abdelahad-satour/)

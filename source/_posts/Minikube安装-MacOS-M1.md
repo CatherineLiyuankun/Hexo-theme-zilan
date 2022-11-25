@@ -98,7 +98,7 @@ Error: hyperkit: An unsatisfied requirement failed this build.
     - `brew install qemu`
     - `minikube start --driver=qemu --memory=4Gb`
 
-## 检查运行Minikube
+## 运行Minikube
 
 ```bash
 minikube start --driver=hyperkit
@@ -111,7 +111,21 @@ minikube start --driver=hyperkit
 minikube start --driver=qemu
 ```
 
-# 运行Minikube
+如果没有VPN，为了解决海外资源访问受限问题，可以使用阿里云提供的镜像地址。具体命令如下：
+
+$ minikube start 
+--cpus=4 
+--memory='6000mb' 
+--image-mirror-country='cn' 
+--image-repository='registry.cn-hangzhou.aliyuncs.com/google_containers'
+命令参数说明如下：
+
+--cpus=4：表示为minikube分配的CPU核数；
+--memory='6000mb'：表示为minikube虚拟机分配的内存数；
+--image-mirror-country='cn'：将缺省利用"registry.cn-hangzhou.aliyuncs.com/google_containers"作为安装Kubernetes的容器镜像仓库；
+--image-repository="xx"：表示所使用的镜像仓库地址，这里为阿里云地址；
+
+# Minikube使用
 
 ## Testing Minikube
 

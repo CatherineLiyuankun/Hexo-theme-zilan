@@ -40,6 +40,8 @@ categories:
 
 ## Node.js 安装方法
 
+`node -v` 先查看是否安装node.js 和安装的版本。
+
 ## 通过`nvm`安装Node.js
 
 安装 Node.js 的最佳方式是使用 nvm（`Node Version Manager`）。

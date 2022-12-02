@@ -149,6 +149,10 @@ MAC Monterey 系统上新版本Homebrew， 例如 3.3.12，默认路径变为`/o
 npm install -g grunt-cli
 ```
 
+```bash
+grunt -v
+```
+
 ### Install yarn globally
 
 ```bash
@@ -175,7 +179,9 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
 fi
 ```
 
-## Install Maven and add its bin folder to the PATH environment variable
+## Install `Maven`
+
+### Install `Maven` - MacOS
 
 ```bash
 brew install maven
@@ -186,13 +192,42 @@ mvn -v
 vi ~/.bash_profile
 ```
 
+add its bin folder to the PATH environment variable
+
 ```bash
 # Maven
 export M2_HOME="/usr/local/Cellar/maven/3.8.1/libexec"
 export PATH="${M2_HOME}/bin:${PATH}"
 ```
 
-## Install the Ant build tool
+`echo $M2_HOME` 或者 `mvn --version`验证
+
+### Install `Maven` - Windows
+
+- Maven 3.3 要求 JDK 1.7 或以上
+- Maven 3.2 要求 JDK 1.6 或以上
+- Maven 3.0/3.1 要求 JDK 1.5 或以上
+
+#### 下载 Maven 文件
+
+- [下载 Maven](http://maven.apache.org/download.html)
+- 解压 Maven 文件
+  - 解压文件到你想要的位置来安装 Maven 3.2.5，你会得到 apache-maven-3.2.5 子目录。`C:\Tools\apache-maven-3.3.9`
+- 设置 Maven 环境变量
+  - 添加 `M2_HOME`、`MAVEN_OPTS` 环境变量。
+    - 右键单击“我的电脑”，然后单击“属性” --> 单击“高级”选项卡 --> 单击“环境变量” --> 单击“新建”添加一个新变量名和值。
+      - `M2_HOME= C:\Tools\apache-maven-3.3.9` 或者通过`where maven`查找已经安装的路径
+      - `MAVEN_OPTS=-Xms256m -Xmx512m`
+  - 编辑环境变量`path`
+    - 尾部添加`%M2_HOME%\bin`
+- 验证 Maven 安装
+  - 现在打开控制台，执行以下命令。
+  - `c:\> mvn --version`
+  - 或者`echo $M2_HOME`
+
+## Install the `Ant` build tool
+
+### Install the `Ant` - MacOS
 
 ```bash
 brew install ant
@@ -214,6 +249,21 @@ vi ~/.bash_profile
 export ANT_HOME=/usr/local/Cellar/1.10.10/libexec
 export PATH=$PATH:$ANT_HOME/bin
 ```
+
+`echo $ANT_HOME` 或者 `ant -version` 验证
+
+### Install the `Ant` - Windows
+
+- 设置 Ant 环境变量
+  - 添加 `ANT_HOME`环境变量。
+    - 右键单击“我的电脑”，然后单击“属性” --> 单击“高级”选项卡 --> 单击“环境变量” --> 单击“新建”添加一个新变量名和值。
+      - `ANT_HOME= C:\Tools\ant` 或者通过`where ant`查找已经安装的路径
+  - 编辑环境变量`path`
+    - 尾部添加`%ANT_HOME%\bin`
+- 验证 Maven 安装
+  - 现在打开控制台，执行以下命令。
+  - `c:\> ant --version`
+  - 或者`echo $ANT_HOME`
 
 ## Install gradle
 

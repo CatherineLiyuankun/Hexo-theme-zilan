@@ -19,6 +19,9 @@ categories:
 
 > Minikube是一个可以快速构建一个单节点本地运行Kubernetes环境的一个工具，它专注于让快速创建本地Kubernetes环境，用于学习和开发。
 > 抛去多集群有关的特性，Minukube构建的单节点集群，足以使用户探索和发现Kubernate的绝大多数主要功能。
+> 
+> 如果你使用的是minikube, 注意, 你面对的minikube就是一个集群, 它有自己的IP, 可以采用`minikube ip`进行访问, 也就意味着minikube就是一个服务器, 那就是它的公网IP.
+> Minikube 只能通过 `NodePort` 公开服务。`EXTERNAL-IP` 始终处于挂起状态
 
 # Minikube 安装
 

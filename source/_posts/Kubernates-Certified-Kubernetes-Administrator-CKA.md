@@ -1149,3 +1149,4 @@ echo 2 > /opt/KUSC00402/kusc00402.txt
 - [2022.2 k8s-cka考试题库](https://blog.csdn.net/qq_33680297/article/details/123074501)
 - [CKA 百度文库](https://wenku.baidu.com/view/1d4a8bdbcbd376eeaeaad1f34693daef5ef713f4?bfetype=new)
 - [CKA Kubernauts Training Plan Mind 脑图](https://www.mindmeister.com/zh/920845833/kubernauts-training-pla)
+[惊！2020年CKA考试最新最全指南](https://zhuanlan.zhihu.com/p/106090560?utm_medium=social&utm_oi=56834706636800&utm_psn=1578894322392657920&utm_source=wechat_session)

@@ -63,7 +63,7 @@ https://docs.linuxfoundation.org/tc-docs/certification/faq-cka-ckad
 - **经验1**： 不要完全按照顺序做题！！！Kubernates cluster upgrade 或者 etcd backup 放最后做，否则环境搞坏，其他的题不能做. 隔过去的题可以用flag标记，省的忘记哪些还没有做。
 - **经验2**：  需要在ssh到新的node的时候，在新的tab做题，避免忘记exit出来。
 - 使用`kubectl explain` 来查看命令内容， 例如`kubectl explain pods.spec.tolerations --recursive`
-- 使用`kubectl --help` 查看命令参数, 例如`kubectl create clusterrole --help`
+- 使用`kubectl --help` 或`kubectl -h` 查看命令参数, 例如`kubectl create clusterrole --help`
 - 使用`kubectl api-resources`, 查看所有资源缩写
 - 考试环境点击`-`来zoom out, 这样可以显示更多内容。（尤其是使用平板电脑，屏幕太小，显示有效内容很少）。
 - 善用考试记事本（exam notepad）。
@@ -100,6 +100,7 @@ Once you've gained access to your terminal it might be wise to spend ~1 minute t
 alias k=kubectl                         # will already be pre-configured 
                                         # (2022最新考试环境默认已开启，不用再配置了)
 export do="--dry-run=client -o yaml"    # k create deploy nginx --image=nginx $do
+                                        # k run podname --image=nginx $do > pod.yaml
 
 export now="--force --grace-period 0"   # k delete pod x $now
                                         # Don't need to wait ~30 seconds
@@ -148,15 +149,19 @@ k -n my-namespace get pod
 下面代码中，双引号开始的行表示注释。
 
 ```vim
-"1.1 由于 Tab 键在不同的编辑器缩进不一致，该设置自动将 Tab 转为空格。
+"1.1 use spaces for tab 由于 Tab 键在不同的编辑器缩进不一致，该设置自动将 Tab 转为空格。
 :set expandtab
 
-"1.2 按下 Tab 键时，Vim 显示的空格数。
+"1.2 amount of spaces used for tab 按下 Tab 键时，Vim 显示的空格数。
 :set tabstop=2
 
-"1.3 在文本上按下>>（增加一级缩进）、<<（取消一级缩进）或者==（取消全部缩进）时，每一级的字符数。
+"1.3 amount of spaces used during indentation 在文本上按下>>（增加一级缩进）、<<（取消一级缩进）或者==（取消全部缩进）时，每一级的字符数。
 :set shiftwidth=2
 ```
+
+Save and close the file by pressing <kbd>Esc</kbd> followed by <kbd>:x</kbd> and <kbd>Enter</kbd>.
+Whenever you open Vim now as the current user, these settings will be used.
+If you ssh onto a different server, these settings will **not** be transferred.
 
 **1.3 Indent multiple lines**
 

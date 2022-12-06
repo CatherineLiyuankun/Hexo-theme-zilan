@@ -26,6 +26,11 @@ categories:
   - [主流 Kubernetes 发行版梳理，看完就会选了](https://zhuanlan.zhihu.com/p/56031304?utm_medium=social&utm_oi=56834706636800&utm_psn=1578890535669833728&utm_source=wechat_session)
   - [想学习云原生/云原生边缘计算相关技术，需要哪些计算机基础知识？](https://www.zhihu.com/question/434475807/answer/2409751479?utm_campaign=shareopn&utm_content=group2_Answer&utm_medium=social&utm_oi=56834706636800&utm_psn=1578891774508052480&utm_source=wechat_session)
 
+### kubectl context
+
+> 注：所谓 kubectl context，就是用来告诉kubectl 命令“去连接哪个集群”的一系列配置。
+> A kubectl context contains connection information to a Kubernetes cluster. Different kubectl contexts can connect to different Kubernetes clusters, or to the same cluster but using different users or different default namespaces.
+
 ## K8s书籍
 
 - 英文名：《Docker Deep Dive》中文名：《深入浅出Docker》（很薄, 深入浅出)
@@ -77,7 +82,6 @@ Prepare the `Minikube` based lab setup before start of the course can follow the
 是一个来自Docker 公司的免费桌面应用，只需要下载并运行安装程序。桌面版 Docker 是在自己的 macos 或 Windows 中部署本地开发环境的最佳方式。只需几个步骤就可以轻松地部署一个用于开发和测试的**单节点**的 Kubernetes 集群。
 
 桌面版Docker通过创建一个虚拟机，然后在虚拟机中启动一个单节点的Kubernehs集群来实现。同时它还会完成 kubectl 容户端的配置，以便连接集群。最后，还有一个简单的图形界面用来执行诸如切换 kubectl context 的基本操作。
-> 注：所谓 kubecdl context，就是用来告诉kubectl 命令“去连接哪个集群”的一系列配置。
 
 1. 打开 Docker 主页，选择 Products ＞ 桌面版 Docker。
 2. 单击macOs 或 Windows 对应的下载按钮，
@@ -98,7 +102,7 @@ $ kubectl get nodes
 
 只需要注册一个账号并登录，即可马上得到一个完整可用的多节点私有集群。其中还有一些内置课程和上手实验。
 
-### 在线环境-killercoda
+### 在线环境-killercoda(考试练习推荐)
 
 - CKA在线练习环境：https://killercoda.com/killer-shell-cka
 - CKAD在线练习环境：https://killercoda.com/killer-shell-ckad

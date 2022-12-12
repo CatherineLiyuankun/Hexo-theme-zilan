@@ -423,6 +423,10 @@ ICU的功能主要有:
 
 ### JS库 - Moment
 
+#### Moment global import issue
+
+https://codesandbox.io/s/moment-import-issue-17oqzz
+
 ### JS库 - Date
 
 ## Java 中的DateTime

@@ -34,6 +34,8 @@ categories:
 - Understand `Jobs` and `CronJobs`
 - Implement `probes` and health checks
 - Understand `SecurityContexts`
+- `canary deployment`
+  - 有一个running的deployment，给了原始yaml文件，让你建一个新的deployment，image用题目给定的新的image，然后让用户的流量按照2:8 （具体比例不记得了，这个不重要）流向这两个deployment
 
 ## 如何备考
 
@@ -43,6 +45,7 @@ categories:
 
 有几个练习库，建议将每个题目都自己亲自操作一遍，一定要操作。
 
+- CKAD在线练习环境：https://killercoda.com/killer-shell-ckad
 - [Git - StenlyTU - K8s Practice Training for CKA, CKAD and CKS](https://github.com/StenlyTU/K8s-training-official)
 - [bbachi/CKAD-Practice-Questions](https://github.com/bbachi/CKAD-Practice-Questions)
   - 对应博客[2019.11 Practice Enough With These 150 Questions for the CKAD Exam](https://medium.com/bb-tutorials-and-thoughts/practice-enough-with-these-questions-for-the-ckad-exam-2f42d1228552)
@@ -56,10 +59,29 @@ categories:
 
 ### CKAD课程
 
-- CKAD考试-对应官方课程[Kubernetes for Developers (LFD259)](https://training.linuxfoundation.org/training/kubernetes-for-developers/)
-- Oreilly视频课程: (For beginner or Advanced) [Certified Kubernetes Application Developer (CKAD) Sander van Vugt](https://learning.oreilly.com/videos/certified-kubernetes-application/9780137841509/).
+- 【需付费】CKAD考试-对应官方课程[Kubernetes for Developers (LFD259)](https://training.linuxfoundation.org/training/kubernetes-for-developers/)
+- 【需付费】Oreilly视频课程: (For beginner or Advanced) [Certified Kubernetes Application Developer (CKAD) Sander van Vugt](https://learning.oreilly.com/videos/certified-kubernetes-application/9780137841509/).
   - [Certified Kubernetes Application Developer (CKAD) Crash Course](https://learning.oreilly.com/live-events/certified-kubernetes-application-developer-ckad-crash-course/0636920315803/)
     - 附带练习环境Practice: [Certified Kubernetes - CKAD Labs](https://learning.oreilly.com/playlists/ea6ea0fc-d8e2-422c-94dd-a0a8f608d224/)
+
+### 常用命令
+
+```bash
+# 不熟
+## 输出pod status
+kubectl -n default describe pod pod1 | grep -i status:
+kubectl -n default get pod pod1 -o jsonpath="{.status.phase}"
+## 创建job
+k -n neptune create job neb-new-job --image=busybox:1.31.0 $do > /opt/course/3/job.yaml -- sh -c "sleep 2 && echo done"
+
+# 常用
+## 创建pod
+kubectl run pod1 --image=httpd:2.4.41-alpine $do > 2.yaml
+## 创建service
+kubectl expose deployment d1 --name=服务名 --port=服务端口 --target-port=pod运行端口 --type=类型
+kubectl expose pod pod名 --name=服务名 --port=服务端口 --target-port=pod运行端口 --type=类型
+
+```
 
 ## [经验总结](http://liyuankun.top/Kubernates-Certified-Kubernetes-Administrator-CKA.html#%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93)(同CKA)
 

@@ -121,8 +121,8 @@ alias kn='kubectl config set-context --current --namespace
 Which allows you to define the default namespace of the current context. Then once you switch a context or namespace you can just run:
 
 ```bash
-k default      # set default to default
-k my-namespace # set default to my-namespace
+kn default      # set default to default
+kn my-namespace # set default to my-namespace
 ```
 
 But only do this if you used it before and are comfortable doing so. Else you need to specify the namespace for every call, which is also fine:
@@ -132,6 +132,8 @@ k -n my-namespace get all
 k -n my-namespace get pod
 ...
 ```
+
+如果想使用不同的`shell`或`tmux`，可以把这些 alias和变量存入`~/.bashrc`.
 
 **2. [开启自动补全autocomplete](https://kubernetes.io/docs/reference/kubectl/cheatsheet/#kubectl-autocomplete)**
 (2022最新考试环境默认已开启，不用再配置了)
@@ -341,7 +343,7 @@ namespace `internal` to connect to port `5768` of other Pods in the namespace `m
 Ensure that the new NetworkPolicy:
 
 - does not allow access to Pods not listening on port 5768
-- does not allow access from Pods not in namespace `my-app`
+- does not allow access from Pods not in namespace `internal`
 
 ### 解答：NetworkPolicy
 
@@ -350,8 +352,11 @@ Ensure that the new NetworkPolicy:
 ```bash
 kubectl config use-context hk8s
 kubectl get ns --show-labels # 得到`internal`的label，例如project=internal
-# kubectl create namespace internal
-kubectl label ns internal project: my-app
+
+# kubectl create namespace internal if namespace has no labels
+kubectl label ns internal project:internal
+kubectl label ns my-app project:my-app
+
 vim allow-port-from-namespace.yaml
 # nano allow-port-from-namespace.yaml
 ```

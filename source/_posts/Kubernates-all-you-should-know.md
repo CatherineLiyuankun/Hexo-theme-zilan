@@ -16,15 +16,15 @@ categories:
 # K8s基础知识
 
 - [K8s 官方文档](https://kubernetes.io/docs/home/)
-- [Kubernetes 知识合集（微信公众号）](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzIxMTE0ODU5NQ==&action=getalbum&album_id=2332884281821462529&scene=173&from_msgid=2650248506&from_itemidx=1&count=3&nolastread=1#wechat_redirect)
-  - [新手必须知道的 Kubernetes 架构](https://mp.weixin.qq.com/s/uTBmNoXuiNyIkxRtPhsvOA)
-  - [Kubernetes 架构核心点详细总结！](https://mp.weixin.qq.com/s/JpvlPBazyvy41AyX-RPwvQ)
-  - [【云原生】一文细数kubernetes常见20道问题](https://mp.weixin.qq.com/s/n3QYIGuM1io1ubE3KC1hrw)
 - 知乎文章
   - [一关系图让你理解K8s中的概念，Pod、Service、Job等到底有啥关系](https://zhuanlan.zhihu.com/p/105006577?utm_medium=social&utm_oi=56834706636800&utm_psn=1578874624045264896&utm_source=wechat_session)
   - [Kubernets原理的分解讲解](https://zhuanlan.zhihu.com/p/500443105?utm_medium=social&utm_oi=56834706636800&utm_psn=1578889599430103040&utm_source=wechat_session)
   - [主流 Kubernetes 发行版梳理，看完就会选了](https://zhuanlan.zhihu.com/p/56031304?utm_medium=social&utm_oi=56834706636800&utm_psn=1578890535669833728&utm_source=wechat_session)
   - [想学习云原生/云原生边缘计算相关技术，需要哪些计算机基础知识？](https://www.zhihu.com/question/434475807/answer/2409751479?utm_campaign=shareopn&utm_content=group2_Answer&utm_medium=social&utm_oi=56834706636800&utm_psn=1578891774508052480&utm_source=wechat_session)
+- [Kubernetes 知识合集（微信公众号）](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzIxMTE0ODU5NQ==&action=getalbum&album_id=2332884281821462529&scene=173&from_msgid=2650248506&from_itemidx=1&count=3&nolastread=1#wechat_redirect)
+  - [新手必须知道的 Kubernetes 架构](https://mp.weixin.qq.com/s/uTBmNoXuiNyIkxRtPhsvOA)
+  - [Kubernetes 架构核心点详细总结！](https://mp.weixin.qq.com/s/JpvlPBazyvy41AyX-RPwvQ)
+  - [【云原生】一文细数kubernetes常见20道问题](https://mp.weixin.qq.com/s/n3QYIGuM1io1ubE3KC1hrw)
 
 ### kubectl context
 

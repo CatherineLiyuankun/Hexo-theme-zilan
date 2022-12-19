@@ -315,6 +315,8 @@ Docker Hub 等镜像仓库上有大量的高质量的镜像可以用，可以从
     - 从第三方镜像仓库服务获取，需在前面加上第三方镜像仓库服务DNS名称 例如Google容器镜像仓库（GCR） `docker image pull gcr.io/nigelpoulton/tu-demo:v2`
   - `docker image pull -a <DockerHub用户名组织名/repository>` `-a` 拉取全部镜像
   - `docker image pull <repository><Digest>``docker image pull ubuntu@sha256:c0537...7cj32rg42454` 通过镜像摘要Digest 拉取镜像，镜像摘要Digest是基于内容散列值（Content Hash），可区分出两个tag相同的镜像
+- push镜像
+  - `docker image push <option> <DockerHub用户名组织名/repository>:<tag>`
 
 ### 镜像管理
 
@@ -357,6 +359,40 @@ Docker Hub 等镜像仓库上有大量的高质量的镜像可以用，可以从
   - docker save
 - 导入镜像
   - docker load
+- tag镜像
+  - `docker image tag`: Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+  - Usage:  `docker image tag SOURCE_IMAGE_repo[:TAG] TARGET_IMAGE[:TAG]`
+  - Usage:  `docker image tag SOURCE_IMAGE_ID TARGET_IMAGE[:TAG]`
+  - 例子：
+  
+    ```bash
+    $ docker image ls
+    REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
+    my-ping      pinger    8120ce1f0447   9 minutes ago   12.9MB
+    ```
+
+    ```bash
+    # Tag the image, which is currently tagged as pinger , also as local-registry:5000/pinger .
+    docker image tag my-ping:pinger local-registry:5000/pinger
+
+    docker image ls
+    REPOSITORY                   TAG       IMAGE ID       CREATED          SIZE
+    my-ping                      pinger    8120ce1f0447   10 minutes ago   12.9MB
+    local-registry:5000/pinger   latest    8120ce1f0447   10 minutes ago   12.9MB
+
+    # Then push the image into the local registry.
+    docker image push local-registry:5000/pinger
+
+    # 变为v1 tag
+    docker image tag local-registry:5000/pinger:latest local-registry:5000/pinger:v1
+
+    docker image ls
+    REPOSITORY                   TAG       IMAGE ID       CREATED          SIZE
+    my-ping                      pinger    8120ce1f0447   31 minutes ago   12.9MB
+    local-registry:5000/pinger   latest    8120ce1f0447   31 minutes ago   12.9MB
+    local-registry:5000/pinger   v1        8120ce1f0447   31 minutes ago   12.9MB
+    ```
+
 
 ## Dockerfile构建镜像
 
@@ -397,13 +433,18 @@ Docker Hub 等镜像仓库上有大量的高质量的镜像可以用，可以从
 
 以下是一个Dockerfile实例：
 
-```bash
+```Dockerfile
 FROM java:8
 LABEL maintainer="yuanli@gmail.com"
 MAINTAINER "jinshw"<jinshw@qq.com>
 ADD mapcharts-0.0.1-SNAPSHOT.jar mapcharts.jar
 EXPOSE 8080
 CMD java -jar mapcharts.jar
+```
+
+```Dockerfile
+FROM bash
+CMD ["ping", "killercoda.com"]
 ```
 
 ```Dockerfile
@@ -440,6 +481,7 @@ ENTRYPOINT ["node", "./app.js"]
 - `.`表示使用当前目录作为构建上下文
 - `--no-cache=true` 强制忽略缓存，不使用缓存构建镜像
 - `--squash` 创建一个合并镜像
+- `-t name:tag` 加tag list
 
 构建过程：
 

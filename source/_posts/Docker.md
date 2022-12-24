@@ -443,6 +443,11 @@ CMD java -jar mapcharts.jar
 ```
 
 ```Dockerfile
+# Create a new file /root/Dockerfile to build a container image from. It should:
+
+# use bash as base
+# run ping killercoda.com
+
 FROM bash
 CMD ["ping", "killercoda.com"]
 ```
@@ -489,6 +494,20 @@ ENTRYPOINT ["node", "./app.js"]
 2. 在该容器中运行Dockerfile中的指令
 3. 将指令运行结果保存为一个新的镜像层 `---> cldddca785f`
 4. 删除临时容器 `Removing intermediate container`
+
+```bash
+# Build the image by /root/Dockerfile and tag it as pinger .
+# Run the image (create a container) named my-ping
+
+cd /root
+docker image build . -t pinger
+docker container run --name=my-ping pinger
+
+# Tag the image, which is currently tagged as pinger , also as local-registry:5000/pinger .
+docker tag pinger local-registry:5000/pinger
+docker image ls
+docker push local-registry:5000/pinger
+```
 
 #### 查看构建镜像过程中执行的指令`docker image history`
 

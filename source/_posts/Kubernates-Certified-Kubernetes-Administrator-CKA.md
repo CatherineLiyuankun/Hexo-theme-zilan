@@ -318,7 +318,12 @@ $ kubectl create clusterrole deployment-clusterrole --resource=deployments,state
 $ kubectl create serviceaccount cicd-token -n app-team1
 $ kubectl create rolebinding cicd-token-binding --clusterrole=deployment-clusterrole --serviceaccount=app-team1:cicd-token --namespace=app-team1
 # $ kubectl -n app-team1 describe rolebindings.rbac.authorization.k8s.io cicd-token-binding
-# kubectl auth can-i create deployments
+
+# Verify everything using kubectl auth can-i
+kubectl auth can-i create deployments --as system:serviceaccount:app-team1:cicd-token -n app-team1 # YES
+kubectl auth can-i create deployments --as system:serviceaccount:app-team1:cicd-token -n default # NO
+kubectl auth can-i delete deployments --as system:serviceaccount:app-team1:cicd-token -n app-team1 # NO
+kubectl auth can-i update deployments --as system:serviceaccount:app-team1:cicd-token -n app-team1 # NO
 ```
 
 ---
@@ -469,20 +474,25 @@ Create a new nginx Ingress resource as follows:
 
 ```bash
 kubectl config use-context k85
-# kubectl get svc
+# Find out the ingressClassName with:
+kubectl get ingressclass
+NAME    CONTROLLER             PARAMETERS   AGE
+nginx   k8s.io/ingress-nginx   <none>       22
 
-vi pong.yaml
+vim pong.yaml
 
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: pong
-  namespace: ing-internal
+  namespace: ing-internal  # Add： The Ingress resources needs to be created in the same Namespace as the applications.
   annotations:
-    kubernetes.io/ingress.class: "nginx"   # 要加这句，不然kubctl get ingress 不出来address
+    kubernetes.io/ingress.class: "nginx"   # 要加这句或者加spec.ingressClassName，不然kubctl get ingress 不出来address
+    # this annotation removes the need for a trailing slash when calling urls
+    # but it is not necessary for solving this scenario
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: nginx-example
+  ingressClassName: nginx # 要加这句，不然kubctl get ingress 不出来address
   rules:
   - http:
       paths:
@@ -616,7 +626,7 @@ Given an existing Kubernetes cluster running version `1.24.1`, upgrade all of th
 You are also expected to upgrade kubelet and kubectl on the **master** node.
 
 > Be sure to drain the master node before upgrading it and uncordon it after the upgrade.
-Do not upgrade the worker nodes, etc, the container manager, the CNI plugin, the DNS service or any other addons.
+Do not upgrade the worker nodes, etcd, the container manager, the CNI plugin, the DNS service or any other addons.
 
 ### 解答：升级master
 
@@ -701,7 +711,7 @@ ETCDCTL_API=3 etcdctl snapshot save /srv/data/etcd-snapshot.db \
 --key=/opt/KUIN00601/etcd-client.key 
 
 # 1.2 接着既可以检查下你备份的文件:
-ETCDCTL_API=3 etcdctl --write-out=table snapshot status /data/backup/etcd- snapshot.db
+ETCDCTL_API=3 etcdctl --write-out=table snapshot status /srv/data/etcd-snapshot.db
 #有以下输出，就没问题
 +----------+----------+------------+------------+ 
 | HASH | REVISION | TOTAL KEYS | TOTAL SIZE |
@@ -743,6 +753,8 @@ Create a pod named `kucc1` with a single app container for each of the following
 
 ```bash
 kubectl config use-context k8s
+
+kubectl run kucc1 --image nginx --dry-run=client -o yaml > kucc1.yaml
 vim kucc1.yaml
 
 apiVersion: v1
@@ -842,6 +854,7 @@ Finally, using `kubectl edit` or `kubectl patch` expand the `PersistentVolumeCla
   - [Create a PersistentVolumeClaim](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolumeclaim)
   - [Configure a Pod ...中文文档](https://kubernetes.io/zh-cn/docs/tasks/configure-pod-container/configure-persistent-volume-storage/)
 - 搜索 `kubectl edit pvc` [Resizing Persistent Volumes using Kubernetes](https://kubernetes.io/blog/2018/07/12/resizing-persistent-volumes-using-kubernetes/)
+  - [expanding-persistent-volumes-claims](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#expanding-persistent-volumes-claims)
 
 ```bash
 kubectl config use-context hk85
@@ -870,11 +883,11 @@ nano web-server.yaml
 apiVersion: v1
 kind: Pod
 metadata:
-  name: web-server
+  name: web-server # pod name
 spec:
-  volumes:
-    - name: task-pv-storage
-      persistentVolumeClaim:
+  volumes:                  # add
+    - name: task-pv-storage # add
+      persistentVolumeClaim: # add
         claimName: pv-volume # PVC name, 要与之前一致
   containers:
     - name: nginx
@@ -882,9 +895,9 @@ spec:
       ports:
         - containerPort: 80
           name: "http-server"
-      volumeMounts:
-        - mountPath: "/usr/share/nginx/html"
-          name: task-pv-storage
+      volumeMounts:                          # add
+        - mountPath: "/usr/share/nginx/html" # mountPath
+          name: task-pv-storage              # 和spec.volumes.name一致
 
 kubectl apply -f web-server.yaml
 kubectl get pods
@@ -892,7 +905,6 @@ kubectl get pods
 # 3 Edit PVC
 kubectl edit pvc pv-volume --record
 # 修改 storage: 10Mi 为 storage: 70Mi
-
 ```
 
 
@@ -970,11 +982,11 @@ CPU to the file `/opt/KUTR00401/KUTR00401.txt` (which already exists).
 ```bash
 kubectl top pod -l name=cpu-user -A --sort-by=cpu
 
-    NAMAESPACE NAME CPU MEM
-    cpu-user-1 45m 6Mi
-    cpu-user-2 38m 6Mi 
-    cpu-user-3 35m 7Mi 
-    cpu-user-4 32m 10Mi
+    NAMAESPACE NAME  CPU MEM
+          cpu-user-1 45m 6Mi
+          cpu-user-2 38m 6Mi 
+          cpu-user-3 35m 7Mi 
+          cpu-user-4 32m 10Mi
 
 echo 'cpu-user-1' > /opt/KUTR00401/KUTR00401.txt
 ```
@@ -1001,7 +1013,8 @@ changes are made permanent.
 Search `systemctl restart`, 选择[Troubleshooting kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/)
 
 ```bash
-# kubectl get nodes
+kubectl get nodes
+
 # 连接worker node
 ssh wk8s-node-O
 # 获取sudo权限
@@ -1030,14 +1043,11 @@ Set configuration context:
 
 #### Context
 
-Without changing its existing containers, an existing Pod needs to be integrated into Kubernetes's built-in logging
-architecture (e.g. kubect] logs). Adding a streaming sidecar container is a good and common way to accomplish this
-requirement.
+Without changing its existing containers, an existing Pod needs to be integrated into Kubernetes's built-in logging architecture (e.g. kubectl logs). Adding a streaming sidecar container is a good and common way to accomplish this requirement.
 
 #### Task
 
-Add a `busybox` sidecar container to the existing Pod `legacy-app`. The new sidecar container has to run the
-following command:
+Add a `busybox` sidecar container to the existing Pod `legacy-app`. The new sidecar container has to run the following command:
 `/bin/sh -c tail -n+l -f /var/log/legacy-app.log`
 
 Use a volume mount named `logs` to make the file `/var/log/legacy-app.log` available to the sidecar container.
@@ -1077,27 +1087,25 @@ spec:
         sleep 1;
       done      
     volumeMounts:
-    - name: logs # 3.1 修改挂载名称
-      mountPath: /var/log/legacy-app.log # 3.2 修改挂载目录
-  - name: busybox  # 1 添加pod及vomuleMount挂载点
-    image: busybox
-    args: [/bin/sh, -c, 'tail -n+1 -f /var/log/legacy-app.log']
+    - name: logs          # 3 修改挂载目录及名称
+      mountPath: /var/log # 3 修改挂载目录及名称
+  - name: busybox  # 1 Add sidecar container
+    image: busybox # 1 Add sidecar container
+    args: [/bin/sh, -c, 'tail -n+1 -f /var/log/legacy-app.log'] # 1 command
     volumeMounts:
-    - name: logs
-      mountPath: /var/log/legacy-app.log
-  volumes:  
-  - name: logs # 2 添加volumes
+    - name: logs          # 2 添加vomuleMount挂载点
+      mountPath: /var/log # 2 注意是/var/log，不是/var/log/legacy-app.log
+  volumes:     
+  - name: logs # 3 添加volumes
     emptyDir: {}
 
-kubectl apply -f legacy-app2.yaml
+# 删除legacy-app，否则再运行yaml时会提示legacy-app已存在
 kubectl delete pod legacy-app -–force
+kubectl apply -f legacy-app2.yaml
 kubectl get pods | grep legacy-app
 ```
 
 ---
-
-
-
 
 
 ## 考题17-检查有多少 node 节点是健康状态

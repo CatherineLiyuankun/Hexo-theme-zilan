@@ -185,6 +185,12 @@ Replace 3yy with 3dd to cut instead of copy and reply the operation if you wish
 
 ## Advanced
 
+### 多行缩进
+
+To indent multiple lines using `vim` you should set the shiftwidth using `:set shiftwidth=2`.
+Then mark multiple lines using `Shift v` and the `up/down` keys.
+To then indent the marked lines press `Shift` + `>` or `<` and to repeat the action press `.`
+
 ### Comment out multiple lines
 
 You'll often need to comment/uncomment multiple lines in a config file. You can perform this operation conveniently in Visual mode
@@ -247,9 +253,9 @@ P: 在光标之前粘贴。
 ?something: 在前面的文本中查找something。
 n: 向后查找下一个。
 N: 向前查找下一个。
-:s/old/new - 用new替换当前行第一个old。
-:s/old/new/g - 用new替换当前行所有的old。
-:%s/old/new/g - 用new替换文件中所有的old。
+`:s/old/new` - 用new替换当前行第一个old。
+`:s/old/new/g` - 用new替换当前行所有的old。
+`:%s/old/new/g` - 用new替换文件中所有的old。
 
 
 

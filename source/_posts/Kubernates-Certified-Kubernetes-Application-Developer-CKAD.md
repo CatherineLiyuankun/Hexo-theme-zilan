@@ -18,7 +18,7 @@ categories:
 ## 考试内容
 
 - 考试包括 15-20 项performance-based tasks。
-  - 实测是19道题
+  - 2022.12 实测是16道题
 - 考生有 2 小时的时间完成 CKA 和 CKAD 考试。
   - 因为从06/2022开始环境升级（贬义），考试环境更难用了，变的很卡，所以时间变得比较紧张。容易做不完题，建议先把有把握的，花费时间不多的题先做掉
     - [CKS CKA CKAD changed Terminal to Remote Desktop ](https://itnext.io/cks-cka-ckad-changed-terminal-to-remote-desktop-157a26c1d5e)
@@ -71,15 +71,51 @@ categories:
 ## 输出pod status
 kubectl -n default describe pod pod1 | grep -i status:
 kubectl -n default get pod pod1 -o jsonpath="{.status.phase}"
-## 创建job
-k -n neptune create job neb-new-job --image=busybox:1.31.0 $do > /opt/course/3/job.yaml -- sh -c "sleep 2 && echo done"
+## Check the pod for error
+kubectl describe pod podname | grep -i error
+... Error: ImagePullBackOff
+## a fast way to get an overview of the ReplicaSets of a Deployment and their images could be done with:
+kubectl -n neptune get rs -o wide | grep deployname
+NAME         DESIRED   CURRENT   READY   AGE    CONTAINERS   IMAGES         SELECTOR
+deployname   3         3         3       9m6s   httpd        httpd:alpine   app=wonderful
 
+## 创建job
+kubectl -n neptune create job neb-new-job --image=busybox:1.31.0 $do > /opt/course/3/job.yaml -- sh -c "sleep 2 && echo done"
+## If a Secret bolongs to a serviceaccount, it'll have the annotation kubernetes.io/service-account.name
+kubectl get secrets -oyaml | grep annotations -A 1 # shows secrets with first annotation
+## log
+kubectl logs podname > /opt/test.log
+## decode base64
+base64 -d filename
+## check service connection using a temporary Pod
+## k run tmp --restart=Never --rm --image=nginx:alpine -i -- curl http://svcname.namespace:svcport
+kubectl run tmp --restart=Never --rm --image=nginx:alpine -i -- curl http://svcname.namespace:80
+## check that both PV and PVC have the status Bound:
+k -n earth get pv,pvc
+NAME                                            CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                                 STORAGECLASS   REASON   AGE
+persistentvolume/earth-project-earthflower-pv   2Gi        RWO            Retain           Bound    earth/earth-project-earthflower-pvc                           8m4s
+
+NAME                                                  STATUS   VOLUME                         CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+persistentvolumeclaim/earth-project-earthflower-pvc   Bound    earth-project-earthflower-pv   2Gi        RWO                           7m38s
+
+## We can confirm the pod of deployment with PVC mounting correctly:
+k describe pod project-earthflower-586758cc49-hb87f -n earth | grep -A2 Mount:
+    Mounts:
+      /tmp/project-data from task-pv-storage (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-jj2t2 (ro)
+```
+
+```bash
 # 常用
 ## 创建pod
 kubectl run pod1 --image=httpd:2.4.41-alpine $do > 2.yaml
+kubectl get pod sat-003 -o yaml > 7-sat-003.yaml # export
+kubectl delete pod pod1 --force --grace-period=0
 ## 创建service
 kubectl expose deployment d1 --name=服务名 --port=服务端口 --target-port=pod运行端口 --type=类型
 kubectl expose pod pod名 --name=服务名 --port=服务端口 --target-port=pod运行端口 --type=类型
+## modify a pod yaml to deployment yaml
+### put the Pod's metadata: and spec: into the Deployment's template: section:
 
 ```
 

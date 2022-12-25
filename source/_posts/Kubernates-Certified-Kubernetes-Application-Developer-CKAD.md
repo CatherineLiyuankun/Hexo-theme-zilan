@@ -33,9 +33,10 @@ categories:
 - Understand multi-container Pod design patterns (init containers)
 - Understand `Jobs` and `CronJobs`
 - Implement `probes` and health checks
-- Understand `SecurityContexts`
+- Understand `SecurityContexts` 
 - `canary deployment`
   - 有一个running的deployment，给了原始yaml文件，让你建一个新的deployment，image用题目给定的新的image，然后让用户的流量按照2:8 （具体比例不记得了，这个不重要）流向这两个deployment
+- `ResourceQuota`
 
 ## 如何备考
 
@@ -106,6 +107,11 @@ k describe pod project-earthflower-586758cc49-hb87f -n earth | grep -A2 Mount:
 
 ## Verify everything using kubectl auth can-i
 kubectl auth can-i create deployments --as system:serviceaccount:app-team1:cicd-token -n app-team1 # YES
+
+## 查看某个namespace的resource quota
+$ kubectl describe quota --namespace=rq-demo
+## 或者
+$ kubectl describe resourcequotas -n rq-demo
 ```
 
 ```bash
@@ -117,6 +123,8 @@ kubectl delete pod pod1 --force --grace-period=0
 ## 创建service
 kubectl expose deployment d1 --name=服务名 --port=服务端口 --target-port=pod运行端口 --type=类型
 kubectl expose pod pod名 --name=服务名 --port=服务端口 --target-port=pod运行端口 --type=类型
+## 创建secret
+kubectl create secret generic db-credentials --from-literal db-password=passwd
 ## modify a pod yaml to deployment yaml
 ### put the Pod's metadata: and spec: into the Deployment's template: section:
 
@@ -125,6 +133,533 @@ kubectl expose pod pod名 --name=服务名 --port=服务端口 --target-port=pod
 ## [经验总结](http://liyuankun.top/Kubernates-Certified-Kubernetes-Administrator-CKA.html#%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93)(同CKA)
 
 ## [Pre Setup](http://liyuankun.top/Kubernates-Certified-Kubernetes-Administrator-CKA.html#pre-setup)(同CKA)
+
+## CKA 2021 真题 1.20
+
+### 考题1 - Creating a Pod and Inspecting it
+
+1. Create the namespace ckad-prep.
+2. In the namespace ckad-prep create a new Pod named mypod with the image nginx:2.3.5. Expose the port 80.
+3. Identify the issue with creating the container. Write down the root cause of issue in a file named pod-error.txt.
+4. Change the image of the Pod to nginx:1.15.12.
+5. List the Pod and ensure that the container is running.
+6. Log into the container and run the ls command. Write down the output. Log out of the container.
+7. Retrieve the IP address of the Pod mypod.
+8. Run a temporary Pod using the image busybox, shell into it and run a wget command against the nginx Pod using port 80.
+9. Render the logs of Pod mypod.
+10. Delete the Pod and the namespace.
+
+```bash
+# 1. create the namespace.
+$ kubectl create ns ckad-prep
+
+# 2. create a new Pod
+$ kubectl run mypod -n ckad-prep --image=nginx:2.3.5 --port=80 
+# 或者：
+# $ kubectl run mypod --namespace=ckad-prep --image=nginx:2.3.5 --port=80 
+pod/mypod created
+```
+
+```bash
+# 3. Write down root cause in pod-error.txt
+$ kubectl get pod -n ckad-prep
+NAME    READY   STATUS             RESTARTS   AGE
+mypod   0/1     ImagePullBackOff   0          1m
+
+$ kubectl describe pod mypod -n ckad-prep
+...
+Events:
+  Type     Reason     Age                  From               Message
+  ----     ------     ----                 ----               -------
+  Normal   Scheduled  12m                  default-scheduler  Successfully assigned ckad-prep/mypod to controlplane
+  Normal   Pulling    10m (x4 over 12m)    kubelet            Pulling image "nginx:2.3.5"
+  Warning  Failed     10m (x4 over 12m)    kubelet            Failed to pull image "nginx:2.3.5": rpc error: code = NotFound desc = failed to pull and unpack image "docker.io/library/nginx:2.3.5": failed to resolve reference "docker.io/library/nginx:2.3.5": docker.io/library/nginx:2.3.5: not found
+  Warning  Failed     10m (x4 over 12m)    kubelet            Error: ErrImagePull
+  Warning  Failed     10m (x6 over 12m)    kubelet            Error: ImagePullBackOff
+  Normal   BackOff    2m9s (x41 over 12m)  kubelet            Back-off pulling image "nginx:2.3.5"
+
+# 或者
+$ kubectl describe pod mypod -n ckad-prep | grep err -i
+      Reason:       ErrImagePull
+  Warning  Failed     17s (x3 over 57s)  kubelet            Failed to pull image "nginx:2.3.5": rpc error: code = NotFound desc = failed to pull and unpack image "docker.io/library/nginx:2.3.5": failed to resolve reference "docker.io/library/nginx:2.3.5": docker.io/library/nginx:2.3.5: not found
+  Warning  Failed     17s (x3 over 57s)  kubelet            Error: ErrImagePull
+  Warning  Failed     3s (x3 over 56s)   kubelet            Error: ImagePullBackOff
+
+$ kubectl describe pod mypod -n ckad-prep | grep err -i > pod-error.txt
+```
+
+```bash
+# 4. Change the image of the Pod to nginx:1.15.12
+$ kubectl edit pod mypod -n ckad-prep
+
+spec:
+  containers:
+  - image: nginx:1.15.12 # 从nginx:2.3.5改为nginx:1.15.12
+
+pod/mypod edited
+
+# 5. List the Pod and ensure that the container is running.
+$ kubectl get pod -n ckad-prep
+NAME    READY   STATUS    RESTARTS   AGE
+mypod   1/1     Running   0          19m
+
+# 6. Log into the container and run the ls command. Write down the output. Log out of the container.
+$ kubectl exec mypod -n ckad-prep -- ls
+# 或者
+$ kubectl exec mypod -it -n ckad-prep  -- /bin/sh
+/ # ls
+bin  boot  dev	etc  home  lib	lib64  media  mnt  opt	proc  root  run  sbin  srv  sys  tmp  usr  var
+/ # exit
+
+# 7. Retrieve the IP address of the Pod mypod.
+$ kubectl get pod -n ckad-prep -o wide
+NAME    READY   STATUS    RESTARTS   AGE   IP            NODE           NOMINATED NODE   READINESS GATES
+mypod   1/1     Running   0          29m   192.168.0.6   controlplane   <none>           <none>
+```
+
+```bash
+# 8. Run a temporary Pod using the image busybox, shell into it and run a wget command against the nginx Pod using port 80.
+# 用#7 里面得到的IP
+$ kubectl run busybox --image=busybox --rm -it --restart=Never -n ckad-prep -- /bin/sh
+/ # wget -O- 192.168.0.6:80
+Connecting to 192.168.0.6:80 (192.168.0.6:80)
+writing to stdout
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+-                    100% |***************************************************************************************************|   612  0:00:00 ETA
+written to stdout
+/ # exit
+```
+
+```bash
+# 9. Render the logs of Pod mypod.
+$ kubectl logs pods/mypod -n ckad-prep
+192.168.0.7 - - [25/Dec/2022:10:47:23 +0000] "GET / HTTP/1.1" 200 612 "-" "Wget" "-"
+
+# 10. Delete the Pod and the namespace.
+$ kubectl delete pods/mypod -n ckad-prep
+pod "mypod" deleted
+
+$ kubectl delete ns ckad-prep
+namespace "ckad-prep" deleted
+```
+
+### 考题2 - Configuring a Pod to Use a ConfigMap
+
+1. Create a new file named `config.txt` with the following environment variables as key/value pairs on each line.
+   - `DB_URL` equates to `localhost:3306`
+   - `DB_USERNAME` equates to `postgres`
+2. Create a new ConfigMap named `db-config` from that file.
+3. Create a Pod named `backend` that uses the environment variables from the ConfigMap and runs the container with the image `nginx`.
+4. Shell into the Pod and print out the created environment variables. You should find `DB_URL` and `DB_USERNAME` with their appropriate values.
+
+```bash
+# 1. Create a new file named `config.txt`
+$ echo -e "DB_URL=localhost:3306\nDB_USERNAME=postgres" > config.txt
+或者
+$ vim config.txt
+DB_URL=localhost:3306
+DB_USERNAME=postgres
+
+# 2. Create a new ConfigMap `db-config`
+$ kubectl create configmap db-config --from-file config.txt
+configmap/db-config created
+
+# 3. Create a Pod `backend`
+$ kubectl run backend --image nginx --dry-run=client -o yaml > 1.yaml
+$ vim 1.yaml
+```
+
+参考官网[config](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables)
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: backend
+  name: backend
+spec:
+  containers:
+  - image: nginx
+    name: backend
+    resources: {}
+    envFrom:         # Add
+    - configMapRef:  # Add
+        name: db-config  # Modify to configmap name: db-config
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+```
+
+```bash
+$ kubectl apply -f 1.yaml 
+pod/backend created
+```
+
+```bash
+# 4. Shell into the Pod and print out the created environment variables. You should find `DB_URL` and `DB_USERNAME` with their appropriate values.
+$ kubectl exec backend -it -- /bin/sh
+/ # env
+config.txt=DB_URL=localhost:3306
+DB_USERNAME=postgres
+...
+/ # exit
+
+# 或者
+$ kubectl exec backend -- env | grep DB
+config.txt=DB_URL=localhost:3306
+DB_USERNAME=postgres
+```
+
+### 考题3 - Configuring a Pod to Use a Secret
+
+1. Create a new Secret named `db-credentials` with the key/value pair `db-password=passwd`.
+2. Create a Pod named `backend` that defines uses the Secret as environment variable named `DB_PASSWORD` and runs the container with the image `nginx`.
+3. Shell into the Pod and print out the created environment variables. You should find `DB_PASSWORD` variable.
+
+```bash
+# 1.
+$ kubectl create secret generic db-credentials --from-literal=db-password=passwd
+secret/db-credentials created
+$ kubectl get secrets
+NAME              TYPE      DATA   AGE
+db-credentials    Opaque    1      26s
+
+# 2. 
+$ kubectl run backend --image=nginx --restart=Never -o yaml --dry-run > pod.yaml
+```
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: backend
+  name: backend
+spec:
+  containers:
+  - image: nginx
+    name: backend
+    env:                          # Add
+      - name: DB_PASSWORD         # modify to DB_PASSWORD
+        valueFrom:                # Add
+          secretKeyRef:           # Add
+            name: db-credentials  # secret name
+            key: db-password      # secret key
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}
+```
+
+```bash
+# 2.2
+$ kubectl create -f pod.yaml
+
+# 3
+$ kubectl exec -it backend -- /bin/sh
+/ # env
+DB_PASSWORD=passwd
+/ # exit
+
+# 或者
+$ kubectl exec backend -- env
+```
+
+### 考题4 - Creating a Security Context for a Pod
+
+1. Create a Pod named `secured` that uses the image `nginx` for a single container. Mount an `emptyDir` volume to the directory `/data/app`.
+2. Files created on the volume should use the filesystem group ID `3000`.
+3. Get a shell to the running container and create a new file named `logs.txt` in the directory `/data/app`. List the contents of the directory and write them down.
+
+参考官网：[Configure a Security Context for a Pod or Container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod)
+
+```bash
+# 1.1 Create a Pod named `secured`
+$ kubectl run secured --image=nginx -o yaml --dry-run > secured.yaml
+```
+
+```yaml
+# secured.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: secured
+  name: secured
+spec:
+  securityContext:        # Add
+    fsGroup: 3000         # Add 2 filesystem group ID `3000`
+  containers:
+  - image: nginx
+    name: secured
+    volumeMounts:                   # Add 1.3 mount emptyDir
+    - name: data-vol                # Add 1.3 mount emptyDir
+      mountPath: /data/app          # Add 1.3 mount emptyDir
+    resources: {}
+  volumes:                  # Add 1.2 emptyDir
+  - name: data-vol          # Add 1.2 emptyDir
+    emptyDir: {}            # Add 1.2 emptyDir
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}
+```
+
+```bash
+# 2. Create a Pod named `secured`
+$ kubectl create -f secured.yaml
+pod/secured created
+
+# 3 
+$ kubectl exec -it secured -- sh
+/ # cd /data/app
+/ # touch logs.txt
+/ # ls -l
+-rw-r--r-- 1 root 3000 0 Mar 11 15:56 logs.txt
+/ # exit
+```
+
+### 考题5 - Defining a Pod’s Resource Requirements
+
+1. Create a resource quota named `apps` under the namespace `rq-demo` using the following YAML definition in the file `rq.yaml`.
+
+```yaml
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: app
+spec:
+  hard:
+    pods: "2"
+    requests.cpu: "2"
+    requests.memory: 500m
+```
+
+2. Create a new Pod that exceeds the limits of the resource quota requirements. Write down the error message.
+3. Change the request limits to fulfill the requirements to ensure that the Pod could be created successfully. Write down the output of the command that renders the used amount of resources for the namespace.
+
+```bash
+# 1.
+$ kubectl create namespace rq-demo
+$ vim rq.yaml
+
+metadata:
+  name: apps
+
+$ kubectl create -f rq.yaml --namespace=rq-demo
+resourcequota/app created
+
+$ kubectl get resourcequota/apps -n rq-demo
+NAME   AGE     REQUEST                                                 LIMIT
+apps   4m43s   pods: 0/2, requests.cpu: 0/2, requests.memory: 0/500m
+
+$ kubectl describe quota --namespace=rq-demo
+Name:            app
+Namespace:       rq-demo
+Resource         Used  Hard
+--------         ----  ----
+pods             0     2
+requests.cpu     0     2
+requests.memory  0     500m
+```
+
+参考官网：[resource-quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/)
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: mypod
+  name: mypod
+spec:
+  containers:
+  - image: nginx
+    name: mypod
+    resources:
+      requests:
+        memory: "1G"
+        cpu: "400m"
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}
+```
+
+```bash
+# 2. 注意即使yaml文件里面加了metadata.namespace, 创建的命令仍然要加`-n`或者`--namespace`，否则新建的pod不在这个namespace上
+$ kubectl create -f pod.yaml -n rq-demo
+Error from server (Forbidden): error when creating "pod.yaml": pods "mypod" is forbidden: exceeded quota: app, requested: requests.memory=1G, used: requests.memory=0, limited: requests.memory=500m
+```
+
+3. Lower the memory settings to less than 500m (e.g. 200m) and create the Pod.
+
+```bash
+$ kubectl create -f pod.yaml --namespace=rq-demo
+pod/mypod created
+$ kubectl describe quota --namespace=rq-demo
+Name:            app
+Namespace:       rq-demo
+Resource         Used  Hard
+--------         ----  ----
+pods             1     2
+requests.cpu     400m  2
+requests.memory  200m  500m
+```
+
+### 考题6 - Using a Service Account
+
+1. Create a new service account named `backend-team`.
+2. Print out the token for the service account in YAML format.
+3. Create a Pod named `backend` that uses the image `nginx` and the identity `backend-team` for running processes.
+4. Get a shell to the running container and print out the token of the service account.
+
+```bash
+# 1. Create a new service account
+$ kubectl create serviceaccount backend-team
+serviceaccount/backend-team created
+
+# 2.
+$ kubectl get serviceaccount backend-team -o yaml --export
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  creationTimestamp: 2019-05-09T22:43:54Z
+  name: backend-team
+  namespace: default
+  resourceVersion: "1888067"
+  selfLink: /api/v1/namespaces/default/serviceaccounts/backend-team
+  uid: ecd3b7ea-72ab-11e9-96c5-025000000001
+secrets:
+- name: backend-team-token-hskch
+```
+
+```bash
+# 2.2 拿到对应的secret的encoded token
+$ kubectl get secret backend-team-token-hskch -o yaml
+apiVersion: v1
+data:
+...
+  token:
+ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkltNWFaRmRxWkRKMmFHTnZRM0JxV0haT1IxZzFiM3BJY201SlowaEhOV3hUWmt3elFuRmFhVEZhZDJNaWZ
+RLmV5SnBjM01pT2lKcmRXSmxjbTVsZEdWekwzTmxjblpwWTJWaFkyTnZkVzUwSWl3aWEzVmlaWEp1WlhSbGN5NXBieTl6WlhKMmFXTmxZV05qYjNWdWRDOX
+VZVzFsYzNCaFkyVWlPaUp1WlhCMGRXNWxJaXdpYTNWaVpYSnVaWFJsY3k1cGJ5OXpaWEoyYVdObFlXTmpiM1Z1ZEM5elpXTnlaWFF1Ym1GdFpTSTZJbTVsY
+0hSMWJtVXRjMkV0ZGpJdGRHOXJaVzR0Wm5FNU1tb2lMQ0pyZFdKbGNtNWxkR1Z6TG1sdkwzTmxjblpwWTJWaFkyTnZkVzUwTDNObGNuWnBZMlV0WVdOamIz
+VnVkQzV1WVcxbElqb2libVZ3ZEhWdVpTMXpZUzEyTWlJc0ltdDFZbVZ5Ym1WMFpYTXVhVzh2YzJWeWRtbGpaV0ZqWTI5MWJuUXZjMlZ5ZG1salpTMWhZMk5
+2ZFc1MExuVnBaQ0k2SWpZMlltUmpOak0yTFRKbFl6TXROREpoWkMwNE9HRTFMV0ZoWXpGbFpqWmxPVFpsTlNJc0luTjFZaUk2SW5ONWMzUmxiVHB6WlhKMm
+FXTmxZV05qYjNWdWREcHVaWEIwZFc1bE9tNWxjSFIxYm1VdGMyRXRkaklpZlEuVllnYm9NNENUZDBwZENKNzh3alV3bXRhbGgtMnZzS2pBTnlQc2gtNmd1R
+XdPdFdFcTVGYnc1WkhQdHZBZHJMbFB6cE9IRWJBZTRlVU05NUJSR1diWUlkd2p1Tjk1SjBENFJORmtWVXQ0OHR3b2FrUlY3aC1hUHV3c1FYSGhaWnp5NHlp
+bUZIRzlVZm1zazVZcjRSVmNHNm4xMzd5LUZIMDhLOHpaaklQQXNLRHFOQlF0eGctbFp2d1ZNaTZ2aUlocnJ6QVFzME1CT1Y4Mk9KWUd5Mm8tV1FWYzBVVWF
+uQ2Y5NFkzZ1QwWVRpcVF2Y3pZTXM2bno5dXQtWGd3aXRyQlk2VGo5QmdQcHJBOWtfajVxRXhfTFVVWlVwUEFpRU43T3pka0pzSThjdHRoMTBseXBJMUFlRn
+I0M3Q2QUx5clFvQk0zOWFiRGZxM0Zrc1Itb2NfV013
+kind: Secret
+
+# 2.3 拿到对应的secret的decoded token
+$ kubectl describe secret backend-team-token-hskch -o yaml
+...
+Data
+====
+token:
+eyJhbGciOiJSUzI1NiIsImtpZCI6Im5aZFdqZDJ2aGNvQ3BqWHZOR1g1b3pIcm5JZ0hHNWxTZkwzQnFaaTFad2MifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3Nl
+cnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJuZXB0dW5lIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWN
+jb3VudC9zZWNyZXQubmFtZSI6Im5lcHR1bmUtc2EtdjItdG9rZW4tZnE5MmoiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3
+VudC5uYW1lIjoibmVwdHVuZS1zYS12MiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6IjY2YmRjNjM2LTJlY
+zMtNDJhZC04OGE1LWFhYzFlZjZlOTZlNSIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpuZXB0dW5lOm5lcHR1bmUtc2EtdjIifQ.VYgboM4CTd0pd
+CJ78wjUwmtalh-2vsKjANyPsh-6guEwOtWEq5Fbw5ZHPtvAdrLlPzpOHEbAe4eUM95BRGWbYIdwjuN95J0D4RNFkVUt48twoakRV7h-
+aPuwsQXHhZZzy4yimFHG9Ufmsk5Yr4RVcG6n137y-FH08K8zZjIPAsKDqNBQtxg-lZvwVMi6viIhrrzAQs0MBOV82OJYGy2o-
+WQVc0UUanCf94Y3gT0YTiqQvczYMs6nz9ut-
+XgwitrBY6Tj9BgPprA9k_j5qEx_LUUZUpPAiEN7OzdkJsI8ctth10lypI1AeFr43t6ALyrQoBM39abDfq3FksR-oc_WMw
+ca.crt:     1066 bytes
+namespace:  7 bytes
+
+# 3.1 Create a Pod named `backend`
+$ kubectl run backend --image=nginx --dry-run=client -o yaml > 6.yaml
+$ vim 6.yaml 
+```
+
+参考官方文档[Configure Service Accounts for Pods](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)
+
+```yaml
+# 6.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: backend
+  name: backend
+spec:
+  serviceAccountName: backend-team  # Add
+  containers:
+  - image: nginx
+    name: backend
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+
+```
+
+```bash
+# 3.2
+$ k apply -f 6.yaml 
+pod/backend created
+$ k get pod/backend -o wide
+
+# 4. print out the token from the volume source at /var/run/secrets/kubernetes.io/serviceaccount
+$ kubectl exec -it backend -- /bin/sh
+/ # cat /var/run/secrets/kubernetes.io/serviceaccount/token
+eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImJhY2tlbmQtdGVhbS10b2tlbi1kbTJmZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJiYWNrZW5kLXRlYW0iLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiIxNzM0MzVjMS00NDJmLTExZTktOGRjMy0wMjUwMDAwMDAwMDEiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6ZGVmYXVsdDpiYWNrZW5kLXRlYW0ifQ.DjWUxEMNUmQVoXd4b-eIjxboj3w3k7hS5hfV8mm8eoEPz3HJJMgjIpAaurcvo1pp2Ggpd1kIhQvfRqI6-u57f80N5UqXt_qATJfonat2NNXX8pXmFNoPig9LB-pbo8TN_pYGWNworXsxmK9w6V9eaRosIinRp0u-cvijQbsBw3lxWgGo9S4G-7f19mMKN1Pg2xS2J6fKX9IKvhHrUkM91nwcwmsO0use5B4TGbuRa9METiGsfEpegvzMPBbPl0B_T1ANH_pck0LFNtvKe0g1v5zpKx2lRF9WdFAqPsG7BJ1dEH88JtBHzD59OhxIPqtyT4sXKjACBN_ka5ZADMzPJg
+```
+
+### 考题7 - 
+
+### 考题8 - 
+
+### 考题9 - 
+
+### 考题10 - 
+
+### 考题11 - 
+
+### 考题12 - 
+
+### 考题13 - 
+
+### 考题14 - 
+
+### 考题15 - 
+
+### 考题16 - 
+
+### 考题17 - 
 
 ## 参考文章
 
@@ -143,6 +678,6 @@ kubectl expose pod pod名 --name=服务名 --port=服务端口 --target-port=pod
     - [Kubernetes CKAD 1.20 - 真题 （第1题）Creating a Pod and Inspecting it](https://blog.csdn.net/itsaka/article/details/117590286)
     - [Kubernetes CKAD 1.20 - 真题 （第2题）Configuring a Pod to Use a ConfigMap](https://blog.csdn.net/itsaka/article/details/117590437)
     - [Kubernetes CKAD 1.20 - 真题 （第3题）Implementing the Adapter Pattern](https://blog.csdn.net/itsaka/article/details/117590502)
-    - [Kubernetes CKAD 1.20 - 真题 （第4题）Defining a Pod’s Readiness and Liveness Probe](https://www.cxymm.net/article/itsaka/117590558)
-  - [2022 K8S CKAD 1.23 考试 实验 模拟环境（一键导入）](https://blog.csdn.net/vic_qxz/article/details/123361130?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522166039499316782248581366%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=166039499316782248581366&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~pc_rank_34-16-123361130-null-null.142^v40^pc_search_integral,185^v2^control&utm_term=CKAD%E8%80%83%E8%AF%95%E9%A2%98&spm=1018.2226.3001.4187)
+    - [Kubernetes CKAD 1.20 - 真题 （第4题）Defining a Pod’s Readiness and Liveness Probe](https://blog.csdn.net/itsaka/article/details/117590558)
+  - [2022 K8S CKAD 1.23 考试 实验 模拟环境（一键导入）【需购买】](https://blog.csdn.net/vic_qxz/article/details/123361130?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522166039499316782248581366%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=166039499316782248581366&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~pc_rank_34-16-123361130-null-null.142^v40^pc_search_integral,185^v2^control&utm_term=CKAD%E8%80%83%E8%AF%95%E9%A2%98&spm=1018.2226.3001.4187)
 - [Practical tips for passing CKAD certification exam](https://itnext.io/practical-tips-for-passing-ckad-exam-6cbdf2d35cb1)

@@ -26,6 +26,12 @@ categories:
   - [Kubernetes 架构核心点详细总结！](https://mp.weixin.qq.com/s/JpvlPBazyvy41AyX-RPwvQ)
   - [【云原生】一文细数kubernetes常见20道问题](https://mp.weixin.qq.com/s/n3QYIGuM1io1ubE3KC1hrw)
 
+## 关系图
+
+![关系图](https://img-blog.csdnimg.cn/20210605112824989.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2l0c2FrYQ==,size_16,color_FFFFFF,t_70)
+
+## K8s基本概念
+
 ### kubectl context
 
 > 注：所谓 kubectl context，就是用来告诉kubectl 命令“去连接哪个集群”的一系列配置。

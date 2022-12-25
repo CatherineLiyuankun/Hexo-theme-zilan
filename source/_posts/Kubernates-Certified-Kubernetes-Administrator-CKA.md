@@ -192,7 +192,9 @@ toggle vim line numbers
 When in `vim` you can press <kbd>Esc</kbd> and type `:set number` (turn on number) or `:set nonumber` (turn off number) followed by Enter to toggle line numbers. This can be useful when finding syntax errors based on line - but can be bad when wanting to mark&copy by mouse.
 You can also just jump to a line number with <kbd>Esc</kbd> `:22` + Enter.
 
-### 使用nano编辑器
+#### [Vim基本操作](./Vim%E6%93%8D%E4%BD%9C-%E9%85%8D%E7%BD%AE.html)
+
+### [使用nano编辑器](./nano%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-%E5%BF%AB%E6%8D%B7%E9%94%AE-Linux.html)
 
 ```bash
 # 编辑1.yaml文件，如果1.yaml文件不存在则新建
@@ -202,82 +204,6 @@ nano 1.yaml
 # 保存 control + o
 # 退出 control + x
 ```
-
-#### nano快捷键
-
-nano中被称为"快捷方式"，例如保存，退出，对齐等。最常见的功能在屏幕底部列出，但还有许多其他功能。
-
-<!-- 请注意，nano不使用快捷键中的<kbd>Shift</kbd>键。 所有快捷方式均使用小写字母和未修改的数字键，因此<kbd>Ctrl</kbd> + <kbd>G</kbd>不是<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>G</kbd>。 -->
-
-- 光标控制
-  - 移动光标：使用用方向键移动。
-  - 选择文字：按住鼠标左键拖动
-  - ^A        move to the beginning of the current line.
-    ^E        move to the End of the current line.
-
-- 复制、剪贴和粘贴
-  <!-- - 复制一整行：<kbd>option</kbd> + <kbd>6</kbd> -->
-  - 复制和粘贴快捷键<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>c</kbd> and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd>
-  - 剪切一整行<kbd>control</kbd>  + <kbd>K</kbd>
-  - 在当前光标处插入上次剪切的内容<kbd>control</kbd>  + <kbd>U</kbd>
-
-- 选中：<kbd>control</kbd>  + <kbd>U</kbd>
-  - 如果需要复制／剪贴多行或者一行中的一部分，先将光标移动到需要复制／剪贴的文本的开头，按<kbd>control</kbd>  + <kbd>6</kbd>（或者<kbd>option</kbd> + <kbd>A</kbd>）做标记，然后移动光标到 待复制／剪贴的文本末尾。
-  - 这时选定的文本会反白，用<kbd>option</kbd> + <kbd>6</kbd>来复制，<kbd>control</kbd>  + <kbd>K</kbd> 来剪贴。若在选择文本过程中要取消，只需要再按一次<kbd>control</kbd>  + <kbd>6</kbd>。
-
-- 保存
-  - 使用<kbd>control</kbd> + <kbd>O</kbd>来保存所做的修改
-
-- 退出
-  - 按<kbd>control</kbd> + <kbd>X</kbd> 
-  - 如果你修改了文件，下面会询问你是否需要保存修改。
-    - 输入<kbd>Y</kbd>确认保存，输入<kbd>N</kbd>不保存，按<kbd>control</kbd>  + <kbd>U</kbd>取消返回。
-    - 如果输入了<kbd>Y</kbd>，下一步会让你输入想要保存的文件名。
-      - 如果不需要修改文件名直接回车就行；若想要保存成别的名字（也就是另存为）则输入新名称然后回车。这个时候也可用<kbd>control</kbd>  + <kbd>U</kbd>来取消返回。
-- Undo
-  - <kbd>Meta</kbd> + <kbd>u</kbd>
-  - 考试环境 + MAC OS 上的<kbd>Meta</kbd>实测是<kbd>Esc</kbd>
-- Redo
-  - <kbd>Meta</kbd> + <kbd>e</kbd>
-- 搜索
-  - 按<kbd>control</kbd>  + <kbd>W</kbd>，然后输入你要搜索的关键字，回车确定。这将会定位到第一个匹配的文本，接着可以用<kbd>option</kbd> + <kbd>W</kbd>来定位到下一个匹配的文本。
-
-- 翻页
-  - <kbd>control</kbd>  + <kbd>Y</kbd>到上一页 <kbd>control</kbd>  + <kbd>V</kbd>到下一页
-
-<!-- >       ^G (F1)   Display this help text.
-        ^F        move Forward a character.
-        ^B        move Backward a character.
-        ^P        move to the Previous line.
-        ^N        move to the Next line.
-        ^A        move to the beginning of the current line.
-        ^E        move to the End of the current line.
-        ^V (F8)   move forward a page of text.
-        ^Y (F7)   move backward a page of text.
-
-        ^W (F6)   Search for (where is) text, neglecting case.
-        ^L        Refresh the display.
-
-        ^D        Delete the character at the cursor position.
-        ^^        Mark cursor position as beginning of selected text.
-                  Note: Setting mark when already set unselects text.
-        ^K (F9)   Cut selected text (displayed in inverse characters).
-                  Note: The selected text's boundary on the cursor side
-                        ends at the left edge of the cursor.  So, with
-                        selected text to the left of the cursor, the
-                        character under the cursor is not selected.
-        ^U (F10)  Uncut (paste) last cut text inserting it at the
-                  current cursor position.
-        ^I        Insert a tab at the current cursor position.
-
-        ^J (F4)   Format (justify) the current paragraph.
-                  Note: paragraphs delimited by blank lines or indentation.
-        ^T (F12)  To invoke the spelling checker
-        ^C (F11)  Report current cursor position
-
-        ^R (F5)   Insert an external file at the current cursor position.
-        ^O (F3)   Output the current buffer to a file, saving it.
-        ^X (F2)   Exit pico, saving buffer. -->
 
 ---
 
@@ -710,32 +636,165 @@ connecting to the server with `etcdctl`:
 Search `etcd backup`, 选择 [Operating etcd clusters for Kubernetes](https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#backing-up-an-etcd-cluster)
 
 ```bash
-# 1.0 如果记不清参数，可查看帮助
+# 1 backup
+## 1.0 如果记不清参数，可查看帮助
 etcdctl snapshot save --help
+### 1.0.1 [本题目中无需这一步]如果题目中没有给出certificates/key 可从/etc/kubernetes/manifests/etcd.yaml里查找
+➜ root@cluster3-master1:~# vim /etc/kubernetes/manifests/etcd.yaml
+```
 
-# 1.1 backup
+```yaml
+# /etc/kubernetes/manifests/etcd.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    component: etcd
+    tier: control-plane
+  name: etcd
+  namespace: kube-system
+spec:
+  containers:
+  - command:
+    - etcd
+    - --advertise-client-urls=https://192.168.100.31:2379
+    - --cert-file=/etc/kubernetes/pki/etcd/server.crt                   # use as --cert
+    - --client-cert-auth=true
+    - --data-dir=/var/lib/etcd
+    - --initial-advertise-peer-urls=https://192.168.100.31:2380
+    - --initial-cluster=cluster3-master1=https://192.168.100.31:2380
+    - --key-file=/etc/kubernetes/pki/etcd/server.key                    # use as --key
+    - --listen-client-urls=https://127.0.0.1:2379,https://192.168.100.31:2379 # use as --endpoints
+    - --listen-metrics-urls=http://127.0.0.1:2381
+    - --listen-peer-urls=https://192.168.100.31:2380
+    - --name=cluster3-master1
+    - --peer-cert-file=/etc/kubernetes/pki/etcd/peer.crt
+    - --peer-client-cert-auth=true
+    - --peer-key-file=/etc/kubernetes/pki/etcd/peer.key
+    - --peer-trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt               # use as --cacert
+    - --snapshot-count=10000
+    - --trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
+    image: k8s.gcr.io/etcd:3.3.15-0
+    imagePullPolicy: IfNotPresent
+    livenessProbe:
+      failureThreshold: 8
+      httpGet:
+        host: 127.0.0.1
+        path: /health
+        port: 2381
+        scheme: HTTP
+      initialDelaySeconds: 15
+      timeoutSeconds: 15
+    name: etcd
+    resources: {}
+    volumeMounts:
+    - mountPath: /var/lib/etcd
+      name: etcd-data
+    - mountPath: /etc/kubernetes/pki/etcd
+      name: etcd-certs
+  hostNetwork: true
+  priorityClassName: system-cluster-critical
+  volumes:
+  - hostPath:
+      path: /etc/kubernetes/pki/etcd
+      type: DirectoryOrCreate
+    name: etcd-certs
+  - hostPath:
+      path: /var/lib/etcd                                     # important
+      type: DirectoryOrCreate
+    name: etcd-data
+status: {}
+```
+
+```bash
+### 1.0.2 [本题目中无需这一步] 或者1.0.1可用1.0.2取代
+# But we also know that the api-server is connecting to etcd, so we can check how its manifest is configured:
+root@cluster3-master1:~ cat /etc/kubernetes/manifests/kube-apiserver.yaml | grep etcd
+- --etcd-cafile=/etc/kubernetes/pki/etcd/ca.crt
+- --etcd-certfile=/etc/kubernetes/pki/apiserver-etcd-client.crt
+- --etcd-keyfile=/etc/kubernetes/pki/apiserver-etcd-client.key
+- --etcd-servers=https://127.0.0.1:2379
+
+## 1.1 backup snapshot
 ETCDCTL_API=3 etcdctl snapshot save /srv/data/etcd-snapshot.db \
---endpoints 127.0.0.1:2379 
 --cacert=/opt/KUIN00601/ca.crt \
 --cert=/opt/KUIN00601/etcd-client.crt \
---key=/opt/KUIN00601/etcd-client.key 
+--key=/opt/KUIN00601/etcd-client.key \
+--endpoints=https://127.0.0.1:2379
 
+Snapshot saved at /srv/data/etcd-snapshot.db
+
+# NOTE: Dont use `snapshot status` because it can alter the snapshot file and render it invalid
 # 1.2 接着既可以检查下你备份的文件:
-ETCDCTL_API=3 etcdctl --write-out=table snapshot status /srv/data/etcd-snapshot.db
-#有以下输出，就没问题
-+----------+----------+------------+------------+ 
-| HASH | REVISION | TOTAL KEYS | TOTAL SIZE |
-+----------+----------+------------+------------+ 
-| fe01cf57 | 10 | 7 | 2.1 MB 
-| +----------+----------+------------+------------+
+# ETCDCTL_API=3 etcdctl --write-out=table snapshot status /srv/data/etcd-snapshot.db
+# #有以下输出，就没问题
+# +----------+----------+------------+------------+ 
+# | HASH | REVISION | TOTAL KEYS | TOTAL SIZE |
+# +----------+----------+------------+------------+ 
+# | fe01cf57 | 10 | 7 | 2.1 MB 
+# | +----------+----------+------------+------------+
 
 # 2 restore
+## 2.1 Next we stop all controlplane components:
+root@cluster3-master1:~ cd /etc/kubernetes/manifests/
+root@cluster3-master1:/etc/kubernetes/manifests# mv * ..
+root@cluster3-master1:/etc/kubernetes/manifests# watch crictl ps
+
+## 2.2 restore snapshot into a specific directory: /var/lib/etcd-backup
 ETCDCTL_API=3 etcdctl snapshot restore /var/lib/backup/etcd-snapshot-previous.db \
-# --data-dir /var/lib/etcd-backup \
-# --endpoints 127.0.0.1:2379 
+--data-dir /var/lib/etcd-backup \
 --cacert=/opt/KUIN00601/ca.crt \
 --cert=/opt/KUIN00601/etcd-client.crt \
 --key=/opt/KUIN00601/etcd-client.key 
+
+2022-08-04 16:50:19.650804 I | mvcc: restore compact to 9935
+2022-08-04 16:50:19.659095 I | etcdserver/membership: added member 8e9e05c52164694d [http://localhost:2380] to cluster
+cdf818194e3a8c32
+
+# We could specify another host to make the backup from by using `etcdetl --endpoints http: //IP`, but here we just use the default value
+# which is: `http://127.0.0.1:2379,http://127.0.0.1:4001`
+
+## 2.3  
+## The restored files are located at the new folder `/var/lib/eted-backup`, now we have to tell etcd to use that directory:
+root@cluster3-master1:~ vim /etc/kubernetes/etcd.yaml
+```
+
+```yaml
+# /etc/kubernetes/etcd.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    component: etcd
+    tier: control-plane
+  name: etcd
+  namespace: kube-system
+spec: ...
+    - mountPath: /etc/kubernetes/pki/etcd
+      name: etcd-certs
+  hostNetwork: true
+  priorityClassName: system-cluster-critical
+  volumes:
+  - hostPath:
+      path: /etc/kubernetes/pki/etcd
+      type: DirectoryOrCreate
+    name: etcd-certs
+  - hostPath:
+      path: /var/lib/etcd-backup               # change
+      type: DirectoryOrCreate
+    name: etcd-data
+status: {}
+```
+
+```bash
+## 2.4
+# Now we move all controlplane yaml again into the manifest directory. 
+# Give it some time (up to several minutes) for eted to restart and for the api-server to be reachable again:
+root@cluster3-master1:~ cd /etc/kubernetes/manifests/
+root@cluster3-master1:/etc/kubernetes/manifests# mv ../*.yaml .
+root@cluster3-master1:/etc/kubernetes/manifests# watch crictl ps
 ```
 
 ---

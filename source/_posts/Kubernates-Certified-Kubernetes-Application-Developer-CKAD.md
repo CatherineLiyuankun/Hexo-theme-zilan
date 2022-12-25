@@ -103,6 +103,9 @@ k describe pod project-earthflower-586758cc49-hb87f -n earth | grep -A2 Mount:
     Mounts:
       /tmp/project-data from task-pv-storage (rw)
       /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-jj2t2 (ro)
+
+## Verify everything using kubectl auth can-i
+kubectl auth can-i create deployments --as system:serviceaccount:app-team1:cicd-token -n app-team1 # YES
 ```
 
 ```bash

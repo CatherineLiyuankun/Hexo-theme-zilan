@@ -429,7 +429,9 @@ kubectl config use-context k8S
 
 kubectl get deployment front-end # 可选
 kubectl edit deployment front-end
+```
 
+```yaml
 spec:
   containers:
   - name: nginx
@@ -480,7 +482,9 @@ NAME    CONTROLLER             PARAMETERS   AGE
 nginx   k8s.io/ingress-nginx   <none>       22
 
 vim pong.yaml
+```
 
+```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -503,7 +507,9 @@ spec:
             name: hi
             port:
               number: 5678
+```
 
+```bash
 kubectl apply -f pong.yaml
 
 # 获取 ingress 的 IP 地址
@@ -588,7 +594,9 @@ Schedule a pod as follows:
 kubectl config use-context k8s
 kubectl run nginx-kuSc00401 --image=nginx --dry-run=client -o yaml > nginx-kusc00401.yaml
 vim nginx-kusc00401.yaml
+```
 
+```yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -600,7 +608,9 @@ spec:
     imagePullPolicy: IfNotPresent
   nodeSelector: # 添加nodeSelector
     disk: spinning # 添加node label
-    
+```
+
+```bash
 kubectl apply -f nginx-kusc00401.yaml
 kubectl get pod nginx-kusc00401 -o wide
 ```
@@ -756,7 +766,9 @@ kubectl config use-context k8s
 
 kubectl run kucc1 --image nginx --dry-run=client -o yaml > kucc1.yaml
 vim kucc1.yaml
+```
 
+```yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -771,7 +783,9 @@ spec:
     image: memcached
   - name: consul # Add 3
     image: consul
+```
 
+```bash
 kubectl apply -f kucc1.yaml
 # kubectl describe pods kucc1
 ```
@@ -798,8 +812,10 @@ Create a persistent volume with name `app-config`, of capacity `2Gi` and access 
 
 ```bash
 kubectl config use-context hk85
-nano app-config.yaml
+vim app-config.yaml
+```
 
+```yaml
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -811,7 +827,9 @@ spec:
     - ReadWriteMany # ReadWriteMany
   hostPath: # hostPath
     path: "/srv/app-config"
+```
 
+```bash
 kubectl apply -f app-config.yaml
 kubectl get pv
 ```
@@ -861,7 +879,9 @@ kubectl config use-context hk85
 
 # 1 创建PVC
 nano pv-volume.yaml
+```
 
+```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -873,13 +893,17 @@ spec:
     requests:
       storage: 10Mi # 3
   storageClassName: csi-hostpath-sc # 4
+```
 
+```bash
 kubectl apply -f pv-volume.yaml
 kubectl get pvc
 
 # 2 创建pod
 nano web-server.yaml
+```
 
+```yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -898,7 +922,9 @@ spec:
       volumeMounts:                          # add
         - mountPath: "/usr/share/nginx/html" # mountPath
           name: task-pv-storage              # 和spec.volumes.name一致
+```
 
+```bash
 kubectl apply -f web-server.yaml
 kubectl get pods
 
@@ -906,7 +932,6 @@ kubectl get pods
 kubectl edit pvc pv-volume --record
 # 修改 storage: 10Mi 为 storage: 70Mi
 ```
-
 
 
 ## 考题12-设置node unavailable
@@ -1065,7 +1090,9 @@ kubectl config use-context k8s
 
 kubectl get pod legacy-app -o yaml > legacy-app2.yaml
 vim legacy-app2.yaml
+```
 
+```yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -1098,7 +1125,9 @@ spec:
   volumes:     
   - name: logs # 3 添加volumes
     emptyDir: {}
+```
 
+```bash
 # 删除legacy-app，否则再运行yaml时会提示legacy-app已存在
 kubectl delete pod legacy-app -–force
 kubectl apply -f legacy-app2.yaml

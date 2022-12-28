@@ -481,7 +481,7 @@ ENTRYPOINT ["node", "./app.js"]
 #### 镜像构建`docker image build`
 
 镜像构建(在Dockerfile目录下运行)
-`docker image build -t test:latest .`
+`docker image build -t imageName:tag1 -t imageName:tag2 .`
 
 - `.`表示使用当前目录作为构建上下文
 - `--no-cache=true` 强制忽略缓存，不使用缓存构建镜像

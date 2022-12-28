@@ -78,7 +78,22 @@ Prepare the `Minikube` based lab setup before start of the course can follow the
 
 ## k8s练习环境(非生产环境)
 
-### [Play with Kubernetes（PWK）](https://labs.play-with-k8s.com/)
+### 在线环境-killercoda(考试练习推荐)
+
+- k8s 环境： https://killercoda.com/playgrounds/scenario/kubernetes
+- CKA在线练习环境：https://killercoda.com/killer-shell-cka
+- CKAD在线练习环境：https://killercoda.com/killer-shell-ckad
+- CKS在线练习环境：https://killercoda.com/killer-shell-cks
+
+- 临时考试模拟环境（1小时有效期）：https://killercoda.com/kimwuestkamp/scenario/cks-cka-ckad-remote-desktop
+
+- 模拟考试环境： https://killer.sh/ 包含CKA,CKAD,CKS （需付费，官方考试已包含两次session，每个session 36个小时有效期）
+  - 模拟考题：[CKA Simulator Kubernetes 1.24](https://killer.sh/attendee/f8c336a9-658e-4342-a59e-13850ff20813/content)
+  - [CKA Simulator Preview Kubernetes 1.25](https://killer.sh/course/preview/e84d0e31-4fff-4c42-8afd-be1bdbc0d994)
+  - [CKAD Simulator Preview Kubernetes 1.25](https://killer.sh/course/preview/052229bd-1062-44a4-8aae-f50d0770165a)
+  - [CKS Simulator Preview Kubernetes 1.25](https://killer.sh/course/preview/bf573045-49c8-44c3-b2e5-8eec7b8eaab3)
+
+### 在线环境-[Play with Kubernetes（PWK）](https://labs.play-with-k8s.com/)
 
 需要使用一个 GitFub 或 Docker Fub 账号完成登录，并完成一些简单的操作来搭建一个持续4h的集群。不太稳定，有时会报错。
 [PWK部署k8s集群](./Kubernetes-Play-with-Kubernetes(PWK).html)
@@ -108,19 +123,6 @@ $ kubectl get nodes
 
 只需要注册一个账号并登录，即可马上得到一个完整可用的多节点私有集群。其中还有一些内置课程和上手实验。
 
-### 在线环境-killercoda(考试练习推荐)
-
-- CKA在线练习环境：https://killercoda.com/killer-shell-cka
-- CKAD在线练习环境：https://killercoda.com/killer-shell-ckad
-- CKS在线练习环境：https://killercoda.com/killer-shell-cks
-
-- 临时考试模拟环境（1小时有效期）：https://killercoda.com/kimwuestkamp/scenario/cks-cka-ckad-remote-desktop
-
-- 模拟考试环境： https://killer.sh/ 包含CKA,CKAD,CKS （需付费，官方考试已包含两次session，每个session 36个小时有效期）
-  - 模拟考题：[CKA Simulator Kubernetes 1.24](https://killer.sh/attendee/f8c336a9-658e-4342-a59e-13850ff20813/content)
-  - [CKA Simulator Preview Kubernetes 1.25](https://killer.sh/course/preview/e84d0e31-4fff-4c42-8afd-be1bdbc0d994)
-  - [CKAD Simulator Preview Kubernetes 1.25](https://killer.sh/course/preview/052229bd-1062-44a4-8aae-f50d0770165a)
-  - [CKS Simulator Preview Kubernetes 1.25](https://killer.sh/course/preview/bf573045-49c8-44c3-b2e5-8eec7b8eaab3)
 
 ### 在线环境-Oreilly
 

@@ -47,9 +47,22 @@ categories:
 
 ## K8s课程
 
-> - If you are touching Kubernetes for the first time, start with this Mumshad Mannambeth Udemy course with practical labs https://www.udemy.com/course/learn-kubernetes
-> - If you are familiar with Kubernetes: this Udemy course from Mumshad Mannambeth will be your best friend: https://www.udemy.com/course/certified-kubernetes-application-developer/
-> This course contains: 26 practical labs, 2 lightings labs, 6 mini-mock and 2 mock exams. And are all with the solution in videos.
+- 初学者： [Kubernetes for the Absolute Beginners - Hands-on](https://www.udemy.com/course/learn-kubernetes) by Mumshad Mannambeth – Udemy
+
+### Certified Kubernetes Administrator (CKA)
+
+- [Certified Kubernetes Administrator (CKA) – KodeKloud](https://www.techbeatly.com/kk-cka) – by Mumshad Mannambeth)
+- [Certified Kubernetes Administrator (CKA) with Practice Tests – by Mumshad Mannambeth](https://www.techbeatly.com/kk-cka-ud) – Udemy
+
+### Certified Kubernetes Application Developer (CKAD)
+
+- [Certified Kubernetes Application Developer (CKAD)](https://www.techbeatly.com/kk-ckad) – by Mumshad Mannambeth
+- [Kubernetes Certified Application Developer (CKAD) with Tests](https://www.techbeatly.com/kk-ckad-ud) – by Mumshad Mannambeth – Udemy
+
+### Certified Kubernetes Security Specialist (CKS)
+
+- [Certified Kubernetes Security Specialist (CKS)](https://www.techbeatly.com/kk-cks)– by Mumshad Mannambeth
+- [Kubernetes CKS 2021 Complete Course – Theory – Practice](https://www.techbeatly.com/kw-cks) – by Kim Wüstkamp – Udemy
 
 ### Oreilly视频课程
 
@@ -198,3 +211,5 @@ NAME ZONE MST VER MASTER IP  TYPE NODE VER NUM NODES STATUSkubia eu-wld 1.5.3 10
 ## 参考文章
 
 - [How I got CKAD Certification (2021) in 3 Weeks](https://www.linkedin.com/pulse/how-i-got-ckad-certification-2021-3-weeks-abdelahad-satour/)
+- [2022.12 Kubernetes Certification Coupon + Discount](https://devopscube.com/kubernetes-certification-coupon/)
+- [2022.11 Kubernetes Certification Promotions](https://www.techbeatly.com/kubernetes/)

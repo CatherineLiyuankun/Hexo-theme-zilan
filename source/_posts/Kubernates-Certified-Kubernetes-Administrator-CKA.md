@@ -48,13 +48,18 @@ https://docs.linuxfoundation.org/tc-docs/certification/faq-cka-ckad
 
 #### 在线环境-killercoda
 
-- https://killercoda.com/killer-shell-cka
-- https://killercoda.com/killer-shell-ckad
+- k8s 环境： https://killercoda.com/playgrounds/scenario/kubernetes
+- CKA在线练习环境：https://killercoda.com/killer-shell-cka
+- CKAD在线练习环境：https://killercoda.com/killer-shell-ckad
+- CKS在线练习环境：https://killercoda.com/killer-shell-cks
 
 ### CKA课程
 
-- CKA考试-对应官方课程[Kubernetes Fundamentals (LFS258)](https://training.linuxfoundation.org/training/kubernetes-fundamentals/)
-- Oreilly视频课程: (For beginner or Advanced) [Certified Kubernetes Administrator (CKA), 2nd Ed](https://learning.oreilly.com/videos/certified-kubernetes-administrator/9780137438419/).
+- 【需付费】CKA考试-对应官方课程[Kubernetes Fundamentals (LFS258)](https://training.linuxfoundation.org/training/kubernetes-fundamentals/)
+- 【需付费】Udemy CKA 课程
+  - [Certified Kubernetes Administrator (CKA) – KodeKloud](https://www.techbeatly.com/kk-cka) – by Mumshad Mannambeth)
+  - [Certified Kubernetes Administrator (CKA) with Practice Tests – by Mumshad Mannambeth](https://www.techbeatly.com/kk-cka-ud) – Udemy
+- 【需付费】Oreilly视频课程: (For beginner or Advanced) [Certified Kubernetes Administrator (CKA), 2nd Ed](https://learning.oreilly.com/videos/certified-kubernetes-administrator/9780137438419/).
   - [Certified Kubernetes Administrator (CKA) Crash Course](https://learning.oreilly.com/live-events/certified-kubernetes-administrator-cka-crash-course/0636920315766/)
     - 附带练习环境Practice: [Certified Kubernetes - CKA Labs](https://learning.oreilly.com/playlists/d6e3fe86-067c-4dc7-a36d-698802d0bdee/)
 
@@ -1256,3 +1261,5 @@ echo 2 > /opt/KUSC00402/kusc00402.txt
 - [CKA 百度文库](https://wenku.baidu.com/view/1d4a8bdbcbd376eeaeaad1f34693daef5ef713f4?bfetype=new)
 - [CKA Kubernauts Training Plan Mind 脑图](https://www.mindmeister.com/zh/920845833/kubernauts-training-pla)
 [惊！2020年CKA考试最新最全指南](https://zhuanlan.zhihu.com/p/106090560?utm_medium=social&utm_oi=56834706636800&utm_psn=1578894322392657920&utm_source=wechat_session)
+- [如何在 K8S CKA、CKS 认证中失败！请仔细阅读，风险自负](https://huaweicloud.csdn.net/638db4c0dacf622b8df8cbb2.html)
+- [新版本 CKA 资源目录总览](https://blog.csdn.net/shenhonglei1234/article/details/112670052?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522167231074016782425181102%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=167231074016782425181102&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-27-112670052-null-null.142^v68^control,201^v4^add_ask,213^v2^t3_control1&utm_term=CKAD%20%E7%9C%9F%E9%A2%98&spm=1018.2226.3001.4187#20221114CKANEW_5)

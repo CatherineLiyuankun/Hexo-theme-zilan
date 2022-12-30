@@ -61,7 +61,7 @@ You're only allowed to have one other browser tab open with:
     <!-- - [CKAD考试真题-练习题150道](https://www.cnblogs.com/peteremperor/p/12785335.html) 同第一个链接一样 -->
     - 同第一个链接一样，中文版 [2020 CKAD 考试习题练习104道](https://blog.csdn.net/tanjunchen/article/details/104865939?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522166039499316782248541148%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=166039499316782248541148&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-104865939-null-null.142^v40^pc_search_integral,185^v2^control&utm_term=CKAD%E8%80%83%E8%AF%95%E9%A2%98&spm=1018.2226.3001.4187)
 - [dgkanatsios/CKAD-exercises](https://github.com/dgkanatsios/CKAD-exercises)
-- Oreilly视频课程-附带练习环境（链接已失效）： https://www.katacoda.com/liptanbiswas/courses/ckad-practice-challenges
+- Oreilly视频课程-附带练习环境（链接已失效Katacoda has ended public service）： https://www.katacoda.com/liptanbiswas/courses/ckad-practice-challenges
 
 
 题库里面题目是更简单一些，真的考题会是这些练习题的组合，把里面的题目都能熟练操作，就差不多了。
@@ -69,6 +69,9 @@ You're only allowed to have one other browser tab open with:
 ### CKAD课程
 
 - 【需付费】CKAD考试-对应官方课程[Kubernetes for Developers (LFD259)](https://training.linuxfoundation.org/training/kubernetes-for-developers/)
+- 【需付费】Udemy CKAD 课程
+  - [Certified Kubernetes Application Developer (CKAD)](https://www.techbeatly.com/kk-ckad) – by Mumshad Mannambeth
+  - [Kubernetes Certified Application Developer (CKAD) with Tests](https://www.techbeatly.com/kk-ckad-ud) – by Mumshad Mannambeth – Udemy
 - 【需付费】Oreilly视频课程: (For beginner or Advanced) [Certified Kubernetes Application Developer (CKAD) Sander van Vugt](https://learning.oreilly.com/videos/certified-kubernetes-application/9780137841509/).
   - [Certified Kubernetes Application Developer (CKAD) Crash Course](https://learning.oreilly.com/live-events/certified-kubernetes-application-developer-ckad-crash-course/0636920315803/)
     - 附带练习环境Practice: [Certified Kubernetes - CKAD Labs](https://learning.oreilly.com/playlists/ea6ea0fc-d8e2-422c-94dd-a0a8f608d224/)
@@ -98,6 +101,9 @@ kubectl logs podname > /opt/test.log
 
 ## decode base64
 base64 -d filename
+echo "YWRtaW4=" | base64 -d
+admins$
+
 ## check service connection using a temporary Pod
 ## k run tmp --restart=Never --rm --image=nginx:alpine -i -- curl http://svcname.namespace:svcport
 kubectl run tmp --restart=Never --rm --image=nginx:alpine -i -- curl http://svcname.namespace:80

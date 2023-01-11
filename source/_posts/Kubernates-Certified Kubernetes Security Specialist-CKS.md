@@ -1,5 +1,5 @@
 ---
-title: 2023 CKS 考试真题整理
+title: 2023 CKS v1.25 考试真题整理
 catalog: true
 date: 2022-12-25 22:52:43
 subtitle: Certified Kubernetes Security Specialist
@@ -18,7 +18,8 @@ categories:
 
 ## 考试内容
 
-[CKA 考试链接](https://training.linuxfoundation.org/certification/certified-kubernetes-security-specialist/#)
+[CKS 考试链接](https://training.linuxfoundation.org/certification/certified-kubernetes-security-specialist/#)
+[Important Instructions: CKS](https://docs.linuxfoundation.org/tc-docs/certification/important-instructions-cks)
 
 - 考试包括 15-20 项performance-based tasks。
   - 2023.1 实测是16道题
@@ -29,8 +30,347 @@ categories:
 
 ### More items for CKS than CKA and CKAD
 
-- Secret
-- ...
+- Pod Security Policies(PSP) - removed from Kubernetes in `v1.25`
+- [AppArmor](https://kubernetes.io/docs/tutorials/security/apparmor/)
+- Apiserver
+- [kube-bench](https://github.com/aquasecurity/kube-bench)
+- [Trivy](https://github.com/aquasecurity/trivy)
+
+### Pod Security Policies(PSP)
+
+Reference:
+- [k8s Pod Security Policy官方文档](https://kubernetes.io/docs/concepts/security/pod-security-policy/)
+  - [PodSecurityPolicy Deprecation: Past, Present, and Future](https://kubernetes.io/zh-cn/blog/2021/04/06/podsecuritypolicy-deprecation-past-present-and-future/)
+- [aws eks 官方文档](https://docs.aws.amazon.com/eks/latest/userguide/pod-security-policy.html)
+- [PodSecurityPolicy is Dead, Long Live…?](https://www.appvia.io/blog/podsecuritypolicy-is-dead-long-live/)
+- https://docs.bitnami.com/kubernetes/faq/configuration/understand-pod-security-policies/
+
+
+> Removed feature
+> PodSecurityPolicy was deprecated in Kubernetes `v1.21`, and removed from Kubernetes in `v1.25`.
+> Use [`Pod Security Admission`](https://kubernetes.io/docs/concepts/security/pod-security-admission/)instead.
+
+A Pod Security Policy is a **cluster-level** resource that controls security sensitive aspects of the **pod** specification.
+
+### [AppArmor](https://kubernetes.io/docs/tutorials/security/apparmor/)
+
+![apparmor1](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/CKS/AppArmor1-Check%20existing%20AppArmor%20profiles.png)
+
+![apparmor1](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/CKS/AppArmor2-deployment.png)
+
+![AppArmor2-deployment2.png](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/CKS/AppArmor2-deployment2.png)
+
+![AppArmor2-deployment3beforeChange.png](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/CKS/AppArmor2-deployment3beforeChange.png)
+
+![AppArmor2-deployment4.png](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/CKS/AppArmor2-deployment4.png)
+
+![AppArmor2-deployment5.png](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/CKS/AppArmor2-deployment5.png)
+
+![AppArmor3-install profile.png](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/CKS/AppArmor3-install%20profile.png)
+
+### Apiserver
+
+kube-apiserver.yaml Location: `/etc/kubernetes/manifests/kube-apiserver.yaml`
+
+Log locations to check:
+
+- `/var/log/pods`
+- `/var/log/containers`
+- `crictl ps` + `crictl logs`
+- `docker ps` + `docker logs` (in case when Docker is used)
+- kubelet logs: `/var/log/syslog` or `journalctl`
+
+```bash
+# smart people use a backup
+cp ~/kube-apiserver.yaml.ori /etc/kubernetes/manifests/kube-apiserver.yaml
+
+# wait till container restarts
+watch crictl ps
+
+# check for apiserver pod
+k -n kube-system get pod
+```
+
+Give the Apiserver some time to restart itself, like 1-2 minutes. If it doesn't restart by itself you can also force it with:
+- 1: `mv /etc/kubernetes/manifests/kube-apiserver.yaml /tmp/kube-apiserver.yaml`
+- 2: wait till container is removed with `watch crictl ps`
+- 3: `mv /tmp/kube-apiserver.yaml /etc/kubernetes/manifests/kube-apiserver.yaml`
+
+#### Configure a wrong argument
+
+The idea here is to misconfigure the Apiserver in different ways, then check possible log locations for errors.
+
+You should be very comfortable with situations where the Apiserver is not coming back up.
+
+Configure the Apiserver manifest with a new argument `--this-is-very-wrong` .
+
+Check if the Pod comes back up and what logs this causes.
+
+Fix the Apiserver again.
+
+```bash
+# always make a backup !
+cp /etc/kubernetes/manifests/kube-apiserver.yaml ~/kube-apiserver.yaml.ori
+
+# make the change
+vim /etc/kubernetes/manifests/kube-apiserver.yaml
+
+# wait till container restarts
+watch crictl ps
+
+# check for apiserver pod
+k -n kube-system get pod
+```
+
+Apiserver is not coming back, we messed up!
+
+```bash
+# check pod logs
+cat /var/log/pods/kube-system_kube-apiserver-controlplane_a3a455d471f833137588e71658e739da/kube-apiserver/X.log
+> 2022-01-26T10:41:12.401641185Z stderr F Error: unknown flag: --this-is-very-wrong
+```
+
+Now undo the change and continue
+
+```bash
+# smart people use a backup
+cp ~/kube-apiserver.yaml.ori /etc/kubernetes/manifests/kube-apiserver.yaml
+
+# wait till container restarts
+watch crictl ps
+
+# check for apiserver pod
+k -n kube-system get pod
+```
+
+#### Misconfigure ETCD connection
+
+Change the existing Apiserver manifest argument to: `--etcd-servers=this-is-very-wrong` .
+
+Check what the logs say, without using anything in `/var` .
+
+Fix the Apiserver again.
+
+```bash
+# always make a backup !
+cp /etc/kubernetes/manifests/kube-apiserver.yaml ~/kube-apiserver.yaml.ori
+
+# make the change
+vim /etc/kubernetes/manifests/kube-apiserver.yaml
+
+# wait till container restarts
+watch crictl ps
+
+# check for apiserver pod
+k -n kube-system get pod
+```
+
+Apiserver is not coming back, we messed up!
+
+```bash
+# 1) if we would check the /var directory
+cat /var/log/pods/kube-system_kube-apiserver-controlplane_e24b3821e9bdc47a91209bfb04056993/kube-apiserver/X.log
+> Err: connection error: desc = "transport: Error while dialing dial tcp: address this-is-very-wrong: missing port in address". Reconnecting...
+
+# 2) but here we want to find other ways, so we check the container logs
+crictl ps # maybe run a few times, because the apiserver container get's restarted
+crictl logs f669a6f3afda2 # pod ID
+> Error while dialing dial tcp: address this-is-very-wrong: missing port in address. Reconnecting...
+
+# 3) what about syslogs
+journalctl | grep apiserver # nothing specific
+cat /var/log/syslog | grep apiserver # nothing specific
+```
+
+Now undo the change and continue
+
+```bash
+# smart people use a backup
+cp ~/kube-apiserver.yaml.ori /etc/kubernetes/manifests/kube-apiserver.yaml
+
+# wait till container restarts
+watch crictl ps
+
+# check for apiserver pod
+k -n kube-system get pod
+```
+
+#### Invalid Apiserver Manifest YAML
+
+Change the Apiserver manifest and add invalid YAML, something like this:
+
+```yaml
+apiVersionTHIS IS VERY ::::: WRONG v1
+kind: Pod
+metadata:
+```
+
+Check what the logs say, and fix again.
+
+Fix the Apiserver again.
+
+Apiserver is not coming back, we messed up!
+
+```bash
+# seems like the kubelet can't even create the apiserver pod/container
+/var/log/pods # nothing
+crictl logs # nothing
+
+# syslogs:
+tail -f /var/log/syslog | grep apiserver
+> Could not process manifest file err="/etc/kubernetes/manifests/kube-apiserver.yaml: couldn't parse as pod(yaml: mapping values are not allowed in this context), please check config file"
+
+# or:
+journalctl | grep apiserver
+> Could not process manifest file" err="/etc/kubernetes/manifests/kube-apiserver.yaml: couldn't parse as pod(yaml: mapping values are not allowed in this context), please check config file
+```
+
+### [kube-bench](https://github.com/aquasecurity/kube-bench)
+
+[cis-benchmarks-kube-bench-fix-controlplane](https://killercoda.com/killer-shell-cks/scenario/cis-benchmarks-kube-bench-fix-controlplane)
+
+#### Apiserver should be more conform to CIS
+
+Use `kube-bench` to ensure `1.2.20` has status `PASS`.
+
+Solution
+
+Check for results
+
+```bash
+# see all
+kube-bench run --targets master
+
+# or just see the one 推荐这种方法，输出比较少，好看关键信息
+kube-bench run --targets master --check 1.2.20
+
+[INFO] 1 Master Node Security Configuration
+[INFO] 1.2 API Server
+[FAIL] 1.2.20 Ensure that the --profiling argument is set to false (Automated)
+
+== Remediations master ==
+1.2.20 Edit the API server pod specification file /etc/kubernetes/manifests/kube-apiserver.yaml
+on the master node and set the below parameter.
+--profiling=false
+```
+
+Fix the `/etc/kubernetes/manifests/kube-apiserver.yaml`
+
+```yaml
+...
+containers:
+  - command:
+    - kube-apiserver
+    - --profiling=false
+...
+    image: k8s.gcr.io/kube-apiserver:v1.22.2
+...
+
+```
+
+Now wait for container to be restarted: `watch crictl ps`
+
+#### ControllerManager should be more conform to CIS
+
+Use `kube-bench` to ensure `1.3.2` has status `PASS`.
+
+```bash
+# 推荐这种方法，输出比较少，好看关键信息
+kube-bench run --targets=master --check=1.3.2
+
+[INFO] 1 Master Node Security Configuration
+[INFO] 1.3 Controller Manager
+[FAIL] 1.3.2 Ensure that the --profiling argument is set to false (Automated)
+
+== Remediations master ==
+1.3.2 Edit the Controller Manager pod specification file /etc/kubernetes/manifests/kube-controller-manager.yaml
+on the master node and set the below parameter.
+--profiling=false
+```
+
+Fix the /etc/kubernetes/manifests/kube-controller-manager.yaml
+
+
+```yaml
+...
+  containers:
+  - command:
+    - kube-controller-manager
+    - --profiling=false
+...
+    image: k8s.gcr.io/kube-controller-manager:v1.22.2
+...
+```
+
+Now wait for container to be restarted: `watch crictl ps`
+
+#### PKI directory should be more conform to CIS
+
+```bash
+# 推荐这种方法，输出比较少，好看关键信息
+kube-bench run --check 1.1.19 --targets=master
+[INFO] 1 Master Node Security Configuration
+[INFO] 1.1 Master Node Configuration Files
+[FAIL] 1.1.19 Ensure that the Kubernetes PKI directory and file ownership is set to root:root (Automated)
+
+== Remediations master ==
+1.1.19 Run the below command (based on the file location on your system) on the master node.
+For example,
+chown -R root:root /etc/kubernetes/pki/
+```
+
+Fix the /etc/kubernetes/pki/
+
+```bash
+chgrp root /etc/kubernetes/pki/
+
+# or
+chown -R root:root /etc/kubernetes/pki/
+```
+
+### [Trivy](https://github.com/aquasecurity/trivy)
+
+#### Use trivy to scan images for known vulnerabilities
+
+Using `trivy` :
+Scan images in Namespaces `applications` and `infra` for the vulnerabilities `CVE-2021-28831` and `CVE-2016-9841` .
+
+Scale those Deployments containing any of these down to `0` .
+
+
+Solution:
+
+First we check the applications Namespace.
+
+```bash
+# find images
+k -n applications get pod -oyaml | grep image:
+
+# scan first deployment
+trivy image nginx:1.19.1-alpine-perl | grep CVE-2021-28831
+trivy image nginx:1.19.1-alpine-perl | grep CVE-2016-9841
+
+# scan second deployment
+trivy image nginx:1.20.2-alpine | grep CVE-2021-28831
+trivy image nginx:1.20.2-alpine | grep CVE-2016-9841
+
+# hit on the first one, so we scale down
+k -n applications scale deploy web1 --replicas 0
+```
+
+Next we check the infra Namespace.
+
+```bash
+# find images
+k -n infra get pod -oyaml | grep image:
+
+# scan deployment
+trivy image httpd:2.4.39-alpine | grep CVE-2021-28831
+trivy image httpd:2.4.39-alpine | grep CVE-2016-9841
+
+# hit, so we scale down
+k -n infra scale deploy inf-hjk --replicas 0
+```
 
 ## 如何备考
 
@@ -41,6 +381,7 @@ categories:
 有几个练习库，建议将每个题目都自己亲自操作一遍，一定要操作。
 
 - CKS在线练习环境：https://killercoda.com/killer-shell-cks
+- [Adminission pligin/Pod Security Policies 练习](https://killercoda.com/killer-shell-ckad/scenario/admission-controllers)
 
 ### CKS课程
 

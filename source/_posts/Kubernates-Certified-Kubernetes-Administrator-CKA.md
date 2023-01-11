@@ -1,5 +1,5 @@
 ---
-title: 2022年8月 CKA 考试真题整理
+title: 2022年8月 CKA K8s v1.24 考试真题整理
 catalog: true
 date: 2022-08-02 22:52:43
 subtitle: Kubernates-Certified Kubernetes Administrator
@@ -14,6 +14,8 @@ categories:
 ---
 
 ## 考试内容
+
+[Important Instructions: CKA and CKAD](https://docs.linuxfoundation.org/tc-docs/certification/tips-cka-and-ckad)
 
 - 考试包括 15-20 项performance-based tasks。
   - 实测是17道题

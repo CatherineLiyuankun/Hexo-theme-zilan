@@ -1,5 +1,5 @@
 ---
-title: 2022 CKAD 考试真题整理
+title: 2022 CKAD K8s v1.25 考试真题整理
 catalog: true
 date: 2022-08-02 22:52:43
 subtitle: Kubernates-Certified Kubernetes Application Developer
@@ -41,9 +41,9 @@ You're only allowed to have one other browser tab open with:
 - Understand multi-container Pod design patterns (init containers)
 - Understand `Jobs` and `CronJobs`
 - Implement `probes` and health checks
-- Understand `SecurityContexts`
-- `canary deployment`
-  - 有一个running的deployment，给了原始yaml文件，让你建一个新的deployment，image用题目给定的新的image，然后让用户的流量按照2:8 （具体比例不记得了，这个不重要）流向这两个deployment
+- Understand [`SecurityContexts`](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
+- [`canary deployment`](https://kubernetes.io/docs/concepts/cluster-administration/manage-deployment/#canary-deployments)
+  - [考题10 - 2022 Rollout Canary](./Kubernates-Certified-Kubernetes-Application-Developer-CKAD.html#%E8%80%83%E9%A2%9810-2022-rollout-canary)
 - `ResourceQuota`
 
 ## 如何备考
@@ -1009,11 +1009,13 @@ The app has a Deployment with image `httpd:alpine` , but should be switched over
 
 参考官方文档[canary-deployments](https://kubernetes.io/docs/concepts/cluster-administration/manage-deployment/#canary-deployments)
 
+```bash
 $ k get deployments.apps
 NAME           READY   UP-TO-DATE   AVAILABLE   AGE
 wonderful-v1   10/10   10           10          27s
 
 $ k get deployments.apps wonderful-v1 -o yaml > v2.yaml
+```
 
 ```yaml
 # v2.yaml

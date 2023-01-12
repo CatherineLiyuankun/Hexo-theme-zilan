@@ -33,6 +33,9 @@ categories:
 - Pod Security Policies(PSP) - removed from Kubernetes in `v1.25`
 - [AppArmor](https://kubernetes.io/docs/tutorials/security/apparmor/)
 - Apiserver
+  - Apiserver Crash
+  - Apiserver NodeRestriction
+- ImagePolicyWebhook
 - [kube-bench](https://github.com/aquasecurity/kube-bench)
 - [Trivy](https://github.com/aquasecurity/trivy)
 
@@ -54,6 +57,8 @@ A Pod Security Policy is a **cluster-level** resource that controls security sen
 
 ### [AppArmor](https://kubernetes.io/docs/tutorials/security/apparmor/)
 
+[Manage AppArmor profiles and Pods using these](https://killercoda.com/killer-shell-cks/scenario/apparmor)
+
 ![apparmor1](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/CKS/AppArmor1-Check%20existing%20AppArmor%20profiles.png)
 
 ![apparmor1](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/CKS/AppArmor2-deployment.png)
@@ -68,7 +73,9 @@ A Pod Security Policy is a **cluster-level** resource that controls security sen
 
 ![AppArmor3-install profile.png](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/CKS/AppArmor3-install%20profile.png)
 
-### Apiserver
+### Apiserver Crash
+
+[Crash that Apiserver and check them logs](https://killercoda.com/killer-shell-cks/scenario/apiserver-crash)
 
 kube-apiserver.yaml Location: `/etc/kubernetes/manifests/kube-apiserver.yaml`
 
@@ -225,6 +232,199 @@ journalctl | grep apiserver
 > Could not process manifest file" err="/etc/kubernetes/manifests/kube-apiserver.yaml: couldn't parse as pod(yaml: mapping values are not allowed in this context), please check config file
 ```
 
+### [Apiserver NodeRestriction](https://killercoda.com/killer-shell-cks/scenario/apiserver-node-restriction)
+
+[admission controller - Use the NodeRestriction Admission Controller to restrict Kubelet's permissions](https://killercoda.com/killer-shell-cks/scenario/apiserver-node-restriction)
+
+#### Verify the issue
+
+The Kubelet on `node01` shouldn't be able to set Node labels
+
+- starting with `node-restriction.kubernetes.io/*`
+- on other Nodes than itself （不能label其他node，只能label本node：`node01`）
+
+Verify this is not restricted atm by performing the following actions as the Kubelet from node01 :
+
+- add label `killercoda/one=123` to Node `controlplane`
+- add label `node-restriction.kubernetes.io/one=123` to Node `node01`
+
+Tip
+
+We can contact the Apiserver as the Kubelet by using the Kubelet kubeconfig
+
+```bash
+export KUBECONFIG=/etc/kubernetes/kubelet.conf
+k get node
+```
+
+
+Solution
+
+```bash
+ssh node01
+    export KUBECONFIG=/etc/kubernetes/kubelet.conf
+    k label node controlplane killercoda/one=123 # works but should be restricted 现在可以成功加label，但是我们应该更改配置使得它满足题目要求：be restricted
+    node/controlplane labeled
+    k label node node01 node-restriction.kubernetes.io/one=123 # works but should be restricted
+    node/node01 labeled
+
+    k get node --show-labels 
+NAME           STATUS   ROLES           AGE   VERSION   LABELS
+controlplane   Ready    control-plane   20d   v1.25.3   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,killercoda/one=123,kubernetes.io/arch=amd64,kubernetes.io/hostname=controlplane,kubernetes.io/os=linux,node-role.kubernetes.io/control-plane=,node.kubernetes.io/exclude-from-external-load-balancers=
+node01         Ready    <none>          20d   v1.25.3   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=node01,kubernetes.io/os=linux,node-restriction.kubernetes.io/one=123
+
+# 可以看到两个label都成功加上了
+```
+
+#### Enable the NodeRestriction Admission Controller
+
+```bash
+node01 $ exit
+logout
+Connection to node01 closed.
+controlplane $ vim /etc/kubernetes/manifests/kube-apiserver.yaml
+```
+
+```bash
+spec:
+  containers:
+  - command:
+    - kube-apiserver
+    - --advertise-address=172.30.1.2
+    - --allow-privileged=true
+    - --authorization-mode=Node,RBAC
+    - --client-ca-file=/etc/kubernetes/pki/ca.crt
+    - --enable-admission-plugins=NodeRestriction    # Add this line
+    - --enable-bootstrap-token-auth=true
+```
+
+```bash
+ssh node01
+    export KUBECONFIG=/etc/kubernetes/kubelet.conf
+    k label node controlplane killercoda/two=123 # restricted
+      Error from server (Forbidden): nodes "controlplane" is forbidden: node "node01" is not allowed to modify node "controlplane"
+
+    k label node node01 node-restriction.kubernetes.io/two=123 # restricted
+      Error from server (Forbidden): nodes "node01" is forbidden: is not allowed to modify labels: node-restriction.kubernetes.io/two
+
+    k label node node01 test/two=123 # works
+
+    # other test
+    k label node controlplane test/two=123
+      Error from server (Forbidden): nodes "controlplane" is forbidden: node "node01" is not allowed to modify node "controlplane"
+```
+
+Notice that existing restricted labels won't be removed once the NodeRestriction is enabled.
+
+### [ImagePolicyWebhook](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#imagepolicywebhook)
+
+[Complete the ImagePolicyWebhook setup](https://killercoda.com/killer-shell-cks/scenario/image-policy-webhook-setup)
+
+#### Complete the ImagePolicyWebhook setup
+
+An ImagePolicyWebhook setup has been half finished, complete it:
+
+1. Make sure `admission_config.json` points to correct kubeconfig
+2. Set the `allowTTL` to `100`
+3. All Pod creation should be prevented if the external service is not reachable
+4. The external service will be reachable under `https://localhost:1234` in the future. It doesn't exist yet so it - shouldn't be able to create any Pods till then
+5. Register the correct admission plugin in the apiserver
+
+<details>
+  <summary>Solution</summary>
+  <p>
+
+```bash
+  # find admission_config.json path
+  vim /etc/kubernetes/manifests/kube-apiserver.yaml
+```
+
+```bash
+  # find admission_config.json path in kube-apiserver.yaml
+  vim /etc/kubernetes/manifests/kube-apiserver.yaml # Find value of --admission-control-config-file
+  # or
+  cat /etc/kubernetes/manifests/kube-apiserver.yaml | grep admission-control-config-file
+      - --admission-control-config-file=/etc/kubernetes/policywebhook/admission_config.json
+
+  vim /etc/kubernetes/policywebhook/admission_config.json
+```
+
+The `/etc/kubernetes/policywebhook/admission_config.json` should look like this:
+
+```json
+{
+   "apiVersion": "apiserver.config.k8s.io/v1",
+   "kind": "AdmissionConfiguration",
+   "plugins": [
+      {
+         "name": "ImagePolicyWebhook",
+         "configuration": {
+            "imagePolicy": {
+               "kubeConfigFile": "/etc/kubernetes/policywebhook/kubeconf", // 1.modify "kubeConfigFile": "/todo/kubeconf" to current
+               "allowTTL": 100,  // 2.modify to 100
+               "denyTTL": 50,
+               "retryBackoff": 500,
+               "defaultAllow": false   // 3.modify from true to false
+            }
+         }
+      }
+   ]
+}
+```
+
+```bash
+  vim /etc/kubernetes/policywebhook/admission_config.json
+```
+
+The `/etc/kubernetes/policywebhook/kubeconf` should contain the correct server:
+
+```yaml
+apiVersion: v1
+kind: Config
+clusters:
+- cluster:
+    certificate-authority: /etc/kubernetes/policywebhook/external-cert.pem
+    server: https://localhost:1234 # 4.
+  name: image-checker
+...
+```
+
+5 The apiserver needs to be configured with the ImagePolicyWebhook admission plugin:
+
+```yaml
+spec:
+  containers:
+  - command:
+    - kube-apiserver
+    - --enable-admission-plugins=NodeRestriction,ImagePolicyWebhook # 5. Add ImagePolicyWebhook
+    - --admission-control-config-file=/etc/kubernetes/policywebhook/admission_config.json
+```
+
+Luckily the `--admission-control-config-file` argument seems already to be configured.
+  </p>
+</details>
+
+<details>
+  <summary>Test your Solution</summary>
+  <p>
+Wait till apiserver container restarted: 
+
+`watch crictl ps`
+
+To test your solution you can simply try to create a Pod:
+
+`k run pod --image=nginx`
+
+It should throw you an error like:
+
+```bash
+Error from server (Forbidden): pods "pod" is forbidden: Post "https://localhost:1234/?timeout=30s": dial tcp 127.0.0.1:1234: connect: connection refused
+```
+
+Once that service would be implemented and if it would allow the Pod, the Pod could be created.
+  </p>
+</details>
+
 ### [kube-bench](https://github.com/aquasecurity/kube-bench)
 
 [cis-benchmarks-kube-bench-fix-controlplane](https://killercoda.com/killer-shell-cks/scenario/cis-benchmarks-kube-bench-fix-controlplane)
@@ -330,6 +530,7 @@ chown -R root:root /etc/kubernetes/pki/
 
 ### [Trivy](https://github.com/aquasecurity/trivy)
 
+[Image Vulnerability Scanning Trivy](https://killercoda.com/killer-shell-cks/scenario/image-vulnerability-scanning-trivy)
 #### Use trivy to scan images for known vulnerabilities
 
 Using `trivy` :
@@ -348,6 +549,10 @@ k -n applications get pod -oyaml | grep image:
 
 # scan first deployment
 trivy image nginx:1.19.1-alpine-perl | grep CVE-2021-28831
+31.00 MiB / 31.00 MiB [---------------------------------------------------------------------------------------------------] 100.00% 8.41 MiB p/s 4s
+| busybox      | CVE-2021-28831   |          | 1.31.1-r9         | 1.31.1-r10    | busybox: invalid free or segmentation |
+| ssl_client   | CVE-2021-28831   | HIGH     | 1.31.1-r9         | 1.31.1-r10    | busybox: invalid free or segmentation |
+
 trivy image nginx:1.19.1-alpine-perl | grep CVE-2016-9841
 
 # scan second deployment
@@ -355,7 +560,24 @@ trivy image nginx:1.20.2-alpine | grep CVE-2021-28831
 trivy image nginx:1.20.2-alpine | grep CVE-2016-9841
 
 # hit on the first one, so we scale down
+$ k -n applications get deploy
+NAME   READY   UP-TO-DATE   AVAILABLE   AGE
+web1   2/2     2            2           6m53s
+web2   1/1     1            1           6m53s
+
+$ k -n applications get deploy web1 -oyaml | grep nginx:1.19.1-alpine-perl
+      - image: nginx:1.19.1-alpine-perl
+$ k -n applications get deploy web2 -oyaml | grep nginx:1.19.1-alpine-perl
+
+k -n applications get deploy web1 
+NAME   READY   UP-TO-DATE   AVAILABLE   AGE
+web1   2/2     2            2           13m
+
 k -n applications scale deploy web1 --replicas 0
+
+$ k -n applications get deploy web1
+NAME   READY   UP-TO-DATE   AVAILABLE   AGE
+web1   0/0     0            0           13m
 ```
 
 Next we check the infra Namespace.
@@ -369,8 +591,20 @@ trivy image httpd:2.4.39-alpine | grep CVE-2021-28831
 trivy image httpd:2.4.39-alpine | grep CVE-2016-9841
 
 # hit, so we scale down
+$ k -n infra get deployments.apps 
+NAME      READY   UP-TO-DATE   AVAILABLE   AGE
+inf-hjk   3/3     3            3           16m
+
 k -n infra scale deploy inf-hjk --replicas 0
+
+$ k -n infra get deployments.apps 
+NAME      READY   UP-TO-DATE   AVAILABLE   AGE
+inf-hjk   0/0     0            0           18m
 ```
+
+### TODO
+
+
 
 ## 如何备考
 

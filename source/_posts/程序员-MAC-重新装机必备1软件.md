@@ -213,7 +213,14 @@ JAVACMD="/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin
   - Scrolling Screenshots on Mac 长截图
   - Color picker 取色器
 
+## 修图
+
+[修图软件](./%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90.html)
+
+
 ## 视频
+
+## 视频播放
 
 - [x] [**Gif Brewery 3**](https://apps.apple.com/cn/app/gif-brewery-3-video-to-gif/id1081413713?l=en&mt=12) ，GIF 录屏工具, 可以直接录屏并转换成gif动图。免费，App store 下载。
 - 各类视频软件

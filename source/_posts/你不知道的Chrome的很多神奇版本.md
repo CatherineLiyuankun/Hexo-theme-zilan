@@ -11,3 +11,6 @@ tags:
 https://www.zhihu.com/question/28531079/answer/41319912
 
 https://www.cnblogs.com/haochuang/p/7404339.html
+
+Chrome update blog
+- [Chrome 108](https://developer.chrome.com/blog/new-in-devtools-108/?utm_source=devtools#recorder)

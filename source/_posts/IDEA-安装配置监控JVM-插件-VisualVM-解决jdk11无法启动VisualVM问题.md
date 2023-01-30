@@ -2,7 +2,7 @@
 title: IDEA 安装配置监控JVM 插件-VisualVM-解决jdk11无法启动VisualVM问题
 catalog: true
 date: 2023-01-16 18:43:33
-subtitle:
+subtitle: Windows & MacOS
 header-img:
 tags:
 - Java
@@ -13,6 +13,8 @@ categories:
 - Java
 - JVM
 ---
+
+GitHub：[VisualVM](https://github.com/oracle/visualvm) 已经被 Oracle 在 GitHub 上开源了，因此我们可以直接在 GitHub 上下载安装包。
 
 ## IDEA 安装配置监控JVM 插件
 
@@ -50,6 +52,7 @@ VisualVM executable 填 `你的jdk8路径/bin/jvisualvm.exe`, 例如`C:/Program 
     - 监控的本地jdk路径（不修改也是能用，只是不能显示详细的包名和类名，只显示进程号难以区分）
 - MacOS 下载VisualVM_215.dmg 安装
   - VisualVM executable 填写`/Applications/VisualVM.app/Contents/MacOS/visualvm`
+  - `/Applications/VisualVM.app/Contents/Resources/visualvm/etc/visualvm.conf` 里面配置JDK路径，例如 `visualvm_jdkhome="/opt/homebrew/Cellar/openjdk@11/11.0.15/libexec/openjdk.jdk/Contents/Home"` (参考：[Mac安装VisualVM Mac版 V2.0.7](https://blog.51cto.com/u_15456153/4847185))
 
 ![VisualVM-config-mac](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Java/VisualVM/VisualVM-config-mac.png)
 
@@ -107,9 +110,10 @@ Java VisualVM 插件各个版本： https://visualvm.github.io/pluginscenters.ht
 ## [jdk 11使用jvisualVM visualGC](https://blog.csdn.net/muxiaoshan/article/details/124230445)
 
 
-## 监控JVM
+## 其他相关文章
 
 - [VisualVM远程连接配置](https://blog.csdn.net/wngpenghao/article/details/82884874)
+- [解决 jvisualvm 启动后长时间 Computing description... 的问题](https://yanbin.blog/fix-jvisualvm-stuck-at-computing-description-issue/)
 - [环境篇：idea 安装VisualVM，Jprofiler，jclasslib](https://juejin.cn/post/6997281868362350599#heading-2)
 
 - [idea安装Jprofiler](https://juejin.cn/post/6997281868362350599#heading-2)

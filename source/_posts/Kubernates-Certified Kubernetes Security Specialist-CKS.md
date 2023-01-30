@@ -57,6 +57,8 @@ A Pod Security Policy is a **cluster-level** resource that controls security sen
 
 ### [AppArmor](https://kubernetes.io/docs/tutorials/security/apparmor/)
 
+[kubernetes CKS 3.2 AppArmor限制容器对资源访问](https://blog.csdn.net/cloud_engineer/article/details/125659959)
+
 [Manage AppArmor profiles and Pods using these](https://killercoda.com/killer-shell-cks/scenario/apparmor)
 
 ![apparmor1](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/CKS/AppArmor1-Check%20existing%20AppArmor%20profiles.png)
@@ -429,6 +431,12 @@ Once that service would be implemented and if it would allow the Pod, the Pod co
 
 [cis-benchmarks-kube-bench-fix-controlplane](https://killercoda.com/killer-shell-cks/scenario/cis-benchmarks-kube-bench-fix-controlplane)
 
+- Api Server: `/etc/kubernetes/manifests/kube-apiserver.yaml`
+- Controller Manager pod specification file `/etc/kubernetes/manifests/kube-controller-manager.yaml`
+- Kubelet: `/var/lib/kubelet/config.yaml`
+- etcd: `/etc/kubernetes/manifests/etcd.yaml`
+
+
 #### Apiserver should be more conform to CIS
 
 Use `kube-bench` to ensure `1.2.20` has status `PASS`.
@@ -687,10 +695,129 @@ kubectl create secret generic db-credentials --from-literal db-password=passwd
 
 ## CKS 2021 真题 1.20
 
-### 考题1 - Creating a Pod and Inspecting it
+### 考题1 - AppArmor 访问控制
 
+#### Context
 
-### 考题2 - Configuring a Pod to Use a ConfigMap
+AppArmor is enabled on the cluster's worker node. An AppArmor profile is prepared, but not enforced yet.
+You may use your browser to open one additional tab to access the AppArmor documentation.
+
+AppArmor 已在 cluster 的工作节点上被启用。一个 AppArmor 配置文件已存在，但尚未被实施。
+
+#### Task
+
+On the cluster's worker node, enforce the prepared AppArmor profile located at `/etc/apparmor.d/nginx_apparmor` .
+Edit the prepared manifest file located at `/home/candidate/KSSH00401/nginx-deploy.yaml` to apply the AppArmor profile.
+Finally, apply the manifest file and create the pod specified in it.
+
+在 cluster 的工作节点上，实施位于 `/etc/apparmor.d/nginx_apparmor` 的现有 AppArmor 配置文件。
+编辑位于 `/home/candidate/KSSH00401/nginx-deploy.yaml` 的现有清单文件以应用 AppArmor 配置文件。
+最后，应用清单文件并创建其中指定的 Pod 。
+
+#### Solution
+
+搜索 apparmor（使用 AppArmor 限制容器对资源的访问），接着再搜索字符串 “parser”
+https://kubernetes.io/zh/docs/tutorials/security/apparmor/
+
+```bash
+### 远程登录到指定工作节点
+ssh cka-node01
+
+### 从profile文件查看策略名称
+cat /etc/apparmor.d/nginx_apparmor
+
+    profile nginx-profile flags=(attach_disconnected) {
+    ...
+
+### 加载 apparmor 配置文件
+apparmor_parser /etc/apparmor.d/nginx_apparmor
+
+### 查看策略名称，结果是 nginx-profile
+apparmor_status | grep nginx-profile
+
+### 回到控制节点，并更新 Pod 的注解
+exit
+
+vim /home/candidate/KSSH00401/nginx-deploy.yaml
+    annotations:
+      ### hello 是 Pod 里容器名称，nginx-profile 则是 apparmor_status 解析出来的结果
+      container.apparmor.security.beta.kubernetes.io/hello: localhost/nginx-profile
+
+### 如果 apply 后报错，则先删除保存并删除旧 Pod，改完后再创建新的
+kubectl apply -f /home/candidate/KSSH00401/nginx-deploy.yaml
+```
+
+### 考题2 - Kube-Bench 基准测试
+
+#### Context
+
+A CIS Benchmark tool was run against the kubeadm-created cluster and found multiple issues that must be addressed immediately.
+
+针对 kubeadm 创建的 cluster 运行 CIS 基准测试工具时， 发现了多个必须立即解决的问题。
+
+#### Task
+
+Fix all issues via configuration and restart theaffected components to ensure the new settings take effect.
+通过配置修复所有问题并重新启动受影响的组件以确保新的设置生效。
+
+Fix all of the following violations that were found against the API server:
+修复针对 API 服务器发现的所有以下违规行为：
+Ensure that the 1.2.7 --authorization-mode FAIL argument is not set to AlwaysAllow
+Ensure that the 1.2.8 --authorization-mode FAIL argument includes Node
+Ensure that the 1.2.9 --authorization-mode FAIL argument includes RBAC
+Ensure that the 1.2.18 --insecure-bind-address FAIL argument is not set
+Ensure that the 1.2.19 --insecure-port FAIL argument is set to 0
+
+Fix all of the following violations that were found against the kubelet:
+修复针对 kubelet 发现的所有以下违规行为：
+Ensure that the 4.2.1 --anonymous-auth FAIL argument is set to false
+Ensure that the 4.2.2 --authorization-mode FAIL argument is not set to AlwaysAllow
+Use webhook authn/authz where possible. 注意：尽可能使用 Webhook authn/authz。
+
+Fix all of the following violations that were found against etcd:
+修复针对 etcd 发现的所有以下违规行为：
+Ensure that the 4.2.1 --client-cert-auth FAIL argument is set to true
+
+#### Solution
+
+```bash
+$ ssh root@vms65.rhce.cc
+
+### 修复针对 APIserver 发现的以下所有问题：
+### 确保 1.2.7 --authorization-mode 参数不能设置为 AlwaysAllow
+### 确保 1.2.8 --authorization-mode 参数包含 Node
+### 确保 1.2.9 --authorization-mode 参数包含 RBAC
+### 确保 1.2.18 --insecure-bind-address 参数不能设置
+### 确保 1.2.19 --insecure-port 参数设置为 0
+### 注意：修改 master 节点！
+vim /etc/kubernetes/manifests/kube-apiserver.yaml
+    #- --authorization-mode=AlwaysAllow 删除AlwaysAllow，加Node,RBAC
+    - --authorization-mode=Node,RBAC
+    #- --insecure-bind-address=0.0.0.0
+    - --insecure-port=0
+
+### 修复针对 kubelet 发现的以下所有问题：
+### 确保 4.2.1 anonymous-auth 参数设置为 false
+### 确保 4.2.2 --authorization-mode 参数不能设置为 AlwaysAllow，尽可能使用 webhook authn/authz
+### 注意：master 和 node 节点都要修改！
+vim /var/lib/kubelet/config.yaml
+    authentication:
+      anonymous:
+        enabled: false
+    authorization:
+      mode: Webhook
+
+### 修复针对 etcd 发现的以下所有问题：
+### 确保 4.2.--client-cert-auth 参数设置为 true
+### 注意：修改 master 节点！
+vim /etc/kubernetes/manifests/etcd.yaml
+    - --client-cert-auth=true
+
+### 加载并重启 kubelet 服务
+### 注意：master 和 node 节点都要重启！
+systemctl daemon-reload
+systemctl restart kubelet
+```
 
 ### 考题3 - Configuring a Pod to Use a Secret
 

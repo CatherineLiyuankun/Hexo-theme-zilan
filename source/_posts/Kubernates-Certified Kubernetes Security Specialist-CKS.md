@@ -610,6 +610,87 @@ NAME      READY   UP-TO-DATE   AVAILABLE   AGE
 inf-hjk   0/0     0            0           18m
 ```
 
+### Falco
+
+https://killercoda.com/killer-shell-cks/scenario/falco-change-rule
+
+#### Investigate a Falco Rule
+
+Falco has been installed on Node `controlplane` and it runs as a service.
+
+It's configured to log to `syslog`, and this is where the verification for this scenario also looks.
+
+Cause the rule "shell in a container" to log by:
+
+1. creating a new Pod image `nginx:alpine`
+2. `kubectl exec pod -- sh` into it
+3. check the Falco logs contain a related output
+
+##### Tip
+
+`service falco status`
+
+`cat /var/log/syslog | grep falco`
+
+##### Solution
+
+`k run pod --image=nginx:alpine`
+
+`k exec -it pod -- sh`
+
+`exit`
+
+`cat /var/log/syslog | grep falco | grep shell`
+
+#### Change a Falco Rule
+
+Change the Falco `output` of rule "Terminal shell in container" to:
+
+- include `NEW SHELL!!!` at the very beginning
+- include `user_id=%user.uid` at any position
+- include `repo=%container.image.repository` at any position
+
+Cause syslog output again by creating a shell in that Pod.
+Verify the syslogs contain the new data.
+
+##### Tip
+
+https://falco.org/docs/rules/supported-fields
+
+```bash
+cd /etc/falco/
+grep -ri "shell in"
+```
+
+##### Solution
+
+```bash
+cd /etc/falco/
+cp falco_rules.yaml falco_rules.local.yaml
+vim falco_rules.local.yaml
+```
+
+```yaml
+- rule: Terminal shell in container
+  desc: A shell was used as the entrypoint/exec point into a container with an attached terminal.
+  condition: >
+    spawned_process and container
+    and shell_procs and proc.tty != 0
+    and container_entrypoint
+    and not user_expected_terminal_shell_in_container_conditions
+  output: >
+    NEW SHELL!!! (user_id=%user.uid repo=%container.image.repository %user.uiduser=%user.name user_loginuid=%user.loginuid %container.info
+    shell=%proc.name parent=%proc.pname cmdline=%proc.cmdline terminal=%proc.tty container_id=%container.id image=%container.image.repository)
+  priority: NOTICE
+  tags: [container, shell, mitre_execution]
+```
+
+```bash
+service falco restart
+k exec -it pod -- sh
+cat /var/log/syslog | grep falco | grep shell
+```
+
 ### TODO
 
 
@@ -861,27 +942,23 @@ you may use you brower to open one additonal tab to access sysdig's documentatio
 
 #### Task
 
-the tools are pre-installed on the cluster's worker node only;the are not
-
-avaliable on the base system or the master node.
-
-using the tool of you choice(including any non pre-install tool) analyse the
-
-container's behaviour for at lest 30 seconds,using filers that detect newly
-
-spawing and executing processes
-
-store an incident file at /opt/2/report,containing the detected incidents one per
-
-line in the follwing format:
-
-   [timestamp],[uid],[processName]
-
-use runtime detection tools to detect anomalous processes spawning and executing frequently in the sigle container belonging to Pod redis. Two tools are avaliable to use:
+Use runtime detection tools to detect anomalous processes spawning and executing frequently in the sigle container belonging to Pod redis. Two tools are avaliable to use:
 使用运行时检测工具来检测 Pod tomcat 单个容器中频发生成和执行的异常进程。有两种工具可供使用：
+
 - sysdig
 - falco
-注：这些工具只预装在 cluster 的工作节点，不在 master 节点。 使用工具至少分析 30 秒，使用过滤器检查生成和执行的进程，将事件写到 /opt/KSR00101/incidents/summary 文件中，其中包含检测的事件，格式如下：[timestamp],[uid],[processName] 保持工具的原始时间戳格式不变。
+
+The tools are pre-installed on the cluster's worker node only, they are not avaliable on the base system or the master node.
+Using the tool of you choice(including any non pre-install tool) analyse the container's behaviour for at least `30` seconds, using filers that detect newly spawing and executing processes, store an incident file at `/opt/KSR00101/incidents/summary`, containing the detected incidents one per line in the follwing format:
+注：这些工具只预装在 cluster 的工作节点，不在 master 节点。
+使用工具至少分析 30 秒，使用过滤器检查生成和执行的进程，将事件写到 `/opt/KSR00101/incidents/summary` 文件中，其中包含检测的事件, 每个单独一行
+格式如下：
+
+```yaml
+   [timestamp],[uid],[processName]
+```
+
+保持工具的原始时间戳格式不变。
 注：确保事件文件存储在集群的工作节点上。
 
 ```bash

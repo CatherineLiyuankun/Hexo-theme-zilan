@@ -819,12 +819,87 @@ systemctl daemon-reload
 systemctl restart kubelet
 ```
 
-### 考题3 - Configuring a Pod to Use a Secret
+### 考题3 - Trivy 镜像扫描
 
+#### Task
 
+使用 Trivy 开源容器扫描器检测 namespace kamino 中 Pod 使用的具有严重漏洞的镜像。
+查找具有 High 或 Critical 严重性漏洞的镜像，并删除使用这些镜像的 Pod。
+注意：Trivy 仅安装在 cluster 的 master 节点上，在工作节点上不可使用。你必须切换到 cluster 的 master 节点才能使用 Trivy 。
 
-### 考题4 - Creating a Security Context for a Pod
+Use the Trivy open-source container scanner to detect images with severe vulnerabilities used by Pods in the namespace `kamino`.
+Look for images with `High` or `Critical` severity vulnerabilities, and delete the Pods that use those images.
 
+Trivy is pre-installed on the cluster's `master` node only; it is not available on the base system or the worker nodes. You'll have to connect to the cluster's master node to use `Trivy`.
+
+#### Solution
+
+搜索 kubectl images（列出集群中所有运行容器的镜像）
+https://kubernetes.io/zh-cn/docs/tasks/access-application-cluster/list-all-running-container-images/
+
+```bash
+### 需登录到控制节点操作
+ssh cka-master01
+
+### 查询命名空间 kamino 中 pod 使用的镜像
+kubectl get pod -n kamino -o yaml | grep image:
+# 或者
+kubectl get pods -n kamino -o jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}' | sort
+
+### 假设镜像是 registry.aliyuncs.com/google_containers/coredns:1.7.0
+### 使用 trivy 工具查询具有 HIGH 或 CRITICAL 漏洞的镜像
+trivy --help
+trivy image --severity HIGH,CRITICAL 'registry.aliyuncs.com/google_containers/coredns:1.7.0'
+
+### 删除检测到的漏洞镜像对应的 pod（如果有控制器，得删除控制器）
+kubectl delete pod -n kamino pod名称
+```
+
+### 考题4 - Sysdig & Falco
+
+you may use you brower to open one additonal tab to access sysdig's documentation or Falco's documentaion
+
+#### Task
+
+the tools are pre-installed on the cluster's worker node only;the are not
+
+avaliable on the base system or the master node.
+
+using the tool of you choice(including any non pre-install tool) analyse the
+
+container's behaviour for at lest 30 seconds,using filers that detect newly
+
+spawing and executing processes
+
+store an incident file at /opt/2/report,containing the detected incidents one per
+
+line in the follwing format:
+
+   [timestamp],[uid],[processName]
+
+use runtime detection tools to detect anomalous processes spawning and executing frequently in the sigle container belonging to Pod redis. Two tools are avaliable to use:
+使用运行时检测工具来检测 Pod tomcat 单个容器中频发生成和执行的异常进程。有两种工具可供使用：
+- sysdig
+- falco
+注：这些工具只预装在 cluster 的工作节点，不在 master 节点。 使用工具至少分析 30 秒，使用过滤器检查生成和执行的进程，将事件写到 /opt/KSR00101/incidents/summary 文件中，其中包含检测的事件，格式如下：[timestamp],[uid],[processName] 保持工具的原始时间戳格式不变。
+注：确保事件文件存储在集群的工作节点上。
+
+```bash
+### 需登录到工作节点操作
+ssh cka-node01
+
+### 查看 sysdig 帮助
+sysdig -h
+
+### 查看 sysdig 支持的元数据
+sysdig -l
+
+### 查看指定容器ID
+crictl ps | grep tomcat
+
+### -M 分析容器30秒，-p 指定事件保存格式，--cri 指定容器运行时，并且保存到指定文件路径中
+sysdig -M 30 -p "*%evt.time,%user.uid,%proc.name" --cri /run/containerd/containerd.sock container.id=xxxxx > /opt/KSR00101/incidents/summary
+```
 
 
 ### 考题5 - Defining a Pod’s Resource Requirements

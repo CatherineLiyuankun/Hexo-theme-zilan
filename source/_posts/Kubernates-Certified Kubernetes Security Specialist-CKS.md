@@ -763,10 +763,24 @@ kubectl delete pod pod1 --force --grace-period=0
 ## 创建service
 kubectl expose deployment d1 --name=服务名 --port=服务端口 --target-port=pod运行端口 --type=类型
 kubectl expose pod pod名 --name=服务名 --port=服务端口 --target-port=pod运行端口 --type=类型
+```
+
+```bash
+# CKS
 ## 创建secret
 kubectl create secret generic db-credentials --from-literal db-password=passwd
 ## modify a pod yaml to deployment yaml
 ### put the Pod's metadata: and spec: into the Deployment's template: section:
+
+## To verify that the token hasn't been mounted run the following commands:
+kubectl -n one exec -it pod-name -- mount | grep serviceaccount
+kubectl -n one exec -it pod-name -- cat /var/run/secrets/kubernetes.io/serviceaccount/token
+
+### 创建 clusterrole，使用 psp
+kubectl create clusterrole restrict-access-role --verb=use --resource=psp --resource-name=restrict-policy
+
+## after modify /etc/kubernetes/manifests/kube-apiserver.yaml
+systemctl restart kubelet
 
 ```
 
@@ -979,11 +993,133 @@ sysdig -M 30 -p "*%evt.time,%user.uid,%proc.name" --cri /run/containerd/containe
 ```
 
 
-### 考题5 - Defining a Pod’s Resource Requirements
+### 考题5 - ServiceAccount
 
+Context
+A Pod fails to run because of an incorrectly specified ServiceAcccount.
 
+#### Task
 
-### 考题6 - 
+create a new ServiceAccount named `backend-sa` in the existing namespace `qa`, which must **not have access to any secrets**.
+- Inspect the Pod named `backend` running in the namespace `qa`.
+  - Edit the Pod to use the newly created serviceAccount `backend-sa`.
+  - You can find the Pod's manifest file at `/cks/9/pod9.yaml`
+  - Ensure that the modified specification is applied and the Pod is running.
+- Finally, clean-up and delete the now unused serviceAccount that the Pod used initially.
+在现有 namespace `qa` 中创建一个名为 `backend-sa` 的新 ServiceAccount， 确保此 ServiceAccount 不自动挂载secrets。
+使用 `/cks/9/pod9.yaml` 中的清单文件来创建一个 Pod。
+最后，清理 namespace `qa` 中任何未使用的 ServiceAccount。
+
+#### Solution 
+
+搜索 serviceaccount（为Pod配置服务账号），接着再搜索字符串 “automount”
+https://kubernetes.io/zh-cn/docs/tasks/configure-pod-container/configure-service-account/
+
+```bash
+### 创建 ServiceAccount
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: backend-sa
+  namespace: qa
+automountServiceAccountToken: false
+EOF
+
+### 编辑 Pod 使用新创建的 serviceaccount
+vim /cks/9/pod9.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: backend
+  name: backend
+  namespace: qa
+spec:
+  serviceAccountName: backend-sa # add
+  containers:
+  - image: nginx:1.9
+    name: backend
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+
+### 应用清单文件
+kubectl apply -f /cks/9/pod9.yaml
+
+### 把除了 backend-sa 的 serviceaccount 都删除 或者删除 pod之前使用的serviceaccount（根据题）
+kubectl get secret -n qa
+kubectl delete -n qa serviceaccount sa名称
+
+```
+
+### 考题6 - Pod 安全策略-PodSecurityPolicy
+
+#### Context6
+
+A PodsecurityPolicy shall prevent the creation on of privileged Pods in a specific namespace.
+PodSecurityPolicy 应防止在特定 namespace 中特权 Pod 的创建。
+
+#### Task6
+
+Create a new `PodSecurityPolicy` named `restrict-policy`, which prevents the creation of privileged Pods.
+
+Create a new `ClusterRole` named `restrict-access-role`, which uses the newly created PodSecurityPolicy `restrict-policy`.
+Create a new `serviceAccount` named `psp-denial-sa` in the existing namespace `staging`.
+
+Finally, create a new `clusterRoleBinding` named `dany-access-bind`, which binds the newly created ClusterRole `restrict-access-role` to the newly created serviceAccount `psp-denial-sa`.
+
+创建一个名为 `restrict-policy` 的新的 PodSecurityPolicy，以防止特权 Pod 的创建。
+创建一个名为 `restrict-access-role` 并使用新创建的 PodSecurityPolicy `restrict-policy` 的 ClusterRole。
+在现有的 namespace `staging` 中创建一个名为 `psp-denial-sa` 的新 ServiceAccount 。
+最后，创建一个名为 `dany-access-bind` 的 ClusterRoleBinding，将新创建的 ClusterRole `restrict-access-role` 绑定到新创建的 ServiceAccount `psp-denial-sa`。
+你可以在一下位置找到模版清单文件： `/cks/psp/psp.yaml`
+
+#### Solution6
+
+搜索 runasany（Pod Security Policy）
+https://kubernetes.io/id/docs/concepts/policy/pod-security-policy/
+搜索 clusterrole（使用RBAC鉴权）
+https://kubernetes.io/zh-cn/docs/reference/access-authn-authz/rbac/
+
+```bash
+### (1)创建 psp
+vim /cks/psp/psp.yaml
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: restrict-policy
+spec:
+  privileged: false
+  seLinux:
+    rule: RunAsAny
+  supplementalGroups:
+    rule: RunAsAny
+  runAsUser:
+    rule: RunAsAny
+  fsGroup:
+    rule: RunAsAny
+  volumes:
+  - '*'
+
+kubectl apply -f /cks/psp/psp.yaml
+
+### (2)创建 clusterrole，使用 psp
+kubectl create clusterrole restrict-access-role --verb=use --resource=psp --resource-name=restrict-policy
+
+### (3)创建 serviceaccount
+kubectl create serviceaccount psp-denial-sa -n staging 
+
+### (4)创建 clusterrolebinding
+kubectl create clusterrolebinding dany-access-bind --clusterrole=restrict-access-role --serviceaccount=staging:psp-denial-sa
+
+### (5)启用 PodSecurityPolicy（在控制节点上修改 apiserver 配置）
+vim /etc/kubernetes/manifests/kube-apiserver.yaml
+    - --enable-admission-plugins=NodeRestriction,PodSecurityPolicy
+
+systemctl restart kubelet
+
+```
 
 ### 考题7 - 
 

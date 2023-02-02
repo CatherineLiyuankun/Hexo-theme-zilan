@@ -691,6 +691,118 @@ k exec -it pod -- sh
 cat /var/log/syslog | grep falco | grep shell
 ```
 
+### NetworkPolicy - namespace selector
+
+There are existing Pods in Namespace `space1` and `space2` .
+
+We need a new NetworkPolicy named `np` that restricts all Pods in Namespace `space1` to only have outgoing traffic to Pods in Namespace `space2` . Incoming traffic not affected.
+
+We also need a new NetworkPolicy named `np` that restricts all Pods in Namespace `space2` to only have incoming traffic from Pods in Namespace `space1` . Outgoing traffic not affected.
+
+The NetworkPolicies should still allow outgoing DNS traffic on port `53` TCP and UDP.
+
+#### Tip
+
+For learning you can check the NetworkPolicy Editor
+The namespaceSelector from NPs works with Namespace labels, so first we check existing labels for Namespaces
+
+#### Solution
+
+```bash
+# 获取 namespace的label
+k get ns --show-labels
+  NAME              STATUS   AGE     LABELS
+  space1            Active   3m9s    kubernetes.io/metadata.name=space1
+  space2            Active   3m9s    kubernetes.io/metadata.name=space2
+
+vim 1.yaml
+```
+
+```yaml
+# 1.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: np
+  namespace: space1  # namespace 已经来表示应用到all Pods in Namespace `space1`
+spec:
+  podSelector: {} # 所有pod
+  policyTypes:
+  - Egress
+  egress:
+    - to:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: space2  # space2的namespace
+    - ports: # 注意加 - 表示或的关系
+      - protocol: TCP
+        port: 53
+      - protocol: UDP
+        port: 53
+```
+
+```yaml
+# 2.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: np
+  namespace: space2
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: space1
+    - ports:
+      - protocol: TCP
+        port: 53
+      - protocol: UDP
+        port: 53
+```
+
+```bash
+k apply -f 1.yaml
+k apply -f 2.yaml
+```
+
+### NetworkPolicy - Metadata Protection
+
+https://killercoda.com/killer-shell-cks/scenario/networkpolicy-metadata-protection
+
+Cloud providers can have Metadata Servers which expose critical information, for example GCP or AWS.
+
+For this task we assume that there is a Metadata Server at `1.1.1.1` .
+
+You can test connection to that IP using `nc -v 1.1.1.1 53` .
+
+Create a NetworkPolicy named `metadata-server `In Namespace `default` which restricts all egress traffic to that IP.
+
+The NetworkPolicy should only affect Pods with label `trust=nope` .
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: metadata-server
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      trust: nope
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+      - ipBlock:
+          cidr: 0.0.0.0/0  # all addresses 掩码为0，且0.0.0.0，代表所有地址
+          except:
+            - 1.1.1.1/32 # 
+```
+
 ### TODO
 
 
@@ -1123,7 +1235,70 @@ systemctl restart kubelet
 
 ### 考题7 - 
 
-### 考题8 - 
+### 考题8 - NetworkPolicy
+
+#### Task
+
+create a NetworkPolicy named `pod-restriction` to restrict access to Pod `products-service` running in namespace `dev-team`.
+Only allow the following Pods to connect to Pod `products-service`:
+
+- Pods in the namespace `qa`
+- Pods with label `environment: testing`, in any namespace
+
+Make sure to apply the NetworkPolicy.
+You can find a skelet on manifest file at `/cks/6/p1.yaml`
+
+创建一个名为 `pod-restriction` 的 NetworkPolicy 来限制对在 namespace `dev-team` 中运行的 Pod `products-service` 的访问。只允许以下 Pod 连接到 Pod `products-service`：
+
+- namespace `qa` 中的 Pod
+- 位于任何 namespace，带有标签 `environment: testing` 的 Pod
+
+注意：确保应用 NetworkPolicy。
+你可以在`/cks/net/po.yaml` 找到一个模板清单文件。
+
+#### Solution
+
+搜索 networkpolicy（网络策略）
+https://kubernetes.io/zh-cn/docs/concepts/services-networking/network-policies/
+
+```bash
+### (1)查看命名空间 qa 具有的标签
+kubectl get namespace qa --show-labels
+
+### (2)查看 pod 具有的标签
+kubectl get pod products-service -n dev-team --show-labels
+
+### 修改模板清单文件
+vim /cks/net/po.yaml
+```
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: pod-restriction  # name
+  namespace: dev-team  # namespace
+spec:
+  podSelector:
+    matchLabels:
+      run: products-service  # (2)
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: qa  # (1)
+    - podSelector:  # 注意带 - ，表示或的关系
+        matchLabels:
+          environment: testing
+      namespaceSelector: {}    ## 任何命名空间, 不带 - ，且的关系
+```
+
+```bash
+### 应用清单文件
+kubectl apply -f /cks/net/po.yaml
+```
 
 ### 考题9 - 
 

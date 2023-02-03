@@ -1233,7 +1233,43 @@ systemctl restart kubelet
 
 ```
 
-### 考题7 - 
+### 考题7 - NetworkPolicy - default-deny
+
+#### Context
+
+A default-deny NetworkPolicy avoids to accidentally expose a Pod in a namespace that doesn't have any other NetworkPolicy defined.
+一个默认拒绝（default-deny）的 NetworkPolicy 可避免在未定义任何其他 NetworkPolicy 的 namespace 中意外公开 Pod。
+
+#### Task
+
+Create a new default-deny NetworkPolicy named `denynetwork` in the namespace `development` for all traffic of type `Ingress`.
+The new NetworkPolicy must deny all ingress traffic in the namespace `development`.
+
+Apply the newly created `default-deny` NetworkPolicy to all Pods running in namespace `development`.
+You can find a skeleton manifest file at `/cks/15/p1.yaml`
+
+为所有类型为 Ingress+Egress 的流量在 namespace testing 中创建一个名为 `denynetwork` 的新默认拒绝 NetworkPolicy。 此新的 NetworkPolicy 必须拒绝 namespace testng 中的所有的 Ingress + Egress 流量。
+将新创建的默认拒绝 NetworkPolicy 应用与在 namespace testing 中运行的所有 Pod。
+你可以在 `/cks/15/p1.yaml` 找到一个模板清单文件。
+
+```bash
+### 修改模板清单文件
+vim /cks/15/p1.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: denynetwork
+  namespace: testing
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress # 根据题目来加Ingress或者Egress
+
+### 应用清单文件
+kubectl apply -f /cks/15/p1.yaml
+```
+
 
 ### 考题8 - NetworkPolicy
 

@@ -6,10 +6,19 @@ subtitle:
 header-img:
 tags:
 - devtool
+- Chrome
 categories:
 - TECH
 - FrontEnd
 ---
+
+### Chrome devtool - Overrides 覆盖线上代码
+
+开发者模式，用本地 js 替换线上js调试过程
+[chrome浏览器使用Overrides线上调试](https://juejin.cn/post/7083396282072432647)
+Sources --> Overrides
+Sources--> Page里面找到咱们要调试的代码文件，然后右键点击 Save for overrides
+修改save好的文件，保存，刷新页面，调试。
 
 ### Emulate a focused page in DevTools to debug overlay elements
 

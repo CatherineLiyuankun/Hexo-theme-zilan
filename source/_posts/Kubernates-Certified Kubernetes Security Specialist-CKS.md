@@ -39,773 +39,7 @@ categories:
 - [kube-bench](https://github.com/aquasecurity/kube-bench)
 - [Trivy](https://github.com/aquasecurity/trivy)
 
-### Pod Security Policies(PSP)
-
-Reference:
-- [k8s Pod Security Policy官方文档](https://kubernetes.io/docs/concepts/security/pod-security-policy/)
-  - [PodSecurityPolicy Deprecation: Past, Present, and Future](https://kubernetes.io/zh-cn/blog/2021/04/06/podsecuritypolicy-deprecation-past-present-and-future/)
-- [aws eks 官方文档](https://docs.aws.amazon.com/eks/latest/userguide/pod-security-policy.html)
-- [PodSecurityPolicy is Dead, Long Live…?](https://www.appvia.io/blog/podsecuritypolicy-is-dead-long-live/)
-- https://docs.bitnami.com/kubernetes/faq/configuration/understand-pod-security-policies/
-
-
-> Removed feature
-> PodSecurityPolicy was deprecated in Kubernetes `v1.21`, and removed from Kubernetes in `v1.25`.
-> Use [`Pod Security Admission`](https://kubernetes.io/docs/concepts/security/pod-security-admission/)instead.
-
-A Pod Security Policy is a **cluster-level** resource that controls security sensitive aspects of the **pod** specification.
-
-### [AppArmor](https://kubernetes.io/docs/tutorials/security/apparmor/)
-
-[kubernetes CKS 3.2 AppArmor限制容器对资源访问](https://blog.csdn.net/cloud_engineer/article/details/125659959)
-
-[Manage AppArmor profiles and Pods using these](https://killercoda.com/killer-shell-cks/scenario/apparmor)
-
-![apparmor1](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/CKS/AppArmor1-Check%20existing%20AppArmor%20profiles.png)
-
-![apparmor1](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/CKS/AppArmor2-deployment.png)
-
-![AppArmor2-deployment2.png](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/CKS/AppArmor2-deployment2.png)
-
-![AppArmor2-deployment3beforeChange.png](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/CKS/AppArmor2-deployment3beforeChange.png)
-
-![AppArmor2-deployment4.png](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/CKS/AppArmor2-deployment4.png)
-
-![AppArmor2-deployment5.png](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/CKS/AppArmor2-deployment5.png)
-
-![AppArmor3-install profile.png](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/CKS/AppArmor3-install%20profile.png)
-
-### Apiserver Crash
-
-[Crash that Apiserver and check them logs](https://killercoda.com/killer-shell-cks/scenario/apiserver-crash)
-
-kube-apiserver.yaml Location: `/etc/kubernetes/manifests/kube-apiserver.yaml`
-
-Log locations to check:
-
-- `/var/log/pods`
-- `/var/log/containers`
-- `crictl ps` + `crictl logs`
-- `docker ps` + `docker logs` (in case when Docker is used)
-- kubelet logs: `/var/log/syslog` or `journalctl`
-
-```bash
-# smart people use a backup
-cp ~/kube-apiserver.yaml.ori /etc/kubernetes/manifests/kube-apiserver.yaml
-
-# wait till container restarts
-watch crictl ps
-
-# check for apiserver pod
-k -n kube-system get pod
-```
-
-Give the Apiserver some time to restart itself, like 1-2 minutes. If it doesn't restart by itself you can also force it with:
-- 1: `mv /etc/kubernetes/manifests/kube-apiserver.yaml /tmp/kube-apiserver.yaml`
-- 2: wait till container is removed with `watch crictl ps`
-- 3: `mv /tmp/kube-apiserver.yaml /etc/kubernetes/manifests/kube-apiserver.yaml`
-
-#### Configure a wrong argument
-
-The idea here is to misconfigure the Apiserver in different ways, then check possible log locations for errors.
-
-You should be very comfortable with situations where the Apiserver is not coming back up.
-
-Configure the Apiserver manifest with a new argument `--this-is-very-wrong` .
-
-Check if the Pod comes back up and what logs this causes.
-
-Fix the Apiserver again.
-
-```bash
-# always make a backup !
-cp /etc/kubernetes/manifests/kube-apiserver.yaml ~/kube-apiserver.yaml.ori
-
-# make the change
-vim /etc/kubernetes/manifests/kube-apiserver.yaml
-
-# wait till container restarts
-watch crictl ps
-
-# check for apiserver pod
-k -n kube-system get pod
-```
-
-Apiserver is not coming back, we messed up!
-
-```bash
-# check pod logs
-cat /var/log/pods/kube-system_kube-apiserver-controlplane_a3a455d471f833137588e71658e739da/kube-apiserver/X.log
-> 2022-01-26T10:41:12.401641185Z stderr F Error: unknown flag: --this-is-very-wrong
-```
-
-Now undo the change and continue
-
-```bash
-# smart people use a backup
-cp ~/kube-apiserver.yaml.ori /etc/kubernetes/manifests/kube-apiserver.yaml
-
-# wait till container restarts
-watch crictl ps
-
-# check for apiserver pod
-k -n kube-system get pod
-```
-
-#### Misconfigure ETCD connection
-
-Change the existing Apiserver manifest argument to: `--etcd-servers=this-is-very-wrong` .
-
-Check what the logs say, without using anything in `/var` .
-
-Fix the Apiserver again.
-
-```bash
-# always make a backup !
-cp /etc/kubernetes/manifests/kube-apiserver.yaml ~/kube-apiserver.yaml.ori
-
-# make the change
-vim /etc/kubernetes/manifests/kube-apiserver.yaml
-
-# wait till container restarts
-watch crictl ps
-
-# check for apiserver pod
-k -n kube-system get pod
-```
-
-Apiserver is not coming back, we messed up!
-
-```bash
-# 1) if we would check the /var directory
-cat /var/log/pods/kube-system_kube-apiserver-controlplane_e24b3821e9bdc47a91209bfb04056993/kube-apiserver/X.log
-> Err: connection error: desc = "transport: Error while dialing dial tcp: address this-is-very-wrong: missing port in address". Reconnecting...
-
-# 2) but here we want to find other ways, so we check the container logs
-crictl ps # maybe run a few times, because the apiserver container get's restarted
-crictl logs f669a6f3afda2 # pod ID
-> Error while dialing dial tcp: address this-is-very-wrong: missing port in address. Reconnecting...
-
-# 3) what about syslogs
-journalctl | grep apiserver # nothing specific
-cat /var/log/syslog | grep apiserver # nothing specific
-```
-
-Now undo the change and continue
-
-```bash
-# smart people use a backup
-cp ~/kube-apiserver.yaml.ori /etc/kubernetes/manifests/kube-apiserver.yaml
-
-# wait till container restarts
-watch crictl ps
-
-# check for apiserver pod
-k -n kube-system get pod
-```
-
-#### Invalid Apiserver Manifest YAML
-
-Change the Apiserver manifest and add invalid YAML, something like this:
-
-```yaml
-apiVersionTHIS IS VERY ::::: WRONG v1
-kind: Pod
-metadata:
-```
-
-Check what the logs say, and fix again.
-
-Fix the Apiserver again.
-
-Apiserver is not coming back, we messed up!
-
-```bash
-# seems like the kubelet can't even create the apiserver pod/container
-/var/log/pods # nothing
-crictl logs # nothing
-
-# syslogs:
-tail -f /var/log/syslog | grep apiserver
-> Could not process manifest file err="/etc/kubernetes/manifests/kube-apiserver.yaml: couldn't parse as pod(yaml: mapping values are not allowed in this context), please check config file"
-
-# or:
-journalctl | grep apiserver
-> Could not process manifest file" err="/etc/kubernetes/manifests/kube-apiserver.yaml: couldn't parse as pod(yaml: mapping values are not allowed in this context), please check config file
-```
-
-### [Apiserver NodeRestriction](https://killercoda.com/killer-shell-cks/scenario/apiserver-node-restriction)
-
-[admission controller - Use the NodeRestriction Admission Controller to restrict Kubelet's permissions](https://killercoda.com/killer-shell-cks/scenario/apiserver-node-restriction)
-
-#### Verify the issue
-
-The Kubelet on `node01` shouldn't be able to set Node labels
-
-- starting with `node-restriction.kubernetes.io/*`
-- on other Nodes than itself （不能label其他node，只能label本node：`node01`）
-
-Verify this is not restricted atm by performing the following actions as the Kubelet from node01 :
-
-- add label `killercoda/one=123` to Node `controlplane`
-- add label `node-restriction.kubernetes.io/one=123` to Node `node01`
-
-Tip
-
-We can contact the Apiserver as the Kubelet by using the Kubelet kubeconfig
-
-```bash
-export KUBECONFIG=/etc/kubernetes/kubelet.conf
-k get node
-```
-
-
-Solution
-
-```bash
-ssh node01
-    export KUBECONFIG=/etc/kubernetes/kubelet.conf
-    k label node controlplane killercoda/one=123 # works but should be restricted 现在可以成功加label，但是我们应该更改配置使得它满足题目要求：be restricted
-    node/controlplane labeled
-    k label node node01 node-restriction.kubernetes.io/one=123 # works but should be restricted
-    node/node01 labeled
-
-    k get node --show-labels 
-NAME           STATUS   ROLES           AGE   VERSION   LABELS
-controlplane   Ready    control-plane   20d   v1.25.3   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,killercoda/one=123,kubernetes.io/arch=amd64,kubernetes.io/hostname=controlplane,kubernetes.io/os=linux,node-role.kubernetes.io/control-plane=,node.kubernetes.io/exclude-from-external-load-balancers=
-node01         Ready    <none>          20d   v1.25.3   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=node01,kubernetes.io/os=linux,node-restriction.kubernetes.io/one=123
-
-# 可以看到两个label都成功加上了
-```
-
-#### Enable the NodeRestriction Admission Controller
-
-```bash
-node01 $ exit
-logout
-Connection to node01 closed.
-controlplane $ vim /etc/kubernetes/manifests/kube-apiserver.yaml
-```
-
-```bash
-spec:
-  containers:
-  - command:
-    - kube-apiserver
-    - --advertise-address=172.30.1.2
-    - --allow-privileged=true
-    - --authorization-mode=Node,RBAC
-    - --client-ca-file=/etc/kubernetes/pki/ca.crt
-    - --enable-admission-plugins=NodeRestriction    # Add this line
-    - --enable-bootstrap-token-auth=true
-```
-
-```bash
-ssh node01
-    export KUBECONFIG=/etc/kubernetes/kubelet.conf
-    k label node controlplane killercoda/two=123 # restricted
-      Error from server (Forbidden): nodes "controlplane" is forbidden: node "node01" is not allowed to modify node "controlplane"
-
-    k label node node01 node-restriction.kubernetes.io/two=123 # restricted
-      Error from server (Forbidden): nodes "node01" is forbidden: is not allowed to modify labels: node-restriction.kubernetes.io/two
-
-    k label node node01 test/two=123 # works
-
-    # other test
-    k label node controlplane test/two=123
-      Error from server (Forbidden): nodes "controlplane" is forbidden: node "node01" is not allowed to modify node "controlplane"
-```
-
-Notice that existing restricted labels won't be removed once the NodeRestriction is enabled.
-
-### [ImagePolicyWebhook](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#imagepolicywebhook)
-
-[Complete the ImagePolicyWebhook setup](https://killercoda.com/killer-shell-cks/scenario/image-policy-webhook-setup)
-
-#### Complete the ImagePolicyWebhook setup
-
-An ImagePolicyWebhook setup has been half finished, complete it:
-
-1. Make sure `admission_config.json` points to correct kubeconfig
-2. Set the `allowTTL` to `100`
-3. All Pod creation should be prevented if the external service is not reachable
-4. The external service will be reachable under `https://localhost:1234` in the future. It doesn't exist yet so it - shouldn't be able to create any Pods till then
-5. Register the correct admission plugin in the apiserver
-
-<details>
-  <summary>Solution</summary>
-  <p>
-
-```bash
-  # find admission_config.json path
-  vim /etc/kubernetes/manifests/kube-apiserver.yaml
-```
-
-```bash
-  # find admission_config.json path in kube-apiserver.yaml
-  vim /etc/kubernetes/manifests/kube-apiserver.yaml # Find value of --admission-control-config-file
-  # or
-  cat /etc/kubernetes/manifests/kube-apiserver.yaml | grep admission-control-config-file
-      - --admission-control-config-file=/etc/kubernetes/policywebhook/admission_config.json
-
-  vim /etc/kubernetes/policywebhook/admission_config.json
-```
-
-The `/etc/kubernetes/policywebhook/admission_config.json` should look like this:
-
-```json
-{
-   "apiVersion": "apiserver.config.k8s.io/v1",
-   "kind": "AdmissionConfiguration",
-   "plugins": [
-      {
-         "name": "ImagePolicyWebhook",
-         "configuration": {
-            "imagePolicy": {
-               "kubeConfigFile": "/etc/kubernetes/policywebhook/kubeconf", // 1.modify "kubeConfigFile": "/todo/kubeconf" to current
-               "allowTTL": 100,  // 2.modify to 100
-               "denyTTL": 50,
-               "retryBackoff": 500,
-               "defaultAllow": false   // 3.modify from true to false
-            }
-         }
-      }
-   ]
-}
-```
-
-```bash
-  vim /etc/kubernetes/policywebhook/admission_config.json
-```
-
-The `/etc/kubernetes/policywebhook/kubeconf` should contain the correct server:
-
-```yaml
-apiVersion: v1
-kind: Config
-clusters:
-- cluster:
-    certificate-authority: /etc/kubernetes/policywebhook/external-cert.pem
-    server: https://localhost:1234 # 4.
-  name: image-checker
-...
-```
-
-5 The apiserver needs to be configured with the ImagePolicyWebhook admission plugin:
-
-```yaml
-spec:
-  containers:
-  - command:
-    - kube-apiserver
-    - --enable-admission-plugins=NodeRestriction,ImagePolicyWebhook # 5. Add ImagePolicyWebhook
-    - --admission-control-config-file=/etc/kubernetes/policywebhook/admission_config.json
-```
-
-Luckily the `--admission-control-config-file` argument seems already to be configured.
-  </p>
-</details>
-
-<details>
-  <summary>Test your Solution</summary>
-  <p>
-Wait till apiserver container restarted: 
-
-`watch crictl ps`
-
-To test your solution you can simply try to create a Pod:
-
-`k run pod --image=nginx`
-
-It should throw you an error like:
-
-```bash
-Error from server (Forbidden): pods "pod" is forbidden: Post "https://localhost:1234/?timeout=30s": dial tcp 127.0.0.1:1234: connect: connection refused
-```
-
-Once that service would be implemented and if it would allow the Pod, the Pod could be created.
-  </p>
-</details>
-
-### [kube-bench](https://github.com/aquasecurity/kube-bench)
-
-[cis-benchmarks-kube-bench-fix-controlplane](https://killercoda.com/killer-shell-cks/scenario/cis-benchmarks-kube-bench-fix-controlplane)
-
-- Api Server: `/etc/kubernetes/manifests/kube-apiserver.yaml`
-- Controller Manager pod specification file `/etc/kubernetes/manifests/kube-controller-manager.yaml`
-- Kubelet: `/var/lib/kubelet/config.yaml`
-- etcd: `/etc/kubernetes/manifests/etcd.yaml`
-
-
-#### Apiserver should be more conform to CIS
-
-Use `kube-bench` to ensure `1.2.20` has status `PASS`.
-
-Solution
-
-Check for results
-
-```bash
-# see all
-kube-bench run --targets master
-
-# or just see the one 推荐这种方法，输出比较少，好看关键信息
-kube-bench run --targets master --check 1.2.20
-
-[INFO] 1 Master Node Security Configuration
-[INFO] 1.2 API Server
-[FAIL] 1.2.20 Ensure that the --profiling argument is set to false (Automated)
-
-== Remediations master ==
-1.2.20 Edit the API server pod specification file /etc/kubernetes/manifests/kube-apiserver.yaml
-on the master node and set the below parameter.
---profiling=false
-```
-
-Fix the `/etc/kubernetes/manifests/kube-apiserver.yaml`
-
-```yaml
-...
-containers:
-  - command:
-    - kube-apiserver
-    - --profiling=false
-...
-    image: k8s.gcr.io/kube-apiserver:v1.22.2
-...
-
-```
-
-Now wait for container to be restarted: `watch crictl ps`
-
-#### ControllerManager should be more conform to CIS
-
-Use `kube-bench` to ensure `1.3.2` has status `PASS`.
-
-```bash
-# 推荐这种方法，输出比较少，好看关键信息
-kube-bench run --targets=master --check=1.3.2
-
-[INFO] 1 Master Node Security Configuration
-[INFO] 1.3 Controller Manager
-[FAIL] 1.3.2 Ensure that the --profiling argument is set to false (Automated)
-
-== Remediations master ==
-1.3.2 Edit the Controller Manager pod specification file /etc/kubernetes/manifests/kube-controller-manager.yaml
-on the master node and set the below parameter.
---profiling=false
-```
-
-Fix the /etc/kubernetes/manifests/kube-controller-manager.yaml
-
-
-```yaml
-...
-  containers:
-  - command:
-    - kube-controller-manager
-    - --profiling=false
-...
-    image: k8s.gcr.io/kube-controller-manager:v1.22.2
-...
-```
-
-Now wait for container to be restarted: `watch crictl ps`
-
-#### PKI directory should be more conform to CIS
-
-```bash
-# 推荐这种方法，输出比较少，好看关键信息
-kube-bench run --check 1.1.19 --targets=master
-[INFO] 1 Master Node Security Configuration
-[INFO] 1.1 Master Node Configuration Files
-[FAIL] 1.1.19 Ensure that the Kubernetes PKI directory and file ownership is set to root:root (Automated)
-
-== Remediations master ==
-1.1.19 Run the below command (based on the file location on your system) on the master node.
-For example,
-chown -R root:root /etc/kubernetes/pki/
-```
-
-Fix the /etc/kubernetes/pki/
-
-```bash
-chgrp root /etc/kubernetes/pki/
-
-# or
-chown -R root:root /etc/kubernetes/pki/
-```
-
-### [Trivy](https://github.com/aquasecurity/trivy)
-
-[Image Vulnerability Scanning Trivy](https://killercoda.com/killer-shell-cks/scenario/image-vulnerability-scanning-trivy)
-#### Use trivy to scan images for known vulnerabilities
-
-Using `trivy` :
-Scan images in Namespaces `applications` and `infra` for the vulnerabilities `CVE-2021-28831` and `CVE-2016-9841` .
-
-Scale those Deployments containing any of these down to `0` .
-
-
-Solution:
-
-First we check the applications Namespace.
-
-```bash
-# find images
-k -n applications get pod -oyaml | grep image:
-
-# scan first deployment
-trivy image nginx:1.19.1-alpine-perl | grep CVE-2021-28831
-31.00 MiB / 31.00 MiB [---------------------------------------------------------------------------------------------------] 100.00% 8.41 MiB p/s 4s
-| busybox      | CVE-2021-28831   |          | 1.31.1-r9         | 1.31.1-r10    | busybox: invalid free or segmentation |
-| ssl_client   | CVE-2021-28831   | HIGH     | 1.31.1-r9         | 1.31.1-r10    | busybox: invalid free or segmentation |
-
-trivy image nginx:1.19.1-alpine-perl | grep CVE-2016-9841
-
-# scan second deployment
-trivy image nginx:1.20.2-alpine | grep CVE-2021-28831
-trivy image nginx:1.20.2-alpine | grep CVE-2016-9841
-
-# hit on the first one, so we scale down
-$ k -n applications get deploy
-NAME   READY   UP-TO-DATE   AVAILABLE   AGE
-web1   2/2     2            2           6m53s
-web2   1/1     1            1           6m53s
-
-$ k -n applications get deploy web1 -oyaml | grep nginx:1.19.1-alpine-perl
-      - image: nginx:1.19.1-alpine-perl
-$ k -n applications get deploy web2 -oyaml | grep nginx:1.19.1-alpine-perl
-
-k -n applications get deploy web1 
-NAME   READY   UP-TO-DATE   AVAILABLE   AGE
-web1   2/2     2            2           13m
-
-k -n applications scale deploy web1 --replicas 0
-
-$ k -n applications get deploy web1
-NAME   READY   UP-TO-DATE   AVAILABLE   AGE
-web1   0/0     0            0           13m
-```
-
-Next we check the infra Namespace.
-
-```bash
-# find images
-k -n infra get pod -oyaml | grep image:
-
-# scan deployment
-trivy image httpd:2.4.39-alpine | grep CVE-2021-28831
-trivy image httpd:2.4.39-alpine | grep CVE-2016-9841
-
-# hit, so we scale down
-$ k -n infra get deployments.apps 
-NAME      READY   UP-TO-DATE   AVAILABLE   AGE
-inf-hjk   3/3     3            3           16m
-
-k -n infra scale deploy inf-hjk --replicas 0
-
-$ k -n infra get deployments.apps 
-NAME      READY   UP-TO-DATE   AVAILABLE   AGE
-inf-hjk   0/0     0            0           18m
-```
-
-### Falco
-
-https://killercoda.com/killer-shell-cks/scenario/falco-change-rule
-
-#### Investigate a Falco Rule
-
-Falco has been installed on Node `controlplane` and it runs as a service.
-
-It's configured to log to `syslog`, and this is where the verification for this scenario also looks.
-
-Cause the rule "shell in a container" to log by:
-
-1. creating a new Pod image `nginx:alpine`
-2. `kubectl exec pod -- sh` into it
-3. check the Falco logs contain a related output
-
-##### Tip
-
-`service falco status`
-
-`cat /var/log/syslog | grep falco`
-
-##### Solution
-
-`k run pod --image=nginx:alpine`
-
-`k exec -it pod -- sh`
-
-`exit`
-
-`cat /var/log/syslog | grep falco | grep shell`
-
-#### Change a Falco Rule
-
-Change the Falco `output` of rule "Terminal shell in container" to:
-
-- include `NEW SHELL!!!` at the very beginning
-- include `user_id=%user.uid` at any position
-- include `repo=%container.image.repository` at any position
-
-Cause syslog output again by creating a shell in that Pod.
-Verify the syslogs contain the new data.
-
-##### Tip
-
-https://falco.org/docs/rules/supported-fields
-
-```bash
-cd /etc/falco/
-grep -ri "shell in"
-```
-
-##### Solution
-
-```bash
-cd /etc/falco/
-cp falco_rules.yaml falco_rules.local.yaml
-vim falco_rules.local.yaml
-```
-
-```yaml
-- rule: Terminal shell in container
-  desc: A shell was used as the entrypoint/exec point into a container with an attached terminal.
-  condition: >
-    spawned_process and container
-    and shell_procs and proc.tty != 0
-    and container_entrypoint
-    and not user_expected_terminal_shell_in_container_conditions
-  output: >
-    NEW SHELL!!! (user_id=%user.uid repo=%container.image.repository %user.uiduser=%user.name user_loginuid=%user.loginuid %container.info
-    shell=%proc.name parent=%proc.pname cmdline=%proc.cmdline terminal=%proc.tty container_id=%container.id image=%container.image.repository)
-  priority: NOTICE
-  tags: [container, shell, mitre_execution]
-```
-
-```bash
-service falco restart
-k exec -it pod -- sh
-cat /var/log/syslog | grep falco | grep shell
-```
-
-### NetworkPolicy - namespace selector
-
-There are existing Pods in Namespace `space1` and `space2` .
-
-We need a new NetworkPolicy named `np` that restricts all Pods in Namespace `space1` to only have outgoing traffic to Pods in Namespace `space2` . Incoming traffic not affected.
-
-We also need a new NetworkPolicy named `np` that restricts all Pods in Namespace `space2` to only have incoming traffic from Pods in Namespace `space1` . Outgoing traffic not affected.
-
-The NetworkPolicies should still allow outgoing DNS traffic on port `53` TCP and UDP.
-
-#### Tip
-
-For learning you can check the NetworkPolicy Editor
-The namespaceSelector from NPs works with Namespace labels, so first we check existing labels for Namespaces
-
-#### Solution
-
-```bash
-# 获取 namespace的label
-k get ns --show-labels
-  NAME              STATUS   AGE     LABELS
-  space1            Active   3m9s    kubernetes.io/metadata.name=space1
-  space2            Active   3m9s    kubernetes.io/metadata.name=space2
-
-vim 1.yaml
-```
-
-```yaml
-# 1.yaml
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: np
-  namespace: space1  # namespace 已经来表示应用到all Pods in Namespace `space1`
-spec:
-  podSelector: {} # 所有pod
-  policyTypes:
-  - Egress
-  egress:
-    - to:
-      - namespaceSelector:
-          matchLabels:
-            kubernetes.io/metadata.name: space2  # space2的namespace
-    - ports: # 注意加 - 表示或的关系
-      - protocol: TCP
-        port: 53
-      - protocol: UDP
-        port: 53
-```
-
-```yaml
-# 2.yaml
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: np
-  namespace: space2
-spec:
-  podSelector: {}
-  policyTypes:
-    - Ingress
-  ingress:
-    - from:
-      - namespaceSelector:
-          matchLabels:
-            kubernetes.io/metadata.name: space1
-    - ports:
-      - protocol: TCP
-        port: 53
-      - protocol: UDP
-        port: 53
-```
-
-```bash
-k apply -f 1.yaml
-k apply -f 2.yaml
-```
-
-### NetworkPolicy - Metadata Protection
-
-https://killercoda.com/killer-shell-cks/scenario/networkpolicy-metadata-protection
-
-Cloud providers can have Metadata Servers which expose critical information, for example GCP or AWS.
-
-For this task we assume that there is a Metadata Server at `1.1.1.1` .
-
-You can test connection to that IP using `nc -v 1.1.1.1 53` .
-
-Create a NetworkPolicy named `metadata-server `In Namespace `default` which restricts all egress traffic to that IP.
-
-The NetworkPolicy should only affect Pods with label `trust=nope` .
-
-```yaml
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: metadata-server
-  namespace: default
-spec:
-  podSelector:
-    matchLabels:
-      trust: nope
-  policyTypes:
-    - Egress
-  egress:
-    - to:
-      - ipBlock:
-          cidr: 0.0.0.0/0  # all addresses 掩码为0，且0.0.0.0，代表所有地址
-          except:
-            - 1.1.1.1/32 # 
-```
-
-### TODO
-
-
+### [CKS 知识点&练习题总结](./Kubernetes-CKS-%E7%9F%A5%E8%AF%86%E7%82%B9-%E7%BB%83%E4%B9%A0%E9%A2%98.html)
 
 ## 如何备考
 
@@ -894,6 +128,17 @@ kubectl create clusterrole restrict-access-role --verb=use --resource=psp --reso
 ## after modify /etc/kubernetes/manifests/kube-apiserver.yaml
 systemctl restart kubelet
 
+### 查询 sa 对应的 role 名称（假设是 role-1）
+kubectl get rolebinding -n db -oyaml | grep 'service-account-web' -B 10
+
+### grep
+grep apple -A 10 # apple之后10行
+
+grep apple -B 10 # apple之前10行
+
+### secret used by pod
+kubectl exec pod1 -- env
+kubectl exec pod1 -- cat /etc/diver/hosts
 ```
 
 ## [经验总结](http://liyuankun.top/Kubernates-Certified-Kubernetes-Administrator-CKA.html#%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93)(同CKA)
@@ -1270,7 +515,6 @@ spec:
 kubectl apply -f /cks/15/p1.yaml
 ```
 
-
 ### 考题8 - NetworkPolicy
 
 #### Task
@@ -1336,13 +580,311 @@ spec:
 kubectl apply -f /cks/net/po.yaml
 ```
 
-### 考题9 - 
+### 考题9 - RBAC
 
-### 考题10 - 
+#### Context
 
-### 考题11 - 
+绑定到 Pod 的 ServiceAccount 的 Role 授予过度宽松的权限。完成以下项目以减少权限集。
+A Role bound to a Pod's serviceAccount grants overly permissive permissions.
+Complete the following tasks to reduce the set of permissions.
 
-### 考题12 - 
+#### Task
+
+一个名为 `web-pod` 的现有 Pod 已在 namespace `db` 中运行。编辑绑定到 Pod 的 ServiceAccount `service-account-web` 的现有 Role， 仅允许只对 services 类型的资源执行 `get` 操作。
+
+- 在 namespace `db` 中创建一个名为 `role-2` ，并仅允许只对 `namespaces` 类型的资源执行 `delete` 操作的新 Role。
+- 创建一个名为 `role-2-binding` 的新 RoleBinding，将新创建的 Role 绑定到 Pod 的 ServiceAccount。
+注意：请勿删除现有的 RoleBinding。
+
+Given an existing Pod named `web-pod` running in the namespace `db`. Edit the existing Role bound to the Pod's serviceAccount `sa-dev-1` to only allow performing `list` operations, only on resources of type `Endpoints`.
+
+- create a new Role named `role-2` in the namespace `db`, which only allows performing `update` operations, only on resources of type `persistentvolumeclaims`
+- create a new RoleBinding named `role-2-binding` binding the newly created Role to the Pod's serviceAccount.
+
+Don't delete the existing RoleBinding
+
+#### solution
+
+搜索 clusterrole（使用RBAC鉴权）
+https://kubernetes.io/zh-cn/docs/reference/access-authn-authz/rbac/
+
+```bash
+### 查询 sa 对应的 role 名称（假设是 role-1）
+kubectl get rolebinding -n db -oyaml | grep 'service-account-web' -B 10
+
+### 修改 role 清单文件（仅允许对 services 类型的资源执行 get 操作）
+kubectl edit role -n db role-1
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: role-1
+  namespace: db
+  resourceVersion: "9528"
+rules:
+- apiGroups:
+    - ""
+  resources:
+    - services
+  verbs:
+    - get
+
+### 创建新角色 role-2（仅允许只对 namespaces 类型的资源执行 delete 操作）
+kubectl create role role-2 -n db --verb=delete --resource=namespaces
+
+### 创建 rolebinding，并绑定到 sa 上
+kubectl create rolebinding role-2-binding --role=role-2 --serviceaccount=db:service-account-web
+
+```
+
+### 考题10 - kube-apiserver 审计日志记录和采集
+
+#### Task
+
+Enable audit logs in the cluster.
+To do so, enable the log backend, and ensure that:
+
+- logs are stored at `/var/log/kubernetes/audit-logs.txt`
+- log files are retained for `10` days
+- at maximum, a number of `2` auditlog files are retained
+A basic policy is provided at `/etc/kubernetes/logpolicy/sample-policy.yaml`. it only specifies what not to log. The base policy is located on the cluster's `master` node.
+
+Edit and extend the basic policy to log:
+
+- `namespaces` changes at `RequestResponse` level
+- the request body of pods changes in the namespace `front-apps`
+- `configMap` and `secret` changes in all namespaces at the `Metadata` level
+- Also, add a `catch-all` ruie to log all other requests at the `Metadata` level.
+
+Don't forget to apply the modifiedpolicy.
+`/etc/kubernetes/logpolicy/sample-policy.yaml`
+
+在 cluster 中启用审计日志。为此，请启用日志后端，并确保：
+
+- 日志存储在 `/var/log/kubernetes/audit-logs.txt`
+- 日志文件能保留 `10` 天
+- 最多保留 `2` 个旧审计日志文件
+/etc/kubernetes/logpolicy/sample-policy.yaml 提供了基本策略。它仅指定不记录的内容。
+注意：基本策略位于 cluster 的 master 节点上。
+
+编辑和扩展基本策略以记录：
+
+- RequestResponse 级别的 cronjobs 更改
+- namespace front-apps 中 deployment 更改的请求体
+- Metadata 级别的所有 namespace 中的 ConfigMap 和 Secret 的更改
+- 此外，添加一个全方位的规则以在 Metadata 级别记录所有其他请求。
+注意：不要忘记应用修改后的策略
+
+#### Solution
+
+搜索 audit（审计）
+https://kubernetes.io/zh-cn/docs/tasks/debug/debug-cluster/audit/
+
+```bash
+### 如果没有 /var/log/kubernetes/，则创建目录
+mkdir /var/log/kubernetes/
+
+### 修改 audit 模板文件
+vim /etc/kubernetes/logpolicy/sample-policy.yaml
+
+apiVersion: audit.k8s.io/v1
+kind: Policy
+omitStages:
+  - "RequestReceived"
+rules:
+  - level: RequestResponse
+    resources:
+    - group: ""
+      resources: ["cronjobs"]
+  - level: Request
+    resources:
+    - group: ""
+      resources: ["deployments"]
+    namespaces: ["front-apps"]
+  - level: Metadata
+    resources:
+    - group: ""
+      resources: ["secrets", "configmaps"]
+  - level: Metadata
+    omitStages:
+      - "RequestReceived"
+
+### 修改 apiserver 配置文件，启用审计日志
+vim /etc/kubernetes/manifests/kube-apiserver.yaml
+--audit-policy-file=/etc/kubernetes/logpolicy/sample-policy.yaml
+--audit-log-path=/var/log/kubernetes/audit-logs.txt
+--audit-log-maxage=10
+--audit-log-maxbackup=2
+
+### 在 apiserver 的 Pod 上挂载策略文件和日志文件所在的目录（考试时可能已经挂载好）
+vim /etc/kubernetes/manifests/kube-apiserver.yaml
+volumeMounts:
+  - mountPath: /var/log/kubernetes
+    name: kubernetes-logs
+  - mountPath: /etc/kubernetes/logpolicy
+    name: kubernetes-policy
+volumes:
+- name: kubernetes-logs
+  hostPath:
+    path: /var/log/kubernetes
+- name: kubernetes-policy
+  hostPath:
+    path: /etc/kubernetes/logpolicy
+
+### 重载生效配置
+systemctl daemon-reload
+systemctl restart kubelet
+
+```
+
+### 考题11 - Secret
+
+#### Task
+
+Retrieve the content of the existing secret named `db1-test` in the `istio-system` namespace.
+store the username field in a file named `/home/candidate/user.txt`, and the password field in a file named `/home/candidate/pass`.txt.
+
+You must create both files; they don't exist yet.
+Do not use/modify the created files in the following steps, create new temporary files if needed.
+
+Create a new secret named `db2-test` in the `istio-system` namespace, with the following
+
+```yaml
+username : production-instance
+password : KvLftKgs4aVH
+```
+
+Finally, create a new Pod that has access to the secret db2-test via a volume:
+
+- Pod name `secret-pod`
+- Namespace `istio-system`
+- container name `dev-container`
+- image `nginx`
+- volume name `secret-volume`
+- mount path `/etc/secret`
+
+在 namespace `istio-system` 中获取名为 `db1-test` 的现有 secret 的内容.
+将 username 字段存储在名为 `/cks/sec/user.txt` 的文件中，并将 password 字段存储在名为 `/cks/sec/pass.txt` 的文件中。
+
+注意：你必须创建以上两个文件，他们还不存在。
+注意：不要在以下步骤中使用/修改先前创建的文件，如果需要，可以创建新的临时文件。
+
+在 `istio-system` namespace 中创建一个名为 `db2-test` 的新 secret，内容如下：
+
+```yaml
+username : production-instance
+password : KvLftKgs4aVH
+```
+
+最后，创建一个新的 Pod，它可以通过卷访问 secret `db2-test` ：
+
+- Pod 名称 `secret-pod`
+- Namespace `istio-system`
+- 容器名 `dev-container`
+- 镜像 `nginx`
+- 卷名 `secret-volume`
+- 挂载路径 `/etc/secret`
+
+#### Solution
+
+搜索 secret（使用 kubectl 管理 Secret）
+https://kubernetes.io/zh-cn/docs/tasks/configmap-secret/managing-secret-using-kubectl/
+搜索 secret（Secret）
+https://kubernetes.io/zh-cn/docs/concepts/configuration/secret/
+
+```bash
+### 检索已存在的 secret，将获取到的用户名和密码字段存储到指定文件
+kubectl get secrets db2-test -o jsonpath='{.data.username}' | base64 -d > /home/candidate/user.txt
+kubectl get secrets db2-test -o jsonpath='{.data.password}' | base64 -d > /home/candidate/pass.txt
+
+### 创建 secret
+kubectl create secret generic db2-test -n istio-system --from-literal=username=production-instance --from-literal=password=KvLftKgs4aVH 
+
+### 在 Pod 中以文件形式使用 Secret
+vim k8s-secret.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secret-pod
+  namespace: istio-system
+spec:
+  containers:
+  - name: dev-container
+    image: nginx
+    volumeMounts:
+    - name: secret-volume
+      mountPath: "/etc/secret"
+      readOnly: true
+  volumes:
+  - name: secret-volume
+    secret:
+      secretName: db2-test
+      optional: false
+
+### 应用清单文件
+kubectl apply -f k8s-secret.yaml
+
+### 验证 pod
+kubectl get pods -n istio-system dev-pod
+```
+
+### 考题12 - dockerfile 和 deployment 安全优化
+
+open policyagent/conftest test deploy.yaml
+open policyagent/conftest test myapp.dockerfile
+
+#### Task
+
+- 分析和编辑给定的 Dockerfile `/cks/docker/Dockerfile`（基于 ubuntu:16.04 镜像），并修复在文件中拥有的突出的安全/最佳实践问题的两个指令。
+- 分析和编辑给定的清单文件 `/cks/docker/deployment.yaml`，并修复在文件中拥有突出的安全/最佳实践问题的两个字段。
+
+注意：请勿添加或删除配置设置；只需修改现有的配置设置让以上两个配置设置都不再有安全/最佳实践问题。
+注意：如果您需要非特权用户来执行任何项目，请使用用户 ID 65535 的用户 nobody 。
+答题： 注意，本次的 Dockerfile 和 deployment.yaml 仅修改即可，无需部署。
+
+- Analyze and edit the given Dockerfile (based on the ubuntu:16.04 image) `/cks/7/Dockerfile` fixing two instructions present in the file being prominent security/best-practice issues.
+- Analyze and edit the given manifest file `/cks/7/deployment.yaml` fixing two fields present in the file being prominent security/best-practice issues.
+
+Don't add or remove configuration settings; only modify the existing configuration settings, so that two configuration settings each are no longer security/best-practice concerns.
+
+Should you need an unprivileged user for any of the tasks, use user `nobody` with user id `65536`.
+
+#### Solution 12
+
+```bash
+### 修复 dockerfile 文件中存在的两个安全/最佳实践指令
+### (1)将 root 注释掉；(2)增加 nobody
+vim /cks/docker/Dockerfile
+
+FROM ubuntu:16.04
+#USER root 
+USER nobody
+
+### 修复 deployment 文件中存在的两个安全/最佳实践问题字段
+### (1)将 privileged 变为 False；(2)将 readOnlyRootFilesystem 变为 True
+vim /cks/docker/deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dev
+  name: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+			app: dev
+	template:
+		metadata:
+ 			labels:
+ 				app: dev
+	spec:
+ 		containers:
+ 		- image: mysql
+ 			name: mysql
+ 			securityContext: {'capabilities':{'add':['NET_ADMIN'],'drop':['all']},'privileged': False,'readOnlyRootFilesystem': True, 'runAsUser': 65535}
+```
 
 ### 考题13 - 
 

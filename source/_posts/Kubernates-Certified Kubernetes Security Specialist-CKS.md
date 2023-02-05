@@ -1,5 +1,5 @@
 ---
-title: 2023 CKS v1.25 考试真题整理
+title: 2023 CKS v1.26 考试真题整理
 catalog: true
 date: 2022-12-25 22:52:43
 subtitle: Certified Kubernetes Security Specialist
@@ -27,6 +27,51 @@ categories:
   - 因为从06/2022开始环境升级（贬义），考试环境更难用了，变的很卡，所以时间变得比较紧张。容易做不完题，建议先把有把握的，花费时间不多的题先做掉
     - [CKS CKA CKAD changed Terminal to Remote Desktop ](https://itnext.io/cks-cka-ckad-changed-terminal-to-remote-desktop-157a26c1d5e)
 - CKS考试66分以上即可通过，考试不通过有一次补考机会。
+
+Certifications- expire 36 months from the date that the Program certification requirements are met by a candidate.
+
+### Certified Kubernetes Security Specialist (CKS)
+
+The following tools and resources are allowed during the exam as long as they are used by candidates to work independently on exam tasks (i.e. not used for 3rd party assistance or research) and are accessed from within the Linux server terminal on which the Exam is delivered.
+During the exam, candidates may:
+- review the Exam content instructions that are presented in the command line terminal.
+- review Documents installed by the distribution (i.e. /usr/share and its subdirectories)
+- use the search function provided on https://kubernetes.io/docs/ however, they may only open search results that have a domain matching the sites listed below
+- use the browser within the VM to access the following documentation:  
+  - Kubernetes Documentation: 
+    - https://kubernetes.io/docs/ and their subdomains
+    - https://kubernetes.io/blog/ and their subdomains
+  This includes all available language translations of these pages (e.g. https://kubernetes.io/zh/docs/)
+  - Tools:
+    - Trivy documentation https://aquasecurity.github.io/trivy/
+    - Falco documentation https://falco.org/docs/
+  This includes all available language translations of these pages (e.g. https://falco.org/zh/docs/)
+  - App Armor:
+    - Documentation https://gitlab.com/apparmor/apparmor/-/wikis/Documentation
+
+### CKS Environment
+
+- Each task on this exam must be completed on a designated cluster/configuration context.
+- Sixteen clusters comprise the exam environment, one for each task. Each cluster is made up of one master node and one worker node.
+- An infobox at the start of each task provides you with the cluster name/context and the hostname of the master and worker node.
+- You can switch the cluster/configuration context using a command such as the following:
+- `kubectl config use-context <cluster/context name>`
+- Nodes making up each cluster can be reached via ssh, using a command such as the following:
+- `ssh <nodename> `
+- You have elevated privileges on any node by default, so there is no need to assume elevated privileges.
+- You must return to the base node (hostname cli) after completing each task.
+- Nested `−ssh` is not supported.
+- You can use `kubectl` and the appropriate context to work on any cluster from the base node. When connected to a cluster member via ssh, you will only be able to work on that particular cluster via kubectl.
+- For your convenience, all environments, in other words, the base system and the cluster nodes, have the following additional command-line tools pre-installed and pre-configured:
+  - `kubectl` with kalias and Bash autocompletion
+  - `yq` and `jq` for YAML/JSON processing
+  - `tmux` for terminal multiplexing
+  - `curl` and `wget` for testing web services
+  - `man` and man pages for further documentation
+- Further instructions for connecting to cluster nodes will be provided in the appropriate tasks
+- The CKS environment is currently running etcd v3.5
+- The CKS environment is currently running Kubernetes v1.26
+- The CKS  exam environment will be aligned with the most recent K8s minor version within approximately 4 to 8 weeks of the K8s release date.
 
 ### More items for CKS than CKA and CKAD
 
@@ -145,7 +190,7 @@ kubectl exec pod1 -- cat /etc/diver/hosts
 
 ## [Pre Setup](http://liyuankun.top/Kubernates-Certified-Kubernetes-Administrator-CKA.html#pre-setup)(同CKA)
 
-## CKS 2021 真题 1.20
+## CKS 2022 真题 1.20
 
 ### 考题1 - AppArmor 访问控制
 
@@ -886,15 +931,191 @@ spec:
  			securityContext: {'capabilities':{'add':['NET_ADMIN'],'drop':['all']},'privileged': False,'readOnlyRootFilesystem': True, 'runAsUser': 65535}
 ```
 
-### 考题13 - 
+### 考题13 - admission-controllers - ImagePolicyWebhook
 
-### 考题14 - 
+#### Context
 
-### 考题15 - 
+A container image scanner is set up on the cluster, but it's not yet fully integrated into the cluster's configuration. When complete, the container image scanner shall scan for and reject the use of vulnerable images.
 
-### 考题16 - 
+cluster 上设置了容器镜像扫描器，但尚未完全集成到 cluster 的配置中。完成后，容器镜像扫描器应扫描并拒绝易受攻击的镜像的使用。
 
-### 考题17 - 
+#### Task
+
+You have to complete the entire task on the cluster's `master` node, where all services and files have been prepared and placed.
+Given an incomplete configuration in directory `/etc/kubernetes/epconfig` and a functional container image scanner with HTTPS endpoint `https://acme.local:8082/image_policy`:
+
+1. Enable the necessary plugins to create an image policy
+2. validate the control configuration and change it to an implicit deny
+3. Edit the configuration to point to the provided HTTPS endpoint correctly.
+4. Finally , test if the configuration is working by trying to deploy the vulnerable resource  `/cks/1/web1.yaml`
+
+You can find the container image scanner's log file at `/var/loglimagepolicyiacme.log`
+
+注意：你必须在 cluster 的 master 节点上完成整个考题，所有服务和文件都已被准备好并放置在该节点上。 给定一个目录 `/etc/kubernetes/epconfig` 中不完整的配置以及具有 HTTPS 端点 `https://acme.local:8082/image_policy` 的功能性容器镜像扫描器：
+
+1. 启用必要的插件来创建镜像策略
+2. 校验控制配置并将其更改为隐式拒绝（implicit deny）
+3. 编辑配置以正确指向提供的 HTTPS 端点
+4. 最后，通过尝试部署易受攻击的资源 `/cks/img/web1.yaml` 来测试配置是否有效。
+
+你可以在 `/var/log/imagepolicy/roadrunner.log` 找到容器镜像扫描仪的日志文件。
+
+#### Solution
+
+搜索 imagepolicywebhook（使用准入控制器），接着再搜索字符串"imagepolicywebhook"
+https://kubernetes.io/zh-cn/docs/reference/access-authn-authz/admission-controllers/
+
+```bash
+### (1)修改不完整的配置
+cd /etc/kubernetes/epconfig
+ls
+
+### (2)验证控制平面的配置并将其更改为拒绝
+vim admission_configuration.json
+```
+
+```json
+{
+   "apiVersion": "apiserver.config.k8s.io/v1",
+   "kind": "AdmissionConfiguration",
+   "plugins": [
+      {
+         "name": "ImagePolicyWebhook",
+         "configuration": {
+            "imagePolicy": {
+               "kubeConfigFile": "/etc/kubernetes/epconfig/kubeconfig.yaml", // kubeconfig
+               "allowTTL": 100,
+               "denyTTL": 50,
+               "retryBackoff": 500,
+               "defaultAllow": false   // 2.modify from true to false
+            }
+         }
+      }
+   ]
+}
+```
+
+```bash
+### (3)编辑配置以正确指向提供的 HTTPS 端点
+vim kubeconfig.yaml
+    apiVersion: v1
+    kind: Config
+    clusters:
+    - cluster:
+        certificate-authority: /etc/kubernetes/epconfig/webhook.pem
+        server: https://acme.local:8082/image_policy   # 配置此步
+  		name: bouncer_webhook
+
+### (4)启用必要的插件以创建镜像策略
+vim /etc/kubernetes/manifests/kube-apiserver.yaml
+
+    - --enable-admission-plugins=NodeRestriction,ImagePolicyWebhook
+    - --admission-control-config-file=/etc/kubernetes/epconfig/admission_configuration.json
+    ......
+    volumeMounts:
+    - mountPath: /etc/kubernetes/epconfig
+      name: config
+      readyOnly: true
+  volumes:
+  - hostPath:
+      path: /etc/kubernetes/epconfig
+      type: DirectoryOrCreate
+    name: config
+
+### (5)加载生效配置
+systemctl daemon-reload
+systemctl restart kubelet
+
+### (6)通过部署易受攻击的资源来测试配置是否有效
+kubectl apply -f /cks/img/web1.yaml
+```
+
+
+### 考题14 - 删除非无状态或非不可变的 pod
+
+Context: it is best-practice to design containers to be stateless and immutable
+
+#### Task
+
+Inspect Pods runnings in namespace `production` and delete any Pod that is either not stateless or not immutable.
+
+Use the following strict interpretation of stateless and immutable:
+
+- Pod being able to store data inside containers must be treated as not stateless. You don't have to worry whether data is actually stored inside containers or not already.
+- Pod being configured to be `privileged` in any way must be treated as potentially not stateless and not immutable.
+
+检查在 namespace production 中运行的 Pod，并删除任何非无状态或非不可变的 Pod。
+使用以下对无状态和不可变的严格解释：
+- 能够在容器内存储数据的 Pod 的容器必须被视为非无状态的。
+- 被配置为任何形式的特权 Pod 必须被视为可能是非无状态和非不可变的。
+注意：你不必担心数据是否实际上已经存储在容器中。
+
+```bash
+### 在命名空间 dev 中检查 running 状态的 pod
+kubectl get pods -n production | grep running
+
+### 查看具有特权的 pod
+kubectl get pods -n production -oyaml | grep -i "privileged: true"
+
+### 查看具有 volume 的 pod
+# jq 用于处理JSON输入，将给定过滤器应用于其JSON文本输入并在标准输出上将过滤器的结果生成为JSON。
+kubectl get pods -n production -o jsonpath={.spec.volumes} | jq
+
+### 将查询到的具有特权和 volume 的 pod 都删除
+kubectl delete pods -n production pod名称
+
+```
+
+### 考题15 - gVisor/runtimeclass
+
+#### Context
+
+该 cluster 使用 containerd 作为 CRI 运行时。
+containerd 的默认运行时处理程序是 `runc`。 containerd 已准备好支持额外的运行时处理程序 `runsc` (gVisor)。
+
+This cluster uses containerd as CRI runtime.
+Containerd's default runtime handler is `runc` . Containerd has been prepared to support an additional runtime handler , `runsc` (gVisor).
+
+#### Task
+
+使用名为 `runsc` 的现有运行时处理程序，创建一个名为 `untrusted` 的 RuntimeClass。
+更新 namespace `server` 中的所有 Pod 以在 gVisor 上运行。
+您可以在 `/cks/gVisor/rc.yaml` 中找到一个模版清单
+
+Create a RuntimeClass named `untrusted` using the prepared runtime handler named `runsc`.
+Update all Pods in the namespace `client` to run on gvisor, unless they are already running on `anon-default` runtime handler.
+You can find a skeleton manifest file at `/cks/13/rc.yaml`
+
+#### Solution
+
+搜索 runtimeclass（容器运行时类）
+https://kubernetes.io/zh-cn/docs/concepts/containers/runtime-class/
+
+### 考题16 - 启用 API Server 认证
+
+#### Context
+
+由 kubeadm 创建的 cluster 的 Kubernetes API 服务器，出于测试目的，临时配置允许未经身份验证和未经授权的访问，授予匿名用户 `cluster-admin` 的访问权限。
+
+#### Task
+
+重新配置 cluster 的 Kubernetes API 服务器，以确保**只允许经过身份验证和授权**的 REST 请求。
+使用授权模式 `Node`,`RBAC` 和准入控制器 `NodeRestriction。`
+删除用户 `system:anonymous` 的 ClusterRoleBinding 来进行清理。
+注意：所有 kubectl 配置环境/文件也被配置使用未经身份验证和未经授权的访问。 你不必更改它，但请注意，一旦完成 cluster 的安全加固， kubectl 的配置将无法工作。 您可以使用位于 cluster 的 master 节点上，cluster 原本的 kubectl 配置文件 /etc/kubernetes/admin.conf ，以确保经过身份验证的授权的请求仍然被允许。
+
+```bash
+### (1)使用授权模式 Node,RBAC 和准入控制器 NodeRestriction
+### 注意：修改 master 节点！
+vim /etc/kubernetes/manifests/kube-apiserver.yaml
+    - --authorization-mode=Node,RBAC
+    - --enable-admission-plugins=NodeRestriction
+    - --client-ca-file=/etc/kubernetes/pki/ca.crt
+		- --enable-bootstrap-token-auth=true
+
+### (2)删除 system:anonymous 的 ClusterRolebinding 角色绑定（取消匿名用户的集群管理员权限）
+kubectl delete clusterrolebinding system:anonymous
+```
 
 ## 参考文章
 

@@ -158,7 +158,10 @@ cat /var/log/pods/kube-system_kube-apiserver-controlplane_e24b3821e9bdc47a91209b
 
 # 2) but here we want to find other ways, so we check the container logs
 crictl ps # maybe run a few times, because the apiserver container get's restarted
-crictl logs f669a6f3afda2 # pod ID
+CONTAINER           IMAGE               CREATED             STATE               NAME                      ATTEMPT             POD ID              POD
+062e4db76ac48       a31e1d84401e6       10 minutes ago      Running             kube-apiserver            0                   2641ca9ecc8ee       kube-apiserver-controlplane
+
+crictl logs 2641ca9ecc8ee # pod ID
 > Error while dialing dial tcp: address this-is-very-wrong: missing port in address. Reconnecting...
 
 # 3) what about syslogs
@@ -207,6 +210,72 @@ tail -f /var/log/syslog | grep apiserver
 # or:
 journalctl | grep apiserver
 > Could not process manifest file" err="/etc/kubernetes/manifests/kube-apiserver.yaml: couldn't parse as pod(yaml: mapping values are not allowed in this context), please check config file
+```
+
+## Apiserver Misconfigured
+
+https://killercoda.com/killer-shell-cks/scenario/apiserver-misconfigured
+
+Make sure to have solved the previous Scenario Apiserver Crash.
+The Apiserver is not coming up, the manifest is misconfigured in `3` places. Fix it.
+
+### Issues
+
+For your changes to apply you might have to:
+
+move the kube-apiserver.yaml out of the manifests directory
+wait for apiserver container to be gone (watch crictl ps )
+move the manifest back in and wait for apiserver coming back up
+Some users report that they need to restart the kubelet (service kubelet restart ) but in theory this shouldn't be necessary.
+
+### Solution 1
+
+The kubelet cannot even create the Pod/Container. Check the kubelet logs in syslog for issues.
+
+```bash
+cat /var/log/syslog | grep kube-apiserver
+```
+
+There is wrong YAML in the manifest at `metadata;`
+
+```bash
+vim /etc/kubernetes/manifests/kube-apiserver.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:  # `metadata;` 改为 "metadata:"
+```
+
+### Solution 2
+
+After fixing the wrong YAML there still seems to be an issue with a wrong parameter.
+
+```bash
+# Check logs in `/var/log/pods`.
+cd /var/log/pods
+cd /kube-system_kube-apiserver-controlplane_24f6c7045a5830f4ff3dd5c63e8bd9cb/kube-apiserver/
+ls
+    5.log
+cat 5.log
+    Error: Error: unknown flag: --authorization-modus.
+# The correct parameter is --authorization-mode.
+vim /etc/kubernetes/manifests/kube-apiserver.yaml
+    - --authorization-mode=Node,RBAC # 修改--authorization-modus
+```
+
+### Solution 3
+
+After fixing the wrong parameter, the pod/container might be up, but gets restarted.
+
+Check container logs or /var/log/pods, where we should find:
+
+Error while dialing dial tcp 127.0.0.1:23000: connect:connection refused
+
+Check the container logs: the ETCD connection seems to be wrong. Set the correct port on which ETCD is running (check the ETCD manifest)
+
+```bash
+vim /etc/kubernetes/manifests/kube-apiserver.yaml
+  - --etcd-servers=https://127.0.0.1:2379 # 修改--etcd-servers=https://127.0.0.1:23000 为--etcd-servers=https://127.0.0.1:2379
 ```
 
 ## [Apiserver NodeRestriction](https://killercoda.com/killer-shell-cks/scenario/apiserver-node-restriction)
@@ -311,11 +380,6 @@ An ImagePolicyWebhook setup has been half finished, complete it:
   <p>
 
 ```bash
-  # find admission_config.json path
-  vim /etc/kubernetes/manifests/kube-apiserver.yaml
-```
-
-```bash
   # find admission_config.json path in kube-apiserver.yaml
   vim /etc/kubernetes/manifests/kube-apiserver.yaml # Find value of --admission-control-config-file
   # or
@@ -337,7 +401,7 @@ The `/etc/kubernetes/policywebhook/admission_config.json` should look like this:
          "configuration": {
             "imagePolicy": {
                "kubeConfigFile": "/etc/kubernetes/policywebhook/kubeconf", // 1.modify "kubeConfigFile": "/todo/kubeconf" to current
-               "allowTTL": 100,  // 2.modify to 100
+               "allowTTL": 100,  // 2.modify 50 to 100
                "denyTTL": 50,
                "retryBackoff": 500,
                "defaultAllow": false   // 3.modify from true to false
@@ -349,7 +413,7 @@ The `/etc/kubernetes/policywebhook/admission_config.json` should look like this:
 ```
 
 ```bash
-  vim /etc/kubernetes/policywebhook/admission_config.json
+  vim /etc/kubernetes/policywebhook/kubeconf
 ```
 
 The `/etc/kubernetes/policywebhook/kubeconf` should contain the correct server:
@@ -357,15 +421,35 @@ The `/etc/kubernetes/policywebhook/kubeconf` should contain the correct server:
 ```yaml
 apiVersion: v1
 kind: Config
+# clusters refers to the remote service.
 clusters:
 - cluster:
-    certificate-authority: /etc/kubernetes/policywebhook/external-cert.pem
-    server: https://localhost:1234 # 4.
+    certificate-authority: /etc/kubernetes/policywebhook/external-cert.pem # CA for verifying the remote service.
+    server: https://localhost:1234 # 4.external service  # URL of remote service to query. Must use 'https'.
   name: image-checker
+
+contexts:
+- context:
+    cluster: image-checker
+    user: api-server
+  name: image-checker
+current-context: image-checker
+preferences: {}
+
+# users refers to the API server's webhook configuration.
+users:
+- name: api-server
+  user:
+    client-certificate: /etc/kubernetes/policywebhook/apiserver-client-cert.pem     # cert for the webhook admission controller to use
+    client-key:  /etc/kubernetes/policywebhook/apiserver-client-key.pem             # key matching the cert
 ...
 ```
 
 5 The apiserver needs to be configured with the ImagePolicyWebhook admission plugin:
+
+```bash
+  vim /etc/kubernetes/manifests/kube-apiserver.yaml
+```
 
 ```yaml
 spec:
@@ -1252,4 +1336,78 @@ docker exec c2 ps
 docker rm c2 --force
 ```
 
-##
+## RuntimeClass - gVisor
+
+https://killercoda.com/killer-shell-cks/scenario/sandbox-gvisor
+### Install and configure gVisor
+
+You should install gVisor on the node `node01` and make containerd use it.
+There is install script `/root/gvisor-install.sh` which should setup everything, execute it on node `node01` .
+
+#### **Solution**
+
+```bash
+scp gvisor-install.sh node01:/root
+ssh node01
+    sh gvisor-install.sh
+    service kubelet status
+```
+
+### Create RuntimeClass and Pod to use gVisor
+
+Now that gVisor should be configured, create a new `RuntimeClass` for it.
+Then create a new Pod named `sec` using image `nginx:1.21.5-alpine` .
+Verify your setup by running `dmesg` in the Pod.
+
+#### Tip
+
+The handler for the gVisor RuntimeClass is `runsc`.
+
+#### Solution
+
+```bash
+# Back to cantroplane
+node01 $ exit
+    logout
+    Connection to node01 closed.
+controlplane $ 
+```
+
+First we create the RuntimeClass
+
+```yaml
+apiVersion: node.k8s.io/v1
+kind: RuntimeClass
+metadata:
+  name: gvisor
+handler: runsc
+```
+
+And the Pod that uses it
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sec
+spec:
+  runtimeClassName: gvisor
+  containers:
+    - image: nginx:1.21.5-alpine
+      name: sec
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+```
+
+```bash
+k apply -f rc.yaml
+k apply -f pod.yaml
+```
+
+#### Verify
+
+```bash
+k exec sec -- dmesg | grep -i gvisor
+```
+
+## 

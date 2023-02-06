@@ -1410,4 +1410,290 @@ k apply -f pod.yaml
 k exec sec -- dmesg | grep -i gvisor
 ```
 
-## 
+## CertificateSigningRequests sign manually
+
+https://killercoda.com/killer-shell-cks/scenario/certificate-signing-requests-sign-manually
+
+https://kubernetes.io/zh-cn/docs/reference/access-authn-authz/certificate-signing-requests/#create-private-key
+
+### Create KEY and CSR
+
+The idea here is to create a new "user" that can communicate with K8s.
+
+For this now:
+
+1. Create a new KEY at /root/60099.key for user named 60099@internal.users
+2. Create a CSR at /root/60099.csr for the KEY
+
+#### Explanation
+
+Users in K8s are managed via CRTs and the CN/CommonName field in them. The cluster CA needs to sign these CRTs.
+
+This can be achieved with the following procedure:
+
+- Create a KEY (Private Key) file
+- Create a CSR (CertificateSigningRequest) file for that KEY
+- Create a CRT (Certificate) by signing the CSR. Done using the CA (Certificate Authority) of the cluster
+
+#### Tip
+
+```bash
+openssl genrsa -out XXX 2048
+openssl req -new -key XXX -out XXX
+```
+
+#### Solution
+
+```bash
+openssl genrsa -out 60099.key 2048
+openssl req -new -key 60099.key -out 60099.csr
+# set Common Name = 60099@internal.users
+```
+
+### Manual signing
+
+Manually sign the CSR with the K8s CA file to generate the CRT at /root/60099.crt .
+
+Create a new context for kubectl named 60099@internal.users which uses this CRT to connect to K8s.
+#### Tip 1
+
+```bash
+openssl x509 -req -in XXX -CA XXX -CAkey XXX -CAcreateserial -out XXX -days 500
+```
+
+#### Tip 2
+
+```bash
+find /etc/kubernetes/pki | grep ca
+```
+
+#### Solution 1
+
+```bash
+openssl x509 -req -in 60099.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out 60099.crt -days 500
+```
+
+#### Solution 2
+
+```bash
+k config set-credentials 60099@internal.users --client-key=60099.key --client-certificate=60099.crt
+k config set-context 60099@internal.users --cluster=kubernetes --user=60099@internal.users
+k config get-contexts
+k config use-context 60099@internal.users
+k get ns # fails because no permissions, but shows the correct username returne
+```
+
+## CertificateSigningRequests sign via API
+
+https://killercoda.com/killer-shell-cks/scenario/certificate-signing-requests-sign-k8s
+
+https://kubernetes.io/zh-cn/docs/reference/access-authn-authz/certificate-signing-requests/#create-private-key
+
+### Create KEY and CSR
+
+The idea here is to create a new "user" that can communicate with K8s.
+For this now:
+
+1. Create a new KEY at /root/60099.key for user named 60099@internal.users
+2. Create a CSR at /root/60099.csr for the KEY
+
+#### Tip
+
+```bash
+openssl genrsa -out XXX 2048
+
+openssl req -new -key XXX -out XXX
+```
+
+#### Solution
+
+```bash
+openssl genrsa -out 60099.key 2048
+
+openssl req -new -key 60099.key -out 60099.csr
+# set Common Name = 60099@internal.users
+```
+
+### Signing via API
+
+Create a K8s CertificateSigningRequest resource named `60099@internal.users` and which sends the `/root/60099.csr` to the API.
+Let the K8s API sign the CertificateSigningRequest.
+Download the CRT file to `/root/60099.crt` .
+
+Create a new context for kubectl named `60099@internal.users` which uses this CRT to connect to K8s.
+
+#### CertificateSigningRequest template
+
+```bash
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+metadata:
+  name: 60099@internal.users # ADD
+spec:
+  groups:
+  - system:authenticated
+  request: {{BASE_64_ENCODED_CSR}} # ADD
+  signerName: kubernetes.io/kube-apiserver-client
+  usages:
+  - client auth
+```
+
+#### Solution
+
+Convert the CSR file into base64
+
+`cat 60099.csr | base64 -w 0`
+
+Copy it into the YAML
+
+
+```yaml
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+metadata:
+  name: 60099@internal.users # ADD
+spec:
+  groups:
+  - system:authenticated
+  request: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURSBSRVFV... # ADD
+  signerName: kubernetes.io/kube-apiserver-client
+  usages:
+  - client auth
+```
+
+Create and approve
+
+```bash
+k -f csr.yaml create
+k get csr # pending
+k certificate approve 60099@internal.users
+k get csr # approved
+k get csr 60099@internal.users -ojsonpath="{.status.certificate}" | base64 -d > 60099.crt
+```
+
+#### Use the CRT
+
+```bash
+k config set-credentials 60099@internal.users --client-key=60099.key --client-certificate=60099.crt
+k config set-context 60099@internal.users --cluster=kubernetes --user=60099@internal.users
+k config get-contexts
+k config use-context 60099@internal.users
+k get ns # fails because no permissions, but shows the correct username returned
+```
+
+## Image Use Digest
+
+### Use an image digest instead of tag
+
+Image tags can be overwritten, digests not.
+
+Create a Pod named `crazy-pod` which uses the image digest `nginx@sha256:eb05700fe7baa6890b74278e39b66b2ed1326831f9ec3ed4bdc6361a4ac2f333` .
+
+#### Solution
+
+```bash
+# Simply use the image@sha256:digest as image:
+k run crazy-pod --image=nginx@sha256:eb05700fe7baa6890b74278e39b66b2ed1326831f9ec3ed4bdc6361a4ac2f333
+```
+
+### Switch deployment from using tag to digest
+
+Convert the existing Deployment `crazy-deployment` to use the image digest of the current tag instead of the tag.
+
+#### Solution
+
+```bash
+# get digest
+k get deploy --show-labels
+k get pod -l app=crazy-deployment -oyaml | grep imageID
+
+# use digest
+k edit deploy crazy-deployment # image: httpd@sha256:c7b8040505e2e63eafc82d37148b687ff488bf6d25fc24c8bf01d71f5b457531
+
+# control
+k get pod -l app=crazy-deployment -oyaml | grep image:
+```
+
+## securityContext - Immutability Readonly Filesystem
+
+https://killercoda.com/killer-shell-cks/scenario/immutability-readonly-fs
+
+### Create a Pod with read-only filesystem
+
+Create a Pod named `pod-ro` in Namespace `sun` of image `busybox:1.32.0` .
+Make sure the container keeps running, like using `sleep 1d` .
+
+The container root filesystem should be read-only.
+
+#### Solution
+
+```bash
+# Generate Pod yaml
+k -n sun run pod-ro --image=busybox:1.32.0 -oyaml --dry-run=client --command -- sh -c 'sleep 1d' > pod.yaml
+```
+
+Set the readOnlyRootFilesystem :
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: pod-ro
+  name: pod-ro
+  namespace: sun
+spec:
+  containers:
+  - command:
+    - sh
+    - -c
+    - sleep 1d
+    image: busybox:1.32.0
+    name: pod-ro
+    securityContext:
+      readOnlyRootFilesystem: true  # Add
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+```
+
+```bash
+k apply -f pod.yaml
+```
+
+### Fix existing Nginx Deployment to work with read-only filesystem
+
+The Deployment `web4.0` in Namespace `moon` doesn't seem to work with `readOnlyRootFilesystem` .
+
+Add an emptyDir volume to fix this.
+
+#### Solution
+
+```bash
+Check the logs to find the location that needs to be writable
+
+k -n moon logs -f deploy/web4.0
+    Found 2 pods, using pod/web4.0-8554496f95-trtz9
+    sh: can't create /etc/date.log: Read-only file system
+```
+
+Edit the Deployment, add a new emptyDir volume
+
+```yaml
+...
+    spec:
+      containers:
+      - command:
+        - sh
+        - -c
+        - date > /etc/date.log && sleep 1d
+        image: busybox:1.32.0
+        name: container
+        securityContext:
+          readOnlyRootFilesystem: true
+        volumeMounts:
+        - mountPath: /etc  # Get from log, the location that needs to be writable
+          name: temp
+      volumes:
+      - name: temp
+        emptyDir: {}
+```

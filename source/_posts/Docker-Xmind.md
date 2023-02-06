@@ -205,3 +205,66 @@ sudo docker cp host_path containerID:container_path
 # 从容器复制到主机
 sudo docker cp containerID:container_path host_path
 ```
+
+### Create two Docker containers sharing the same PID namespace
+
+https://killercoda.com/killer-shell-cks/scenario/container-namespaces-docker
+
+Run two Docker containers `app1` and `app2` with the following attributes:
+
+- they should run image `nginx:alpine`
+- they should share the same `PID` kernel namespace
+- they should run command `sleep infinity`
+- they should run in the background (detached)
+
+Then check which container sees which processes and make sense of why.
+
+#### Solution
+
+```bash
+# 1 Run first container
+docker run --name app1 -d nginx:alpine sleep infinity
+
+# We only see the processes of container app1
+docker exec app1 ps aux
+
+# Run second container in first containers PID namespace
+docker run --name app2 --pid=container:app1 -d nginx:alpine sleep infinity
+
+# We see processes of both containers in both containers
+docker exec app1 ps aux
+docker exec app2 ps aux
+```
+
+### Container Namespaces Podman
+
+https://killercoda.com/killer-shell-cks/scenario/container-namespaces-podman
+
+Create two Podman containers sharing the same PID namespace
+Run two `Podman` containers `app1` and `app2` with the following attributes:
+
+- they should run image `nginx:alpine`
+- they should share the same `PID` kernel namespace
+- they should run command `sleep infinity`
+- they should run in the background (detached)
+
+Then check which container sees which processes and make sense of why.
+
+#### Solution
+
+```bash
+# Run first container
+podman run --name app1 -d nginx:alpine sleep infinity
+
+# We only see the processes of container app1
+podman exec app1 ps aux
+
+# Run second container in first containers PID namespace
+podman run --name app2 --pid=container:app1 -d nginx:alpine sleep infinity
+
+# We see processes of both containers in both containers
+podman exec app1 ps aux
+podman exec app2 ps aux
+```
+
+### 

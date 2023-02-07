@@ -1697,3 +1697,245 @@ Edit the Deployment, add a new emptyDir volume
       - name: temp
         emptyDir: {}
 ```
+
+## Static Manual Analysis K8s
+
+### Analyse K8s Pod YAML
+
+Perform a manual static analysis on files `/root/apps/app1-*` considering security.
+Move the less secure file to `/root/insecure`
+
+```yaml
+# app1-30b5eba5.yaml 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod
+spec:
+  containers:
+  - name: main
+    image: alpine
+    command: ["/bin/sleep", "999999"]
+    securityContext:
+      readOnlyRootFilesystem: true
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+
+# app1-510d6362.yaml 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod
+spec:
+  containers:
+  - name: main
+    image: alpine
+    command: ["/bin/sleep", "999999"]
+    livenessProbe:
+      exec:
+        command:
+        - cat
+        - /tmp/healthy
+      initialDelaySeconds: 5
+      periodSeconds: 5
+```
+
+#### Tip
+
+Enforcing a read-only root filesystem can make containers more secure.
+
+#### Solution
+
+```bash
+cd /root/apps   
+ls
+    app1-30b5eba5.yaml  app1-510d6362.yaml  app2-b917e60e.yaml  app2-f720cbb4.yaml  app3-819f4686.yaml  app3-905fe637.yaml
+
+mv /root/apps/app1-510d6362.yaml /root/insecure
+```
+
+### Analyse K8s Deployment YAML
+
+Perform a manual static analysis on files `/root/apps/app2-*` considering security.
+Move the less secure file to `/root/insecure`
+
+```yaml
+# app2-b917e60e.yaml 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  labels:
+    app: web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: web
+        securityContext:
+          capabilities:
+            drop: []
+          allowPrivilegeEscalation: true  # not secure
+        image: httpd
+        readinessProbe:
+          exec:
+            command:
+            - cat
+            - /tmp/healthy
+          initialDelaySeconds: 5
+          periodSeconds: 5
+
+# app2-f720cbb4.yaml 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+      containers:
+      - name: nginx
+        image: nginx:1.21.6
+        ports:
+        - containerPort: 80
+```
+
+#### Tip
+
+Check the `securityContext` settings, just because there are some doesn't mean they do something good or at all.
+
+#### Solution
+
+File a`pp2-b917e60e.yaml` has some `securityContext` settings, but they don't drop any capabilities and even allow `allowPrivilegeEscalation`.
+
+```bash
+mv /root/apps/app2-b917e60e.yaml /root/insecure
+```
+
+### Analyse K8s StatefulSet YAML
+
+Perform a manual static analysis on files `/root/apps/app3-*` considering security.
+Move the less secure file to `/root/insecure`
+
+
+```yaml
+# app3-819f4686.yaml 
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  ports:
+  - port: 80
+    name: web
+  clusterIP: None
+  selector:
+    app: nginx
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  serviceName: "nginx"
+  replicas: 3
+  minReadySeconds: 10
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: nginx
+        image: k8s.gcr.io/nginx-slim:0.8
+        ports:
+        - containerPort: 80
+          name: web
+        volumeMounts:
+        - name: www
+          mountPath: /usr/share/nginx/html
+        readinessProbe:
+          httpGet:
+            scheme: HTTPS
+            path: /index.html
+            port: 8443
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        startupProbe:
+          httpGet:
+            scheme: HTTPS
+            path: /index.html
+            port: 8443
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        securityContext:
+          privileged: true  # not secure
+        ...
+
+# app3-905fe637.yaml 
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql-set
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  serviceName: "mysql"
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: mysql
+        image: mysql:5.7
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: mysql-store
+          mountPath: /var/lib/mysql
+        securityContext:
+          privileged: false    # secure
+        ...
+```
+
+#### Tip
+
+If you face large files, search for settings like `securityContext` .
+
+#### Solution
+
+We see usage of privileged: true .
+
+```bash
+cat /root/apps/app3-819f4686.yaml | grep securityContext -A 3
+mv /root/apps/app3-819f4686.yaml /root/insecure
+```

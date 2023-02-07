@@ -206,7 +206,9 @@ sudo docker cp host_path containerID:container_path
 sudo docker cp containerID:container_path host_path
 ```
 
-### Create two Docker containers sharing the same PID namespace
+# docker练习
+
+## Create two Docker containers sharing the same PID namespace
 
 https://killercoda.com/killer-shell-cks/scenario/container-namespaces-docker
 
@@ -219,7 +221,7 @@ Run two Docker containers `app1` and `app2` with the following attributes:
 
 Then check which container sees which processes and make sense of why.
 
-#### Solution
+### Solution
 
 ```bash
 # 1 Run first container
@@ -236,7 +238,7 @@ docker exec app1 ps aux
 docker exec app2 ps aux
 ```
 
-### Container Namespaces Podman
+## Container Namespaces Podman
 
 https://killercoda.com/killer-shell-cks/scenario/container-namespaces-podman
 
@@ -250,7 +252,7 @@ Run two `Podman` containers `app1` and `app2` with the following attributes:
 
 Then check which container sees which processes and make sense of why.
 
-#### Solution
+### Solution
 
 ```bash
 # Run first container
@@ -267,4 +269,131 @@ podman exec app1 ps aux
 podman exec app2 ps aux
 ```
 
-### 
+## Static Manual Analysis Docker
+
+https://killercoda.com/killer-shell-cks/scenario/static-manual-analysis-docker
+
+### Analyse K8s Pod YAML
+
+Perform a manual static analysis on files `/root/apps/app1-*` considering security.
+Move the less secure file to `/root/insecure`
+
+#### Tip
+
+Using a smaller base image to run the application can be more secure.
+[Dockerfile Best Practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices)
+
+#### Solution
+
+```bash
+cd /root/apps/
+ls
+  app1-214422c7-Dockerfile  app2-2782517e-Dockerfile  app3-1c8650b1-Dockerfile
+  app1-9df32ce3-Dockerfile  app2-5cde5c3d-Dockerfile  app3-4049a117-Dockerfile
+
+# File `app1-214422c7-Dockerfile` uses multiple stages, a larger for building and a smaller for running.
+FROM ubuntu
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y golang-go
+COPY app.go .
+RUN CGO_ENABLED=0 go build app.go
+FROM alpine   # uses multiple stages
+COPY --from=0 /app .
+CMD ["./app"]
+
+# File `app1-9df32ce3-Dockerfile`
+FROM ubuntu
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y golang-go
+COPY app.go .
+RUN CGO_ENABLED=0 go build app.go
+CMD ["./app"]
+
+# 
+mv /root/apps/app1-9df32ce3-Dockerfile /root/insecure
+```
+
+---
+
+### Analyse K8s Deployment YAML
+Perform a manual static analysis on files `/root/apps/app2-*` considering security.
+Move the less secure file to `/root/insecure`
+
+#### Tip
+
+Running applications as not root inside a container can be more secure.
+
+#### Solution
+
+```bash
+# File app2-2782517e-Dockerfile
+FROM ubuntu:20.04
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y golang-go=2:1.13~1ubuntu2
+COPY app.go .
+RUN CGO_ENABLED=0 go build app.go
+FROM alpine:3.12.0
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup -h /home/appuser
+COPY --from=0 /app /home/appuser/
+USER appuser  # File app2-2782517e-Dockerfile creates a new user and doesn't run the application as root.
+CMD ["/home/appuser/app"]
+
+# File app2-5cde5c3d-Dockerfile
+FROM ubuntu
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y golang-go
+COPY app.go .
+RUN CGO_ENABLED=0 go build app.go
+FROM alpine:3.11.6
+COPY --from=0 /app .
+CMD ["./app"]
+
+# File app2-2782517e-Dockerfile creates a new user and doesn't run the application as root.
+mv /root/apps/app2-5cde5c3d-Dockerfile /root/insecure
+```
+
+---
+
+### Analyse K8s StatefulSet YAML
+
+Perform a manual static analysis on files `/root/apps/app3-*` considering security.
+Move the less secure file to `/root/insecure`
+
+#### Tip
+
+Docker containers work with layers. Every FROM , COPY , RUN and CMD will create one layer.
+
+#### Solution
+
+```bash
+# app3-1c8650b1-Dockerfile 
+FROM ubuntu
+COPY my.cnf /etc/mysql/conf.d/my.cnf
+COPY mysqld_charset.cnf /etc/mysql/conf.d/mysqld_charset.cnf
+RUN apt-get update && \
+    apt-get -yq install mysql-server-5.6 &&
+COPY import_sql.sh /import_sql.sh
+COPY run.sh /run.sh
+RUN /etc/register.sh $SECRET_TOKEN  # new layer
+EXPOSE 3306
+CMD ["/run.sh"]
+
+# app3-4049a117-Dockerfile
+FROM ubuntu
+COPY my.cnf /etc/mysql/conf.d/my.cnf
+COPY mysqld_charset.cnf /etc/mysql/conf.d/mysqld_charset.cnf
+RUN apt-get update && \
+    apt-get -yq install mysql-server-5.6 &&
+COPY import_sql.sh /import_sql.sh
+COPY run.sh /run.sh
+RUN echo $SECRET_TOKEN > /tmp/token   # new layer
+RUN /etc/register.sh /tmp/token       # new layer
+RUN rm /tmp/token                     # new layer
+EXPOSE 3306
+CMD ["/run.sh"]
+
+# File app3-4049a117-Dockerfile stores the temporarily used token at /tmp/token .
+# This is persisted as layer in the container even though the file is later deleted.
+# Therefore:
+mv /root/apps/app3-4049a117-Dockerfile /root/insecure
+```

@@ -245,6 +245,10 @@ JAVACMD="/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin
 - [x] [**ParallelsDesktop**](https://www.parallels.com/) 【付费】Mac上跑Windows虚拟机，与Mac集成的非常好。
 - [x] [**VirtualBox**](https://www.virtualbox.org/) 【免费】Oracle虚拟机。
 
+## 翻译
+
+- [DeepL](https://www.deepl.com/translator)  网页版，app版，浏览器插件 都有。Pro版本收费，普通版免费。
+
 ## 工作必备
 
 - [x] [GlobalProtect](https://vpn.microstrategy.com/global-protect/getsoftwarepage.esp) 【网址下载】 工作 VPN 软件

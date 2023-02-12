@@ -711,7 +711,7 @@ Change the Falco `output` of rule "Terminal shell in container" to:
 Cause syslog output again by creating a shell in that Pod.
 Verify the syslogs contain the new data.
 
-##### Tip
+#### Tip
 
 https://falco.org/docs/rules/supported-fields
 
@@ -719,6 +719,7 @@ https://falco.org/docs/rules/supported-fields
 cd /etc/falco/
 grep -ri "shell in"
 ```
+
 #### Solution
 
 ```bash
@@ -838,7 +839,7 @@ You can test connection to that IP using `nc -v 1.1.1.1 53` .
 
 Create a NetworkPolicy named `metadata-server `In Namespace `default` which restricts all egress traffic to that IP.
 
-The NetworkPolicy should only affect Pods with label `trust=nope` .
+The NetworkPolicy should only affect Pods with label `trust=nope`.
 
 ```yaml
 apiVersion: networking.k8s.io/v1

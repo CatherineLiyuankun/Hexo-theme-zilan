@@ -25,7 +25,7 @@ categories:
   - 2023.1 实测是16道题
 - 考生有 2 小时的时间完成 CKS 考试。
   - 因为从06/2022开始环境升级（贬义），考试环境更难用了，变的很卡，所以时间变得比较紧张。容易做不完题，建议先把有把握的，花费时间不多的题先做掉
-    - [CKS CKA CKAD changed Terminal to Remote Desktop ](https://itnext.io/cks-cka-ckad-changed-terminal-to-remote-desktop-157a26c1d5e)
+    - [CKS CKA CKAD changed Terminal to Remote Desktop](https://itnext.io/cks-cka-ckad-changed-terminal-to-remote-desktop-157a26c1d5e)
 - CKS考试66分以上即可通过，考试不通过有一次补考机会。
 
 Certifications- expire 36 months from the date that the Program certification requirements are met by a candidate.
@@ -34,20 +34,30 @@ Certifications- expire 36 months from the date that the Program certification re
 
 The following tools and resources are allowed during the exam as long as they are used by candidates to work independently on exam tasks (i.e. not used for 3rd party assistance or research) and are accessed from within the Linux server terminal on which the Exam is delivered.
 During the exam, candidates may:
+
 - review the Exam content instructions that are presented in the command line terminal.
 - review Documents installed by the distribution (i.e. /usr/share and its subdirectories)
-- use the search function provided on https://kubernetes.io/docs/ however, they may only open search results that have a domain matching the sites listed below
+- use the search function provided on <https://kubernetes.io/docs/> however, they may only open search results that have a domain matching the sites listed below
 - use the browser within the VM to access the following documentation:  
-  - Kubernetes Documentation: 
-    - https://kubernetes.io/docs/ and their subdomains
-    - https://kubernetes.io/blog/ and their subdomains
-  This includes all available language translations of these pages (e.g. https://kubernetes.io/zh/docs/)
+  - Kubernetes Documentation:
+    - <https://kubernetes.io/docs/> and their subdomains
+    - <https://kubernetes.io/blog/> and their subdomains
+  This includes all available language translations of these pages (e.g. <https://kubernetes.io/zh/docs/>)
   - Tools:
-    - Trivy documentation https://aquasecurity.github.io/trivy/
-    - Falco documentation https://falco.org/docs/
-  This includes all available language translations of these pages (e.g. https://falco.org/zh/docs/)
+    - Trivy documentation <https://aquasecurity.github.io/trivy/>
+    - Falco documentation <https://falco.org/docs/>
+  This includes all available language translations of these pages (e.g. <https://falco.org/zh/docs/>)
   - App Armor:
-    - Documentation https://gitlab.com/apparmor/apparmor/-/wikis/Documentation
+    - Documentation <https://gitlab.com/apparmor/apparmor/-/wikis/Documentation>
+
+You're only allowed to have one other browser tab open with:
+
+- <https://kubernetes.io/docs>
+- <https://github.com/kubernetes>
+- <https://kubernetes.io/blog>
+- <https://github.com/aquasecurity/trivy>
+- <https://falco.org/docs>
+- <https://gitlab.com/apparmor/apparmor/-/wikis/Documentation>
 
 ### CKS Environment
 
@@ -57,7 +67,7 @@ During the exam, candidates may:
 - You can switch the cluster/configuration context using a command such as the following:
 - `kubectl config use-context <cluster/context name>`
 - Nodes making up each cluster can be reached via ssh, using a command such as the following:
-- `ssh <nodename> `
+- `ssh <nodename>`
 - You have elevated privileges on any node by default, so there is no need to assume elevated privileges.
 - You must return to the base node (hostname cli) after completing each task.
 - Nested `−ssh` is not supported.
@@ -94,7 +104,8 @@ During the exam, candidates may:
 
 有几个练习库，建议将每个题目都自己亲自操作一遍，一定要操作。
 
-- CKS在线练习环境：https://killercoda.com/killer-shell-cks
+- CKS在线练习环境：<https://killercoda.com/killer-shell-cks>
+- [CKS Simulator Kubernetes 1.26](https://killer.sh/attendee/f65d95f1-170b-444d-8af0-bbf302f8c796/content)
 - [Adminission pligin/Pod Security Policies 练习](https://killercoda.com/killer-shell-ckad/scenario/admission-controllers)
 
 ### CKS课程
@@ -190,7 +201,7 @@ kubectl exec pod1 -- cat /etc/diver/hosts
 
 ## [Pre Setup](http://liyuankun.top/Kubernates-Certified-Kubernetes-Administrator-CKA.html#pre-setup)(同CKA)
 
-## CKS 2022 真题 1.20
+## CKS 2023 真题 1.26
 
 ### 考题1 - AppArmor 访问控制
 
@@ -214,7 +225,7 @@ Finally, apply the manifest file and create the pod specified in it.
 #### Solution
 
 搜索 apparmor（使用 AppArmor 限制容器对资源的访问），接着再搜索字符串 “parser”
-https://kubernetes.io/zh/docs/tutorials/security/apparmor/
+<https://kubernetes.io/zh/docs/tutorials/security/apparmor/>
 
 ```bash
 ### 远程登录到指定工作节点
@@ -269,7 +280,7 @@ Fix all of the following violations that were found against the kubelet:
 修复针对 kubelet 发现的所有以下违规行为：
 Ensure that the 4.2.1 --anonymous-auth FAIL argument is set to false
 Ensure that the 4.2.2 --authorization-mode FAIL argument is not set to AlwaysAllow
-Use webhook authn/authz where possible. 注意：尽可能使用 Webhook authn/authz。
+Use `Webhook` authn/authz where possible. 注意：尽可能使用 Webhook authn/authz。
 
 Fix all of the following violations that were found against etcd:
 修复针对 etcd 发现的所有以下违规行为：
@@ -279,6 +290,9 @@ Ensure that the 4.2.1 --client-cert-auth FAIL argument is set to true
 
 ```bash
 $ ssh root@vms65.rhce.cc
+
+# kube-bench run --target=master --check=1.2.7
+kube-bench run --target=master | grep FAIL
 
 ### 修复针对 APIserver 发现的以下所有问题：
 ### 确保 1.2.7 --authorization-mode 参数不能设置为 AlwaysAllow
@@ -295,7 +309,7 @@ vim /etc/kubernetes/manifests/kube-apiserver.yaml
 
 ### 修复针对 kubelet 发现的以下所有问题：
 ### 确保 4.2.1 anonymous-auth 参数设置为 false
-### 确保 4.2.2 --authorization-mode 参数不能设置为 AlwaysAllow，尽可能使用 webhook authn/authz
+### 确保 4.2.2 --authorization-mode 参数不能设置为 AlwaysAllow，尽可能使用 Webhook authn/authz
 ### 注意：master 和 node 节点都要修改！
 vim /var/lib/kubelet/config.yaml
     authentication:
@@ -332,7 +346,7 @@ Trivy is pre-installed on the cluster's `master` node only; it is not available 
 #### Solution
 
 搜索 kubectl images（列出集群中所有运行容器的镜像）
-https://kubernetes.io/zh-cn/docs/tasks/access-application-cluster/list-all-running-container-images/
+<https://kubernetes.io/zh-cn/docs/tasks/access-application-cluster/list-all-running-container-images/>
 
 ```bash
 ### 需登录到控制节点操作
@@ -358,14 +372,14 @@ you may use you brower to open one additonal tab to access sysdig's documentatio
 
 #### Task
 
-Use runtime detection tools to detect anomalous processes spawning and executing frequently in the sigle container belonging to Pod redis. Two tools are avaliable to use:
+Use runtime detection tools to detect anomalous processes spawning and executing frequently in the sigle container belonging to Pod `redis`. Two tools are avaliable to use:
 使用运行时检测工具来检测 Pod tomcat 单个容器中频发生成和执行的异常进程。有两种工具可供使用：
 
 - sysdig
 - falco
 
 The tools are pre-installed on the cluster's worker node only, they are not avaliable on the base system or the master node.
-Using the tool of you choice(including any non pre-install tool) analyse the container's behaviour for at least `30` seconds, using filers that detect newly spawing and executing processes, store an incident file at `/opt/KSR00101/incidents/summary`, containing the detected incidents one per line in the follwing format:
+Using the tool of you choice (including any non pre-install tool) analyse the container's behavior for at least `30` seconds, using filers that detect newly spawing and executing processes, store an incident file at `/opt/KSR00101/incidents/summary`, containing the detected incidents one per line in the follwing format:
 注：这些工具只预装在 cluster 的工作节点，不在 master 节点。
 使用工具至少分析 30 秒，使用过滤器检查生成和执行的进程，将事件写到 `/opt/KSR00101/incidents/summary` 文件中，其中包含检测的事件, 每个单独一行
 格式如下：
@@ -378,6 +392,7 @@ Using the tool of you choice(including any non pre-install tool) analyse the con
 注：确保事件文件存储在集群的工作节点上。
 
 ```bash
+# 方法一 sysdig
 ### 需登录到工作节点操作
 ssh cka-node01
 
@@ -388,12 +403,43 @@ sysdig -h
 sysdig -l
 
 ### 查看指定容器ID
-crictl ps | grep tomcat
+crictl ps | grep redis
 
 ### -M 分析容器30秒，-p 指定事件保存格式，--cri 指定容器运行时，并且保存到指定文件路径中
 sysdig -M 30 -p "*%evt.time,%user.uid,%proc.name" --cri /run/containerd/containerd.sock container.id=xxxxx > /opt/KSR00101/incidents/summary
 ```
 
+```bash
+# 方法二 falco
+### 需登录到工作节点操作
+ssh cka-node01
+
+### 
+cd /etc/falco
+ls
+
+### 
+vim /etc/falco/falco_rules.yaml
+# Container is supposed to be immutable. Package management should be done in building the image.
+- rule: Launch Package Management Process in Container
+  desc: Package management process ran inside container
+  condition: >
+    spawned_process
+    and container
+    and user.name != "_apt"
+    and package_mgmt_procs
+    and not package_mgmt_ancestor_procs
+    and not user_known_package_manager_in_container
+  output: >
+    Package management process launched in container %evt.time,%user.uid,%proc.name
+
+### 查看指定容器ID
+cat /var/log/sysdig | grep falco | grep "Package management" -i
+
+# 
+vim /opt/KSR00101/incidents/summary
+
+```
 
 ### 考题5 - ServiceAccount
 
@@ -403,19 +449,19 @@ A Pod fails to run because of an incorrectly specified ServiceAcccount.
 #### Task
 
 create a new ServiceAccount named `backend-sa` in the existing namespace `qa`, which must **not have access to any secrets**.
-- Inspect the Pod named `backend` running in the namespace `qa`.
+
+- Inspect the Pods in the namespace `qa`.
   - Edit the Pod to use the newly created serviceAccount `backend-sa`.
-  - You can find the Pod's manifest file at `/cks/9/pod9.yaml`
   - Ensure that the modified specification is applied and the Pod is running.
-- Finally, clean-up and delete the now unused serviceAccount that the Pod used initially.
+- Finally, clean-up and delete the now unused serviceAccount in the namespace `qa`.
 在现有 namespace `qa` 中创建一个名为 `backend-sa` 的新 ServiceAccount， 确保此 ServiceAccount 不自动挂载secrets。
 使用 `/cks/9/pod9.yaml` 中的清单文件来创建一个 Pod。
 最后，清理 namespace `qa` 中任何未使用的 ServiceAccount。
 
-#### Solution 
+#### Solution
 
 搜索 serviceaccount（为Pod配置服务账号），接着再搜索字符串 “automount”
-https://kubernetes.io/zh-cn/docs/tasks/configure-pod-container/configure-service-account/
+<https://kubernetes.io/zh-cn/docs/tasks/configure-pod-container/configure-service-account/>
 
 ```bash
 ### 创建 ServiceAccount
@@ -428,34 +474,47 @@ metadata:
 automountServiceAccountToken: false
 EOF
 
+### 
+k get pods -n qa
+  web1-xxx1
+  web2-xwx2
+  web3-xwx3
+k get deployment -n qa
+  web1
+  web2
+  web3
+# 发现这些pod都属于deployment
+
 ### 编辑 Pod 使用新创建的 serviceaccount
-vim /cks/9/pod9.yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    run: backend
-  name: backend
-  namespace: qa
-spec:
-  serviceAccountName: backend-sa # add
-  containers:
-  - image: nginx:1.9
-    name: backend
-    resources: {}
-  dnsPolicy: ClusterFirst
-  restartPolicy: Always
+k edit deployment/web1 -n qa
+k edit deployment/web2 -n qa
+k edit deployment/web3 -n qa
+
+...
+template:
+  spec:
+    serviceAccountName: backend-sa # add
+...
 
 ### 应用清单文件
 kubectl apply -f /cks/9/pod9.yaml
 
-### 把除了 backend-sa 的 serviceaccount 都删除 或者删除 pod之前使用的serviceaccount（根据题）
+### 把除了 backend-sa, 并且没有被使用的 serviceaccount 都删除
 kubectl get secret -n qa
-kubectl delete -n qa serviceaccount sa名称
+    backend-sa
+    default
+    contentsa
+
+kubectl get rolebinding -n qa -o wide
+kubectl get clustorrolebinding -n qa -o wide
+
+kubectl delete -n qa serviceaccount contentsa
 
 ```
 
-### 考题6 - Pod 安全策略-PodSecurityPolicy
+### 考题6 - 2022真题v1.20 Pod 安全策略-PodSecurityPolicy
+
+2023的最新考试已经没有这道题了，替代的是Pod Security Standard
 
 #### Context6
 
@@ -480,9 +539,9 @@ Finally, create a new `clusterRoleBinding` named `dany-access-bind`, which binds
 #### Solution6
 
 搜索 runasany（Pod Security Policy）
-https://kubernetes.io/id/docs/concepts/policy/pod-security-policy/
+<https://kubernetes.io/id/docs/concepts/policy/pod-security-policy/>
 搜索 clusterrole（使用RBAC鉴权）
-https://kubernetes.io/zh-cn/docs/reference/access-authn-authz/rbac/
+<https://kubernetes.io/zh-cn/docs/reference/access-authn-authz/rbac/>
 
 ```bash
 ### (1)创建 psp
@@ -523,6 +582,81 @@ systemctl restart kubelet
 
 ```
 
+### 考题6 - 2023真题V1.26 Pod Security Standard
+
+Task weight: 8%
+Use context: `kubectl config use-context workload-prod`
+
+There is Deployment `container-host-hacker` in Namespace `team-red` which mounts `/run/containerd` as a hostPath volume on the Node where it's running. This means that the Pod can access various data about other containers running on the same Node.
+
+To prevent this configure Namespace `team-red` to `enforce` the `baseline` Pod Security Standard. Once completed, delete the Pod of the Deployment mentioned above.
+
+Check the `ReplicaSet` events and write the event/log lines containing the reason why the Pod isn't recreated into `/opt/course/4/logs`.
+
+#### Answer
+
+Making Namespaces use Pod Security Standards works via labels. We can simply edit it:
+
+```bash
+k edit ns team-red
+```
+
+Now we configure the requested label:
+
+```yaml
+# kubectl edit namespace team-red
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: team-red
+    pod-security.kubernetes.io/enforce: baseline # add
+  name: team-red
+...
+```
+
+This should already be enough for the default Pod Security Admission Controller to pick up on that change. Let's test it and delete the Pod to see if it'll be recreated or fails, it should fail!
+
+```bash
+➜ k -n team-red get pod
+NAME                                    READY   STATUS    RESTARTS   AGE
+container-host-hacker-dbf989777-wm8fc   1/1     Running   0          115s
+
+➜ k -n team-red delete pod container-host-hacker-dbf989777-wm8fc 
+pod "container-host-hacker-dbf989777-wm8fc" deleted
+
+➜ k -n team-red get pod
+No resources found in team-red namespace.
+```
+
+Usually the ReplicaSet of a Deployment would recreate the Pod if deleted, here we see this doesn't happen. Let's check why:
+
+```bash
+➜ k -n team-red get rs
+NAME                              DESIRED   CURRENT   READY   AGE
+container-host-hacker-dbf989777   1         0         0       5m25s
+
+➜ k -n team-red describe rs container-host-hacker-dbf989777
+Name:           container-host-hacker-dbf989777
+Namespace:      team-red
+...
+Events:
+  Type     Reason            Age                   From                   Message
+  ----     ------            ----                  ----                   -------
+...
+  Warning  FailedCreate      2m41s                 replicaset-controller  Error creating: pods "container-host-hacker-dbf989777-bjwgv" is forbidden: violates PodSecurity "baseline:latest": hostPath volumes (volume "containerdata")
+  Warning  FailedCreate      2m2s (x9 over 2m40s)  replicaset-controller  (combined from similar events): Error creating: pods "container-host-hacker-dbf989777-kjfpn" is forbidden: violates PodSecurity "baseline:latest": hostPath volumes (volume "containerdata")
+```
+
+There we go! Finally we write the reason into the requested file so that Mr Scoring will be happy too!
+
+```bash
+# /opt/course/4/logs
+Warning  FailedCreate      2m2s (x9 over 2m40s)  replicaset-controller  (combined from similar events): Error creating: pods "container-host-hacker-dbf989777-kjfpn" is forbidden: violates PodSecurity "baseline:latest": hostPath volumes (volume "containerdata")
+```
+
+Pod Security Standards can give a great base level of security! But when one finds themselves wanting to deeper adjust the levels like `baseline` or `restricted`... this isn't possible and 3rd party solutions like OPA could be looked at.
+
 ### 考题7 - NetworkPolicy - default-deny
 
 #### Context
@@ -554,7 +688,6 @@ spec:
   podSelector: {}
   policyTypes:
   - Ingress
-  - Egress # 根据题目来加Ingress或者Egress
 
 ### 应用清单文件
 kubectl apply -f /cks/15/p1.yaml
@@ -584,7 +717,7 @@ You can find a skelet on manifest file at `/cks/6/p1.yaml`
 #### Solution
 
 搜索 networkpolicy（网络策略）
-https://kubernetes.io/zh-cn/docs/concepts/services-networking/network-policies/
+<https://kubernetes.io/zh-cn/docs/concepts/services-networking/network-policies/>
 
 ```bash
 ### (1)查看命名空间 qa 具有的标签
@@ -651,7 +784,7 @@ Don't delete the existing RoleBinding
 #### solution
 
 搜索 clusterrole（使用RBAC鉴权）
-https://kubernetes.io/zh-cn/docs/reference/access-authn-authz/rbac/
+<https://kubernetes.io/zh-cn/docs/reference/access-authn-authz/rbac/>
 
 ```bash
 ### 查询 sa 对应的 role 名称（假设是 role-1）
@@ -723,7 +856,7 @@ Don't forget to apply the modifiedpolicy.
 #### Solution
 
 搜索 audit（审计）
-https://kubernetes.io/zh-cn/docs/tasks/debug/debug-cluster/audit/
+<https://kubernetes.io/zh-cn/docs/tasks/debug/debug-cluster/audit/>
 
 ```bash
 ### 如果没有 /var/log/kubernetes/，则创建目录
@@ -833,9 +966,9 @@ password : KvLftKgs4aVH
 #### Solution
 
 搜索 secret（使用 kubectl 管理 Secret）
-https://kubernetes.io/zh-cn/docs/tasks/configmap-secret/managing-secret-using-kubectl/
+<https://kubernetes.io/zh-cn/docs/tasks/configmap-secret/managing-secret-using-kubectl/>
 搜索 secret（Secret）
-https://kubernetes.io/zh-cn/docs/concepts/configuration/secret/
+<https://kubernetes.io/zh-cn/docs/concepts/configuration/secret/>
 
 ```bash
 ### 检索已存在的 secret，将获取到的用户名和密码字段存储到指定文件
@@ -898,12 +1031,12 @@ Should you need an unprivileged user for any of the tasks, use user `nobody` wit
 
 ```bash
 ### 修复 dockerfile 文件中存在的两个安全/最佳实践指令
-### (1)将 root 注释掉；(2)增加 nobody
+### (1)把ubuntu:latest改为ubuntu:16.04 (2)将 root 注释掉；增加 nobody
 vim /cks/docker/Dockerfile
-
+# FROM ubuntu:latest  1 修改
 FROM ubuntu:16.04
 #USER root 
-USER nobody
+USER nobody # 2
 
 ### 修复 deployment 文件中存在的两个安全/最佳实践问题字段
 ### (1)将 privileged 变为 False；(2)将 readOnlyRootFilesystem 变为 True
@@ -919,16 +1052,16 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-			app: dev
-	template:
-		metadata:
- 			labels:
- 				app: dev
-	spec:
- 		containers:
- 		- image: mysql
- 			name: mysql
- 			securityContext: {'capabilities':{'add':['NET_ADMIN'],'drop':['all']},'privileged': False,'readOnlyRootFilesystem': True, 'runAsUser': 65535}
+      app: dev
+  template:
+    metadata:
+      labels:
+        app: dev
+    spec:
+      containers:
+      - image: mysql
+        name: mysql
+        securityContext: {'capabilities':{'add':['NET_ADMIN'],'drop':['all']},'privileged': False,'readOnlyRootFilesystem': True, 'runAsUser': 65535}
 ```
 
 ### 考题13 - admission-controllers - ImagePolicyWebhook
@@ -963,7 +1096,7 @@ You can find the container image scanner's log file at `/var/loglimagepolicyiacm
 #### Solution
 
 搜索 imagepolicywebhook（使用准入控制器），接着再搜索字符串"imagepolicywebhook"
-https://kubernetes.io/zh-cn/docs/reference/access-authn-authz/admission-controllers/
+<https://kubernetes.io/zh-cn/docs/reference/access-authn-authz/admission-controllers/>
 
 ```bash
 ### (1)修改不完整的配置
@@ -1004,7 +1137,7 @@ vim kubeconfig.yaml
     - cluster:
         certificate-authority: /etc/kubernetes/epconfig/webhook.pem
         server: https://acme.local:8082/image_policy   # 配置此步
-  		name: bouncer_webhook
+    name: bouncer_webhook
 
 ### (4)启用必要的插件以创建镜像策略
 vim /etc/kubernetes/manifests/kube-apiserver.yaml
@@ -1030,7 +1163,6 @@ systemctl restart kubelet
 kubectl apply -f /cks/img/web1.yaml
 ```
 
-
 ### 考题14 - 删除非无状态或非不可变的 pod
 
 Context: it is best-practice to design containers to be stateless and immutable
@@ -1046,6 +1178,7 @@ Use the following strict interpretation of stateless and immutable:
 
 检查在 namespace production 中运行的 Pod，并删除任何非无状态或非不可变的 Pod。
 使用以下对无状态和不可变的严格解释：
+
 - 能够在容器内存储数据的 Pod 的容器必须被视为非无状态的。
 - 被配置为任何形式的特权 Pod 必须被视为可能是非无状态和非不可变的。
 注意：你不必担心数据是否实际上已经存储在容器中。
@@ -1089,7 +1222,31 @@ You can find a skeleton manifest file at `/cks/13/rc.yaml`
 #### Solution
 
 搜索 runtimeclass（容器运行时类）
-https://kubernetes.io/zh-cn/docs/concepts/containers/runtime-class/
+<https://kubernetes.io/zh-cn/docs/concepts/containers/runtime-class/>
+
+```bash
+### 修改模板清单文件
+vim /cks/gVisor/rc.yaml
+    apiVersion: node.k8s.io/v1
+    kind: RuntimeClass
+    metadata:
+      name: untrusted
+    handler: runsc
+
+### 应用清单文件
+kubectl apply -f /cks/gVisor/rc.yaml
+
+### 修改 server 命名空间下的所有 pod（还需要修改deployment）
+kubectl get pods -n server -oyaml > myrc.yaml
+vim myrc.yaml
+spec:
+  ......
+  runtimeClassName: untrusted
+
+### 更新清单文件
+kubectl delete -f myrc.yaml
+kubectl apply -f myrc.yaml
+```
 
 ### 考题16 - 启用 API Server 认证
 
@@ -1105,15 +1262,20 @@ https://kubernetes.io/zh-cn/docs/concepts/containers/runtime-class/
 注意：所有 kubectl 配置环境/文件也被配置使用未经身份验证和未经授权的访问。 你不必更改它，但请注意，一旦完成 cluster 的安全加固， kubectl 的配置将无法工作。 您可以使用位于 cluster 的 master 节点上，cluster 原本的 kubectl 配置文件 /etc/kubernetes/admin.conf ，以确保经过身份验证的授权的请求仍然被允许。
 
 ```bash
-### (1)使用授权模式 Node,RBAC 和准入控制器 NodeRestriction
+k get nodes
+
 ### 注意：修改 master 节点！
+ssh masterNode
+
+### (1)使用授权模式 Node,RBAC 和准入控制器 NodeRestriction
 vim /etc/kubernetes/manifests/kube-apiserver.yaml
     - --authorization-mode=Node,RBAC
     - --enable-admission-plugins=NodeRestriction
     - --client-ca-file=/etc/kubernetes/pki/ca.crt
-		- --enable-bootstrap-token-auth=true
+    - --enable-bootstrap-token-auth=true
 
 ### (2)删除 system:anonymous 的 ClusterRolebinding 角色绑定（取消匿名用户的集群管理员权限）
+k get clusterrolebinding | grep system:anonymous
 kubectl delete clusterrolebinding system:anonymous
 ```
 

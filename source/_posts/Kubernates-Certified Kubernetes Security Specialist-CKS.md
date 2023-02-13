@@ -1008,24 +1008,21 @@ kubectl get pods -n istio-system dev-pod
 
 ### 考题12 - dockerfile 和 deployment 安全优化
 
-open policyagent/conftest test deploy.yaml
-open policyagent/conftest test myapp.dockerfile
-
 #### Task
 
-- 分析和编辑给定的 Dockerfile `/cks/docker/Dockerfile`（基于 ubuntu:16.04 镜像），并修复在文件中拥有的突出的安全/最佳实践问题的两个指令。
-- 分析和编辑给定的清单文件 `/cks/docker/deployment.yaml`，并修复在文件中拥有突出的安全/最佳实践问题的两个字段。
-
-注意：请勿添加或删除配置设置；只需修改现有的配置设置让以上两个配置设置都不再有安全/最佳实践问题。
-注意：如果您需要非特权用户来执行任何项目，请使用用户 ID 65535 的用户 nobody 。
-答题： 注意，本次的 Dockerfile 和 deployment.yaml 仅修改即可，无需部署。
-
-- Analyze and edit the given Dockerfile (based on the ubuntu:16.04 image) `/cks/7/Dockerfile` fixing two instructions present in the file being prominent security/best-practice issues.
-- Analyze and edit the given manifest file `/cks/7/deployment.yaml` fixing two fields present in the file being prominent security/best-practice issues.
+- Analyze and edit the given Dockerfile (based on the ubuntu:16.04 image) `/cks/docker/Dockerfile` fixing two instructions present in the file being prominent security/best-practice issues.
+- Analyze and edit the given manifest file `/cks/docker/deployment.yaml` fixing two fields present in the file being prominent security/best-practice issues.
 
 Don't add or remove configuration settings; only modify the existing configuration settings, so that two configuration settings each are no longer security/best-practice concerns.
 
-Should you need an unprivileged user for any of the tasks, use user `nobody` with user id `65536`.
+Should you need an unprivileged user for any of the tasks, use user `nobody` with user id `65535`.
+
+> - 分析和编辑给定的 Dockerfile `/cks/docker/Dockerfile`（基于 ubuntu:16.04 镜像），并修复在文件中拥有的突出的安全/最佳实践问题的两个指令。
+> - 分析和编辑给定的清单文件 `/cks/docker/deployment.yaml`，并修复在文件中拥有突出的安全/最佳实践问题的两个字段。
+> 
+> 注意：请勿添加或删除配置设置；只需修改现有的配置设置让以上两个配置设置都不再有安全/最佳实践问题。
+> 注意：如果您需要非特权用户来执行任何项目，请使用用户 ID 65535 的用户 nobody 。
+> 答题： 注意，本次的 Dockerfile 和 deployment.yaml 仅修改即可，无需部署。
 
 #### Solution 12
 
@@ -1039,7 +1036,7 @@ FROM ubuntu:16.04
 USER nobody # 2
 
 ### 修复 deployment 文件中存在的两个安全/最佳实践问题字段
-### (1)将 privileged 变为 False；(2)将 readOnlyRootFilesystem 变为 True
+### (1)将 privileged 变为 False；(2)将 readOnlyRootFilesystem 变为 True 3 check runAsUser 65535
 vim /cks/docker/deployment.yaml
 
 apiVersion: apps/v1
@@ -1099,12 +1096,19 @@ You can find the container image scanner's log file at `/var/loglimagepolicyiacm
 <https://kubernetes.io/zh-cn/docs/reference/access-authn-authz/admission-controllers/>
 
 ```bash
-### (1)修改不完整的配置
+# 0 master node
+ssh masterNode
+
 cd /etc/kubernetes/epconfig
 ls
+  admission_configuration.json kubeconfig.yaml
 
-### (2)验证控制平面的配置并将其更改为拒绝
-vim admission_configuration.json
+###  查看config-file路径
+cat /etc/kubernetes/manifests/kube-apiserver.yaml | grep --admission-control-config-file
+    - --admission-control-config-file=/etc/kubernetes/epconfig/admission_configuration.json 
+
+### 1 验证控制平面的配置并将其更改为拒绝
+vim /etc/kubernetes/epconfig/admission_configuration.json
 ```
 
 ```json
@@ -1116,50 +1120,52 @@ vim admission_configuration.json
          "name": "ImagePolicyWebhook",
          "configuration": {
             "imagePolicy": {
-               "kubeConfigFile": "/etc/kubernetes/epconfig/kubeconfig.yaml", // kubeconfig
+               "kubeConfigFile": "/etc/kubernetes/epconfig/kubeconfig.yaml", // 1.1 kubeconfig
                "allowTTL": 100,
                "denyTTL": 50,
                "retryBackoff": 500,
-               "defaultAllow": false   // 2.modify from true to false
+               "defaultAllow": false   // 1.2 modify from true to false
             }
          }
       }
    ]
 }
+
 ```
 
 ```bash
-### (3)编辑配置以正确指向提供的 HTTPS 端点
+
+### 2 编辑配置以正确指向提供的 HTTPS 端点
 vim kubeconfig.yaml
     apiVersion: v1
     kind: Config
     clusters:
     - cluster:
         certificate-authority: /etc/kubernetes/epconfig/webhook.pem
-        server: https://acme.local:8082/image_policy   # 配置此步
+        server: https://acme.local:8082/image_policy   # 2 配置此步
     name: bouncer_webhook
 
-### (4)启用必要的插件以创建镜像策略
+### 3 启用必要的插件以创建镜像策略
 vim /etc/kubernetes/manifests/kube-apiserver.yaml
 
-    - --enable-admission-plugins=NodeRestriction,ImagePolicyWebhook
-    - --admission-control-config-file=/etc/kubernetes/epconfig/admission_configuration.json
+    - --enable-admission-plugins=NodeRestriction,ImagePolicyWebhook  # 3.1 Add ImagePolicyWebhook
+    - --admission-control-config-file=/etc/kubernetes/epconfig/admission_configuration.json  # 3.2 Check config-file path
     ......
-    volumeMounts:
+    volumeMounts:                         # 3.3 Check Mount, can search audit log in kubernetes.io
     - mountPath: /etc/kubernetes/epconfig
       name: config
-      readyOnly: true
+      readyOnly: false
   volumes:
   - hostPath:
       path: /etc/kubernetes/epconfig
       type: DirectoryOrCreate
     name: config
 
-### (5)加载生效配置
+### 4 加载生效配置
 systemctl daemon-reload
 systemctl restart kubelet
 
-### (6)通过部署易受攻击的资源来测试配置是否有效
+### 5 通过部署易受攻击的资源来测试配置是否有效
 kubectl apply -f /cks/img/web1.yaml
 ```
 
@@ -1203,21 +1209,21 @@ kubectl delete pods -n production pod名称
 
 #### Context
 
-该 cluster 使用 containerd 作为 CRI 运行时。
-containerd 的默认运行时处理程序是 `runc`。 containerd 已准备好支持额外的运行时处理程序 `runsc` (gVisor)。
-
 This cluster uses containerd as CRI runtime.
 Containerd's default runtime handler is `runc` . Containerd has been prepared to support an additional runtime handler , `runsc` (gVisor).
 
+> 该 cluster 使用 containerd 作为 CRI 运行时。
+containerd 的默认运行时处理程序是 `runc`。 containerd 已准备好支持额外的运行时处理程序 `runsc` (gVisor)。
+
 #### Task
 
-使用名为 `runsc` 的现有运行时处理程序，创建一个名为 `untrusted` 的 RuntimeClass。
+Create a RuntimeClass named `untrusted` using the prepared runtime handler named `runsc`.
+Update all Pods in the namespace `server` to run on gvisor, unless they are already running on `anon-default` runtime handler.
+You can find a skeleton manifest file at `/cks/13/rc.yaml`
+
+> 使用名为 `runsc` 的现有运行时处理程序，创建一个名为 `untrusted` 的 RuntimeClass。
 更新 namespace `server` 中的所有 Pod 以在 gVisor 上运行。
 您可以在 `/cks/gVisor/rc.yaml` 中找到一个模版清单
-
-Create a RuntimeClass named `untrusted` using the prepared runtime handler named `runsc`.
-Update all Pods in the namespace `client` to run on gvisor, unless they are already running on `anon-default` runtime handler.
-You can find a skeleton manifest file at `/cks/13/rc.yaml`
 
 #### Solution
 
@@ -1237,6 +1243,9 @@ vim /cks/gVisor/rc.yaml
 kubectl apply -f /cks/gVisor/rc.yaml
 
 ### 修改 server 命名空间下的所有 pod（还需要修改deployment）
+kubectl get pods -n server
+kubectl get deployments -n server
+
 kubectl get pods -n server -oyaml > myrc.yaml
 vim myrc.yaml
 spec:
@@ -1269,13 +1278,13 @@ ssh masterNode
 
 ### (1)使用授权模式 Node,RBAC 和准入控制器 NodeRestriction
 vim /etc/kubernetes/manifests/kube-apiserver.yaml
-    - --authorization-mode=Node,RBAC
-    - --enable-admission-plugins=NodeRestriction
+    - --authorization-mode=Node,RBAC              # modify  Node,RBAC 
+    - --enable-admission-plugins=NodeRestriction  # modify  NodeRestriction
     - --client-ca-file=/etc/kubernetes/pki/ca.crt
     - --enable-bootstrap-token-auth=true
 
 ### (2)删除 system:anonymous 的 ClusterRolebinding 角色绑定（取消匿名用户的集群管理员权限）
-k get clusterrolebinding | grep system:anonymous
+k get clusterrolebinding -A | grep system:anonymous
 kubectl delete clusterrolebinding system:anonymous
 ```
 

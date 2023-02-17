@@ -196,15 +196,15 @@ NAME ZONE MST VER MASTER IP  TYPE NODE VER NUM NODES STATUSkubia eu-wld 1.5.3 10
 
 # K8s Certificate 考试认证
 
-- KCNA
+- KCNA（75分及格）
   - [KCNA考试只有选择题](https://training.linuxfoundation.org/certification/kubernetes-cloud-native-associate/)
-- [CKA (Certified Kubernetes Administrator)考试指南](./Kubernates-Certified-Kubernetes-Administrator-CKA.html)
+- [CKA (Certified Kubernetes Administrator)考试指南](./Kubernates-Certified-Kubernetes-Administrator-CKA.html) （66分及格）
   - [CKA机试 - 实战](https://training.linuxfoundation.org/certification/certified-kubernetes-administrator-cka/)
   - CKA is intended for `DeVops, Engineers and Cloud Architects` and Architects. CKA certification is much more difficult than CKAD.
-- [CKAD(Certified Kubernetes Application Developer)考试指南](./Kubernates-Certified-Kubernetes-Application-Developer-CKAD.html)
+- [CKAD(Certified Kubernetes Application Developer)考试指南](./Kubernates-Certified-Kubernetes-Application-Developer-CKAD.html)（66分及格）
   - [CKAD机试 - 实战](https://training.linuxfoundation.org/certification/certified-kubernetes-application-developer-ckad/)
   - 适合开发人员。CKAD is intended for `developers` who will use Kubernetes as an orchestrator in their development projects and cloud engineers.
-- CKS (Certified Kubernetes Security Specialist)
+- CKS (Certified Kubernetes Security Specialist)（67分及格）
   - [CKS机试 - 实战](https://training.linuxfoundation.org/certification/certified-kubernetes-security-specialist/#)
   - 安全专家。CKS is intended for `security` experts, DevOps experts, Cloud Architects, Security Architects. CKS is a very difficult certification, and it takes a lot of time to be prepared.
 

@@ -26,7 +26,7 @@ categories:
 - 考生有 2 小时的时间完成 CKS 考试。
   - 因为从06/2022开始环境升级（贬义），考试环境更难用了，变的很卡，所以时间变得比较紧张。容易做不完题，建议先把有把握的，花费时间不多的题先做掉
     - [CKS CKA CKAD changed Terminal to Remote Desktop](https://itnext.io/cks-cka-ckad-changed-terminal-to-remote-desktop-157a26c1d5e)
-- CKS考试66分以上即可通过，考试不通过有一次补考机会。
+- CKS考试67分以上即可通过，考试不通过有一次补考机会。
 
 Certifications- expire 36 months from the date that the Program certification requirements are met by a candidate.
 
@@ -500,7 +500,7 @@ template:
 kubectl apply -f /cks/9/pod9.yaml
 
 ### 把除了 backend-sa, 并且没有被使用的 serviceaccount 都删除
-kubectl get secret -n qa
+kubectl get serviceaccount -n qa
     backend-sa
     default
     contentsa
@@ -976,7 +976,9 @@ kubectl get secrets db2-test -o jsonpath='{.data.username}' | base64 -d > /home/
 kubectl get secrets db2-test -o jsonpath='{.data.password}' | base64 -d > /home/candidate/pass.txt
 
 ### 创建 secret
-kubectl create secret generic db2-test -n istio-system --from-literal=username=production-instance --from-literal=password=KvLftKgs4aVH 
+kubectl -n istio-system create secret generic db2-test --from-literal=username=production-instance --from-literal=password=KvLftKgs4aVH 
+# kubectl create secret generic db2-test -n istio-system --from-literal username=production-instance --from-literal password=KvLftKgs4aVH
+# error: exactly one NAME is required, got 2
 
 ### 在 Pod 中以文件形式使用 Secret
 vim k8s-secret.yaml
@@ -1191,7 +1193,7 @@ Use the following strict interpretation of stateless and immutable:
 
 ```bash
 ### 在命名空间 dev 中检查 running 状态的 pod
-kubectl get pods -n production | grep running
+kubectl get pods -n production | grep running -i
 
 ### 查看具有特权的 pod
 kubectl get pods -n production -oyaml | grep -i "privileged: true"

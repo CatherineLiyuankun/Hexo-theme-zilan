@@ -11,7 +11,6 @@ categories:
 - Tools
 ---
 
-
 ## Who is Assignees?
 
 [ What do reviewer and assignee mean in pull request?](https://stackoverflow.com/questions/43617352/) 里的答案：
@@ -42,6 +41,21 @@ reviewer: 一般很好理解，就是来review你代码的人。可以是原来�
 Assignees: 其实，没有严格定义，可以具体看项目组怎么用这个选项。一般分两个场景
 1. Pull request：创建pull request的人（这种在另一个组的时候用过，如果你是创建的人，可以指定自己），或者是负责merge代码的人（我们组是这么用的），或者就是当review/colse PR完后accept PR的人.
 2. Issue：当你收到一个issue（通常不是你建的issue）， 你需要指定人来fix这个issue，就可以在Assignees填。
+
+## Tip
+
+### online editor
+
+On github.com when you are viewing a repo or pull request you can press the . (period) key to browse the repo or PR in a VS Code-like editor running in your browser.
+https://github.com/github/dev
+https://www.youtube.com/watch?v=ywUZOOzLX3c
+
+### tab indenting
+
+Github show tab indenting as 8-letter long, this would:
+- make code file mixes tab and spaces indenting looks ugly, you know we have some code repo with long history.
+- consume more horizontal screen space when we review code on Github.
+We can change this [setting](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-personal-account-settings/managing-your-tab-size-rendering-preference)
 
 
 # Reference Links:

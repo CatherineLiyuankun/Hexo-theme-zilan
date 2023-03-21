@@ -61,11 +61,9 @@ OpenAI账号不管是否PLUS都有免费的额度。目前来说是18刀免费�
 
 申请方法：
 
-首先注册好账号，之后点击这个链接：https://platform.openai.com/account/api-keys 即可创建API，默认18美元额度。
-
-基于OPENAI API KEY的网页应用，可以参考这个GitHub：
-
-使用GPT-3.5中的text-davinci-003模型，利用OpenAI API实现简单HTML网页版在线聊天
+- 首先注册好OpenAI账号，之后点击链接：https://platform.openai.com/account/api-keys 即可创建API，默认18美元额度。
+- 基于OPENAI API KEY的网页应用，可以参考这个GitHub：
+  - [使用GPT-3.5中的text-davinci-003模型，利用OpenAI API实现简单HTML网页版在线聊天](https://github.com/slippersheepig/chatgpt-web)
 
 ### ChatGPT 的API
 
@@ -73,7 +71,12 @@ OpenAI账号不管是否PLUS都有免费的额度。目前来说是18刀免费�
 
 申请方法：
 
-在有账号情况下——进入OpenAI个人面板 (https://platform.openai.com/overview) ——顶部有一行“ChatGPT is coming to our API soon, sign up to stay updated”点击sign up——申请资料填报加入候补名单——耐心等待1天时间就可以了
+- 在有OpenAI账号情况下
+- 进入OpenAI个人面板 (https://platform.openai.com/overview)
+- 顶部有一行“ChatGPT is coming to our API soon, sign up to stay updated”
+- 点击sign up
+- 申请资料填报加入候补名单
+- 耐心等待1天时间就可以了
 
 ## GPT收费标准
 
@@ -107,6 +110,9 @@ GPT-4 不同model，token上限： https://platform.openai.com/docs/models/gpt-4
 - [Poe](https://apps.apple.com/us/app/poe-fast-ai-chat/id1640745955) 免费版用户可每4小时向GPT-4提问1次。如果是Poe收费订阅用户，则可每月提问300次。
 - 新Bing 让你免费用GPT-4
   - Microsoft 已表示新Bing 已经使用GPT-4，如果用户在过去5周曾用过新Bing，那么现在已经可以使用GPT-4。
+  - 最新的New bing已经不需要排队申请了。
+  - [新必应（New Bing）国内申请与使用教程](https://juejin.cn/post/7199557716998078522#heading-2)
+  - [总是跳转到国内版(cn.bing.com)？New Bing使用全攻略](https://juejin.cn/post/7202531472720592951#heading-2)
 
 2023.3.20 目前为止GPT 4的各种使用方法都还没有开放功能图片功能。
 
@@ -124,7 +130,15 @@ GPT3 回答：
 GPT4 回答：
 ![GPT 回答](https://www.yundongfang.com/wp-content/uploads/2023/03/GPT4-1024x501.webp-1.jpeg)
 
-## 针对ChatGPT和NewBing效果最好的中文提示词
+## GPT prompt 提示词使用技巧
+
+[Git - Prompt Engineering Topic](https://github.com/prompt-engineering)
+
+- [prompt-patterns](https://github.com/prompt-engineering/prompt-patterns) Prompt 编写模式：如何将思维框架赋予机器
+- [awesome-prompts](https://github.com/prompt-engineering/awesome-prompt-engineering)
+- [Prompt-Engineering-Guide](https://github.com/dair-ai/Prompt-Engineering-Guide) Prompt工程师课程和论文
+
+### 针对ChatGPT和NewBing效果最好的中文提示词
 
 https://qddmercny4.feishu.cn/sheets/shtcnMklYu0WsXEDUXXanrSEB2m
 

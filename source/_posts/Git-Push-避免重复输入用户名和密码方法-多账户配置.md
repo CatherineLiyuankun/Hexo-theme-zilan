@@ -19,7 +19,9 @@ categories:
 
 ## 方法一 Git Credential Manager 【推荐】
 
-[Caching your GitHub credentials in Git](https://docs.github.com/en/get-started/getting-started-with-git/caching-your-github-credentials-in-git#git-credential-manager)
+- [Caching your GitHub credentials in Git](https://docs.github.com/en/get-started/getting-started-with-git/caching-your-github-credentials-in-git#git-credential-manager)
+  - [How to use `git credential-manager`](https://github.com/git-ecosystem/git-credential-manager/blob/release/docs/usage.md)
+- [Support Multiple users](https://github.com/git-ecosystem/git-credential-manager/blob/main/docs/multiple-users.md#setting-it-up)
 
 ## 方法二 .git-credentials
 
@@ -61,6 +63,12 @@ helper = store
 ```
 
 重启终端会发现git push时不用再输入用户名和密码。
+
+## 方法三 
+
+[How to handle multiple git configurations in one machine](https://dhruvbarochiya.com/How-to-handle-multiple-git-configurations-in-one-machine/)
+[Setting Up Git Identities](https://www.micah.soy/posts/setting-up-git-identities/)
+
 
 ## 方法三 环境变量
 
@@ -132,4 +140,12 @@ git config --global user.email "your_email@example.com" # 如果是提到github�
 git config --local user.name "your_name_in_company" # 如果是提到github上，your_name最好是你的github账户的名字
 git config --local user.email "your_company_email@example.com" # 如果是提到github上，your_email@example.com最好是你的github账户的邮箱
 
+# 设置http和https代理 set proxy to git command by executing
+`git config --global http.proxy http://10.xx.x.xxx:8080`
+# unset the proxy, 去除http和https代理：
+`git config --global --unset http.proxy`
+`git config --global --unset https.proxy`
+
 ```
+  <!-- - `git config --global http.proxy http://10.27.7.110:8080` -->
+

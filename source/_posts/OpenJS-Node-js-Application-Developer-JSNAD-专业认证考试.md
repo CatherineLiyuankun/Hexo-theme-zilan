@@ -36,10 +36,14 @@ tags:
 JSNAD:
 The Linux Foundation offers The Node.js Application Development (LFW211) a self-paced E-Learning course to improve your versatility in creating various types of Node.js applications. Covering a broad set of use cases and using Node.js core APIs with selected ecosystem libraries, this course prepares you for JSNAD Certification Exam.
 The following resources are considered Recommended Reading  for the JSNAD Exam:
+
 - Node.js 18.x.Documentation, https://nodejs.org/dist/latest-v18.x/docs/api/
 - Node Cookbook, 3rd Edition, Chapters 1, 2, 3, 4 and 9 
 - https://nodeschool.io/
 - https://openjsf.org/blog/2022/04/29/using-abortsignal-in-node-js/
+
+git上LFW211练习题：https://github.com/rodmoreno/lfw212
+git上JSNAD主题： https://github.com/topics/jsnad
 
 JSNSD:
 The Linux Foundation offers Node.js Services Development (LFW212) a self-paced E-Learning course that provides a deep dive into Node core HTTP clients and servers, web servers, RESTful services and web security essentials. 

@@ -21,13 +21,18 @@ categories:
 
 对比Tabnine收费版和GitHub Copilot收费版，更推荐使用GitHub Copilot
 
+### [`Cursor`](https://www.cursor.so/)
+
+一款集成Gpt-4机器人的编辑器。
+
 ### [GPT-Code-Clippy (GPT-CC)](https://github.com/CodedotAl/gpt-code-clippy)
 
 GPT-Code-Clippy (GPT-CC) 是 GitHub Copilot 的开源版本，构建于 OpenAI 的 GPT-3 之上。它可以作为 VS 代码扩展使用，但不能通过 VS 代码市场获得。
 > GPT-Code-Clippy (GPT-CC) is an open source version of GitHub Copilot, a language model -- based on GPT-3, called GPT-Codex -- that is fine-tuned on publicly available code from GitHub.
 
 [code-clippy-vscode](https://github.com/CodedotAl/code-clippy-vscode)
-GPT-Code-Clippy的VSCode 插件
+GPT-Code-Clippy的VSCode 插件版本
+<!-- 实测用起来有点慢 -->
 
 ### 阿里云智能编码插件（Alibaba Cloud AI Coding Assistant）
 

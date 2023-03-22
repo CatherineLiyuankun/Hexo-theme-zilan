@@ -24,6 +24,25 @@ categories:
 - OpenAI很早就成立了，后面拿到天使融资和投资才不停的壮大发展，目前已经过度到快要变现盈利阶段。
 - 然后OpenAI还有个金主爸爸叫微软Microsoft。这位金主爸爸给自家的bing.com搜索引擎和office 365植入这个ChatGPT功能
 
+## ChatGPT与GPT-3.5（OpenAI API）的区别
+
+在[OpenAI官方网页](https://openai.com/blog/chatgpt/)中，我们可以看到官方对ChatGPT的描述为
+>“ChatGPT is fine-tuned from a model in the GPT-3.5 series, which finished training in early 2022. You can learn more about the 3.5 series [here](https://beta.openai.com/docs/model-index-for-researchers). ChatGPT and GPT 3.5 were trained on an Azure AI supercomputing infrastructure”
+
+从而得知ChatGPT与GPT-3.5是两个不同产品
+官方对GPT-3.5系列的介绍里，`text-davinci-003`是其中的模型之一
+我们再查阅官方对[OpenAI API KEY的介绍](https://beta.openai.com/docs/introduction/key-concepts)，其中有一句
+
+>“The API is powered by a set of models with different capabilities and price points. Our base GPT-3 models are called Davinci, Curie, Babbage and Ada”
+
+davinci等模型都提到了
+
+我们可以得出结论：
+
+- 现在所有使用OpenAI API KEY的项目，都不是基于ChatGPT开发的项目，官方并未发布ChatGPT的API接口
+- 事实上，ChatGPT最近发生过登录认证风波，想了解详细过程的可以查看这个[issue](https://github.com/acheong08/ChatGPT/issues/261)
+- 如果你自己有分别使用过ChatGPT的官方chat和OpenAI的API接口聊天，你会发现API接口比ChatGPT的官方“笨”得多。ChatGPT使用的训练数据量和参数个数是远远比OpenAI的API的多的。
+
 ## AI模型总结
 
 混淆人工智能、机器学习、深度学习、深度神经网络、人工智能模型、对抗神经网络、卷积神经网络、大语言模型、GPT-3等等概念？
@@ -31,14 +50,26 @@ categories:
 
 ## GPT 相关项目
 
+### 编辑器
+
+[`Cursor`](https://www.cursor.so/) 一款集成Gpt-4机器人的编辑器。
+
 ### [DocsGPT](https://github.com/arc53/DocsGPT)
 
 With its integration of the powerful GPT models, developers can easily ask questions about a project and receive accurate answers.
 
 ### ChatGPT 中文调用版
 
-- https://chat.jorto.net/
-- https://new.ctgpt.cn/ [介绍](https://iui.su/3854/)
+- https://new.ctgpt.cn/ [介绍](https://iui.su/3854/) 基于 OpenAI API (gpt-3.5-turbo)开发，免费无次数限制
+  - 网页端：https://new.ctgpt.cn
+  - 安卓端：https://wwji.lanzouf.com/iVoeB0o7wrxe
+  - 苹果端：https://wwji.lanzouf.com/iYlRb0o7wryf 苹果端需要去设置里安装
+  - 它可以和 new bing 一样 对回答内容的保守程度进行调整
+  - 预设了一些常用prompt
+  - 可以给 ChatGPT 设定角色
+- https://chat.jorto.net/  免费中文版
+- https://chatgpt.laoda.de/  需要填写自己的OpenAI账号的APIKEY
+<!-- - https://gpt.chatapi.art/ ，不用科学上网，不用注册，直接提问 已经无法访问 -->
 
 ## OpenAI账号
 
@@ -67,13 +98,13 @@ OpenAI账号不管是否PLUS都有免费的额度。目前来说是18刀免费�
 
 ### ChatGPT 的API
 
-另一种是ChatGPT 的API。不要钱！也是邀请制度。申请一下隔天就可以通过。
+另一种是ChatGPT的API。不要钱！也是邀请制度。申请一下隔天就可以通过。
 
 申请方法：
 
 - 在有OpenAI账号情况下
 - 进入OpenAI个人面板 (https://platform.openai.com/overview)
-- 顶部有一行“ChatGPT is coming to our API soon, sign up to stay updated”
+- 顶部有一行最新的是“Join the GPT-4 API waitlist” 之前是“ChatGPT is coming to our API soon, sign up to stay updated”
 - 点击sign up
 - 申请资料填报加入候补名单
 - 耐心等待1天时间就可以了

@@ -60,6 +60,9 @@ With its integration of the powerful GPT models, developers can easily ask quest
 
 ### ChatGPT 中文调用版
 
+- 川虎ChatGPT 2.0 现已在GitHub开源
+  - 仓库地址：https://github.com/GaiZhenbiao/ChuanhuChatGPT
+  - b站视频：【ChatGPT帮你量子速读！开源客户端川虎ChatGPT重磅更新！】 https://www.bilibili.com/video/BV1184y1w7aP/?share_source=copy_web&vd_source=17c28da67621241803b4287cfdcf14c4
 - https://new.ctgpt.cn/ [介绍](https://iui.su/3854/) 基于 OpenAI API (gpt-3.5-turbo)开发，免费无次数限制
   - 网页端：https://new.ctgpt.cn
   - 安卓端：https://wwji.lanzouf.com/iVoeB0o7wrxe
@@ -72,6 +75,11 @@ With its integration of the powerful GPT models, developers can easily ask quest
 <!-- - https://gpt.chatapi.art/ ，不用科学上网，不用注册，直接提问 已经无法访问 -->
 
 ## OpenAI账号
+
+注册网址：https://chat.openai.com/，需要
+
+- 邮箱
+- 国外手机号。如果没有国外手机号，可使用短信转发平台：https://sms-activate.org/
 
 OpenAI只要是成功注册的账号都有API。
 OpenAI账号不管是否PLUS都有免费的额度。目前来说是18刀免费账户额度。一天能花0.1刀个人问答都很厉害了的，OpenAI靠免费额度限制滥用。
@@ -177,4 +185,4 @@ https://qddmercny4.feishu.cn/sheets/shtcnMklYu0WsXEDUXXanrSEB2m
 
 - [大白话！简单解释ChatGPT和OpenAI还有API KEYS](https://blog.laoda.de/archives/chatgpt-and-openai)
 - [手把手教你ChatGPT API Key申请使用和充值方法](https://cloud.tencent.com/developer/article/2232954)
-
+- [手把手教你注册和使用ChatGPT](https://juejin.cn/post/7199657558834692157)

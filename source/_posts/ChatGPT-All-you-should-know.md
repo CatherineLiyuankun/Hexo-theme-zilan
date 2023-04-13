@@ -58,7 +58,7 @@ davinci等模型都提到了
 
 With its integration of the powerful GPT models, developers can easily ask questions about a project and receive accurate answers.
 
-## Shell GPT
+### Shell GPT
 
 [Shell GPT](https://github.com/TheR1D/shell_gpt)，A command-line productivity tool powered by OpenAI's GPT-3.5 model. As developers, we can leverage AI capabilities to generate shell commands, code snippets, comments, and documentation, among other things. Forget about cheat sheets and notes, with this tool you can get accurate answers right in your terminal, and you'll probably find yourself reducing your daily Google searches, saving you valuable time and effort.
 
@@ -104,7 +104,8 @@ OpenAI账号不管是否PLUS都有免费的额度。目前来说是18刀免费�
 
 申请方法：
 
-- 首先注册好OpenAI账号，之后点击链接：https://platform.openai.com/account/api-keys 即可创建API，默认18美元额度。
+- 首先注册好OpenAI账号，之后点击链接：https://platform.openai.com/account/api-keys 即可创建API。
+  - 默认18美元额度，剩余额度和使用期限可以在 <https://platform.openai.com/account/usage> 查看
 - 基于OPENAI API KEY的网页应用，可以参考这个GitHub：
   - [使用GPT-3.5中的text-davinci-003模型，利用OpenAI API实现简单HTML网页版在线聊天](https://github.com/slippersheepig/chatgpt-web)
 
@@ -180,6 +181,11 @@ GPT4 回答：
 - [prompt-patterns](https://github.com/prompt-engineering/prompt-patterns) Prompt 编写模式：如何将思维框架赋予机器
 - [awesome-prompts](https://github.com/prompt-engineering/awesome-prompt-engineering)
 - [Prompt-Engineering-Guide](https://github.com/dair-ai/Prompt-Engineering-Guide) Prompt工程师课程和论文
+
+### [ChatGPT Shortcut](https://github.com/rockbenben/ChatGPT-Shortcut)
+
+好用的提示词聚合网站 [ChatGPT Shortcut](https://www.aishort.top/cn/)
+简单易用的 ChatGPT 快捷指令表，让生产力倍增！ | 标签筛选、关键词搜索和一键复制 Prompts
 
 ### 针对ChatGPT和NewBing效果最好的中文提示词
 

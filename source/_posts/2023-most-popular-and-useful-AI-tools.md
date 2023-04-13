@@ -133,6 +133,26 @@ AiXcoder 由 JetBrains 创建，是一个基于深度学习技术的代码完成
 | GPT-4 | writing | OpenAI | https://openai.com/product/gpt-4 | - GPT-4 is OpenAI’s most advanced system, producing safer and more useful responses | - None found. | Paid |
 | chat GPT | chat | OpenAI | https://chat.openai.com/chat |  | - None found. | Paid |
 
+## 其他 AI 工具推荐
+
+参考[GPT-4上线，这10个AI工具你必须收藏](https://www.odaily.news/post/5185781)，整理成表格
+>   以下为近 1 个月时间里，团队小伙伴试用 86 种 AI 工具后，按照好用程度筛选出的 17 种 AI 工具
+>   重点介绍好用 Top🔟 的工具，包括推荐理由、收费标准、工具链接、和使用场景等
+
+以下是一些 AI 工具的推荐，供参考：
+| 序号 | 工具名称                                       | 推荐理由                                                                                                     | 付费/免费 | 链接                                                                                     |
+|------|------------------------------------------------|--------------------------------------------------------------------------------------------------------------|-----------|------------------------------------------------------------------------------------------|
+| No.1 | @NotionHQ 「NotionAI」                         | 可结合Web clipper插件，将网页内容剪藏，然后用AI进行总结、摘要，提升阅读效率                             | $10/月-plus版 2000AI积分「基本够用」    | [Notion Ai介绍](https://www.notion.so/product/ai) / [Web clipper插件](https://chrome.google.com/webstore/detail/notion-web-clipper/knheggckgoiihginacbkhaalnibhilkk) |
+| No.2 | @bing「New bing」                              | GPT-4底层，可基于链接进行信息提取，也可生成表格                                                             | 免费      | [申请方法](https://twitter.com/jianshubiji/status/1635832682474250240?s=20)                    |
+| No.3 | chathub.gg by @wong2_x                        | 将ChatGpt和Newbing聚合，对比结果，更容易筛选信息                                                              | 需要填写个人API   | [插件](https://chrome.google.com/webstore/detail/chathub-all-in-one-chatbo/iaakpnchhognanibcahlpcplchdfmgma)                      |
+| No.4 | ChatGpt-4                                      | 可输入2.5W字、逻辑性大幅提升、支持图片输入并对其解释「暂未开放」                                             | plus-$20/月 | [网站](https://chat.openai.com/chat) / [币安 VISA 卡注册教程](https://twitter.com/jianshubiji/status/1628368868820373505?s=20) / [好用的提示词聚合网站 ChatGPT Shortcut](https://www.notion.so/ChatGPT-Shortcut-2e22853f52484ed698b7a846c33a26d8) |
+| No.5 | Phind                                          | 提供相关链接、信息库更新较快可根据信息的时间筛选                                                              | 需要填写个人API   | [网站](https://www.phind.com/)                                                             |
+| No.6 | ChatPDF                                        | 可基于上传的PDF进行内容汇总、信息摘取                                                                         | 免费/plus-$5/月 | [网站](https://www.chatpdf.com/)                                               |
+| No.7 | Freegpt                                        | 免费版本的 ChatGPT、性能稳定                                                                                   | 免费      | [网站](https://freegpt.one/)                                                               |
+| No.8 | OpenAI Translator                              | 不仅能翻译15种语言，还能总结、基于单个词汇扩展解释                                                             | 需要填写个人API   | [插件](https://chrome.google.com/webstore/detail/openai-translator/ogjibjphoadhljaoicdnjnmgokohngcc)                           |
+| No.9 | Language reactor                               | 这个不算AI工具，但对于Web3想学英语的小伙伴非常适用，会根据 YouTube 逐行翻译还可以分等级学习 | 免费,也有专业版 $8.35/月，带储存单词 | [🔗网站](https://www.languagereactor.com/saved-items)  / [🔗插件](https://chrome.google.com/webstore/detail/language-reactor/hoombieeljmmljlkjmnheibnpciblicm)
+| No.10 | Glarity | 基于谷歌页面内容总结、YouTube 视频内容总结「仅限带英文字幕」| 需接入自己的 API | [🔗插件](https://chrome.google.com/webstore/detail/glarity-summary-for-googl/cmnlolelipjlhfkhpohphpedmkfbobjc/related)
+
 ### ChatGPT 详细介绍：[ChatGPT 解答](./ChatGPT-All-you-should-know.html)
 
 ### GPT 相关项目
@@ -174,116 +194,6 @@ With its integration of the powerful GPT models, developers can easily ask quest
 
 [大白话！简单解释ChatGPT和OpenAI还有API KEYS](https://blog.laoda.de/archives/chatgpt-and-openai)
 
-
-[GPT-4上线，这10个AI工具你必须收藏](https://www.odaily.news/post/5185781)
-
-以下为近 1 个月时间里，团队小伙伴试用 86 种 AI 工具后，按照好用程度筛选出的 17 种 AI 工具
-
-重点介绍好用 Top🔟 的工具，包括推荐理由、收费标准、工具链接、和使用场景等
-
-GPT-4上线，这10个AI工具你必须收藏
-
-好用 No.1 - @NotionHQ 「NotionAI」
-推荐理由：可结合Web clipper插件，将网页内容剪藏，然后用AI进行总结、摘要，提升阅读效率
-
-$10/月-plus版 2000AI积分「基本够用」
-
-🔗Notion Ai介绍 https://www.notion.so/product/ai
-
-🔗Web clipper插件 https://chrome.google.com/webstore/detail/notion-web-clipper/knheggckgoiihginacbkhaalnibhilkk
-
-GPT-4上线，这10个AI工具你必须收藏
-
-好用 No.2 - @bing「New bing」
-推荐理由：GPT-4 底层，可基于链接进行信息提取，也可生成表格
-
-免费 「但要申请白单，申请方法放在下方🔗」
-
-🔗申请方法 https://twitter.com/jianshubiji/status/1635832682474250240? s= 20 
-
-GPT-4上线，这10个AI工具你必须收藏
-
-好用 No.3 - chathub.gg by@wong2_x
-推荐理由：将ChatGpt和Newbing聚合，对比结果，更容易筛选信息
-
-需要填写个人API
-
-🔗插件https://chrome.google.com/webstore/detail/chathub-all-in-one-chatbo/iaakpnchhognanibcahlpcplchdfmgma
-
-GPT-4上线，这10个AI工具你必须收藏
-
-好用 No.4 - ChatGpt-4 
-推荐理由：可输入 2.5 W 字、逻辑性大幅提升、支持图片输入并对其解释「暂未开放」
-
-plus 版-$ 20 月 「可用币安 VISA 卡支付购买，亲测好用！」
-
-🔗网站 https://chat.openai.com/chat
-
-🔗币安 VISA 卡注册教程 https://twitter.com/jianshubiji/status/1628368868820373505? s= 20 
-
-🔗好用的提示词聚合网站ChatGPT Shortcut - 简单易用的 ChatGPT 快捷指令表，让生产力倍增！ | 标签筛选、关键词搜索和一键复制 Prompts
-
-GPT-4上线，这10个AI工具你必须收藏
-
-GPT-4上线，这10个AI工具你必须收藏
-
-好用 No.5 - Phind
-推荐理由：提供相关链接、信息库更新较快可根据信息的时间筛选
-
-设置 API，免费也能用但有一定限制
-
-🔗网站 https://www.phind.com/
-
-GPT-4上线，这10个AI工具你必须收藏
-
-好用 No.6 - ChatPDF
-推荐理由：可基于上传的PDF进行内容汇总、信息摘取
-
-免费仅限10mb、3PDF/天、50个问题；plus-$5/月有32mb、50PDF/天、1000个问题
-
-🔗网站https://www.chatpdf.com/
-
-GPT-4上线，这10个AI工具你必须收藏
-
-好用 No.7 - Freegpt
-推荐理由：免费版本的 ChatGPT、性能稳定
-
-免费 「目前版本是 GPT-3.5 」
-
-🔗网站 https://freegpt.one/
-
-GPT-4上线，这10个AI工具你必须收藏
-
-好用 No.8 - OpenAI Translator
-推荐理由：不仅能翻译15种语言，还能总结、基于单个词汇扩展解释
-
-需要输入自己的API
-
-🔗插件https://chrome.google.com/webstore/detail/openai-translator/ogjibjphoadhljaoicdnjnmgokohngcc
-
-GPT-4上线，这10个AI工具你必须收藏
-
-好用 No.9 - Language reactor
-推荐理由：这个不算 AI 工具，但对于Web3想学英语的小伙伴非常适用，会根据 YouTube 逐行翻译还可以分等级学习
-
-免费,也有专业版$ 8.35/月，带储存单词
-
-🔗网站 https://www.languagereactor.com/saved-items
-
-🔗插件 https://chrome.google.com/webstore/detail/language-reactor/hoombieeljmmljlkjmnheibnpciblicm
-
-GPT-4上线，这10个AI工具你必须收藏
-
-GPT-4上线，这10个AI工具你必须收藏
-
-好用 No.10 - Glarity
-推荐理由：基于谷歌页面内容总结、YouTube 视频内容总结「仅限带英文字幕」
-
-需接入自己的 API
-
-🔗插件 https://chrome.google.com/webstore/detail/glarity-summary-for-googl/cmnlolelipjlhfkhpohphpedmkfbobjc/related
-
-
 Source: Conversation with Bing, 3/19/2023
 
 - (1) 10 Best AI Art Generators & Tools in 2023 | Design Shack. https://designshack.net/articles/software/best-ai-art-generators-tools/ Accessed 3/19/2023.
@@ -307,3 +217,4 @@ Source: Conversation with Bing, 3/19/2023
 - (19) 5 best AI art generators of 2023: DALL-E 2 and alternatives. https://www.zdnet.com/article/best-ai-art-generator/ Accessed 3/19/2023.
 - (20) 10 Best AI Art Generators (March 2023) - Unite.AI. https://www.unite.ai/10-best-ai-art-generators/ Accessed 3/19/2023.
 - (21) The best AI chatbots of 2023: ChatGPT and alternatives | ZDNET. https://www.zdnet.com/article/best-ai-chatbot/ Accessed 3/19/2023.
+

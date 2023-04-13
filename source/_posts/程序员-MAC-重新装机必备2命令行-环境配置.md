@@ -14,6 +14,10 @@ categories:
 
 # Terminal 设置
 
+- [x] [Warp](https://www.warp.dev/) [Git开源](https://github.com/warpdotdev/Warp) The terminal for the 21st century。
+  - Warp解决第一个痛点，是通过减少配置、方便输入，优化输出，增加常用命令行自动提示(通过fig)，方便查看历史记录，可定义流程，等等。
+  - 解决第二个痛点，则是增加协作功能。例如可以共享自己的命令行、设置项、历史记录。
+  - [Warp AI](https://www.warp.dev/blog/introducing-warp-ai)： 可以直接问Warp AI怎样write script 来实现特定功能。
 - [x] Terminal 用 [**iTerm2**](https://www.iterm2.com/) + [**zsh**](https://en.wikipedia.org/wiki/Z_shell) + [**oh-my-zsh**](https://github.com/robbyrussell/oh-my-zsh) 的组合，主题是 [robbyrussell](https://github.com/robbyrussell/oh-my-zsh/blob/master/themes/robbyrussell.zsh-theme).
   配置方法参考文章： [iterm2+oh-my-zsh组合你的terminal](../oh-my-zsh%E7%BB%84%E5%90%88%E4%BD%A0%E7%9A%84terminal.html).
 

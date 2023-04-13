@@ -12,6 +12,14 @@ categories:
 - Environment setup
 ---
 
+# 发现好app
+
+- [producthunt](https://www.producthunt.com/) 国际最流行的初创公司展示自己产品的平台，这里有各种奇妙的想法和产品，保证能够让你的脑洞大开。在这个平台上，你可以和创始人交流对话，提出意见，并发现各种好玩的产品和工具。简介：科技圈非常有名的平台，在美国有什么新产品（不论网站、APP还是插件）都会先往上前面挂。在国内原来也有些类似产品出现，但最终都没有做下去，而ProductHunt却流量很不错，有一大拨人经常关注着，是获取种子用户做冷启动的首选之地。可以免费上。可以人工影响排名和曝光。
+- [G2](https://www.g2.com/) 目前海外最大的软件选型平台，估值是超10亿美元的独角兽，国内SaaS点评网、36氪企服点评等类似网站基本都在学习这家。G2给厂商提供会员、广告、数据等服务，通用类软件流量大。想曝光想好看要花钱，评价审核非常严格。类似网站非常多，当然流量也会少，有些收费有些不收费。同类如GetApp、SaaSWorthy等很多家
+- [SaaSHub](https://www.saashub.com/?ref=producthunt) 月访客约200万。介于上面两类之间，有按时间分布的热榜列表，也有产品评价和类似推荐，但网站结构较为简单。类似这种列表、找同类型的网站也有不少。免费上，可以人工干预上榜首。有流量，有转化。
+- [Sourceforge](https://sourceforge.net/) 月访客约2100万，比较知名开源软件平台，后来有了专门的商业软件模块，提供面向商业软件的会员服务。如果是开源软件，推荐上去免费获取流量，但是商业软件要在上面推广费用不低，效果看情况。类似开源软件平台还不少，而类似的软件下载站更是非常多，比如流量更大的Softonic，拥有多语言站点，但是入驻麻烦且收费。可免费，可付费，人工干预影响小。
+- [PartnerStack](https://partnerstack.com/) 月访客约72万。专门针对SaaS的分销管理 系统&分销平台，帮助厂商管理线索生态伙伴，也帮个人和企业找供应商。在海外线索伙伴是非常重要的，比如HubSpot就曾有很大比例来自于这块。类似平台还有，不多介绍。服务SaaS的SaaS，买吧。（老余也想做一个类似产品，对此有兴趣的朋友欢迎勾搭交流
+
 # 编程必备
 
 - [x] [**Google Chrome**](https://www.google.com/chrome/) + [**Google Chrome Canary**](https://www.google.com/chrome/canary/) + [**Firefox**](https://www.mozilla.org/en-US/firefox/new/) + [**Edge**](https://www.microsoft.com/en-us/edge) + **Safari**，浏览器，调试用，IE 的测试会借助公司.

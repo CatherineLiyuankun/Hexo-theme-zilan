@@ -58,6 +58,10 @@ davinci等模型都提到了
 
 With its integration of the powerful GPT models, developers can easily ask questions about a project and receive accurate answers.
 
+## Shell GPT
+
+[Shell GPT](https://github.com/TheR1D/shell_gpt)，A command-line productivity tool powered by OpenAI's GPT-3.5 model. As developers, we can leverage AI capabilities to generate shell commands, code snippets, comments, and documentation, among other things. Forget about cheat sheets and notes, with this tool you can get accurate answers right in your terminal, and you'll probably find yourself reducing your daily Google searches, saving you valuable time and effort.
+
 ### ChatGPT 中文调用版
 
 - 川虎ChatGPT 2.0 现已在GitHub开源

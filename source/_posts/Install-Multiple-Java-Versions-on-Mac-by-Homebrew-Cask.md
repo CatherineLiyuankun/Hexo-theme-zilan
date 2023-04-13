@@ -2,7 +2,7 @@
 title: Install Multiple Java Versions on Mac by Homebrew Cask
 catalog: true
 date: 2021-06-06 16:33:20
-subtitle: 多个Java版本切换和安装
+subtitle: 多个Java版本切换和安装 jenv
 header-img:
 tags:
 - MAC
@@ -224,6 +224,11 @@ The above command will create a .java-version file at project root. Its content 
 ```bash
 oracle64-1.8.0.66
 ```
+
+## `jenv enable-plugin export`
+
+用 jenv 管理 JDK 版本的小伙伴，可以通过这个命令让 `jenv` 在切版本的时候顺便把 `JAVA_HOME` 设置正确，运行一次即可。
+`jenv enable-plugin export`
 
 # Reference
 

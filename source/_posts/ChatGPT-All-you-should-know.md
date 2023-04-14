@@ -16,7 +16,7 @@ categories:
 | --- | --- | --- | --- | --- | --- | --- |
 | GPT-3 | writing | OpenAI | https://openai.com/gpt-3/ | - One of the most powerful AI writing tools on the market. <br> - Capable of generating human-like text. | - None found. | Paid |
 | GPT-4 | writing | OpenAI | https://openai.com/product/gpt-4 | - GPT-4 is OpenAI’s most advanced system, producing safer and more useful responses | - None found. | Paid |
-| chat GPT | chat | OpenAI | https://chat.openai.com/chat |  | - None found. | Paid |
+| chat GPT | chat | OpenAI | https://chat.openai.com/chat |  | - None found. | 注册普通账号，免费18美元额度；ChatGPT Plus `$20`/月 |
 
 ## `ChatGPT`和`OpenAI`和`Microsoft` 关系？
 
@@ -176,7 +176,7 @@ GPT4 回答：
 
 ## GPT prompt 提示词使用技巧
 
-[Git - Prompt Engineering Topic](https://github.com/prompt-engineering)
+### [Git - Prompt Engineering Topic](https://github.com/prompt-engineering)
 
 - [prompt-patterns](https://github.com/prompt-engineering/prompt-patterns) Prompt 编写模式：如何将思维框架赋予机器
 - [awesome-prompts](https://github.com/prompt-engineering/awesome-prompt-engineering)

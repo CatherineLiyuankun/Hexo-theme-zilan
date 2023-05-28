@@ -176,6 +176,15 @@ GPT4 回答：
 
 ## GPT prompt 提示词使用技巧
 
+### 吴恩达课程-ChatGPT Prompt Engineering for Developers
+
+- 课程链接：[ChatGPT Prompt Engineering for Developers](https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/)
+- DeepLearningAI 的YouTUbe： https://www.youtube.com/@Deeplearningai/videos
+
+- 吴恩达《ChatGPT Prompt Engineering for Developers》课程中文版:
+  - [Git 课程中文版](https://github.com/datawhalechina/prompt-engineering-for-developers)
+  - bilibili课程中文版视频地址：https://www.bilibili.com/video/BV1Bo4y1A7FU
+
 ### [Git - Prompt Engineering Topic](https://github.com/prompt-engineering)
 
 - [prompt-patterns](https://github.com/prompt-engineering/prompt-patterns) Prompt 编写模式：如何将思维框架赋予机器

@@ -237,7 +237,7 @@ GPT4 回答：
 
 ### [ChatGPT Shortcut](https://github.com/rockbenben/ChatGPT-Shortcut)
 
-好用的提示词聚合网站 [ChatGPT Shortcut](https://www.aishort.top/cn/)
+好用的提示词聚合网站 [ChatGPT Shortcut](https://www.aishort.top/)
 简单易用的 ChatGPT 快捷指令表，让生产力倍增！ | 标签筛选、关键词搜索和一键复制 Prompts
 
 ### 针对ChatGPT和NewBing效果最好的中文提示词

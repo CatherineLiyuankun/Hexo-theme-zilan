@@ -133,7 +133,7 @@ JAVACMD="/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin
 ## 时间管理
 
 - Apple官方日历，简称iCalendar， 用来日程记录。
-- TimeView， [APP Store 免费版限制2个card; 付费版，3.99美元买断] iCalendar并没有提供官方的数据统计和分析功能，所以我们需要借助第三方软件TimeView。TimeView可以理解为是一个数据透视图，透视的数据都来自你在日历中记录的东西。进去之后设置规则，比如我想要统计健身的时间，可以新建一条卡片，设置规则：选取「健康」日历，并包含「健身」关键词。然后我们就可以一张透视统计图，拉取了所有相关的日程，即使课程的命名不规则，只要「健身」关键词标记准确，就可以准确统计。
+- TimeView， [APP Store 免费版限制2个card; 付费版，5.99美元买断] iCalendar并没有提供官方的数据统计和分析功能，所以我们需要借助第三方软件TimeView。TimeView可以理解为是一个数据透视图，透视的数据都来自你在日历中记录的东西。进去之后设置规则，比如我想要统计健身的时间，可以新建一条卡片，设置规则：选取「健康」日历，并包含「健身」关键词。然后我们就可以一张透视统计图，拉取了所有相关的日程，即使课程的命名不规则，只要「健身」关键词标记准确，就可以准确统计。
 - [**TickTick滴答**](https://dida365.com/) ，任务管理，有MAC版和iPhone版，可以同步。[APP Store]
 - [x] [RescueTime](https://www.rescuetime.com/dashboard)和[WakaTime](https://wakatime.com/dashboard)来记录你的时间，都有Chrome插件。RescueTime 手机端电脑端都有app。[命令行安装WakaTime](https://wakatime.com/terminal)
 

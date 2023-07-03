@@ -333,3 +333,5 @@ export function isMobileOrTabletDevice() {
 - [WKWebView 设置自定义UserAgent正确姿势](https://juejin.cn/post/6844903632152821773)
 - [iOS修改WebView的UserAgent](https://juejin.cn/post/6844904030980800519)
   - [iOS修改UserAgent](https://juejin.cn/post/6844903848671199239)
+- [Setting a custom userAgent in HTML or JavaScript](https://stackoverflow.com/questions/23248525/setting-a-custom-useragent-in-html-or-javascript)
+- [How to change the UserAgent of a window opened with window.open(), if possible?](https://stackoverflow.com/questions/73744290/how-to-change-the-useragent-of-a-window-opened-with-window-open-if-possible)

@@ -30,7 +30,7 @@ categories:
 
 ### URL结构
 
-![URL结构](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_URL/mdn-url-all.png)
+![URL结构](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Web_mechanics/What_is_a_URL/mdn-url-all.png)
 
 `Scheme`(Protocol), `Domain name`(Host), `Port`, `Path`, `Parameters`(queryString) and `Anchor`(#, also known as the `fragment identifier`).
 

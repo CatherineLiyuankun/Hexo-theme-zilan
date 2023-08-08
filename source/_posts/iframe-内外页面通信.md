@@ -4,18 +4,25 @@ catalog: true
 date: 2023-07-03 19:48:07
 subtitle:
 header-img:
+tags:
+- CORS
 categories:
 - TECH
 - FrontEnd
 ---
-
-## 在iframe内获取iframe外的内容
 
 - [`window.parent`](https://developer.mozilla.org/en-US/docs/Web/API/Window/parent) 获取上一级的window对象。 如果当前窗口是一个 `<iframe>`, `<object>`, 或者 `<frame>`,则它的父窗口是嵌入它的那个窗口。如果还是iframe则是该iframe的window对象, 如果没有parent，则返回自身的引用。
 - [window.top](https://developer.mozilla.org/en-US/docs/Web/API/Window/top) 获取最顶级容器的window对象，即，就是你打开页面的window
 - [window.self](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/self) 返回自身window的引用。可以理解 `window===window.self`
 - [window.frames](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/frames) 当前窗口的所有直接子窗口
 - window.open/window.opener 使用window.open返回的对象
+
+## 在iframe内获取iframe外的内容
+
+### window.parent
+
+- [`window.parent`](https://developer.mozilla.org/en-US/docs/Web/API/Window/parent) 获取上一级的window对象。 如果当前窗口是一个 `<iframe>`, `<object>`, 或者 `<frame>`,则它的父窗口是嵌入它的那个窗口。如果还是iframe则是该iframe的window对象, 如果没有parent，则返回自身的引用。
+- [window.top](https://developer.mozilla.org/en-US/docs/Web/API/Window/top) 获取最顶级容器的window对象，即，就是你打开页面的window
 
 ![iframe之间parent关系](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fbd94862dba4460d970290261cdf3bf2~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp?)
 
@@ -27,6 +34,10 @@ HTML结构：
   - iframe    child2
 
 执行结果：![执行结果](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/iframe%E5%86%85%E5%A4%96%E9%A1%B5%E9%9D%A2%E9%80%9A%E4%BF%A1/iframeUserAgent.png)
+
+用本地文件测试frame的时候，在执行`curWindow.navigator.userAgent`的时候会报错：
+`Uncaught DOMException: Blocked a frame with origin "null" from accessing a cross-origin frame.`
+解决方法： [关闭浏览器CORS](../iframe-%E5%86%85%E5%A4%96%E9%A1%B5%E9%9D%A2%E9%80%9A%E4%BF%A1.html#%E6%B5%8F%E8%A7%88%E5%99%A8disable-same-origin-policy)
 
 <details>
   <summary>点击展开parent.html代码</summary>
@@ -223,6 +234,10 @@ HTML结构：
   </p>
 </details>
 
+### 父页面向子页面传递数据by URL
+
+利用location对象的hash值，通过它传递通信数据。在父页面设置`iframe`的`src`后面多加个`data`字符串，然后在子页面中通过某种方式能即时的获取到这儿的data。
+
 ## 在iframe外获取iframe里的内容
 
 ### 方法一 `contentWindow`和`contentDocument`
@@ -265,6 +280,11 @@ console.log("html", iContentDocument.documentElement); // 获取iframe的html
 ## 跨域通信
 
 ### 跨域
+
+[Cross-Origin Resource Sharing (CORS)](https://web.dev/cross-origin-resource-sharing/?utm_source=devtools#preflight-requests-for-complex-http-calls)
+
+CORS的基本原理请看上一篇：
+[CORS的基本原理](../HTTP-CORS.html)
 
 为了保证用户信息的安全，95年的时候Netscape公司引进了同源策略，里面的同源指的是三个相同：
 
@@ -383,18 +403,20 @@ window.addEventListener("message", function( event ) {
 
 需要注意的是postMessage API中的message在ie8/ie9等一些低版本浏览器中，中是不支持除String以外的其他类型时（因为不支持结构化克隆算法），所以，如果要兼容低版本ie，需要通过JSON.strigify以及JSON.parse去发送和接受。
 
-### 父页面向子页面传递数据
+### Fix CORS
 
-利用location对象的hash值，通过它传递通信数据。在父页面设置iframe的src后面多加个data字符串，然后在子页面中通过某种方式能即时的获取到这儿的data。
-
-### 浏览器Disable same origin policy
+[Disable CORS limit](../HTTP-CORS-disable.html)
 
 用本地文件测试frame的时候，在执行`curWindow.navigator.userAgent`的时候会报错：
 `Uncaught DOMException: Blocked a frame with origin "null" from accessing a cross-origin frame.`
 
 原因是浏览器默认开启了CORS的安全保护，不允许iframe跨域获取一些值。
 
-解决方案：参考 [Disable same origin policy in Chrome](https://stackoverflow.com/questions/3102819/disable-same-origin-policy-in-chrome)， 命令行加参数`--disable-web-security`打开chrome浏览器
+关闭同源策略 (CORS) 只会影响您的浏览器。此外，在浏览器中禁用同源安全设置会允许任何网站访问跨源资源，这是非常危险的，只能用于开发目的。现在，只有 `window.postMessage()` 才是`frame/iframe` 之间交互的最佳方式。
+
+#### 解决方案1 关闭浏览器CORS limit [临时解决]
+
+参考 [Disable same origin policy in Chrome](https://stackoverflow.com/questions/3102819/disable-same-origin-policy-in-chrome)， 命令行加参数`--disable-web-security`打开chrome浏览器
 
 ```bash
 # Mac Chrome
@@ -407,6 +429,30 @@ $ google-chrome --disable-web-security
 
 # For Windows go into the command prompt and go into the folder where Chrome.exe is and type
 chrome.exe --disable-web-security
+```
+
+#### 解决方案2 Extensions “xampp” or “Live Server” [临时解决]
+
+You could solve it by installing xampp and moving all files to htdocs or using an extension like “Xampp”.
+
+#### 解决方案3 try-catch [跨域时无法获取想要的值，只是不抛错]
+
+```javascript
+// iframe 内的javascript
+    try {
+        const parent = window.parent && window.parent.navigator;
+    } catch (error) {
+        console.warn(`Error - ${error}`);
+    }
+```
+
+#### 解决方案4 `window.postMessage()` [终极解决]
+
+同源策略可防止脚本访问不同源的网站内容，您可以使用 `window.postMessage()` 安全地在 Window 对象之间实现跨源通信。
+
+```javascript
+postMessage(message,targetOrigin)
+postMessage(message,targetOrigin, [transfer])
 ```
 
 ## 参考文章

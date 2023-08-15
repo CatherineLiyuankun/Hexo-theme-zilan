@@ -297,6 +297,7 @@ CORS的基本原理请看上一篇：
 - 无法读取cookie、localStorage、indexDB
 - DOM无法获得
 - ajax请求无法发送
+- can't access an <iframe> with different origin using JavaScript, browsers block scripts trying to access a frame with a different origin.
 
 ### iframe缺点以及解决方案
 

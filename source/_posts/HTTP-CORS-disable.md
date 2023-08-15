@@ -98,7 +98,8 @@ You could solve it by installing xampp and moving all files to htdocs or using a
 
 ## 解决方案4 `window.postMessage()` [终极解决]
 
-同源策略可防止脚本访问不同源的网站内容，您可以使用 `window.postMessage()` 安全地在 Window 对象之间实现跨源通信。
+同源策略可防止脚本访问不同源的网站内容，可以使用 `window.postMessage()` 安全地在 Window 对象之间实现跨源通信。
+[MDN postMessage](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage)
 
 ```javascript
 postMessage(message,targetOrigin)

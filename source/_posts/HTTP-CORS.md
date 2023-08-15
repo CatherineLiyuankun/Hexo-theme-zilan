@@ -16,9 +16,11 @@ Reference Links里的两篇文章讲述的已经很详细了。简单列一下�
 # 0 CORS
 
 简单说就是从A网址（origin (domain) ）向B网址发送请求，称为跨域。从A网址向A网址发送请求就是，同域。
-[Cross-Origin Resource Sharing (CORS)](https://web.dev/cross-origin-resource-sharing/?utm_source=devtools#preflight-requests-for-complex-http-calls)
+- [Cross-Origin Resource Sharing (CORS)](https://web.dev/cross-origin-resource-sharing/?utm_source=devtools#preflight-requests-for-complex-http-calls)
+- [MDN 跨源资源共享（CORS）](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CORS)
+<!-- [Cross-Origin Resource Sharing (CORS)](https://web.dev/i18n/en/cross-origin-resource-sharing/) -->
 
-## Same-origin & Cross-Origin
+## Same-origin
 
 A 与 B 什么不同？
 [同源策略 Same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy?ref=hackernoon.com)
@@ -39,6 +41,15 @@ Different origin：
 - port: `8443`
 - path: `/test/to/myfile.html`
 - Origin: <https://localhost:8443>
+
+违反了同源策略就会出现跨域问题，主要表现为以下三方面：
+
+- 无法读取cookie、localStorage、indexDB
+- DOM无法获得
+- ajax请求无法发送
+- can't access an <iframe> with different origin using JavaScript, browsers block scripts trying to access a frame with a different origin.
+
+## Cross-Origin
 
 ![CORS](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CORS/cors_principle.png)
 
@@ -108,7 +119,7 @@ Different origin：
 
 假如站点 <http://Server-b.com> 的网页应用想要访问 <http://bar.other> 的资源。
 A向B请求，那么A就是Orign.
-![简单请求（simple request）](https://mdn.mozillademos.org/files/14293/simple_req.png)
+![简单请求（simple request）](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CORS/simple-req.png)
 
 ## 2. 非简单请求（not-so-simple request）
 >
@@ -147,7 +158,7 @@ A向B请求，那么A就是Orign.
 
 假如站点 <http://foo.example> 的网页应用想要访问 <http://bar.other> 的资源。
 
-![预检请求+真实请求](https://mdn.mozillademos.org/files/16753/preflight_correct.png)
+![预检请求+真实请求](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CORS/preflight_correct.png)
 
 ### 2.1 预检请求 OPTION
 
@@ -200,7 +211,7 @@ is controlled by the withCredentials attribute.
 
  同时，Cookie依然遵循同源政策，只有用服务器域名B设置的Cookie才会上传，其他域名的Cookie并不会上传，且（跨源）原网页A代码中的document.cookie也无法读取服务器域名下的Cookie。
 
-![附带身份凭证的请求](https://mdn.mozillademos.org/files/14291/cred-req.png)
+![附带身份凭证的请求](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CORS/cred-req-updated.png)
 
 # Reference Links
 

@@ -19,7 +19,7 @@ categories:
   - Solution 2：修改DNS
 
 - Solution 3： 设置http和https代理 set proxy to git command by executing
-  - `git config --global http.proxy http://10.xx.x.xxx:8080`
+  - `git config --global http.proxy http://10.xx.x.xxx:8080` 查看config： `git config --list`
   <!-- - `git config --global http.proxy http://10.27.7.110:8080` -->
   - unset the proxy, 去除http和https代理：
     `git config --global --unset http.proxy`

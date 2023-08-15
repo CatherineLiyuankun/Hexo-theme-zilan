@@ -75,3 +75,4 @@ If you use Linux or macOS, you may also wish to check your `.bash_profile` or `.
 ## 参考文章
 
 - [Anaconda 介绍、安装及使用保姆级教程](https://mp.weixin.qq.com/s/vIZoE4BmXYlyhfFFmlhDWg)
+- [PyCharm 安装 NumPy，SciPy 等科学计算包 （Anaconda）for mac OS X](https://blog.csdn.net/muzilanlan/article/details/50479931

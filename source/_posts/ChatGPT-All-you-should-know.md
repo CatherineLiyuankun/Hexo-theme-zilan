@@ -68,6 +68,8 @@ davinci等模型都提到了
 - 人工智能（AI）
   - 机器学习（ML）
     - 深度学习（DL）
+      - Generative AI
+        - 大语言模型（LLM）
       - 深度神经网络（DNN）
         - 对抗神经网络（GAN）
         - 卷积神经网络（CNN）

@@ -9,12 +9,12 @@ tags:
 
 根据知乎上的文章修改为自己的需求， 2023年最新的IOS16.6是正常执行的。
 
-知乎上的文章：
+## 知乎上的文章
 
-## [【ios】日历同步---》提醒事项 单向同步+打卡功能 【作者：汀力】](https://zhuanlan.zhihu.com/p/169566930)
+### [【ios】日历同步---》提醒事项 单向同步+打卡功能 【作者：汀力】](https://zhuanlan.zhihu.com/p/169566930)
 
 <details>
-  <summary>代码1</summary>
+  <summary>点击展开代码1</summary>
   <p>
 
 ```javascript
@@ -156,10 +156,10 @@ function updateEvent(event, reminder) {
   </p>
 </details>
 
-## [最完美(ios)提醒事项与日历  双向同步+带跳转  【作者：你说】（根据汀力）](https://zhuanlan.zhihu.com/p/558267163)
+### [最完美(ios)提醒事项与日历  双向同步+带跳转  【作者：你说】（根据汀力）](https://zhuanlan.zhihu.com/p/558267163)
 
 <details>
-  <summary>代码2</summary>
+  <summary>点击展开代码2</summary>
   <p>
 
 ```javascript
@@ -327,7 +327,7 @@ Script.complete();
   </p>
 </details>
 
-## [自动同步iOS提醒事项到日历？简单，看这里！  【作者：crazy】 （根据汀力+你说）](https://zhuanlan.zhihu.com/p/539872086)
+### [自动同步iOS提醒事项到日历？简单，看这里！  【作者：crazy】 （根据汀力+你说）](https://zhuanlan.zhihu.com/p/539872086)
 
 ## 我的改动和代码
 
@@ -344,17 +344,11 @@ Script.complete();
   - 如果calendar里面已经有event了，修改reminder里面的时间为calendar event的开始时间间
 - 【已完成】 不会变成全天任务， 仍然是有开始时间和结束时间
 
-<details>
-  <summary>代码3</summary>
-  <p>
+<!-- <details>
+  <summary><b>点击展开代码3</b></summary>
+  <p> -->
 
 ```javascript
-// 3
-
-// LYK 创建 EventKit 实例
-// const EventKit = require("EventKit");
-// const eventKit = EventKit.init();
-
 var dur_month = 1;
 
 const startDate = new Date();
@@ -418,62 +412,6 @@ for (const reminder of reminders) {
     updateEvent(newEvent, reminder);
   }
 }
-
-// LYK 方法2 EventKit方法
-// 添加事件修改监听器
-//   for (const event of events) {
-//     event.onStartDateChange(() => {
-//       // 在这里实现日历事件开始时间更改时的同步操作
-//       // 可以获取修改后的开始时间，然后更新对应的 Reminder 提醒
-
-//       // 找到对应的 Reminder
-//       const targetNote = `[Reminder] ${event.notes
-//         .split("\n")[0]
-//         .substring(10)}`;
-//       const reminderToUpdate = reminders.find(
-//         (reminder) => reminder.identifier === targetNote
-//       );
-
-//       if (reminderToUpdate) {
-//         // 更新 Reminder 的开始时间
-//         reminderToUpdate.dueDate = event.startDate;
-//         // 保存 Reminder 更新
-//         eventKit.saveReminder(reminderToUpdate, (error) => {
-//           if (!error) {
-//             console.log(`已同步更新 Reminder 的开始时间为 ${event.startDate}`);
-//           } else {
-//             console.error(`更新 Reminder 失败：${error}`);
-//           }
-//         });
-//       }
-//     });
-
-//     event.onEndDateChange(() => {
-//       // 在这里实现日历事件结束时间更改时的同步操作
-//       // 可以获取修改后的结束时间，然后更新对应的 Reminder 提醒
-
-//       // 找到对应的 Reminder
-//       const targetNote = `[Reminder] ${event.notes
-//         .split("\n")[0]
-//         .substring(10)}`;
-//       const reminderToUpdate = reminders.find(
-//         (reminder) => reminder.identifier === targetNote
-//       );
-
-//       if (reminderToUpdate) {
-//         // 更新 Reminder 的结束时间
-//         reminderToUpdate.dueDate = event.endDate;
-//         // 保存 Reminder 更新
-//         eventKit.saveReminder(reminderToUpdate, (error) => {
-//           if (!error) {
-//             console.log(`已同步更新 Reminder 的结束时间为 ${event.endDate}`);
-//           } else {
-//             console.error(`更新 Reminder 失败：${error}`);
-//           }
-//         });
-//       }
-//     });
-//   }
 
 Script.complete();
 
@@ -558,25 +496,87 @@ function updateReminder(event, reminder) {
 }
 
 ```
+<!-- 
+  </p>
+</details> -->
+
+<details>
+  <summary>点击展开"LYK 方法2 EventKit方法"</summary>
+  <p>
+
+```javascript
+// LYK 创建 EventKit 实例
+const EventKit = require("EventKit");
+const eventKit = EventKit.init();
+
+// LYK 方法2 EventKit方法
+// 添加事件修改监听器
+  for (const event of events) {
+    event.onStartDateChange(() => {
+      // 在这里实现日历事件开始时间更改时的同步操作
+      // 可以获取修改后的开始时间，然后更新对应的 Reminder 提醒
+
+      // 找到对应的 Reminder
+      const targetNote = `[Reminder] ${event.notes
+        .split("\n")[0]
+        .substring(10)}`;
+      const reminderToUpdate = reminders.find(
+        (reminder) => reminder.identifier === targetNote
+      );
+
+      if (reminderToUpdate) {
+        // 更新 Reminder 的开始时间
+        reminderToUpdate.dueDate = event.startDate;
+        // 保存 Reminder 更新
+        eventKit.saveReminder(reminderToUpdate, (error) => {
+          if (!error) {
+            console.log(`已同步更新 Reminder 的开始时间为 ${event.startDate}`);
+          } else {
+            console.error(`更新 Reminder 失败：${error}`);
+          }
+        });
+      }
+    });
+
+    event.onEndDateChange(() => {
+      // 在这里实现日历事件结束时间更改时的同步操作
+      // 可以获取修改后的结束时间，然后更新对应的 Reminder 提醒
+
+      // 找到对应的 Reminder
+      const targetNote = `[Reminder] ${event.notes
+        .split("\n")[0]
+        .substring(10)}`;
+      const reminderToUpdate = reminders.find(
+        (reminder) => reminder.identifier === targetNote
+      );
+
+      if (reminderToUpdate) {
+        // 更新 Reminder 的结束时间
+        reminderToUpdate.dueDate = event.endDate;
+        // 保存 Reminder 更新
+        eventKit.saveReminder(reminderToUpdate, (error) => {
+          if (!error) {
+            console.log(`已同步更新 Reminder 的结束时间为 ${event.endDate}`);
+          } else {
+            console.error(`更新 Reminder 失败：${error}`);
+          }
+        });
+      }
+    });
+  }
+```
 
   </p>
 </details>
 
 ## 参考文章
 
-1. 【ios】日历同步---》提醒事项 单向同步+打卡功能 【作者：汀力】
-
-- <https://zhuanlan.zhihu.com/p/390100397> 2021.7
-- <https://zhuanlan.zhihu.com/p/169566930> 2022.9.17
-
-2. 最完美(ios)提醒事项与日历  双向同步+带跳转  【作者：你说】（根据汀力）
-
-- <https://zhuanlan.zhihu.com/p/512921323> 2022.8
-- <https://zhuanlan.zhihu.com/p/558267163> 2022.9.19
-双向同步v3.scriptable
-
-3. 自动同步iOS提醒事项到日历？简单，看这里！  【作者：crazy】 （根据汀力+你说）
-
-- <https://zhuanlan.zhihu.com/p/539872086>  2022.7
-
-4. [将 iOS 上的提醒事项同步到微软日历](https://zhuanlan.zhihu.com/p/335275758)
+- 【ios】日历同步---》提醒事项 单向同步+打卡功能 【作者：汀力】
+  - <https://zhuanlan.zhihu.com/p/390100397> 2021.7
+  - <https://zhuanlan.zhihu.com/p/169566930> 2022.9.17
+- 最完美(ios)提醒事项与日历  双向同步+带跳转  【作者：你说】（根据汀力）
+  - <https://zhuanlan.zhihu.com/p/512921323> 2022.8
+  - <https://zhuanlan.zhihu.com/p/558267163> 2022.9.19
+- 自动同步iOS提醒事项到日历？简单，看这里！  【作者：crazy】 （根据汀力+你说）
+  - <https://zhuanlan.zhihu.com/p/539872086>  2022.7
+- [将 iOS 上的提醒事项同步到微软日历](https://zhuanlan.zhihu.com/p/335275758)

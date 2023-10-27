@@ -294,9 +294,8 @@ baidusitemap:
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://CatherineLiyuankun@github.com/CatherineLiyuankun/CatherineLiyuankun.github.io
+  repo: https://github.com/CatherineLiyuankun/CatherineLiyuankun.github.io
   branch: master
-  token: $LYK_GIT_TOKEN
 
 # Search hexo-generator-searchdb  https://github.com/theme-next/hexo-generator-search
 search:

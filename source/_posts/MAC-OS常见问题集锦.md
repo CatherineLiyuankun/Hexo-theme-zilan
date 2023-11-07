@@ -11,6 +11,22 @@ categories:
 - Tools
 ---
 
+## MAC登陆无法用指纹解锁
+
+MAC登陆无法用指纹解锁，每次都需要重新输入密码
+
+> your login password and keychain password must match. Update your keychain password and try again.
+
+原因：
+登录密码和钥匙串密码不匹配。需要更新钥匙串密码。
+
+解决方法：
+[If your Mac keeps asking for your keychain password](https://support.apple.com/guide/keychain-access/if-you-need-to-update-your-keychain-password-kyca2429/mac)
+
+- 在您的Mac上的“钥匙串访问”应用程序中，选择“钥匙串访问” > “设置”。
+- 点击“重置默认钥匙串”。
+- 选择苹果菜单 > “注销”。当您再次登录时，请将您当前的登录密码保存在一个钥匙串中。
+
 ## 修改/Users/xxx account name
 
 [Change the name of your macOS user account and home folder](https://support.apple.com/en-us/HT201548)

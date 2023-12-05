@@ -222,29 +222,7 @@ GPT4 回答：
 
 ## GPT prompt 提示词使用技巧
 
-### 吴恩达课程-ChatGPT Prompt Engineering for Developers
-
-- 课程链接：[ChatGPT Prompt Engineering for Developers](https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/)
-- DeepLearningAI 的YouTUbe： https://www.youtube.com/@Deeplearningai/videos
-
-- 吴恩达《ChatGPT Prompt Engineering for Developers》课程中文版:
-  - [Git 课程中文版](https://github.com/datawhalechina/prompt-engineering-for-developers)
-  - bilibili课程中文版视频地址：https://www.bilibili.com/video/BV1Bo4y1A7FU
-
-### [Git - Prompt Engineering Topic](https://github.com/prompt-engineering)
-
-- [prompt-patterns](https://github.com/prompt-engineering/prompt-patterns) Prompt 编写模式：如何将思维框架赋予机器
-- [awesome-prompts](https://github.com/prompt-engineering/awesome-prompt-engineering)
-- [Prompt-Engineering-Guide](https://github.com/dair-ai/Prompt-Engineering-Guide) Prompt工程师课程和论文
-
-### [ChatGPT Shortcut](https://github.com/rockbenben/ChatGPT-Shortcut)
-
-好用的提示词聚合网站 [ChatGPT Shortcut](https://www.aishort.top/)
-简单易用的 ChatGPT 快捷指令表，让生产力倍增！ | 标签筛选、关键词搜索和一键复制 Prompts
-
-### 针对ChatGPT和NewBing效果最好的中文提示词
-
-https://qddmercny4.feishu.cn/sheets/shtcnMklYu0WsXEDUXXanrSEB2m
+详细看这一篇： [ChatGPT Prompt Engineering 提示词使用技巧](./ChatGPT-Prompt-Engineering-%E6%8F%90%E7%A4%BA%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7.html)
 
 ## Reference
 

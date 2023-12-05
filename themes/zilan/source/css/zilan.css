@@ -5,18 +5,23 @@
 }
 @media (min-width: 1800px) {
   .container {
-    width: 1770px;
+    width: 100%;
   }
 }
+
 @media (min-width: 1200px) {
+  .container {
+    width: 100%;
+    margin-left: 0;
+  }
   .post-container,
   .sidebar-container {
-    padding-right: 5%;
+    padding-right: 0.1%;
   }
 }
 @media (min-width: 768px) {
   .post-container {
-    padding-right: 5%;
+    padding-right: 0.1%;
   }
 }
 .sidebar-container {

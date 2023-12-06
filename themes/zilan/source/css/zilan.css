@@ -4,23 +4,33 @@
   }
 }
 @media (min-width: 1800px) {
-  .container.post-content {
+  .container.post-content-container {
     width: 100%;
   }
 }
 
 @media (min-width: 1200px) {
-  .container.post-content {
+  .container.post-content-container {
     width: 100%;
+
+    .post-container,
+    .sidebar-container {
+      padding-right: 0.1%;
+    }
   }
   .post-container,
   .sidebar-container {
-    padding-right: 0.1%;
+    padding-right: 5%;
   }
 }
 @media (min-width: 768px) {
   .post-container {
-    padding-right: 0.1%;
+    padding-right: 5%;
+  }
+  .container.post-content-container {
+    .post-container {
+      padding-right: 0.1%;
+    }
   }
 }
 .sidebar-container {

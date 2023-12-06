@@ -4,15 +4,14 @@
   }
 }
 @media (min-width: 1800px) {
-  .container {
+  .container.post-content {
     width: 100%;
   }
 }
 
 @media (min-width: 1200px) {
-  .container {
+  .container.post-content {
     width: 100%;
-    margin-left: 0;
   }
   .post-container,
   .sidebar-container {

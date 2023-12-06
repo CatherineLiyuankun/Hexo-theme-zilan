@@ -6,8 +6,8 @@ layout: layout
     <div class="row">
         <% if(config.sidebar == false) { %>
 <!-- SIDEBAR Below -->
-    <!-- Post Container -->
-            <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1 post-container">
+    <!-- Post List Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1 post-container post-list">
                 <%- page.content || body %>
             </div>
     <!-- Sidebar Container Below -->
@@ -15,13 +15,14 @@ layout: layout
         <%} else { %>
 
 <!-- USE SIDEBAR Aside-->
-    <!-- Post Container -->
+    <!-- Post List Container -->
             <div class="
                 col-lg-8 col-lg-offset-1
                 col-md-8 col-md-offset-1
                 col-sm-12
                 col-xs-12
                 post-container
+                post-list
             ">
             
                 <%- page.content || body %>

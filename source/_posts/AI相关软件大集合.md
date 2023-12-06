@@ -10,7 +10,10 @@ categories:
 - AI
 ---
 
-上一篇列举了更多的AI相关的工具： [2023 most popular and useful AI tools](./2023-most-popular-and-useful-AI-tools.html#%E5%85%B6%E4%BB%96-ai-%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90)
+- 上一篇列举了更多的AI相关的工具： [2023 most popular and useful AI tools](./2023-most-popular-and-useful-AI-tools.html#%E5%85%B6%E4%BB%96-ai-%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90)
+
+- [Product Hunt - Artificial Intelligence](https://www.producthunt.com/topics/artificial-intelligence)  AI软件列表
+
 这一篇列举的主要是原本的软件又添加了AI功能：
 
 - [x] [Warp](https://www.warp.dev/) [Git开源](https://github.com/warpdotdev/Warp) The terminal for the 21st century。

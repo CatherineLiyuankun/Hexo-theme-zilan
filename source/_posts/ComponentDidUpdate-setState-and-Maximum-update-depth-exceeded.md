@@ -5,7 +5,7 @@ date: 2019-05-14 11:35:14
 subtitle:
 header-img: "https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/ComponentDidUpdate-setState-and-Maximum-update-depth-exceeded/header-react-lifecycle.png"
 tags:
-- life cycle
+- React
 categories:
 - TECH
 - FrontEnd

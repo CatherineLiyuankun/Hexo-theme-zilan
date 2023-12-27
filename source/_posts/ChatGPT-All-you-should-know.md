@@ -18,6 +18,10 @@ categories:
 | GPT-4 | writing | OpenAI | https://openai.com/product/gpt-4 | - GPT-4 is OpenAI’s most advanced system, producing safer and more useful responses | - None found. | Paid |
 | chat GPT | chat | OpenAI | https://chat.openai.com/chat |  | - None found. | 注册普通账号，免费18美元额度；ChatGPT Plus `$20`/月 |
 
+## Discover how ChatGPT is trained
+
+[Discover how ChatGPT is trained](https://www.linkedin.com/pulse/discover-how-chatgpt-istrained-pradeep-menon/)
+
 ## `ChatGPT`和`OpenAI`和`Microsoft` 关系？
 
 - ChatGPT是OpenAI开发的聊天机器人，ChatGPT属于OpenAI面向用户的一个产品。你可以视为子集，OpenAI是它爸。
@@ -233,6 +237,8 @@ GPT4 回答：
 # LLM
 
 ## Testing for Large Language Models
+
+- [Giskard简介：面向AI模型的开源质量管理](https://www.atyun.com/57664.html)
 
 一款开源工具可自动测试语言和表格数据模型是否存在社会偏见和其他常见问题。
 

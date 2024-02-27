@@ -9,6 +9,8 @@ tags:
 
 # Enable Dev Mode 打开Microsoft Teams desktop的开发模式
 
+[微软官方文档DevTools for Microsoft Teams tabs](https://learn.microsoft.com/en-us/microsoftteams/platform/tabs/how-to/developer-tools)
+
 ## Mac上
 
 1 Click Teams tray icon 7 times. (快速左键点击7次 Teams app在Mac Dock上的图标)

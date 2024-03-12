@@ -35,3 +35,4 @@ Enable Dev Mode后：
 ## Reference Links
 
 - [(How) can I open the dev tools in the Microsoft Teams desktop client?](https://stackoverflow.com/questions/50678907/how-can-i-open-the-dev-tools-in-the-microsoft-teams-desktop-client)
+- [Enabling Dev Tools in the New Microsoft Teams Client](https://thechriskent.com/2023/11/02/enabling-dev-tools-in-the-new-microsoft-teams-client/)

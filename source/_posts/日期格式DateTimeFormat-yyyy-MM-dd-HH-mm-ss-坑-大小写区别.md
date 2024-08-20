@@ -11,9 +11,9 @@ tags:
 
 ## [Unix 时间戳（Unix Timestamp）](https://zh.m.wikipedia.org/wiki/UNIX%E6%97%B6%E9%97%B4)
 
-参考文章： 
-- [为什么编程语言中日期能够实现加减法](https://www.51cto.com/article/526190.html)
+参考文章：
 
+- [为什么编程语言中日期能够实现加减法](https://www.51cto.com/article/526190.html)
 
 `Unix timestamp = Unix 时间戳 = Unix time = Unix epoch = POSIX time`
 
@@ -39,7 +39,6 @@ Unix时间戳(Unix timestamp)，或称Unix时间(Unix time)、POSIX时间(POSIX 
 
 之后系统时间同步间隔被修订为 1 秒，这样32位就可表述约136年的跨度，也正是这个期间（具体年份不祥），起始时间被修订为1970.1.1 （Unix开发者认为把之前的 1971.1.1 取整进位到最临近的年代起始（以每10年一个断代算），要比 1971 这个有点不伦不类的时间好），因此从这以后，Unix一直沿用了 1970.1.1 这个起始时间，而相关的程序也相应的沿用了这个时间，而深受 Unix 影响的后续操作系统们，如：OS/2, Windows, Mactonish, Linux。。。。都沿用了这个｛事实标准｝。
 
-
 现时大部分使用UNIX的系统都是32位的，即它们会以32位有符号整数表示时间类型time_t。因此它可以表示136年的秒数。表示协调世界时间1901年12月13日星期五20时45分52秒 至 2038年1月19日3时14分07秒（二进制：01111111 11111111 11111111 11111111，0x7FFF:FFFF），在下一秒二进制数字会是10000000 00000000 00000000 00000000（0x8000:0000），这是负数，因此各系统会把时间误解作1901年12月13日20时45分52秒（亦有可能回归到1970年）。这时可能会令软件发生问题，导致系统瘫痪。
 
 目前的解决方案是把系统由32位转为64位系统。在64位系统下，此时间最多可以表示到2922亿7702万6596年12月4日15时30分08秒。
@@ -52,25 +51,25 @@ Unix时间戳(Unix timestamp)，或称Unix时间(Unix time)、POSIX时间(POSIX 
 | 1 Month (30.44 days) | 2629743 Seconds  |
 | 1 Year (365.24 days) | 31556926 Seconds |
 
-| 编程语言       | 编程中获取Unix时间戳     |  0对应的默认时间
-| --------------------------- |-------------------------------------------------- |----
-| Java   | `System.currentTimeMillis() / 1000`  对于中国开发者，通过 `System.out.println(new Date(0));` ,控制台打印的时间是1970-01-01 08:00:00 ，这个是因为中国处于东8区的缘由。对于程序内部存储值无影响。     | Unix timestamp, [文档地址](http://docs.oracle.com/javase/8/docs/api/java/util/Date.html#Date)
-| JavaScript  | `Math.round(new Date().getTime()/1000)` `getTime()`返回数值的单位是毫秒 |Unix timestamp, [文档地址](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Date)
-| Python    | 先 `import time` 然后 `time.time()` 返回1476929706.5320001 可以 `int(time.time())`|Unix timestamp, [文档地址](https://docs.python.org/3/library/datetime.html#date-objects)
-| PHP       | `time()`     | Unix timestamp, [文档地址](http://php.net/manual/en/function.time.php)
-| Microsoft .NET / C#    | `epoch = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000`   | Not Unix timestamp 默认采用int64位来表示时间戳，并且精确到100ns，开始日期点为0001-01-01 00:00:00.000。[文档地址](https://msdn.microsoft.com/zh-cn/library/z2xf7zzk(v=vs.110).aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-1)
-| Perl      | `time`       |
-| Golang    | `time.now().Unix()`     |
-| Ruby      | 获取Unix时间戳：`Time.now` 或 `Time.new`; 显示Unix时间戳：`Time.now.to_i`    |
-| ORACLE    |    | Unix timestamp, [文档TIMESTAMP object initialized to 1/1/1970](https://docs.oracle.com/cd/E11882_01/appdev.112/e13995/oracle/sql/TIMESTAMP.html)
-| PostgreSQL | `SELECT extract(epoch FROM now())`   |
-| MySQL     | `SELECT unix_timestamp(now())`     |
-| SQL Server | `SELECT DATEDIFF(s, '1970-01-01 00:00:00', GETUTCDATE())`    |
-| VBScript / ASP  | `DateDiff("s", "01/01/1970 08:00:00", Now())`     | Not Unix timestamp [文档地址](https://www.microsoft.com/china/vbscript/vbstutor/vbsdatatype.htm). 这个开始时间很奇怪，从API来看，开始时间是从0100-01-01 00:00:00, 不过从代码测试来看，开始时间是从1899-12-30 0 :00:00 开始
-| lua       | `os.time()` 返回时间戳     |
-| Unix /Linux/[类UNIX](https://baike.baidu.com/item/%E7%B1%BBUNIX?fromModule=lemma_inlink)/OS X | 命令行：`date +%s`   |
-| [FreeSWITCH](https://baike.baidu.com/item/FreeSWITCH?fromModule=lemma_inlink)   | `fs_cli > strepoch`或者：`fs_cli > eval ${strepoch()}`或者：（在 freeswitch里面，获取linux系统的时间戳）`fs_cli > system date +%s` |
-| 其他操作系统(如果Perl被安装在系统中)       | 命令行状态：`perl -e "print time"`   |
+| 编程语言                                                                                      | 编程中获取Unix时间戳                                                                                                                                                                            | 0对应的默认时间                                                                                                                                                                                                                 |
+| --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Java                                                                                          | `System.currentTimeMillis() / 1000`  对于中国开发者，通过 `System.out.println(new Date(0));` ,控制台打印的时间是1970-01-01 08:00:00 ，这个是因为中国处于东8区的缘由。对于程序内部存储值无影响。 | Unix timestamp, [文档地址](http://docs.oracle.com/javase/8/docs/api/java/util/Date.html#Date)                                                                                                                                   |
+| JavaScript                                                                                    | `Math.round(new Date().getTime()/1000)` `getTime()`返回数值的单位是毫秒                                                                                                                         | Unix timestamp, [文档地址](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Date)                                                                                                               |
+| Python                                                                                        | 先 `import time` 然后 `time.time()` 返回1476929706.5320001 可以 `int(time.time())`                                                                                                              | Unix timestamp, [文档地址](https://docs.python.org/3/library/datetime.html#date-objects)                                                                                                                                        |
+| PHP                                                                                           | `time()`                                                                                                                                                                                        | Unix timestamp, [文档地址](http://php.net/manual/en/function.time.php)                                                                                                                                                          |
+| Microsoft .NET / C#                                                                           | `epoch = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000`                                                                                                                | Not Unix timestamp 默认采用int64位来表示时间戳，并且精确到100ns，开始日期点为0001-01-01 00:00:00.000。[文档地址](https://msdn.microsoft.com/zh-cn/library/z2xf7zzk(v=vs.110).aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-1) |
+| Perl                                                                                          | `time`                                                                                                                                                                                          |
+| Golang                                                                                        | `time.now().Unix()`                                                                                                                                                                             |
+| Ruby                                                                                          | 获取Unix时间戳：`Time.now` 或 `Time.new`; 显示Unix时间戳：`Time.now.to_i`                                                                                                                       |
+| ORACLE                                                                                        |                                                                                                                                                                                                 | Unix timestamp, [文档TIMESTAMP object initialized to 1/1/1970](https://docs.oracle.com/cd/E11882_01/appdev.112/e13995/oracle/sql/TIMESTAMP.html)                                                                                |
+| PostgreSQL                                                                                    | `SELECT extract(epoch FROM now())`                                                                                                                                                              |
+| MySQL                                                                                         | `SELECT unix_timestamp(now())`                                                                                                                                                                  |
+| SQL Server                                                                                    | `SELECT DATEDIFF(s, '1970-01-01 00:00:00', GETUTCDATE())`                                                                                                                                       |
+| VBScript / ASP                                                                                | `DateDiff("s", "01/01/1970 08:00:00", Now())`                                                                                                                                                   | Not Unix timestamp [文档地址](https://www.microsoft.com/china/vbscript/vbstutor/vbsdatatype.htm). 这个开始时间很奇怪，从API来看，开始时间是从0100-01-01 00:00:00, 不过从代码测试来看，开始时间是从1899-12-30 0 :00:00 开始      |
+| lua                                                                                           | `os.time()` 返回时间戳                                                                                                                                                                          |
+| Unix /Linux/[类UNIX](https://baike.baidu.com/item/%E7%B1%BBUNIX?fromModule=lemma_inlink)/OS X | 命令行：`date +%s`                                                                                                                                                                              |
+| [FreeSWITCH](https://baike.baidu.com/item/FreeSWITCH?fromModule=lemma_inlink)                 | `fs_cli > strepoch`或者：`fs_cli > eval ${strepoch()}`或者：（在 freeswitch里面，获取linux系统的时间戳）`fs_cli > system date +%s`                                                              |
+| 其他操作系统(如果Perl被安装在系统中)                                                          | 命令行状态：`perl -e "print time"`                                                                                                                                                              |
 
 ### Oracle 数据库
 
@@ -139,10 +138,10 @@ const timestamp3=new Date().getTime()；// 1668656204519
 
 ### In Excel & Lotus 1-2-3
 
-> Dec 30th, 1899 comes from a spreadsheet date compatibility issue between Excel and Lotus 1-2-3 (referenced in the title text.) Spreadsheets store dates as sequential numbers so that they can be used in calculations. In Excel, by default, January 1, 1900 is number 1. Based on that, Excel's integer date representation would be the number of days that have passed since December 31, 1899. 
-> 
+> Dec 30th, 1899 comes from a spreadsheet date compatibility issue between Excel and Lotus 1-2-3 (referenced in the title text.) Spreadsheets store dates as sequential numbers so that they can be used in calculations. In Excel, by default, January 1, 1900 is number 1. Based on that, Excel's integer date representation would be the number of days that have passed since December 31, 1899.
+>
 > However, because of a bug intentionally carried over from Lotus 1-2-3 where it counts February 29, 1900 as a day even though it actually was not, for any day since then, Excel's integer date representation is actually the number of days that have passed since December 30, 1899. Most other spreadsheet applications copied the behavior of Excel to maintain compatibility with it. This leads to the value of 0 in some applications (notably Open- and LibreOffice Calc and Google Spreadsheets) being interpreted as Dec 30th, 1899. Similarly, Microsoft Visual Basic and Visual Basic for Applications (VBA) interpret 0.0 as Dec 30th, 1899.
-> 
+>
 > 1899 年 12 月 30 日来自 Excel 和 [Lotus 1-2-3](https://zh.wikipedia.org/wiki/Lotus_1-2-3)之间的电子表格日期兼容性问题（在标题文本中引用。）电子表格将日期存储为连续数字，以便可以在计算中使用它们。 在 Excel 中，默认情况下，1900 年 1 月 1 日是数字 1。 基于此，Excel 的整数日期表示将是自 1899 年 12 月 31 日以来经过的天数。但是，由于有意从 Lotus 1-2-3 遗留的错误，它将 1900 年 2 月 29 日算作一天 虽然它实际上不是，但从那以后的任何一天，Excel 的整数日期表示实际上是自 1899 年 12 月 30 日以来经过的天数。大多数其他电子表格应用程序复制 Excel 的行为以保持与它的兼容性。 这导致某些应用程序（特别是 Open- 和 LibreOffice Calc 以及 Google Spreadsheets）中的值 0 被解释为 1899 年 12 月 30 日。类似地，Microsoft Visual Basic 和 Visual Basic for Applications (VBA) 将 0.0 解释为 1899 年 12 月 30 日。
 
 在office excel中存在两种日期格式1900 和 1904，即日期的开始点为 1900-01-01 00：00:00 和 1904-01-01 00:00:00 。一般Excel 默认是按照1900的日期系统，且认为1900年为润年，1900年2月分 按照29天计算。Excel中存储值得起始日期是从1开始的，即，1900-01-01 00:00:00 在excel中对应的存储值为1 （天）。
@@ -153,46 +152,44 @@ const timestamp3=new Date().getTime()；// 1668656204519
 >
 > The integral part of a Delphi TDateTime value is the number of days that have passed since 12/30/1899. The fractional part of the TDateTime value is fraction of a 24 hour day that has elapsed.  
 
-TDateTime | UTC |
----------|----------|
- 0 | 12/30/1899 12:00 am
-2.75 |1/1/1900 6:00 pm
--1.25 | 12/29/1899 6:00 am
-35065 | 1/1/1996 12:00 am
+| TDateTime | UTC                 |
+| --------- | ------------------- |
+| 0         | 12/30/1899 12:00 am |
+| 2.75      | 1/1/1900 6:00 pm    |
+| -1.25     | 12/29/1899 6:00 am  |
+| 35065     | 1/1/1996 12:00 am   |
 
 > To find the fractional number of days between two dates, simply subtract the two values, unless one of the TDateTime values is negative. Similarly, to increment a date and time value by a certain fractional number of days, add the fractional number to the date and time value if the TDateTime value is positive.  
-> 
+>
 > When working with negative TDateTime values, computations must handle time portion separately. The fractional part reflects the fraction of a 24-hour day without regard to the sign of the TDateTime value. For example, 6:00 am on 12/29/1899 is –1.25, not –1 + 0.25, which would be –0.75. There are no TDateTime values between –1 and 0.
-
-
 
 ## yyyy-MM-dd HH:mm:ss SSS 含义
 
-| Letter | 含义        | Example |
-| ------ | --------- | ----------------------------- |
-| y      | 不包含纪元的年份        | y------>9     例如2009用不包含纪元的年份表示就是9。如果年份小于 10，则显示不具有前导零的年份。      |
-| yy      | 不包含纪元的年份        | yy----->09   例如2009用不包含纪元的年份表示就是09。如果年份小于 10，则显示具有前导零的年份。        |
-| yyyy      | 包括纪元的四位数的年份| yyyy--->2009    |
-| M      | 月份数字| M------->2 大写的M    一位数的月份没有前导零。    |
-| MM      | 月份数字| MM------>02 大写的M  一位数的月份有一个前导零。  |
-| MMM      | 月份的缩写名称       | MMM----->Feb 大写的M   例如英文中是"Jan", "Apr", "Sep", "Oct", "May", "Jun", "Jul", "Feb", "Mar", "Aug",  "Nov", "Dec"。中文是"1月", "2月", "3月"。C#中在 AbbreviatedMonthNames 中定义。  |
-| MMMM      | 月份的完整名称。 | MMMM---->February 大写的M  例如英文中是'January', 'February'，中文是"一月"，"二月" C#中在 MonthNames 中定义。     |
-| d      | 一月中的天数    | d--------->3    一位数的日期没有前导零   |
-| dd      | 一月中的天数    | dd-------->03   有前导零  |
-| ddd      | 周中某天的缩写名称    | ddd------->Sun   例如英文是："Sun", "Mon", "Tue", "Wed"，"Thu", "Fri", "Sat"; 中文是："周日"， "周一"等。 C#中在 AbbreviatedDayNames 中定义。   |
-| dddd      | 周中某天的完整名称    | dddd------>Sunday  例如英文是： ["Sunday", "Monday", "Tuesday", 'Wednesday', "Thursday', 'Friday',"Saturday"; 中文是："星期日"， "星期一"等。 C#中在在 DayNames 中定义。   |
-| H      | 小时（0-23）  | H--------->9   24 小时制的是大写的H |
-| HH      | 小时（0-23）  | HH--------->09   24 小时制的是大写的H |
-| h      | 小时（1-12）  | h---------->6  12小时制的是小写的h，没有前导零， 24小时制 18 = 12小时制 6 |
-| hh      | 小时（1-12）  | hh---------->06  12小时制的是小写的h |
-| m      | 分| m-------->7 小写的m 没有前导零  |
-| mm      | 分| mm-------->07 小写的m   |
-| s      | 秒| s-------->9  没有前导零  |
-| ss      | 秒| ss-------->09    |
-| a      | displays time with AM/ PM marker     | hh:mm:ss a-------->12：59：59 AM      |
-| SSS      | 毫秒        | SSS--------->666 |
-| Y      | Week Year | YYYY---->2020    |
-| D      | 一年中天数     | DD-------->365   |
+| Letter | 含义                             | Example                                                                                                                                                                                  |
+| ------ | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| y      | 不包含纪元的年份                 | y------>9     例如2009用不包含纪元的年份表示就是9。如果年份小于 10，则显示不具有前导零的年份。                                                                                           |
+| yy     | 不包含纪元的年份                 | yy----->09   例如2009用不包含纪元的年份表示就是09。如果年份小于 10，则显示具有前导零的年份。                                                                                             |
+| yyyy   | 包括纪元的四位数的年份           | yyyy--->2009                                                                                                                                                                             |
+| M      | 月份数字                         | M------->2 大写的M    一位数的月份没有前导零。                                                                                                                                           |
+| MM     | 月份数字                         | MM------>02 大写的M  一位数的月份有一个前导零。                                                                                                                                          |
+| MMM    | 月份的缩写名称                   | MMM----->Feb 大写的M   例如英文中是"Jan", "Apr", "Sep", "Oct", "May", "Jun", "Jul", "Feb", "Mar", "Aug",  "Nov", "Dec"。中文是"1月", "2月", "3月"。C#中在 AbbreviatedMonthNames 中定义。 |
+| MMMM   | 月份的完整名称。                 | MMMM---->February 大写的M  例如英文中是'January', 'February'，中文是"一月"，"二月" C#中在 MonthNames 中定义。                                                                            |
+| d      | 一月中的天数                     | d--------->3    一位数的日期没有前导零                                                                                                                                                   |
+| dd     | 一月中的天数                     | dd-------->03   有前导零                                                                                                                                                                 |
+| ddd    | 周中某天的缩写名称               | ddd------->Sun   例如英文是："Sun", "Mon", "Tue", "Wed"，"Thu", "Fri", "Sat"; 中文是："周日"， "周一"等。 C#中在 AbbreviatedDayNames 中定义。                                            |
+| dddd   | 周中某天的完整名称               | dddd------>Sunday  例如英文是： ["Sunday", "Monday", "Tuesday", 'Wednesday', "Thursday', 'Friday',"Saturday"; 中文是："星期日"， "星期一"等。 C#中在在 DayNames 中定义。                 |
+| H      | 小时（0-23）                     | H--------->9   24 小时制的是大写的H                                                                                                                                                      |
+| HH     | 小时（0-23）                     | HH--------->09   24 小时制的是大写的H                                                                                                                                                    |
+| h      | 小时（1-12）                     | h---------->6  12小时制的是小写的h，没有前导零， 24小时制 18 = 12小时制 6                                                                                                                |
+| hh     | 小时（1-12）                     | hh---------->06  12小时制的是小写的h                                                                                                                                                     |
+| m      | 分                               | m-------->7 小写的m 没有前导零                                                                                                                                                           |
+| mm     | 分                               | mm-------->07 小写的m                                                                                                                                                                    |
+| s      | 秒                               | s-------->9  没有前导零                                                                                                                                                                  |
+| ss     | 秒                               | ss-------->09                                                                                                                                                                            |
+| a      | displays time with AM/ PM marker | hh:mm:ss a-------->12：59：59 AM                                                                                                                                                         |
+| SSS    | 毫秒                             | SSS--------->666                                                                                                                                                                         |
+| Y      | Week Year                        | YYYY---->2020                                                                                                                                                                            |
+| D      | 一年中天数                       | DD-------->365                                                                                                                                                                           |
 
 ### 其他含义
 
@@ -273,11 +270,11 @@ UTC 比 GMT更精准，以原子时计时，适应现代社会的精确计时。
 
 例如同样都是东八区，有很多个不同的时区名称，因为名称中通常会包含该国、该地区的地理信息。
 
-Abbreviation | Time zone name | Location | Offset
-----|---------------------|------------|-----
-CST | China Standard Time | Asia | UTC +8|
-HKT | Hong Kong Time | Asia | UTC +8|
-SGT | Singapore Time SST – Singapore Standard Time|Asia|UTC +8
+| Abbreviation | Time zone name                               | Location | Offset |
+| ------------ | -------------------------------------------- | -------- | ------ |
+| CST          | China Standard Time                          | Asia     | UTC +8 |
+| HKT          | Hong Kong Time                               | Asia     | UTC +8 |
+| SGT          | Singapore Time SST – Singapore Standard Time | Asia     | UTC +8 |
 
 ## 夏令时
 
@@ -290,11 +287,14 @@ SGT | Singapore Time SST – Singapore Standard Time|Asia|UTC +8
 >
 > `DST`是夏令时（`Daylight Saving Time`）的缩写，在一年的某一段时间中将当地时间调整（通常）一小时。 DST的规则非常神奇（由当地法律确定），并且每年的起止时间都不同。C语言库中有一个表格，记录了各地的夏令时规则（实际上，为了灵活性，C语言库通常是从某个系统文件中读取这张表）。从这个角度而言，这张表是夏令时规则的唯一权威真理。
 
-## 本地时间
+## 本地时间Local time
 
 > 在日常生活中所使用的时间我们通常称之为本地时间。这个时间等于我们所在（或者所使用）时区内的当地时间，它由与世界标准时间（UTC）之间的偏移量来定义。这个偏移量可以表示为 UTC- 或 UTC+，后面接上偏移的小时和分钟数。
+> 本地时间就是用当地时区的时间表示。通常代码会自动获取操作系统的Time zone设置来转换成本地时间， 例如 `new Date()`.
 
-例如中国就是UTC +8
+'2024-08-19T17:00:00.380Z' UTC时间
+例如在中国的本地时间就是Tue Aug 20 2024 16:33:09 GMT+0800 (China Standard Time)
+和其他时区的本地时间不同
 
 # internationalization其他基本概念
 
@@ -382,13 +382,13 @@ Gradle 配置 （build.gradle）
 
 ## [ICU](https://icu.unicode.org/)
 
-ICU (`International Components for Unicode`)是为软件应用提供Unicode和全球化支持的一套成熟、广泛使用的C/C++、Java和.NET 类库集，可在所有平台的C/C++、Java和C# 软件上获得一致的结果，用于支持软件国际化的开源项目, 软件开发者几乎可以使用ICU 解决任何国际化的问题，根据各地的风俗和语言习惯，实现对数字、货币、时间、日期、和消息的格式化、解析，对字符串进行大小写转换、整理、搜索和排序等功能。ICU的主页是http://www.icu-project.org/
+ICU (`International Components for Unicode`)是为软件应用提供Unicode和全球化支持的一套成熟、广泛使用的C/C++、Java和.NET 类库集，可在所有平台的C/C++、Java和C# 软件上获得一致的结果，用于支持软件国际化的开源项目, 软件开发者几乎可以使用ICU 解决任何国际化的问题，根据各地的风俗和语言习惯，实现对数字、货币、时间、日期、和消息的格式化、解析，对字符串进行大小写转换、整理、搜索和排序等功能。ICU的主页是<http://www.icu-project.org/>
 
 > 在unicode的统治下，世界各国的基本编码不会出现乱码等异常。但当中华民族逐步强大，准备冲出中国统一世界的时候，发现各国的货币，时间，数字等表示灰常不统一，例如数字1234.5，英文表示1,234.5，葡语表示确是1.234,5，很是苦恼。
-> 
+>
 > 此时IBM站了出来，叫上google,apple等小伙伴，遵循”IBM公共许可证”，开源了一套基于unicode的国际化组件ICU(International Component for Unicode
 > )。根据各地的风俗和语言习惯，实现对数字、货币、时间、日期、和消息的格式化、解析，对字符串进行大小写转换、整理、搜索和排序等功能，ICU4C提供了强大的BIDI算法，对阿拉伯语等BIDI语言提供了完善的支持。
-> 
+>
 > ICU成为了目前国际化组件的实事标准，底层依赖UNICODE和CLDR，官方提供了C/C++和JAVA的SDK，ICU4C和ICU4J，同时，各个语言在此基础上开发了各个语言的版本，例如php的intl组件。
 
 ICU首先是由Taligent(泰利根)公司开发的，Taligent公司被合并为IBM公司全球化认证中心的Unicode研究组后，ICU由IBM和开源组织合作继续开发。
@@ -412,22 +412,242 @@ ICU的功能主要有:
 - Bidi: 支持不同文字书写顺序混合文字（例如从左到右书写的英语，或者从右到左书写的阿拉伯文和希伯来文）的处理。
 - 文本边界: 在一段文本内定位词、句或段落位置、或标识最适合显示文本的自动换行位置。
 
-
 # 编程语言中的DateTime format
 
 ## JavaScript中的DateTime
 
 ### 原生JavaScript
 
-#### [JavaScript 中的时间戳](./%E6%97%A5%E6%9C%9F%E6%A0%BC%E5%BC%8FDateTimeFormat-yyyy-MM-dd-HH-mm-ss-%E5%9D%91-%E5%A4%A7%E5%B0%8F%E5%86%99%E5%8C%BA%E5%88%AB.html#javascript-%E4%B8%AD%E7%9A%84%E6%97%B6%E9%97%B4%E6%88%B3-v2)
+[MDN Date()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/Date)
 
-### JS库 - Moment
+```javascript
+const date1 = new Date('December 17, 1995 03:24:00');
+// Sun Dec 17 1995 03:24:00 GMT...
+const date2 = new Date('1995-12-17T03:24:00');
+// Sun Dec 17 1995 03:24:00 GMT...
+
+console.log(date1 === date2);
+// Expected output: false
+console.log(date1 - date2);
+// Expected output: 0
+```
+
+语法：
+
+```javascript
+new Date()   // now
+new Date(value)  // timestamp (the number of milliseconds since midnight at the beginning of January 1, 1970, UTC
+new Date(dateString)
+new Date(dateObject)
+
+new Date(year, monthIndex)
+new Date(year, monthIndex, day)
+new Date(year, monthIndex, day, hours)
+new Date(year, monthIndex, day, hours, minutes)
+new Date(year, monthIndex, day, hours, minutes, seconds)
+new Date(year, monthIndex, day, hours, minutes, seconds, milliseconds)
+
+Date()
+```
+
+```javascript
+const today = new Date();
+const birthday = new Date("December 17, 1995 03:24:00"); // DISCOURAGED: may not work in all runtimes
+const birthday = new Date("1995-12-17T03:24:00"); // This is standardized and will work reliably
+const birthday = new Date(1995, 11, 17); // the month is 0-indexed
+const birthday = new Date(1995, 11, 17, 3, 24, 0);
+const birthday = new Date(628021800000); // passing epoch timestamp
+```
+
+```javascript
+console.log(new Date(undefined)); // Invalid Date
+console.log(new Date(null)); // 1970-01-01T00:00:00.000Z
+console.log(new Date(["2020-06-19", "17:13"]));
+// 2020-06-19T17:13:00.000Z in Chrome, since it recognizes "2020-06-19,17:13"
+// "Invalid Date" in Firefox
+```
+
+时区：
+
+```javascript
+const date = new Date("2024-08-19T17:28:38.380Z")
+// Tue Aug 20 2024 01:28:38 GMT+0800 (China Standard Time)
+// new Date会默认生成本地时间，time zone从 OS 操作系统的time zone设置读取
+
+const utcYear = date.getUTCFullYear(); // 2024
+const utcMonth = date.getUTCMonth() + 1; // 8, Adding 1 because getUTCMonth() returns zero-based index 7
+const utcDay = date.getUTCDate(); // 19
+
+const year = date.getFullYear().toString()   // 2024
+const month = (date.getMonth() + 1).toString().padStart(2, '0') // 8
+const day = date.getDate().toString().padStart(2, '0') 
+// if time zone is GMT+0800, day is 20
+// if time zone is GMT+0000, day is 19
+
+// 修改timezone
+const date = new Date("2024-08-19T17:28:38.380Z");
+const options = { timeZone: 'Asia/Shanghai' };
+const dateString = date.toLocaleString('en-US', options);
+console.log(dateString); // '8/20/2024, 1:28:38 AM'
+```
+
+生成current time的UTC String
+
+```javascript
+export function getNowUTCFormatted() {
+    const date = new Date()
+    const year = date.getUTCFullYear()
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0')
+    const day = String(date.getUTCDate()).padStart(2, '0')
+    const hours = String(date.getUTCHours()).padStart(2, '0')
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0')
+    const seconds = String(date.getUTCSeconds()).padStart(2, '0')
+    const milliseconds = String(date.getUTCMilliseconds()).padStart(3, '0')
+
+    // 'YYYY-MM-DDTHH:mm:ss.SSSZZ'
+    const utcString = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}+0000`
+    return utcString
+}
+```
+
+生成本地时间Local time `MM/dd/yyyy`：
+
+```javascript
+export function getLocalDateFromUTCTime(utcTimeStr: string, _displayLocale: string): string {
+  const date = new Date(utcTimeStr)
+  const year = date.getFullYear().toString()
+  const month = (date.getMonth() + 1).toString().padStart(2, '0')
+  const day = date.getDate().toString().padStart(2, '0')
+  return `${month}/${day}/${year}`
+  // MM/dd/yyyy
+}
+
+// unit test
+  describe('getLocalDateFromUTCTime', () => {
+    it('should format UTC time correctly', () => {
+      const utcTimeStr = '2023-10-01T12:00:00Z'
+      const formattedDate = getLocalDateFromUTCTime(utcTimeStr, 'en')
+      expect(formattedDate).toBe('10/01/2023')
+
+      const utcTimeStr2 = '2024-08-19T17:00:00.380Z'
+      const formattedDate2 = getLocalDateFromUTCTime(utcTimeStr2, 'en')
+      // get current timezone
+      const timezoneOffsetInMinutes = new Date().getTimezoneOffset()  // -480
+      const hours = Math.abs(Math.floor(timezoneOffsetInMinutes / 60)) // 8
+      const minutes = Math.abs(timezoneOffsetInMinutes % 60); // 0
+
+      const sign = timezoneOffsetInMinutes > 0 ? '-' : '+' // '+'
+      const utcOffset = `UTC${sign}${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`; // UTC+08:00
+
+      /* eslint-disable */
+      if (sign === '+' && hours >= 7) {
+        // for Shanghai timezone, the date should be 08/20/2024
+        expect(formattedDate2).toBe('08/20/2024')
+      } else {
+        expect(formattedDate2).toBe('08/19/2024')
+      }
+      /* eslint-enable */
+    })
+  })
+```
+
+生成UTC `MM/dd/yyyy` ：
+
+```javascript
+export function getLocalDateFromUTCTime(utcTimeStr: string, _displayLocale: string): string {
+const date = new Date(utcTimeStr);
+const year = date.getUTCFullYear();
+const month = date.getUTCMonth() + 1; // Adding 1 because getUTCMonth() returns zero-based index
+const day = date.getUTCDate();
+console.log(year, month, day);
+  // MM/dd/yyyy
+}
+```
+
+### JS库 - Moment [Deprecated]
 
 #### Moment global import issue
 
-https://codesandbox.io/s/moment-import-issue-17oqzz
+<https://codesandbox.io/s/moment-import-issue-17oqzz>
 
-### JS库 - Date
+### [JS库 - dayjs](https://www.npmjs.com/package/dayjs)
+
+[Format token： 'YYYY-MM-DDTHH:mm:ss.SSSZZ'代表什么](https://day.js.org/docs/en/parse/string-format#list-of-all-available-parsing-tokens)
+
+生成current time的UTC String:
+
+```javascript
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+
+export function getNowUTCFormatted() {
+  // new Date(0) = Unix Epoch Start Time(Midnight, January 1, 1970 UTC)
+  // Formart new Date(0) to expected format '1970-01-01T00:00:00.000+0000'
+  const now = new Date()
+  dayjs.extend(utc)
+  const formattedDateTime = dayjs(now).utc().format('YYYY-MM-DDTHH:mm:ss.SSSZZ')
+  // "SSS" represents the three-digit millisecond. For example, "123" represents 123 milliseconds.
+  // "ZZ" represents the time zone offset. In this case, it is "+0000," which means the time is in Coordinated Universal Time (UTC) with no offset.
+  return formattedDateTime
+}
+```
+
+生成本地时间[Local time](https://day.js.org/docs/en/manipulate/local) `MM/dd/yyyy`：
+
+```javascript
+export function getLocalDateFromUTCTime(utcTimeStr: string, _displayLocale: string): string {
+  // utc(keepLocalTime?: boolean)
+  const formattedDateTime = dayjs(utcTimeStr).utc(true).format('MM/dd/yyyy')
+  return formattedDateTime
+}
+```
+
+生成[UTC](https://day.js.org/docs/en/manipulate/utc) `MM/dd/yyyy`：
+
+```javascript
+export function getLocalDateFromUTCTime(utcTimeStr: string, _displayLocale: string): string {
+  const formattedDateTime = dayjs(utcTimeStr).utc().format('MM/dd/yyyy')
+  return formattedDateTime
+}
+```
+
+[UTC](https://day.js.org/docs/en/plugin/utc) adds .utc .local .isUTC APIs to parse or display in UTC.
+
+```javascript
+var utc = require("dayjs/plugin/utc");
+// import utc from 'dayjs/plugin/utc' // ES 2015
+
+dayjs.extend(utc);
+
+// default local time
+dayjs().format(); //2019-03-06T17:11:55+08:00
+
+// UTC mode
+dayjs.utc().format(); // 2019-03-06T09:11:55Z
+
+// convert local time to UTC time
+dayjs().utc().format(); // 2019-03-06T09:11:55Z
+
+// While in UTC mode, all display methods will display in UTC time instead of local time.
+// And all getters and setters will internally use the Date#getUTC* and Date#setUTC* methods instead of the Date#get* and Date#set* methods.
+dayjs.utc().isUTC(); // true
+dayjs.utc().local().format(); //2019-03-06T17:11:55+08:00
+dayjs.utc("2018-01-01", "YYYY-MM-DD"); // with CustomParseFormat plugin
+```
+
+[Time Zone](https://day.js.org/docs/en/timezone/timezone)
+
+```javascript
+dayjs.extend(utc)
+dayjs.extend(timezone)
+
+// current time zone is 'Europe/Berlin' (offset +01:00)
+// Parsing
+dayjs.tz("2013-11-18 11:55:20", "America/Toronto") // '2013-11-18T11:55:20-05:00'
+
+// Converting (from time zone 'Europe/Berlin'!)
+dayjs("2013-11-18 11:55:20").tz("America/Toronto") // '2013-11-18T05:55:20-05:00'
+```
 
 ## Java 中的DateTime
 

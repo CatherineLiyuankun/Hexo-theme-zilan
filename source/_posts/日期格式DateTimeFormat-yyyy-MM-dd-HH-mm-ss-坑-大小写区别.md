@@ -432,7 +432,7 @@ console.log(date1 - date2);
 // Expected output: 0
 ```
 
-语法：
+#### 语法
 
 ```javascript
 new Date()   // now
@@ -467,7 +467,9 @@ console.log(new Date(["2020-06-19", "17:13"]));
 // "Invalid Date" in Firefox
 ```
 
-时区：
+#### 原生JS时区
+
+> 注意 `new Date()` 会默认生成本地时间, 也就是带时区的时间
 
 ```javascript
 const date = new Date("2024-08-19T17:28:38.380Z")
@@ -491,7 +493,95 @@ const dateString = date.toLocaleString('en-US', options);
 console.log(dateString); // '8/20/2024, 1:28:38 AM'
 ```
 
-生成current time的UTC String
+#### Local date time
+
+- `toString()`, `toDateString()`, `toTimeString()`
+- `toLocaleString()`,`toLocaleDateString()`, `toLocaleTimeString()`
+
+```javascript
+const event = new Date('05 October 2011 21:48 UTC');
+
+/* ------------------Local------------------ */
+console.log(event.toString());
+// Expected output: "Thu Oct 06 2011 05:48:00 GMT+0800 (China Standard Time)"
+// Note: your timezone may vary
+console.log(event.toDateString());
+// this date interpreted in the local timezone
+// Expected output: 'Thu Oct 06 2011'
+event.toTimeString()
+// '05:48:00 GMT+0800 (China Standard Time)'
+
+// returns a string with a language-sensitive representation of the date portion of this date in the local timezone
+// toLocaleDateString()
+// toLocaleDateString(locales)
+// toLocaleDateString(locales, options)
+console.log(event.toLocaleDateString());
+// '10/6/2011'
+event.toLocaleDateString("nl-Latn-BE")
+// '6-10-2011'
+event.toLocaleDateString("fi")
+// '6.10.2011'
+event.toLocaleDateString("sr-CS")
+// '6. 10. 2011.'
+event.toLocaleDateString("fr-CA")
+// '2011-10-06'
+const options = {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+};
+event.toLocaleDateString('de-DE', options)
+// 'Donnerstag, 6. Oktober 2011'
+event.toLocaleDateString('ar-EG', options)
+// 'الخميس، ٦ أكتوبر ٢٠١١'
+event.toLocaleDateString(undefined, options)
+// 'Thursday, October 6, 2011'
+
+// toLocaleString()
+// toLocaleString(locales)
+// toLocaleString(locales, options)
+// British English uses day-month-year order and 24-hour time without AM/PM
+event.toLocaleString('en-GB', { timeZone: 'UTC' })
+// '05/10/2011, 21:48:00'
+// Korean uses year-month-day order and 12-hour time with AM/PM
+event.toLocaleString('ko-KR', { timeZone: 'UTC' })
+// '2011. 10. 5. 오후 9:48:00'
+
+// toLocaleTimeString()
+// toLocaleTimeString(locales)
+// toLocaleTimeString(locales, options)
+event.toLocaleTimeString('en-US')
+// '5:48:00 AM'
+event.toLocaleTimeString('it-IT')
+// '05:48:00'
+event.toLocaleTimeString('ar-EG')
+// '٥:٤٨:٠٠ ص'
+```
+
+#### UTC datetime
+
+- `toISOString()`，`toJSON()`
+- `toUTCString()`, `toGMTString()`
+
+```javascript
+const event = new Date('05 October 2011 21:48 UTC');
+/* ------------------UTC------------------ */
+console.log(event.toISOString()); 
+// a simplified format based on ISO 8601, which is always 24 or 27 characters long (YYYY-MM-DDTHH:mm:ss.sssZ or ±YYYYYY-MM-DDTHH:mm:ss.sssZ, respectively). The timezone is always UTC, as denoted by the suffix Z.
+// Expected output: "2011-10-05T21:48:00.000Z"
+console.log(event.toJSON());
+// in the same ISO format as toISOString()
+// '2011-10-05T21:48:00.000Z'
+
+console.log(event.toGMTString());
+// Expected output: 'Wed, 05 Oct 2011 21:48:00 GMT'
+event.toUTCString()
+// 'Wed, 05 Oct 2011 21:48:00 GMT'
+// The timezone is always UTC. toGMTString() is an alias of this method.
+```
+
+#### 生成current time的UTC String
 
 ```javascript
 export function getNowUTCFormatted() {
@@ -510,7 +600,7 @@ export function getNowUTCFormatted() {
 }
 ```
 
-生成本地时间Local time `MM/dd/yyyy`：
+#### 生成本地时间Local time `MM/dd/yyyy`
 
 ```javascript
 export function getLocalDateFromUTCTime(utcTimeStr: string, _displayLocale: string): string {
@@ -551,7 +641,7 @@ export function getLocalDateFromUTCTime(utcTimeStr: string, _displayLocale: stri
   })
 ```
 
-生成UTC `MM/dd/yyyy` ：
+#### 生成UTC `MM/dd/yyyy`
 
 ```javascript
 export function getLocalDateFromUTCTime(utcTimeStr: string, _displayLocale: string): string {
@@ -574,7 +664,7 @@ console.log(year, month, day);
 
 [Format token： 'YYYY-MM-DDTHH:mm:ss.SSSZZ'代表什么](https://day.js.org/docs/en/parse/string-format#list-of-all-available-parsing-tokens)
 
-生成current time的UTC String:
+#### dayjs生成current time的UTC String
 
 ```javascript
 import dayjs from 'dayjs'
@@ -592,7 +682,7 @@ export function getNowUTCFormatted() {
 }
 ```
 
-生成本地时间[Local time](https://day.js.org/docs/en/manipulate/local) `MM/dd/yyyy`：
+#### 生成本地时间[Local time](https://day.js.org/docs/en/manipulate/local) `MM/dd/yyyy`
 
 ```javascript
 export function getLocalDateFromUTCTime(utcTimeStr: string, _displayLocale: string): string {
@@ -602,7 +692,7 @@ export function getLocalDateFromUTCTime(utcTimeStr: string, _displayLocale: stri
 }
 ```
 
-生成[UTC](https://day.js.org/docs/en/manipulate/utc) `MM/dd/yyyy`：
+#### dayjs生成[UTC](https://day.js.org/docs/en/manipulate/utc) `MM/dd/yyyy`
 
 ```javascript
 export function getLocalDateFromUTCTime(utcTimeStr: string, _displayLocale: string): string {
@@ -611,7 +701,7 @@ export function getLocalDateFromUTCTime(utcTimeStr: string, _displayLocale: stri
 }
 ```
 
-[UTC](https://day.js.org/docs/en/plugin/utc) adds .utc .local .isUTC APIs to parse or display in UTC.
+#### dayjs [UTC](https://day.js.org/docs/en/plugin/utc) adds .utc .local .isUTC APIs to parse or display in UTC
 
 ```javascript
 var utc = require("dayjs/plugin/utc");
@@ -635,7 +725,7 @@ dayjs.utc().local().format(); //2019-03-06T17:11:55+08:00
 dayjs.utc("2018-01-01", "YYYY-MM-DD"); // with CustomParseFormat plugin
 ```
 
-[Time Zone](https://day.js.org/docs/en/timezone/timezone)
+#### [Time Zone](https://day.js.org/docs/en/timezone/timezone)
 
 ```javascript
 dayjs.extend(utc)

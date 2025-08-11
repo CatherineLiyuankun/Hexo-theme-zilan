@@ -280,31 +280,31 @@ iTerm2设置中不仅要修改Non-ASCII Font，还要修改字体。
 
 ### 方法一 只修改改某一主题
 
-比如我不想让ys主题显示主机名,编辑 ~/.oh-my-zsh/themes/ys.zsh-theme，最后面改成这样。**记得把#去掉**。
+比如我不想让ys主题显示主机名,编辑 ~/.oh-my-zsh/themes/ys.zsh-theme，最后面改成这样。
 
 ```bash
-# PROMPT="
-# %{$terminfo[bold]$fg[blue]%}#%{$reset_color%} \
-# %(#,%{$bg[yellow]%}%{$fg[black]%}%n%{$reset_color%},%{$fg[cyan]%}%n) \
-# %{$fg[white]%}in \
-# %{$terminfo[bold]$fg[yellow]%}%~%{$reset_color%}\
-# ${hg_info}\
-# ${git_info}\
-#  \
-# %{$fg[white]%}[%*] $exit_code
-# %{$terminfo[bold]$fg[red]%}$ %{$reset_color%}"
+PROMPT="
+%{$terminfo[bold]$fg[blue]%}#%{$reset_color%} \
+%(#,%{$bg[yellow]%}%{$fg[black]%}%n%{$reset_color%},%{$fg[cyan]%}%n) \
+%{$fg[white]%}in \
+%{$terminfo[bold]$fg[yellow]%}%~%{$reset_color%}\
+${hg_info}\
+${git_info}\
+ \
+%{$fg[white]%}[%*] $exit_code
+%{$terminfo[bold]$fg[red]%}$ %{$reset_color%}"
 ```
 
 ### 方法二 作用于所有主题
 
-打开.zshrc 在底部粘贴， **记得把#去掉**:
+打开.zshrc 在底部粘贴:
 
 ```bash
-# prompt_context() {
-#  if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
-#    prompt_segment black default "%(!.%{%F{yellow}%}.)$USER"
-#  fi
-# }
+prompt_context() {
+ if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
+   prompt_segment black default "%(!.%{%F{yellow}%}.)$USER"
+ fi
+}
 ```
 
 这样就只显示用户名了. 如果你连用户名也不想显示，只需要注释掉这一行： `prompt_segment black default...`。

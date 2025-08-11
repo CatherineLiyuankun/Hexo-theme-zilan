@@ -39,6 +39,8 @@ categories:
 
 - [Git 多用户配置](http://liyuankun.top/Git-Push-%E9%81%BF%E5%85%8D%E9%87%8D%E5%A4%8D%E8%BE%93%E5%85%A5%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E5%AF%86%E7%A0%81%E6%96%B9%E6%B3%95-%E5%A4%9A%E8%B4%A6%E6%88%B7%E9%85%8D%E7%BD%AE.html)
 
+- [Tomcat 10.x](https://tomcat.apache.org/download-10.cgi)
+
 # 命令行开发环境设置
 
 ## 安装Command line tools
@@ -123,11 +125,8 @@ homebrew是Mac下目前最常用的包管理工具，相当于debain下的 apt ,
 ### 安装路径
 
 The `/usr/local/Cellar` directory is the default location on OS X. You'll see sub-directories in there for all your installed formulae.
-
 MAC 系统上默认路径为`/usr/local/Cellar`, 下面的子目录就是用brew安装的其他包。
-homebrew默认会把可执行文件装在目录 /usr/local/bin 下面，建议修改 path 路径，让你通过 homebrew
-安装的工具可以覆盖掉Mac默认的（例如git，Big sur Mac自带2.30.1版本的git）。使用管理员权限修改文件
-/etc/paths 将 /usr/local/bin 移动到第一行。
+homebrew默认会把可执行文件装在目录 /usr/local/bin 下面，建议修改 path 路径，让你通过 homebrew安装的工具可以覆盖掉Mac默认的（例如git, Big sur Mac自带2.30.1版本的git）。使用管理员权限修改文件/etc/paths 将 /usr/local/bin 移动到第一行。
 
 MAC Monterey 系统上新版本Homebrew， 例如 3.3.12，默认路径变为`/opt/homebrew/Cellar`, 下面的子目录就是用brew安装的其他包。
 
@@ -193,14 +192,19 @@ brew install maven
 
 ```bash
 mvn -v
-vi ~/.bash_profile
+Apache Maven 3.9.11 (3e54c93a704957b63ee3494413a2b544fd3d825b)
+Maven home: /opt/homebrew/Cellar/maven/3.9.11/libexec
+Java version: 24.0.2, vendor: Homebrew, runtime: /opt/homebrew/Cellar/openjdk/24.0.2/libexec/openjdk.jdk/Contents/Home
+
+# vi ~/.bash_profile or
+vim ~/.zshrc
 ```
 
 add its bin folder to the PATH environment variable
 
 ```bash
 # Maven
-export M2_HOME="/usr/local/Cellar/maven/3.8.1/libexec"
+export M2_HOME="/opt/homebrew/Cellar/maven/3.9.11/libexec"
 export PATH="${M2_HOME}/bin:${PATH}"
 ```
 
@@ -241,7 +245,11 @@ Add the environment variable `ANT_HOME` in your system.
 Add its bin folder to the `PATH` environment variable.
 
 ```bash
-vi ~/.bash_profile
+where ant
+/opt/homebrew/bin/ant
+
+# vi ~/.bash_profile or
+vim ~/.zshrc
 ```
 
 添加：
@@ -250,7 +258,8 @@ vi ~/.bash_profile
 # ant
 # BIN folder should include both ant and antRun
 # If installed with brew, it should be "/usr/local/Cellar/ant@1.9/1.9.x/libexec/bin"
-export ANT_HOME=/usr/local/Cellar/1.10.10/libexec
+# export ANT_HOME=/usr/local/Cellar/1.10.10/libexec
+export ANT_HOME=/opt/homebrew/Cellar/ant/1.10.15_1/libexec
 export PATH=$PATH:$ANT_HOME/bin
 ```
 

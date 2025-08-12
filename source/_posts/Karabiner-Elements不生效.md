@@ -1,6 +1,6 @@
 ---
 layout: 
-title: MacOS Karabiner-Elements不生效解决方法
+title: MacOS Karabiner-Elements配置+不生效解决方法
 subtitle: MacOS 10.14.6 or 14.4
 date: 2020-07-29 05:14:01
 tags:
@@ -10,9 +10,47 @@ categories:
 - Tools
 ---
 
+## MacOS Karabiner-Elements配置
+
+[**Karabiner Element**](https://pqrs.org/osx/karabiner/)，用于[把右 Command 和 Capslock 键利用起来](http://lucifr.com/2013/02/16/caps-lock-to-hyper-key/)，避免快捷键冲突，[简单 note](https://hackmd.io/s/rk4u9i-pG)，详见[sorrycc的《我的快捷键技巧》](https://www.bilibili.com/video/av44127555)
+
+- 另外参考[Mac 自定义应用程序快捷键](https://lhajh.github.io/mac/2017/12/05/.Mac-custom-application-shortcut-keys.html)配置了Mac app，比如Chrome和iterm3的一些快捷键。免费，开源。
+
+### right_option --> left_command
+![right_option --> left_command](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Karabiner-Elements%E4%B8%8D%E7%94%9F%E6%95%88/right_option_left_command.png)
+
+### right_command -->  command+control+option+shift
+
+Add your own rule: right_command -->  command+control+option+shift
+![command+control+option+shift](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Karabiner-Elements%E4%B8%8D%E7%94%9F%E6%95%88/right_command%20to%20command%2Bcontrol%2Boption%2Bshift.png)
+
+
+```json
+{
+    "manipulators": [
+        {
+            "description": "Change right_command to command+control+option+shift.",
+            "from": {
+                "key_code": "right_command",
+                "modifiers": { "optional": ["any"] }
+            },
+            "to": [
+                {
+                    "key_code": "left_shift",
+                    "modifiers": ["left_command", "left_control", "left_option"]
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}
+```
+
+## MacOS Karabiner-Elements 不生效解决方法
+
 每回MacOS一升级，总会遇到Karabiner-Elements不生效的问题，所以统一总结一下
 
-## Karabiner-Elements
+### Karabiner-Elements
 
 [**Karabiner Element**](https://pqrs.org/osx/karabiner/)，作用是键盘按键改键。
 
@@ -23,19 +61,19 @@ categories:
 - 我试了后, 把“右 Command”改成F19,发现我右 Command+delete还是经常用的，所以接着在Karabiner Element 的“Simple modifications” 把 "right_option" 改成了 “left_command”。
 - 另外参考[Mac 自定义应用程序快捷键](https://lhajh.github.io/mac/2017/12/05/.Mac-custom-application-shortcut-keys.html)配置了Mac app，比如Chrome和iterm3的一些快捷键。免费，开源。
 
-## 通用解决方法
+### 通用解决方法
 
 系统权限保证都设置正确
 打开System Settings > Security & Privacy > Privacy
 
-### Full Disk Access
+#### Full Disk Access
 
 - Karabiner-Elements
   - /Applications/Karabiner-Elements.app
 - karabiner_grabber
   - 路径： /Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_grabber
 
-### Input monitoring
+#### Input monitoring
 
 - Karabiner-Eventviewer
   - /Applications/Karabiner-EventViewer.app
@@ -44,20 +82,20 @@ categories:
 - karabiner_observer
   - /Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_observer
 
-### Accessibility
+#### Accessibility
 
 - karabiner_grabber
   - /Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_grabber
 - karabiner_observer
   - /Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_observer
 
-### Allow driver
+#### Allow driver
 
 打开System Settings > Security & Privacy > Security
 Allow driver:
 <https://karabiner-elements.pqrs.org/docs/help/troubleshooting/allow-button-does-not-appear/>
 
-### 重启
+#### 重启
 
 重启电脑
 多次重启Karabiner-Elements
@@ -68,13 +106,13 @@ sudo killall karabiner_grabber
 sudo killall karabiner_observer
 ```
 
-## MacOS 14.4.1 Karabiner-Elements不生效
+### MacOS 14.4.1 Karabiner-Elements不生效
 
 额外把'karabiner_grabber' full disk access rights makes it work. However, I had to restart Karabiner twice afterwards and 重启电脑.
 
 参考链接：<https://github.com/pqrs-org/Karabiner-Elements/issues/3620#issuecomment-1765946996>
 
-## MacOS 10.14.6 Karabiner-Elements不生效
+### MacOS 10.14.6 Karabiner-Elements不生效
 
 遇到了[macOS 10.14.6 Karabiner-Elements](https://www.v2ex.com/t/585453) 疑似无法正常使用的问题
 参考[Does not work on MacOS Catalina #1867](https://github.com/pqrs-org/Karabiner-Elements/issues/1867)
@@ -94,7 +132,7 @@ In order to fix, I needed to add the following entries to the Security & Privacy
 /Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_grabber
 /Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_observer
 
-## 其他改键工具
+### 其他改键工具
 
 Some other tools that should work for you are:
 

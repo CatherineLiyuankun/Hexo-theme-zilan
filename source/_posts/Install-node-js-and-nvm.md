@@ -52,25 +52,45 @@ categories:
 
 ### 安装`nvm`
 
+可以下载 安装程序 来安装。
+
+```bash
+brew install nvm
+```
+
 cURL:
 
 ```bash
 curl https://raw.github.com/creationix/nvm/master/install.sh | sh
 ```
 
-Wget:
+或者Wget:
 
 ```bash
 wget -qO- https://raw.github.com/creationix/nvm/master/install.sh | sh
 ```
 
-或者也可以下载 安装程序 来安装。
+### 配置nvm
+
+安装完成后，根据安装完的提示不要忘记
+1. 创建nvm 工作路径： `mkdir ~/.nv`
+2. 配置nvm的路径到~/.profile or ~/.zshrc， 然后`source ~/.zshrc`
 
 ```bash
-brew install nvm
+You should create NVM's working directory if it doesn't exist:
+  mkdir ~/.nvm
+
+Add the following to your shell profile e.g. ~/.profile or ~/.zshrc:
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+You can set $NVM_DIR to any location, but leaving it unchanged from
+/opt/homebrew/Cellar/nvm/0.40.3 will destroy any nvm-installed Node installations
+upon upgrade/reinstall.
 ```
 
-安装完成后，重启终端并执行下列命令即可安装 Node.js。
+重启终端并执行下列命令即可安装 Node.js。
 
 ### 安装问题1：command not found: nvm
 
@@ -81,21 +101,7 @@ zsh: command not found: nvm
 
 #### 解决方法1
 
-There might be some problems installing nvm in new mac, caused by the shell is not bash by default, check if it is bash with command
-
-```bash
-echo $0
-```
-
-§ if it is not run command
-
-```bash
-chsh -s /bin/bash
-```
-
-And then reopen the terminal
-
-#### 解决方法2
+忘记配置nvm
 
 如果用的是`zsh`, 而不是`bash`. 将`.bashrc`中关于`nvm`的配置copy到`.zshrc`里边。
 将`.bashrc`中的copy到`~.zshrc`下就可以啦。
@@ -111,6 +117,24 @@ export NVM_DIR="/usr/local/Cellar/nvm/0.38.0"
 ```bash
 source ~/.zshrc
 ```
+
+#### 解决方法2
+
+There might be some problems installing nvm in new mac, caused by the shell is not bash by default, check if it is bash with command
+
+```bash
+echo $0
+```
+
+§ if it is not run command
+
+```bash
+chsh -s /bin/bash
+```
+
+And then reopen the terminal
+
+
 
 ### `nvm`安装 Node.js
 

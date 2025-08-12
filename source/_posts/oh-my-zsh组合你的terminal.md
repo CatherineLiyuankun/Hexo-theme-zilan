@@ -426,6 +426,10 @@ source ~/.zshrc
 
 # 其他技巧
 
+## iterm Run command
+
+iTerm2 里配 `Run command...` 为 `/usr/local/bin/idea --path \2 \1` ([图](https://zos.alipayobjects.com/rmsportal/RmWdxKRQUWFMoVDjerNQ.png))，这样 Command + 点击文件路径，就会在 Intellij Idea 里打开
+
 ## 给history命令增加时间
 
 .zshrc中加入以下行

@@ -123,8 +123,8 @@ JAVACMD="/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin
 
 - [x] [**shortcutdetective**](https://formulae.brew.sh/cask/shortcutdetective)，【网址下载】检测keyboard shortcut(hotkey) 冲突， 免费。例如control + A, 可以检测出哪些application设置有这个快捷键，避免冲突。
 - [x] [**Thor**](https://github.com/gbammc/Thor)，【网址下载】或者[APP Store + 国外账号]一键直达应用， 免费，开源。
-- [x] [**Karabiner Element**](https://pqrs.org/osx/karabiner/)，用于[把右 Command 和 Capslock 键利用起来](http://lucifr.com/2013/02/16/caps-lock-to-hyper-key/)，避免快捷键冲突，[简单 note](https://hackmd.io/s/rk4u9i-pG)，详见[sorrycc的《我的快捷键技巧》](https://www.bilibili.com/video/av44127555)
-  - [Karabiner-Elements不生效解决方法](./Karabiner-Elements不生效.html)
+- [x] [**Karabiner Element**](https://pqrs.org/osx/karabiner/)，用于改键。可以把右Command利用起来，避免快捷键冲突。
+  - [Karabiner-Elements配置+不生效解决方法](./Karabiner-Elements不生效.html)
   - 另外参考[Mac 自定义应用程序快捷键](https://lhajh.github.io/mac/2017/12/05/.Mac-custom-application-shortcut-keys.html)配置了Mac app，比如Chrome和iterm3的一些快捷键。免费，开源。
 
 ## 时间管理

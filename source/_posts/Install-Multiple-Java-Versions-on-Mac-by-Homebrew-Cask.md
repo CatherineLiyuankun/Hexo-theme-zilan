@@ -77,6 +77,14 @@ MACOS 升级M1芯片后，最好更新下jdk版本，运行效率更高。
 ```bash
 $ brew install openjdk@11
 
+==> Summary
+🍺  /opt/homebrew/Cellar/openjdk@11/11.0.28: 667 files, 296.1MB
+==> Running `brew cleanup openjdk@11`...
+Disable this behaviour by setting `HOMEBREW_NO_INSTALL_CLEANUP=1`.
+Hide these hints with `HOMEBREW_NO_ENV_HINTS=1` (see `man brew`).
+==> No outdated dependents to upgrade!
+==> Caveats
+==> openjdk@11
 For the system Java wrappers to find this JDK, symlink it with
   sudo ln -sfn /opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
 
@@ -146,7 +154,6 @@ ERROR: JAVA_HOME is set to an invalid directory: /opt/homebrew/opt/openjdk@11
 1. `JAVA_HOME` 修改为： `export JAVA_HOME="$(/usr/libexec/java_home)"`
 2. Run `sudo ln -sfn /usr/local/opt/openjdk/libexec/openjdk.jdk`
 
-
 ### other
 
 Install Specific Versions of Java (Java8, Java11, Java13)
@@ -166,13 +173,16 @@ Now it is time to install jEnv:
 
 ```bash
 brew install jenv
-```
 
-Add the following lines to ~/.bash_profile. This will initialize jEnv.
-
-```bash
-# Init jenv
-if which jenv > /dev/null; then eval "$(jenv init -)"; fi
+To activate jenv, add the following to your shell profile e.g. ~/.profile, ~/.bash_profile
+or ~/.zshrc:
+  export PATH="$HOME/.jenv/bin:$PATH"
+  eval "$(jenv init -)"
+==> Summary
+🍺  /opt/homebrew/Cellar/jenv/0.5.9: 91 files, 100.9KB
+==> Running `brew cleanup jenv`...
+Disable this behaviour by setting `HOMEBREW_NO_INSTALL_CLEANUP=1`.
+Hide these hints with `HOMEBREW_NO_ENV_HINTS=1` (see `man brew`).
 ```
 
 jEnv doesn’t install JDKs, so we have to tell jEnv where to look for them. Type these commands to register JDKs in jEnv (replace the minor and patch versions with yours):

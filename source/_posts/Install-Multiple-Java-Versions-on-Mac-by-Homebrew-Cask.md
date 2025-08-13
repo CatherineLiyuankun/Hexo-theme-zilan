@@ -66,7 +66,7 @@ brew install --cask java
 
 ## 安装指定版本Java
 
-### [New]安装openjdk11
+### [New]安装openjdk11 or openjdk17
 
 [Homebrew 安装openjdk11](https://formulae.brew.sh/formula/openjdk@11)
 MACOS 升级M1芯片后，最好更新下jdk版本，运行效率更高。
@@ -77,13 +77,6 @@ MACOS 升级M1芯片后，最好更新下jdk版本，运行效率更高。
 ```bash
 $ brew install openjdk@11
 
-==> Summary
-🍺  /opt/homebrew/Cellar/openjdk@11/11.0.28: 667 files, 296.1MB
-==> Running `brew cleanup openjdk@11`...
-Disable this behaviour by setting `HOMEBREW_NO_INSTALL_CLEANUP=1`.
-Hide these hints with `HOMEBREW_NO_ENV_HINTS=1` (see `man brew`).
-==> No outdated dependents to upgrade!
-==> Caveats
 ==> openjdk@11
 For the system Java wrappers to find this JDK, symlink it with
   sudo ln -sfn /opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
@@ -98,49 +91,88 @@ For compilers to find openjdk@11 you may need to set:
   export CPPFLAGS="-I/opt/homebrew/opt/openjdk@11/include"
 ```
 
+```bash
+brew install openjdk@17
+
+==> Pouring openjdk@17--17.0.16.arm64_sequoia.bottle.tar.gz
+==> Caveats
+For the system Java wrappers to find this JDK, symlink it with
+  sudo ln -sfn /opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-17.jdk
+
+openjdk@17 is keg-only, which means it was not symlinked into /opt/homebrew,
+because this is an alternate version of another formula.
+
+If you need to have openjdk@17 first in your PATH, run:
+  echo 'export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"' >> ~/.zshrc
+
+For compilers to find openjdk@17 you may need to set:
+  export CPPFLAGS="-I/opt/homebrew/opt/openjdk@17/include"
+==> Summary
+🍺  /opt/homebrew/Cellar/openjdk@17/17.0.16: 636 files, 305MB
+==> Running `brew cleanup openjdk@17`...
+Disable this behaviour by setting `HOMEBREW_NO_INSTALL_CLEANUP=1`.
+Hide these hints with `HOMEBREW_NO_ENV_HINTS=1` (see `man brew`).
+```
+
+Add `export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"` to ~/.zshrc
+
+```bash
+source ~/.zshrc
+
+java -version  # 应显示 openjdk 17.x.x
+    openjdk version "17.0.16" 2025-07-15
+    OpenJDK Runtime Environment Homebrew (build 17.0.16+0)
+    OpenJDK 64-Bit Server VM Homebrew (build 17.0.16+0, mixed mode, sharing)
+
+javac -version # 应显示 javac 17.x.x[1,2](@ref)
+    javac 17.0.16
+```
+
 2. Set jdk for jenv
 
 ```bash
 $ where java
+/opt/homebrew/opt/openjdk@17/bin/java
+/Users/yuanli/.jenv/shims/java
 /opt/homebrew/opt/openjdk@11/bin/java
-/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home
 
 $ jenv versions
 openjdk64-11.0.11
 
 $ jenv add /opt/homebrew/opt/openjdk@11
+$ jenv add /opt/homebrew/opt/openjdk@17
 
 $ jenv versions
-* openjdk64-11.0.11 (set by /Users/yuanli/.jenv/version)
-openjdk64-11.0.15
+* openjdk64-11.0.28 (set by /Users/yuanli/.jenv/version)
+  openjdk64-17.0.16
 
 # set default jdk version
-$ jenv global openjdk64-11.0.15
+$ jenv global openjdk64-17.0.16
 
 $ jenv versions
-openjdk64-11.0.11
-* openjdk64-11.0.15 (set by /Users/yuanli/.jenv/version)
+  openjdk64-11.0.28
+* openjdk64-17.0.16 (set by /Users/yuanli/.jenv/version)
 ```
 
 3. (Optional)删除旧的jdk
 
 ```bash
-$ sudo rm -rf /Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin/java
+sudo rm -rf /Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin/java
 
-$ jenv remove openjdk64-11.0.11
+jenv remove openjdk64-11.0.11
 
-$ jenv versions
-openjdk64-11.0.15
+jenv versions
+
 ```
 
-4. Set jdk for IDE
+1. Set jdk for IDE
 
 #### ERROR in terminal
 
 `~/.bash_profile` 或是`~/.zprofile` `~/.zshrc`里面配置了`JAVA_HOME`
 
 ```bash
- export JAVA_HOME="/opt/homebrew/opt/openjdk@11" 
+ export JAVA_HOME="/opt/homebrew/opt/openjdk@17" 
 ```
 
 - 报错：

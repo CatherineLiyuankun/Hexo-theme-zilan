@@ -146,6 +146,8 @@ $ jenv versions
 * openjdk64-11.0.28 (set by /Users/yuanli/.jenv/version)
   openjdk64-17.0.16
 
+$ jenv enable-plugin export
+
 # set default jdk version
 $ jenv global openjdk64-17.0.16
 
@@ -181,10 +183,25 @@ jenv versions
 ERROR: JAVA_HOME is set to an invalid directory: /opt/homebrew/opt/openjdk@11
 ```
 
-- [解决方法](https://stackoverflow.com/a/6588410)：
+- [解决方法1](https://stackoverflow.com/a/6588410)：
 
 1. `JAVA_HOME` 修改为： `export JAVA_HOME="$(/usr/libexec/java_home)"`
 2. Run `sudo ln -sfn /usr/local/opt/openjdk/libexec/openjdk.jdk`
+
+推荐解决方法2： quite IDE
+
+```bash
+ps aux | grep gradle
+yuanli           53967   0.3  0.0 408628368   1616 s004  S+    3:20PM   0:00.00 grep --color=auto --exclude-dir=.bzr --exclude-dir=CVS --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn --exclude-dir=.idea --exclude-dir=.tox gradle
+kill 53967
+```
+
+```bash
+jenv enable-plugin export
+jenv local openjdk64-17.0.16
+
+echo $JAVA_HOME
+```
 
 ### other
 

@@ -427,6 +427,7 @@ Commit 代码3：[重构archive，category, tags2](https://github.com/CatherineL
 利用系统的[list_categories(\[categories\], \[options\])](https://hexo.io/zh-cn/docs/helpers.html#list-categories)辅助函数生成分类列表;
 
 <%- list_categories([options]) %>
+
 | 参数 | 描述 | 默认值 |
 |--|--|--|
 |orderby| 分类排列方式| name|
@@ -619,33 +620,84 @@ mathjax.ejs
 常见国际域名后缀：.com，.net，.top，tech，.ink，.info，.win等
 常见国内域名后缀：.cn,   .com.cn,  .cx,  .cc,  .xin等
 
-### step2 修改CNAME
+### step2 域名解析
 
-如果你不想用<http://username.github.com/jekyll_demo/>这个域名，可以换成自己的域名。
+在你的域名注册提供商那里配置DNS解析，获取[GitHub的IP地址](https://help.github.com/articles/setting-up-an-apex-domain/), 或者直接ping CatherineLiyuankun.github.io, 得到IP。
+
+```bash
+$ ping CatherineLiyuankun.github.io
+PING catherineliyuankun.github.io (185.1xx.xxx.153): 56 data bytes
+64 bytes from 185.1xx.xxx.153: icmp_seq=0 ttl=47 time=459.228 ms
+```
+
+#### ​​🌐 根域名（如 example.com）​​：添加 ​​A记录​
+
+指向GitHub Pages的IP地址（需4条记录）：
+
+```yaml
+主机记录：@  
+记录类型：A  
+记录值：  
+  185.199.108.153  
+  185.199.109.153  
+  185.199.110.153  
+  185.199.111.153  
+TTL：自动（默认）
+```
+
+如果绑定的是顶级域名，则DNS要新建一条A记录，指向185.1xx.xxx.153等4个IP。
+@, 代表 liyuankun.top，记录值就是我们博客的IP地址，刚才ping出的地址 185.1xx.xxx.153
+
+在配置 GitHub Pages 的自定义域名时，为根域名（如 example.com）添加 ​​4 个 A 记录​​，分别指向 185.199.108.153、185.199.109.153、185.199.110.153和 185.199.111.153，主要是出于以下核心原因：
+
+1. ​​负载均衡与高可用性​​
+GitHub Pages 使用​​全球分布式服务器​​部署，这四个 IP 地址对应不同地理位置的服务器节点（如北美、欧洲、亚洲等）。
+当用户访问网站时，DNS 系统会根据用户地理位置自动选择​​最近的服务器 IP​​，显著提升访问速度并降低延迟。
+若某一服务器故障或维护，其他 IP 可无缝接管流量，避免服务中断。
+
+2. ​​冗余设计提升可靠性​​
+
+- 单一 IP 存在​​单点故障风险​​（如服务器宕机、网络波动）。通过配置多个 IP，DNS 系统可自动切换至可用节点，确保网站持续可访问。
+- GitHub 官方明确要求为根域名配置 ​​4 个 A 记录​​，这是其服务架构的强制设计。
+
+3. ​​支持 HTTPS 证书签发​​
+GitHub Pages 为自定义域名​​自动签发 TLS 证书​​（通过 Let's Encrypt），而证书验证过程需确保域名解析到 GitHub 的服务器集群。多个 IP 地址能提高证书验证的成功率。
+若仅配置单一 IP，可能因区域解析不稳定导致证书签发失败或 HTTPS 无法启用。
+
+4. ​​与 CNAME 记录的限制互补​​
+
+- 根域名（如 example.com）​​不能直接使用 CNAME 记录​​（违反 DNS 协议规范），必须通过 A 记录解析到 IP 地址。
+- 子域名（如 <www.example.com）可灵活使用> CNAME 指向 username.github.io，但根域名需依赖多 IP 的 A 记录实现类似效果。
+
+#### ​​🔗 子域名（如 <www.example.com）​​：添加> ​​CNAME记录
+
+指向GitHub Pages默认域名：
+
+```yaml
+主机记录：www  
+记录类型：CNAME  
+记录值：`你的GitHub用户名.github.io`（例如 `catherineliyuankun.github.io`）  
+TTL：自动
+```
+
+如果绑定的是二级域名，则DNS要新建一条CNAME记录，指向CatherineLiyuankun.github.com
+主机记录为 www,代表可以解析 <www.liyuankun.top的域名。>
+
+此外，别忘了将_config.yml文件中的baseurl改成根目录"/"。
+
+![5_1-step3.png](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Git-Pages-Jekyll-Hexo-Build-your-own-blog/5_1-step3.png)
+
+### step3 修改CNAME
+
+如果你不想用<http://username.github.io>这个域名，可以换成自己的域名。
 
 具体方法是在repo的根目录下面，新建一个名为CNAME的文本文件（注意一定是大写的！！！），里面写入你要绑定的域名，比如liyuankun.top或者xxx.example.com。
 或者是在github 你的pages库：CatherineLiyuankun.github.io 的Setting 选项里，设置Custom domain：liyuankun.top。就会自动新建一个名为CNAME的文本文件，里面写入你填写的域名：liyuankun.top。
 ![5_1-1.png](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Git-Pages-Jekyll-Hexo-Build-your-own-blog/5_1-1.png)
 ![5_1-2](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Git-Pages-Jekyll-Hexo-Build-your-own-blog/5_1-2.png)
 
-### step3 域名解析
-
-在你的域名注册提供商那里配置DNS解析，获取[GitHub的IP地址](https://help.github.com/articles/setting-up-an-apex-domain/), 或者直接ping CatherineLiyuankun.github.io, 得到IP。
-
-```bash
-$ ping CatherineLiyuankun.github.io
-PING catherineliyuankun.github.io (185.199.109.153): 56 data bytes
-64 bytes from 185.199.109.153: icmp_seq=0 ttl=47 time=459.228 ms
-```
-
-如果绑定的是顶级域名，则DNS要新建一条A记录，指向185.199.109.153，主机记录为 www,代表可以解析 www.liyuankun.top的域名。
-
-另一个为 @, 代表 liyuankun.top，记录值就是我们博客的IP地址，刚才ping出的地址 185.199.109.153
-（如果绑定的是二级域名，则DNS要新建一条CNAME记录，指向CatherineLiyuankun.github.com）
-
-此外，别忘了将_config.yml文件中的baseurl改成根目录"/"。
-
-![5_1-step3.png](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Git-Pages-Jekyll-Hexo-Build-your-own-blog/5_1-step3.png)
+启用HTTPS（可选但推荐）​​
+完成DNS修改后，耐心等待传播（最长48小时），再启用HTTPS。DNS生效后，在GitHub仓库设置中勾选 ​​Enforce HTTPS​​，强制使用加密访问。
 
 ### step4 域名备案
 
@@ -669,6 +721,74 @@ PING catherineliyuankun.github.io (185.199.109.153): 56 data bytes
  > 4. 接下来你需要再次登录备案系统，申请幕布拍照，然后点击指定链接，网购价值15元的幕布，以此为背景拍照再上传到备案系统。
  >
   5. 工作人员会对照片进行审核，照片审核通过后他们会把你的备案信息提交给省通信管理局审核，通信管理局一般会审核11—20天，审核通过后会发短信和邮件通知你。
+
+## 5.1+ 域名被劫持+GitPages重新绑定域名
+
+### Git Pages Verifying your custom domain
+
+在<https://github.com/CatherineLiyuankun/CatherineLiyuankun.github.io/settings/pages> 里发现 Custom domain 不知怎么变为空的了。重新填写liyuankun.top, save后弹出error: "The custom domain `liyuankun.top` is already taken. If you are the owner of this domain, check out <https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages> for information about how to verify and release this domain."
+
+按照[文档](https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages)的步骤，进入到git profile下的setting: <https://github.com/settings/> --> In the "Code, planning, and automation" section of the sidebar, click  `Pages`
+
+1. Create a TXT record in your DNS configuration for the following hostname: `_github-pages-challenge-CatherineLiyuankun.liyuankun.top`
+2. Use this code for the value of the TXT record: cxxxxxxxxxxxxxxxxx0
+3. Wait until your DNS configuration changes. This could take up to 24 hours to propagate.
+
+前两步的核心目的​​
+
+1. ​域名所有权验证​​GitHub 要求您在 DNS 中创建一条​​专属的 TXT 记录​​（主机名 _github-pages-challenge-CatherineLiyuankun.liyuankun.top，值 c58...6f0），以此证明您对该域名拥有控制权。
+   - 只有真正的域名所有者才能修改 DNS 记录，因此这是最直接的验证方式。
+   - ​​TXT 记录的作用​​TXT 记录用于存储域名相关的文本信息（如验证码）。GitHub 通过向 DNS 系统查询该记录是否存在且匹配，确认您是否按指示完成了操作。
+   - ​​主机名的唯一性​​主机名 _github-pages-challenge-CatherineLiyuankun.liyuankun.top包含您的 GitHub 用户名（CatherineLiyuankun），确保验证码与您的账户绑定，他人无法复用。
+2. ​​防止域名劫持（Domain Takeover）​​未经验证的域名可能被他人恶意绑定到其他 GitHub Pages 仓库（例如当您删除仓库或降级服务时）。
+   - 验证后，GitHub 会锁定该域名，仅允许您的账户或组织使用它发布页面。
+3. ​​安全保护范围扩展​​验证顶级域名（如 liyuankun.top）后，其所有​​直接子域名​​（如 docs.liyuankun.top、blog.liyuankun.top）也会自动受到保护，避免被滥用。
+
+### ​​修改 DNS 的具体操作步骤​​
+
+⚙️ 1. ​​登录域名注册商控制台​​
+访问你的域名注册商网站（如阿里云、腾讯云、Cloudflare 等），登录账户。
+进入 ​​DNS 管理面板​​（通常位于“域名管理”→“DNS 设置”或“域名解析”）。
+
+📝 2. ​​添加 TXT 记录​​
+点击 ​​“添加记录”​​ 按钮（部分服务商需选择“添加解析记录”）。
+按以下参数填写：
+
+```yaml
+​​记录类型​​：选择 ​​TXT​​
+​​主机名/主机记录​​：_github-pages-challenge-CatherineLiyuankun.liyuankun.top（​​⚠️ 注意：需完整复制 GitHub 提供的主机名，包含开头的下划线 _​​）
+​​记录值/内容​​：c5xxxxxxxxxxxxxxxxxf0（​​粘贴 GitHub 提供的完整验证码，包括引号（若有）​​）
+​​TTL（生存时间）​​：保持默认值（通常为 自动或 600）。
+```
+
+💾 3. ​​保存并生效​​
+点击 ​​“保存”​​ 或 ​​“确认”​​，完成记录添加。
+等待 ​​DNS 全球传播​​（通常需 ​​5 分钟~24 小时​​）。
+
+✔️ ​​验证是否生效​​
+🔍 方法 1：使用命令行工具
+
+```bash
+dig _github-pages-challenge-CatherineLiyuankun.liyuankun.to +nostats +nocomments +nocmd TXT
+```
+
+若返回结果包含 "c58xxxxxxxxxxxxxxx6f0"，说明记录已生效。
+
+🌐 方法 2：在线 DNS 检测工具
+访问 DNS Checker 或者点击“生效检测”，输入完整主机名，选择 TXT类型查询。
+若全球多个节点均返回正确验证码，表示记录已生效。
+
+⚠️ ​​关键注意事项​​
+
+1. ​​严格匹配格式​​：
+主机名需包含开头的下划线 _和完整的域名（如_github-pages-challenge-用户名.域名）。
+验证码需完全复制（包括字母大小写和数字），部分服务商要求值用引号包裹（如 "c58...6f0"）。
+2. ​​长期保留记录​​：
+​​不可删除 TXT 记录​​！即使验证成功，删除后 GitHub 会判定验证失效。
+3. ​​与后续步骤的关系​​：
+此操作仅用于所有权验证，仍需按需配置 ​​A 记录（根域名）​​ 或 ​​CNAME 记录（子域名）​​ 指向 GitHub Pages IP。
+
+### DNS生效后，Verify
 
 ## 5.2 网站统计
 

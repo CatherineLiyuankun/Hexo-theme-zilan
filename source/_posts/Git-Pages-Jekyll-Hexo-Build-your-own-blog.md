@@ -620,7 +620,9 @@ mathjax.ejs
 常见国际域名后缀：.com，.net，.top，tech，.ink，.info，.win等
 常见国内域名后缀：.cn,   .com.cn,  .cx,  .cc,  .xin等
 
-### step2 域名解析
+### step2 域名添加DNS解析
+
+官方文档：[Managing a custom domain for your GitHub Pages site](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain)
 
 在你的域名注册提供商那里配置DNS解析，获取[GitHub的IP地址](https://help.github.com/articles/setting-up-an-apex-domain/), 或者直接ping CatherineLiyuankun.github.io, 得到IP。
 
@@ -669,6 +671,18 @@ GitHub Pages 为自定义域名​​自动签发 TLS 证书​​（通过 Let'
 - 根域名（如 example.com）​​不能直接使用 CNAME 记录​​（违反 DNS 协议规范），必须通过 A 记录解析到 IP 地址。
 - 子域名（如 <www.example.com）可灵活使用> CNAME 指向 username.github.io，但根域名需依赖多 IP 的 A 记录实现类似效果。
 
+**验证DNS配置成功**
+
+```bash
+$ dig liyuankun.top +noall +answer -t A
+; <<>> DiG 9.10.6 <<>> liyuankun.top +noall +answer -t A
+;; global options: +cmd
+liyuankun.top.		600	IN	A	185.199.110.153
+liyuankun.top.		600	IN	A	185.199.108.153
+liyuankun.top.		600	IN	A	185.199.111.153
+liyuankun.top.		600	IN	A	185.199.109.153
+```
+
 #### ​​🔗 子域名（如 <www.example.com）​​：添加> ​​CNAME记录
 
 指向GitHub Pages默认域名：
@@ -683,9 +697,23 @@ TTL：自动
 如果绑定的是二级域名，则DNS要新建一条CNAME记录，指向CatherineLiyuankun.github.com
 主机记录为 www,代表可以解析 <www.liyuankun.top的域名。>
 
-此外，别忘了将_config.yml文件中的baseurl改成根目录"/"。
+![DNS_config](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Git-Pages-Jekyll-Hexo-Build-your-own-blog/5.1%2BDNS_config.png)
 
-![5_1-step3.png](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Git-Pages-Jekyll-Hexo-Build-your-own-blog/5_1-step3.png)
+**验证DNS配置成功**
+
+```bash
+$ dig www.liyuankun.top +nostats +nocomments +nocmd
+; <<>> DiG 9.10.6 <<>> www.liyuankun.top +nostats +nocomments +nocmd
+;; global options: +cmd
+;www.liyuankun.top.		IN	A
+www.liyuankun.top.	600	IN	CNAME	catherineliyuankun.github.io.
+catherineliyuankun.github.io. 3600 IN	A	185.199.109.153
+catherineliyuankun.github.io. 3600 IN	A	185.199.108.153
+catherineliyuankun.github.io. 3600 IN	A	185.199.110.153
+catherineliyuankun.github.io. 3600 IN	A	185.199.111.153
+```
+
+此外，别忘了将Hexo-theme-zilan repo里面的_config.yml文件中的`baseurl`改成根目录"/"。
 
 ### step3 修改CNAME
 
@@ -728,11 +756,15 @@ TTL：自动
 
 在<https://github.com/CatherineLiyuankun/CatherineLiyuankun.github.io/settings/pages> 里发现 Custom domain 不知怎么变为空的了。重新填写liyuankun.top, save后弹出error: "The custom domain `liyuankun.top` is already taken. If you are the owner of this domain, check out <https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages> for information about how to verify and release this domain."
 
-按照[文档](https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages)的步骤，进入到git profile下的setting: <https://github.com/settings/> --> In the "Code, planning, and automation" section of the sidebar, click  `Pages`
+![custom_domain_taken](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Git-Pages-Jekyll-Hexo-Build-your-own-blog/5.1%2Bcustom_domain_taken.png)
+
+按照[Git pages官方文档](https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages)的步骤，进入到git profile下的setting: <https://github.com/settings/> --> In the "Code, planning, and automation" section of the sidebar, click  `Pages`
+
+![Add a DNS TXT record](https://docs.github.com/assets/cb-168491/mw-1440/images/help/pages/verify-dns.webp)
 
 1. Create a TXT record in your DNS configuration for the following hostname: `_github-pages-challenge-CatherineLiyuankun.liyuankun.top`
 2. Use this code for the value of the TXT record: cxxxxxxxxxxxxxxxxx0
-3. Wait until your DNS configuration changes. This could take up to 24 hours to propagate.
+3. Wait until your DNS configuration changes. This could take up to 24 hours to propagate. `Verify`
 
 前两步的核心目的​​
 
@@ -748,7 +780,7 @@ TTL：自动
 
 ⚙️ 1. ​​登录域名注册商控制台​​
 访问你的域名注册商网站（如阿里云、腾讯云、Cloudflare 等），登录账户。
-进入 ​​DNS 管理面板​​（通常位于“域名管理”→“DNS 设置”或“域名解析”）。
+进入 ​​DNS 管理面板​​（通常位于“域名管理”→“DNS 设置”或“域名解析”）。https://dnsnext.console.aliyun.com/authoritative/domains/liyuankun.top
 
 📝 2. ​​添加 TXT 记录​​
 点击 ​​“添加记录”​​ 按钮（部分服务商需选择“添加解析记录”）。
@@ -761,6 +793,9 @@ TTL：自动
 ​​TTL（生存时间）​​：保持默认值（通常为 自动或 600）。
 ```
 
+![DNS_config](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Git-Pages-Jekyll-Hexo-Build-your-own-blog/5.1%2BDNS_config.png)
+
+
 💾 3. ​​保存并生效​​
 点击 ​​“保存”​​ 或 ​​“确认”​​，完成记录添加。
 等待 ​​DNS 全球传播​​（通常需 ​​5 分钟~24 小时​​）。
@@ -769,7 +804,13 @@ TTL：自动
 🔍 方法 1：使用命令行工具
 
 ```bash
-dig _github-pages-challenge-CatherineLiyuankun.liyuankun.to +nostats +nocomments +nocmd TXT
+dig _github-pages-challenge-CatherineLiyuankun.liyuankun.top +nostats +nocomments +nocmd TXT
+
+
+; <<>> DiG 9.10.6 <<>> _github-pages-challenge-CatherineLiyuankun.liyuankun.top +nostats +nocomments +nocmd TXT
+;; global options: +cmd
+;_github-pages-challenge-CatherineLiyuankun.liyuankun.top. IN TXT
+_github-pages-challenge-CatherineLiyuankun.liyuankun.top. 600 IN TXT "cxxxxxxxxxxxxxxxxxx0"
 ```
 
 若返回结果包含 "c58xxxxxxxxxxxxxxx6f0"，说明记录已生效。
@@ -783,12 +824,26 @@ dig _github-pages-challenge-CatherineLiyuankun.liyuankun.to +nostats +nocomments
 1. ​​严格匹配格式​​：
 主机名需包含开头的下划线 _和完整的域名（如_github-pages-challenge-用户名.域名）。
 验证码需完全复制（包括字母大小写和数字），部分服务商要求值用引号包裹（如 "c58...6f0"）。
-2. ​​长期保留记录​​：
+1. ​​长期保留记录​​：
 ​​不可删除 TXT 记录​​！即使验证成功，删除后 GitHub 会判定验证失效。
-3. ​​与后续步骤的关系​​：
+1. ​​与后续步骤的关系​​：
 此操作仅用于所有权验证，仍需按需配置 ​​A 记录（根域名）​​ 或 ​​CNAME 记录（子域名）​​ 指向 GitHub Pages IP。
 
-### DNS生效后，Verify
+### DNS生效后，Git Pages Verify
+
+DNS生效后，点击Git pages 上一步中的`Verify` ：
+![verify_domain_success](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Git-Pages-Jekyll-Hexo-Build-your-own-blog/5.1%2Bverify_domain_success.png)
+
+### Git Pages add custom domain again
+
+在github 你的pages库：CatherineLiyuankun.github.io 的Setting 选项里<https://github.com/CatherineLiyuankun/CatherineLiyuankun.github.io/settings/pages> ：
+
+- 输入Custom domain：liyuankun.top。
+- Save
+- 等待DNS Check
+- ​勾选​Enforce HTTPS​​，强制使用加密访问
+
+![custom_domain_success](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/Git-Pages-Jekyll-Hexo-Build-your-own-blog/5.1%2Bcustom_domain_success.png)
 
 ## 5.2 网站统计
 

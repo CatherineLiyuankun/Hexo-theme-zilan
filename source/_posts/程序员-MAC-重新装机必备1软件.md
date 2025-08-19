@@ -35,9 +35,15 @@ categories:
 - [Toolbox](https://www.jetbrains.com/toolbox-app/) + [**IntelliJ**](https://www.jetbrains.com/idea/) + PyCharm：  用Toolbox来管理和下载IntelliJ，PyCharm
   - [IntelliJ 官方文档-Share settings through a settings repository](https://www.jetbrains.com/help/idea/sharing-your-ide-settings.html#settings-repository)
 - [Sublime](https://www.sublimetext.com/)
+- [Cursor](https://cursor.com/cn/downloads)
 
 ## Database
 
+- [Dbeaver](https://dbeaver.io/download/) 社区版免费，pro版本收费
+  - ​​免费跨平台工具：​​ DBeaver 是一款完全免费、支持 Windows/macOS/Linux 的通用数据库管理工具。
+  - ​​广泛数据库支持：​​ 它能连接并管理几乎所有主流 SQL 数据库（如MySQL、MariaDB、PostgreSQL、SQLite、Oracle、SQL Server、Apache家族（Hive/Derby等））。
+  - ​​强大 AI 集成：​​ 集成了 支持 ​​OpenAI、Azure OpenAI、Google Gemini、Ollama、GitHub Copilot​ 6 大 AI 引擎，提供智能 SQL 生成/优化、语义分析及安全执行确认。
+  - ​​高效数据操作：​​ 提供直观的数据编辑器（支持特殊字符过滤）、优化的导航器以及智能代码补全（如优先显示外键表）。
 - [DB Browser for SQLite](https://sqlitebrowser.org/) DB Browser for SQLite (DB4S) is a high quality, visual, open source tool to create, design, and edit database files compatible with SQLite.
 - [MongoDB Compass](https://www.mongodb.com/products/compass) The GUI for MongoDB。
 
@@ -49,6 +55,13 @@ categories:
 - [**ColorSnapper2**](https://colorsnapper.com/)，取色工具。付费，App store 没有。
 
 - [Anaconda](https://www.anaconda.com/) Python data science库集合。
+- [VisualVM​​](https://visualvm.github.io/download.html)
+  - ​​集成式 JVM 监控工具​​VisualVM 是 ​​JDK 自带​​的免费可视化工具，集成了 jstat、jstack、jmap等命令行工具的功能，提供统一的图形界面，支持本地和远程 Java 应用监控。
+  - ​​多维度性能分析​​支持实时监控 ​​CPU 使用率​​、​​内存堆状态​​（含堆转储分析）、​​线程活动​​（含线程快照）及 ​​GC 行为​​，帮助快速定位内存泄漏、死锁等性能问题。
+  - ​​生产环境友好​​无需为被监控程序配置特殊 Agent，对应用性能影响极小，可直接用于生产环境诊断，且兼容 ​​JDK 1.4 及以上版本​​。
+  - ​​插件扩展能力​​通过插件中心（如 ​​Visual GC​​、​​BTrace​​）可扩展功能，例如实时 GC 可视化、动态注入调试代码（BTrace），增强深度分析能力。
+  - ​​全链路诊断支持​​提供 ​​快照生成​​（应用程序快照、性能分析快照）、​​堆转储比较​​、​​OQL 查询​​等功能，支持离线分析问题，并生成详细诊断报告。
+  - ​​适用场景​​：开发调试、生产环境监控、性能调优、内存泄漏排查、多线程问题诊断
 
 ## 开发文档查看器
 
@@ -216,6 +229,12 @@ JAVACMD="/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin
 
 - [x] [**OmniGraffle**](https://www.omnigroup.com/omnigraffle) 画图工具.
 - [x] [**Xmind**](https://www.xmind.net/) 脑图工具。
+- [x] [Figma](https://www.figma.com/downloads/) UX作图工具。 ​
+  - ​一站式设计平台​​Figma为设计师和开发者提供全方位工具，支持自动适配不同布局尺寸，告别手动调整的繁琐。
+  - ​​高效批量编辑​​支持同时编辑系统化或自由布局中的多个画框（Frames），大幅提升设计效率。
+  - ​​智能原型交互​​一键生成高保真交互原型，快速验证用户流程与界面动效，加速产品迭代。
+  - ​​开发者友好模式​​「开发模式」（Dev Mode）专为开发者打造，支持精准查看设计参数、获取代码标注，并实时同步设计状态变更。
+  - ​​无缝团队协作​​设计、开发、文案及外部协作者可在同一文件中实时协作，通过语音/聊天沟通，并利用批注功能收集反馈，确保团队目标一致。
 <!-- - [ ] + iPad 上的 [**Whiteboard**](https://apps.apple.com/us/app/microsoft-whiteboard/id1352499399)，分别用于画架构图和和脑图 -->
 
 ## 截图
@@ -229,7 +248,6 @@ JAVACMD="/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin
 ## 修图
 
 [修图软件](./%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90.html)
-
 
 ## 视频
 
@@ -260,7 +278,7 @@ JAVACMD="/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin
 
 ## 翻译
 
-- [DeepL](https://www.deepl.com/translator)  网页版，app版，浏览器插件 都有。Pro版本收费，普通版免费。
+- [DeepL](https://www.deepl.com/translator)  网页版，[app版](https://www.deepl.com/en/macos-app)，浏览器插件 都有。Pro版本收费，普通版免费。
 
 ## 工作必备
 

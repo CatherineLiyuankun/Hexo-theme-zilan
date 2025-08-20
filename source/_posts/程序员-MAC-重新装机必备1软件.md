@@ -203,19 +203,66 @@ JAVACMD="/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin
 
 ## 笔记/阅读
 
-- [x] [**Onenote**](https://www.onenote.com/signin?wdorigin=ondc)，笔记工具，从 [Evernote印象笔记](https://evernote.com/intl/zh-cn) （原来是会员，现在只是免费版） 切到 Onenote，准备换[**Ulysses**](https://ulysses.app/)。不过我现在markdown一般都用vscode+github来写了。
+### 现用笔记
+
+- [Notion](https://www.notion.com/desktop) 免费
+- [Obsidian](https://obsidian.md/)
+
+```markdown
+#### **Notion vs Obsidian 核心对比表**  
+| 对比维度       | Notion                                  | Obsidian                                |  
+|----------------|-----------------------------------------|-----------------------------------------|  
+| **核心定位**   | 云端协作型“万能工作台”                  | 本地优先的“知识黑洞”                    |  
+| **存储方式**   | 云端服务器存储（依赖网络）              | 本地 Markdown 文件（完全离线）          |  
+| **核心功能**   | • 多维数据库视图（表格/看板/日历）<br>• 模板市场<br>• 原生 AI 集成（总结/生成文本） | • 双向链接 + 知识图谱<br>• 插件扩展（1000+）<br>• 本地大模型对接（如 Llama） |  
+| **协作能力**   | 原生实时协作（免费版支持 10 人）        | 需第三方插件（如 Syncthing）或付费同步服务（$8/月） |  
+| **数据安全**   | 数据在第三方服务器（隐私风险较高）       | 用户完全掌控本地文件（隐私性强）        |  
+| **使用体验**   | • 拖拽式编辑 + 所见即所得<br>• 视觉清爽易上手 | • 纯文本 Markdown 编辑<br>• 无干扰写作（适合深度思考） |  
+| **典型场景**   | • 团队项目管理<br>• 共享知识库<br>• 流程自动化 | • 个人知识网络构建<br>• 学术研究/创意写作<br>• 隐私敏感型笔记 |  
+
+---
+```
+
+**如何选择？30秒决策模型​​**
+
+1. ​​必须完全离线使用？​​
+→ 是：选 ​​Obsidian​​；否：下一步。
+
+2. ​​每周需多人实时协作？​​
+→ 是：选 ​​Notion​​；否：下一步。
+
+3. ​​愿意折腾插件/主题？​​
+→ 是：选 ​​Obsidian​​；否：选 ​​Notion​​。
+
+​​混合方案​​：用Obsidian做本地知识库，精选笔记通过插件同步至Notion展示/协作。
+​​未来趋势​​：Notion已内测离线模式（预计2025 Q4推出），Obsidian将降价Sync服务并增强Canvas协作。
+
+### 旧爱笔记
+
+- [x] [**Onenote**](https://www.onenote.com/signin?wdorigin=ondc)，笔记工具，最早从 [Evernote印象笔记](https://evernote.com/intl/zh-cn) （免费版不够用，会员每年得100+，有点是可以搜索图片里的内容+剪切网页） 切到 Onenote， 现在用Notion 和 Obsidian。博客我现在markdown一般都用vscode+markdown插件来写了。
   - Onenoted 优点
     - 0 免费 + 实时同步到onedrive
     - 1 多级目录（note - stack section - section - page - subpage）
     - 2 笔记间可相互引用：可复制page link和section link
-  - Onenoted 缺点
+    - 3 像画布，可以随意放置在任意地方
+    - 4 语音转文字功能
+  - Onenoted 缺点（导致最后弃用）
     - 对markdown支持不好（只有windows版本有插件可以支持markdown）
+    - 从笔记里复制粘贴出来的文字经常会变成图片
+    - 从外面复制粘贴到笔记里的时候，经常提示不能粘贴此内容
+- [**Ulysses**](https://ulysses.app/)
 - [有道云笔记](https://note.youdao.com/)【免费，支持markdown】推荐。[APP store 可下载](https://apps.apple.com/cn/app/%E6%9C%89%E9%81%93%E4%BA%91%E7%AC%94%E8%AE%B0-%E7%AC%94%E8%AE%B0%E6%95%88%E7%8E%87%E5%8A%9E%E5%85%AC/id1600668116?l=en&mt=12)
   - 支持markdown
   - 免费版（非会员）2-3G空间
 - [Typora](https://typora.io/) 专门写markdown的编辑器。
+
+### 阅读
+
+- [Zlibrary](https://zh.101su.ru/) 图书库，可免费下载书籍。需梯子。
 - [x] [**Reeder**](http://reederapp.com/mac/)，RSS 阅读软件
  <!-- 我的主要信息来源，没有提供 rss 源的我会先在 [**rsshub.app**](https://docs.rsshub.app/) 上找，再没有就自己写一个 serverless 服务部署在 [now](https://zeit.co/) 上，[now使用方法](http://object.ws/2017/09/10/nowsh-note/) -->
+
+ ### 博客
 
 - [uPic](https://github.com/gee1k/uPic) 【免费，开源】Mac图床客户端。我当然用的免费开源版。需要在 系统偏好设置 - 扩展 - 访达扩展 中添加扩展，否则点击会没有反应，[参照](https://blog.svend.cc/upic/#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85)
   - 支持图床： smms、 又拍云 USS、七牛云 KODO、 阿里云 OSS、 腾讯云 COS、微博、Github、 Gitee、 Amazon S3、自定义上传接口等

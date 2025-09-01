@@ -204,15 +204,142 @@ source ~/.bashrc
 - [Pipenv Crash Course - Youtube](https://www.youtube.com/watch?v=6Qmnh5C4Pmo&t=1s)
   - [Pipenv官方文档](https://pipenv.pypa.io/en/latest/)
   - [Python—pipenv精心整理教程](https://juejin.cn/post/6844904202737713160)
-    - 安装pipenv `sudo pip install pipenv`注：无法用pip管理的包，pipenv同样无法使用。pipenv依赖：psutil, virtualenv-clone, pew, certifi, urllib3, chardet, requests, mccabe, pyflakes, pycodestyle, flake8等第三方模块。
+    - 安装pipenv `pip install pipenv`注：无法用pip管理的包，pipenv同样无法使用。pipenv依赖：psutil, virtualenv-clone, pew, certifi, urllib3, chardet, requests, mccabe, pyflakes, pycodestyle, flake8等第三方模块。
     - `pipenv shell`  生成`Pipfile`文件
     - `pipenv install langchain` 即可生成`Pipfile.lock`文件
 
 # 报错解决
 
+## pip not found 和 Pychram配置
+
+```bash
+where python3
+python3: aliased to /opt/homebrew/Cellar/python@3.13/3.13.5/bin/python3.13 /opt/homebrew/bin/python3 /usr/bin/python3
+
+pip install --user pipenv 
+zsh: command not found: pip
+
+# 1. Check which Python you’re actually using
+which python3
+python3: aliased to /opt/homebrew/Cellar/python@3.13/3.13.5/bin/python3.13 
+
+python3 --version
+Python 3.13.5 
+
+# 2. Check if pip is installed for that Python
+python3 -m pip --version
+pip 25.1.1 from /opt/homebrew/lib/python3.13/site-packages/pip (python 3.13)
+
+
+python3 -m pip install --user pipenv
+error: externally-managed-environment × This environment is externally managed ╰─> To install Python packages system-wide, try brew install xyz, where xyz is the package you are trying to install. If you wish to install a Python library that isn't in Homebrew, use a virtual environment: python3 -m venv path/to/venv source path/to/venv/bin/activate python3 -m pip install xyz If you wish to install a Python application that isn't in Homebrew, it may be easiest to use 'pipx install xyz', which will manage a virtual environment for you. You can install pipx with brew install pipx You may restore the old behavior of pip by passing the '--break-system-packages' flag to pip, or by adding 'break-system-packages = true' to your pip.conf file. The latter will permanently disable this error. If you disable this error, we STRONGLY recommend that you additionally pass the '--user' flag to pip, or set 'user = true' in your pip.conf file. Failure to do this can result in a broken Homebrew installation. Read more about this behavior here: <https://peps.python.org/pep-0668/> note: If you believe this is a mistake, please contact your Python installation or OS distribution provider. You can override this, at the risk of breaking your Python installation or OS, by passing --break-system-packages. hint: See PEP 668 for the detailed specification.
+```
+
+that error comes from PEP 668. Homebrew marks its Python as an "externally managed environment", so pip install --user pipenv is blocked to prevent breaking your system Python. (Recommended): Use pipx
+
+do it step by step with pipx so you’ll end up with a clean, working pipenv command.
+
+   
+```bash
+# 1. Install pipx via Homebrew
+brew install pipx
+
+# 2. Make sure pipx’s path is added
+pipx ensurepath
+
+#This may tell you to add something like this to your ~/.zshrc:
+# export PATH="$HOME/.local/bin:$PATH"
+# Then reload your shell:
+source ~/.zshrc
+
+# 3. Install pipenv with pipx
+pipx install pipenv
+
+# 4. Verify it’s working
+which pipenv
+/Users/yuanli/.local/bin/pipenv
+
+pipenv --version
+pipenv, version 2025.0.4
+# After this, pipenv will always be available globally, isolated from Homebrew’s Python environment, 
+# and you won’t run into the PEP 668 restrictions anymore. 
+```
+
+Once pipenv is installed with pipx, you can hook it into PyCharm so your projects automatically use the right environment. Here’s how:
+
+🔹 Step 1: Make sure pipenv is in PATH
+
+Check in your terminal:
+`which pipenv`
+
+It should point to something like:
+`/Users/<you>/.local/bin/pipenv`
+
+If PyCharm can’t find it later, you may need to add that path to PyCharm’s environment PATH (I’ll show how in Step 4).
+
+🔹 Step 2: Open PyCharm Preferences
+
+macOS: PyCharm > Preferences…
+
+Windows/Linux: File > Settings…
+
+Go to:
+Project: <your project> > Python Interpreter
+
+🔹 Step 3: Add a new interpreter from Pipenv
+
+Click the ⚙️ gear icon > Add Interpreter.
+
+Choose Pipenv Environment.
+
+In the dialog:
+
+Select Pipenv executable → click ... and point to the result of which pipenv.
+
+Choose `Pipenv` environment:
+
+Existing environment → if you already ran pipenv install in your project.
+
+New environment → PyCharm will run pipenv install for you.
+
+PyCharm will detect the Python version from Pipenv and set up the interpreter.
+
+Look at **Python Interpreter**
+
+If it’s not the Pipenv venv from Step 1, click the ⚙️ → Add Interpreter → Existing environment
+
+Navigate to:
+
+`/Users/yuanli/.local/share/virtualenvs/python-NwH-YMu4/bin/python`
+
+Click OK and apply.
+
+🔹 Step 4: (If PyCharm can’t find pipenv)
+
+If PyCharm complains it can’t find pipenv, add its location to the IDE’s PATH:
+
+Go to PyCharm > Preferences > Tools > Terminal.
+
+Add this to the “Shell Path” or “Environment variables” section:
+
+`PATH=$HOME/.local/bin:$PATH`
+
+Restart PyCharm.
+
+
+🔹 Step 5: Verify
+
+Once set, open a PyCharm terminal and run:
+
+`pipenv --version`
+`python --version`
+
+
+Both should match what you expect from your Pipenv environment.
+
 ## [pip3 install 成功- import requests仍找不到module:ModuleNotFoundError](https://liyuankun.top/pip3-install-%E6%88%90%E5%8A%9F-import-requests%E4%BB%8D%E6%89%BE%E4%B8%8D%E5%88%B0module-ModuleNotFoundError.html)
 
-## 命令行报错 command cannot found pip
+## 命令行报错 command cannot found pip 2
 
 ```bash
 $ pip install wakatime

@@ -240,13 +240,13 @@ JAVACMD="/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin
 ### 旧爱笔记
 
 - [x] [**Onenote**](https://www.onenote.com/signin?wdorigin=ondc)，笔记工具，最早从 [Evernote印象笔记](https://evernote.com/intl/zh-cn) （免费版不够用，会员每年得100+，有点是可以搜索图片里的内容+剪切网页） 切到 Onenote， 现在用Notion 和 Obsidian。博客我现在markdown一般都用vscode+markdown插件来写了。
-  - Onenoted 优点
+  - Onenote 优点
     - 0 免费 + 实时同步到onedrive
     - 1 多级目录（note - stack section - section - page - subpage）
     - 2 笔记间可相互引用：可复制page link和section link
     - 3 像画布，可以随意放置在任意地方
     - 4 语音转文字功能
-  - Onenoted 缺点（导致最后弃用）
+  - Onenote 缺点（导致最后弃用）
     - 对markdown支持不好（只有windows版本有插件可以支持markdown）
     - 从笔记里复制粘贴出来的文字经常会变成图片
     - 从外面复制粘贴到笔记里的时候，经常提示不能粘贴此内容

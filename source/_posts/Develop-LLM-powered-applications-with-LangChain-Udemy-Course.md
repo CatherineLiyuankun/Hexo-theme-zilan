@@ -22,7 +22,7 @@ tags:
 - [Pipenv Crash Course - Youtube](https://www.youtube.com/watch?v=6Qmnh5C4Pmo&t=1s)
   - [Pipenv官方文档](https://pipenv.pypa.io/en/latest/)
   - [Python—pipenv精心整理教程](https://juejin.cn/post/6844904202737713160)
-    - 安装pipenv `sudo pip install pipenv`注：无法用pip管理的包，pipenv同样无法使用。pipenv依赖：psutil, virtualenv-clone, pew, certifi, urllib3, chardet, requests, mccabe, pyflakes, pycodestyle, flake8等第三方模块。
+    - 安装pipenv `pip install pipenv`注：无法用pip管理的包，pipenv同样无法使用。pipenv依赖：psutil, virtualenv-clone, pew, certifi, urllib3, chardet, requests, mccabe, pyflakes, pycodestyle, flake8等第三方模块。
     - `pipenv shell`  生成`Pipfile`文件
     - `pipenv install langchain` 即可生成`Pipfile.lock`文件
 

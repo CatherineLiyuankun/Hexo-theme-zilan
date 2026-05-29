@@ -224,13 +224,21 @@ iTerm2 --> Preferences --> General --> Preferences Tab
 
 iTerm2需要额外配置，需要在终端中Regular font 和 the Non-ASCII Font选中刚刚安装的字体，点击iTerms的菜单"iTerm > Preferences > Profiles > Text"，进行配置（[git issue](https://github.com/powerline/fonts/issues/44)）。
 
+##### 字体方案四【管用，推荐！正在使用】
+
+如果之前安装的是[Cascadia Code PL /Cascadia Mono PL字体](https://github.com/microsoft/cascadia-code)，i
+Term 2的设置里的Profile中的Text 选项卡中里的Regular Font和Non-ASCII Font的字体都设置成：
+
+- Font：Cascadia Code PL            Regular 12
+- Non-ASCII Font：Cascadia Code PL  Regular 12
+
 ##### 字体方案一【不管用】
 
 ![修改iTerm2设置](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/oh-my-zsh%E7%BB%84%E5%90%88%E4%BD%A0%E7%9A%84terminal/iTerm2%E8%AE%BE%E7%BD%AE.png)
 
 按说这回就能正常显示主题agnoster了，但还是不行。
 
-##### 字体方案二【管用】
+##### 字体方案二【管用-弃用】
 
 后来在git issue上面查了半天，找到了[解决办法](https://github.com/ohmyzsh/ohmyzsh/issues/2869)。
 
@@ -238,7 +246,7 @@ iTerm2设置中不仅要修改Non-ASCII Font，还要修改字体。
 这里我修改成：
 ![修改iTerm2设置字体](https://github.com/CatherineLiyuankun/PictureBed/raw/master/blog/post/oh-my-zsh%E7%BB%84%E5%90%88%E4%BD%A0%E7%9A%84terminal/iTerm2%E8%AE%BE%E7%BD%AE2.png)
 
-##### 字体方案三【管用】
+##### 字体方案三【管用-弃用】
 
 看别人的经验，还可以把iTerm 2的设置里的Profile中的Text 选项卡中里的Regular Font和Non-ASCII Font的字体都设置成 Powerline的字体
 `12pt Meslo LG S DZ Regular for Powerline`
@@ -246,12 +254,7 @@ iTerm2设置中不仅要修改Non-ASCII Font，还要修改字体。
 或者:
 ![或者](https://cloud.githubusercontent.com/assets/1128227/9950693/c834c0ec-5dc5-11e5-92c1-a75d80f3d783.png)
 
-##### 字体方案四【管用，正在使用】
 
-如果之前安装的是[Cascadia Code PL /Cascadia Mono PL字体](https://github.com/microsoft/cascadia-code)，设置为：
-
-- Font：Cascadia Code PL            Regular 12
-- Non-ASCII Font：Cascadia Code PL  Regular 12
 
 #### iTerm2配色方案
 
@@ -275,6 +278,12 @@ iTerm2设置中不仅要修改Non-ASCII Font，还要修改字体。
 - VS Code -> Terminal Font Family 设置字体为 Menlo for Powerline
 
 ## [修改主题-怎样不显示主机名](https://github.com/agnoster/agnoster-zsh-theme/issues/39#issuecomment-307338817)
+
+这时在路径的最前面会显示   用户名@机器名
+
+```bash
+userName@machineName  ~/path 
+```
 
 有的主机名很长，我不需要常常看到。我喜欢这个主题，但是主题里面带有主机名怎么办？
 
@@ -300,11 +309,17 @@ ${git_info}\
 打开.zshrc 在底部粘贴:
 
 ```bash
+# 隐藏机器名，userName@machineName 变为 userName
 prompt_context() {
  if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
    prompt_segment black default "%(!.%{%F{yellow}%}.)$USER"
  fi
 }
+```
+
+```bash
+# 隐藏用户名和机器名，userName@machineName 变为 空
+prompt_context() { }
 ```
 
 这样就只显示用户名了. 如果你连用户名也不想显示，只需要注释掉这一行： `prompt_segment black default...`。
